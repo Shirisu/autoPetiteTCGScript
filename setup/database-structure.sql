@@ -10,7 +10,15 @@ CREATE TABLE IF NOT EXISTS `member_rank` (
   PRIMARY KEY (`member_rank_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `member_rank` VALUES (1,'Admin'),(2,'Co-Admin'),(3,'CardMaker'),(4,'Moderator'),(5,'Member');
+INSERT INTO `member_rank` (member_rank_id, member_rank_name)
+    VALUES
+    (1,'Admin'),
+    (2,'Co-Admin'),
+    (3,'CardMaker'),
+    (4,'Moderator'),
+    (5,'Member')
+ON DUPLICATE KEY UPDATE
+    member_rank_name = VALUES(member_rank_name);
 
 
 CREATE TABLE IF NOT EXISTS `member` (
@@ -24,8 +32,8 @@ CREATE TABLE IF NOT EXISTS `member` (
   `member_register` varchar(55) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   `member_last_login` varchar(15) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   `member_rank` int(11) NOT NULL DEFAULT '5',
-  `member_geb` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
-  `member_show_geb` int(1) NOT NULL DEFAULT '0',
+  `member_birthdate` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
+  `member_show_birthdate` int(1) NOT NULL DEFAULT '0',
   `member_level` int(11) NOT NULL DEFAULT '1',
   `member_cards` int(11) NOT NULL DEFAULT '30',
   `member_master` int(11) NOT NULL,
@@ -119,19 +127,6 @@ CREATE TABLE IF NOT EXISTS `comment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-CREATE TABLE IF NOT EXISTS `contactlist` (
-  `contactlist_id` int(11) NOT NULL AUTO_INCREMENT,
-  `contactlist_from_member_id` int(11) NOT NULL,
-  `contactlist_with_member_id` int(11) NOT NULL,
-  `contactlist_date` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`contactlist_id`),
-  KEY `contactlist_from_member_id` (`contactlist_from_member_id`),
-  KEY `contactlist_with_member_id` (`contactlist_with_member_id`),
-  CONSTRAINT `contactlist_ibfk_1` FOREIGN KEY (`contactlist_from_member_id`) REFERENCES `member` (`member_id`),
-  CONSTRAINT `contactlist_ibfk_2` FOREIGN KEY (`contactlist_with_member_id`) REFERENCES `member` (`member_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
 CREATE TABLE IF NOT EXISTS `game_lucky` (
   `game_lucky_id` int(11) NOT NULL AUTO_INCREMENT,
   `game_lucky_member_id` int(11) NOT NULL,
@@ -189,8 +184,12 @@ CREATE TABLE IF NOT EXISTS `member_level` (
   KEY `member_level_to` (`member_level_to`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `member_level` VALUES (1,'',0,300),(2,'',301,1000),(3,'',1001,1600),(4,'',1601,2500),(5,'',2501,3500),(6,'',3501,5100),(7,'',5101,7700),(8,'',7701,10300),(9,'',10301,13900),(10,'',13901,15600),(11,'',15601,17300),(12,'',17301,19000),(13,'',19001,21700),(14,'',21701,23400),(15,'',23401,25100),(16,'',25101,28800),(17,'',28801,32500),(18,'',32501,45200),(19,'',45201,48900),(20,'',48901,51700),(21,'',51701,55500),(22,'',55501,59300),(23,'',59301,63300),(24,'',63301,68400),(25,'',68401,72500),(26,'',16501,18000),(27,'',18001,19500),(28,'',19501,21100),(29,'',21101,22800),(30,'',22801,24600),(31,'',24601,26500),(32,'',26501,28400),(33,'',28401,30500),(34,'',30501,32600),(35,'',32601,34900),(36,'',34901,37200),(37,'',37201,39700),(38,'',39701,42200),(39,'',42201,44900),(40,'',44901,47600);
-
+INSERT INTO `member_level` (member_level_id, member_level_name, member_level_from, member_level_to)
+    VALUES
+    (1,'',0,300),(2,'',301,1000),(3,'',1001,1600),(4,'',1601,2500),(5,'',2501,3500),(6,'',3501,5100),(7,'',5101,7700),(8,'',7701,10300),(9,'',10301,13900),(10,'',13901,15600),(11,'',15601,17300),(12,'',17301,19000),(13,'',19001,21700),(14,'',21701,23400),(15,'',23401,25100),(16,'',25101,28800),(17,'',28801,32500),(18,'',32501,45200),(19,'',45201,48900),(20,'',48901,51700),(21,'',51701,55500),(22,'',55501,59300),(23,'',59301,63300),(24,'',63301,68400),(25,'',68401,72500),(26,'',16501,18000),(27,'',18001,19500),(28,'',19501,21100),(29,'',21101,22800),(30,'',22801,24600),(31,'',24601,26500),(32,'',26501,28400),(33,'',28401,30500),(34,'',30501,32600),(35,'',32601,34900),(36,'',34901,37200),(37,'',37201,39700),(38,'',39701,42200),(39,'',42201,44900),(40,'',44901,47600)
+ON DUPLICATE KEY UPDATE
+    member_level_from = VALUES(member_level_from),
+    member_level_to = VALUES(member_level_to);
 
 CREATE TABLE IF NOT EXISTS `member_log` (
   `member_log_id` int(11) NOT NULL AUTO_INCREMENT,
