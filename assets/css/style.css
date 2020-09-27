@@ -1,0 +1,78 @@
+/**
+* online style
+**/
+span.online {
+    color:#089408;
+    font-weight:bold;
+}
+span.offline {
+    color:#ff0000;
+    font-weight:bold;
+}
+span.inaktiv {
+    color:#a0a0a0;
+    font-style:italic;
+}
+span.admin, a.admin {
+    color:#AA0000;
+    font-weight:bold;
+}
+span.admin:hover, a.admin:hover {
+    color:#860202;
+    font-weight:bold;
+    cursor:pointer;
+}
+span.coadmin, a.coadmin {
+    color:#993333;
+    font-weight:bold;
+}
+span.coadmin:hover, a.coadmin:hover {
+    color:#822C2C;
+    font-weight:bold;
+    cursor:pointer;
+}
+span.cm, a.cm {
+    color:#996633;
+    font-weight:bold;
+}
+span.cm:hover, a.cm:hover {
+    color:#865A2E;
+    font-weight:bold;
+    cursor:pointer;
+}
+span.cmod {
+    color:#996699;
+    font-weight:bold;
+}
+span.cmod:hover {
+    color:#845784;
+    font-weight:bold;
+    cursor:pointer;
+}
+span.gmod {
+    color:#663366;
+    font-weight:bold;
+}
+span.gmod:hover {
+    color:#582C58;
+    font-weight:bold;
+    cursor:pointer;
+}
+span.mod {
+    color:#336633;
+    font-weight:bold;
+}
+span.mod:hover {
+    color:#2B562B;
+    font-weight:bold;
+    cursor:pointer;
+}
+span.invi {
+    color:#999999;
+    font-weight:bold;
+}
+span.invi:hover {
+    color:#8C8B8B;
+    font-weight:bold;
+    cursor:pointer;
+}
