@@ -12,11 +12,11 @@ if ($anz_tr > 0) {
     $text_trade = 'Trade History';
 }
 
-navlink(TRANSLATIONS[$GLOBALS['language']]['text_trade'],'tcg/trade');
-navlink(TRANSLATIONS[$GLOBALS['language']]['text_userarea'],'tcg/userarea');
-navlink(TRANSLATIONS[$GLOBALS['language']]['text_collectlist'],'tcg/collectlist');
-navlink(TRANSLATIONS[$GLOBALS['language']]['text_ownlog'],'tcg/memberlog');
+navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_trade'],'tcg/trade');
+navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_userarea'],'tcg/userarea');
+navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_collectlist'],'tcg/collectlist');
+navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_ownlog'],'tcg/memberlog');
 navlink('Wish','tcg/wish');
-navlink(TRANSLATIONS[$GLOBALS['language']]['text_contactlist'],'tcg/contactlist');
-navlink(TRANSLATIONS[$GLOBALS['language']]['text_personalwishlist'],'tcg/ownwishlist');
+navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_contactlist'],'tcg/contactlist');
+navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_personalwishlist'],'tcg/ownwishlist');
 ?>

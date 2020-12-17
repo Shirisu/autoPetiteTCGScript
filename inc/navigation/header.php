@@ -106,12 +106,12 @@
                     ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMemberarea" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <?php echo TRANSLATIONS[$GLOBALS['language']]['language_text']; ?>
+                            <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['language_text']; ?>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMemberarea">
                             <?php
-                            navlink_language(TRANSLATIONS[$GLOBALS['language']]['language_en_text'],'en');
-                            navlink_language(TRANSLATIONS[$GLOBALS['language']]['language_de_text'],'de');
+                            navlink_language(TRANSLATIONS[$GLOBALS['language']]['general']['language_en_text'],'en');
+                            navlink_language(TRANSLATIONS[$GLOBALS['language']]['general']['language_de_text'],'de');
                             ?>
                         </div>
                     </li>
