@@ -34,6 +34,8 @@ mysqli_query($link, "DELETE FROM member_online WHERE (member_time+300)<'".$onlin
 $GLOBALS['language'] = TCG_MAIN_LANGUAGE;
 if (!isset($_SESSION['language'])) {
     $GLOBALS['language'] = TCG_MAIN_LANGUAGE;
+} else {
+    $GLOBALS['language'] = $_SESSION['language'];
 }
 if (isset($_GET['language'])) {
     $language = mysqli_real_escape_string($link, $_GET['language']);

@@ -15,6 +15,7 @@ $translations['en'] = array(
         'text_error_login' => 'Wrong data - please try again.',
         'text_memberarea' => 'Member Area',
         'text_pm' => 'PM',
+        'text_trade' => 'Trade',
         'text_cards' => 'Cards',
         'text_statistic' => 'Statistic',
         'text_linkstuff' => 'Link stuff',

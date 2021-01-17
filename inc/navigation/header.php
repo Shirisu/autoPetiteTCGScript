@@ -45,7 +45,7 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMemberarea" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <?php echo $text_memberarea; ?>
+                            <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_memberarea']; ?>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMemberarea">
                             <?php
@@ -63,9 +63,9 @@
                     $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                     $count = mysqli_num_rows($result);
                     if ($count > 0) {
-                        $text_pn_count = '<b>'.$text_pm.' ('.$count.')</b>';
+                        $text_pn_count = '<b>'.TRANSLATIONS[$GLOBALS['language']]['general']['text_pm'].' ('.$count.')</b>';
                     } else {
-                        $text_pn_count = $text_pm;
+                        $text_pn_count = TRANSLATIONS[$GLOBALS['language']]['general']['text_pm'];
                     }
                     ?>
                     <li class="nav-item">
@@ -82,9 +82,9 @@
                     $result = mysqli_query($link, $sql) or die(mysqli_error($link));
                     $count = mysqli_num_rows($result);
                     if ($count > 0) {
-                        $text_cards_count = '<b>'.$text_cards.' ('.$count.')</b>';
+                        $text_cards_count = '<b>'.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'].' ('.$count.')</b>';
                     } else {
-                        $text_cards_count = $text_cards;
+                        $text_cards_count = TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'];
                     }
                     ?>
                     <li class="nav-item">
