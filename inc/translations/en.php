@@ -29,6 +29,12 @@ $translations['en'] = array(
         'text_cardsearch' => 'Card search',
         'text_exchangeoffice' => 'Exchange office',
         'text_cardupdate' => 'Card update',
+
+        'text_active' => 'active',
+        'text_inactive' => 'inactive',
+        'text_rank' => 'Rank',
+        'text_status' => 'Status',
+        'text_main_language' => 'Main language',
     ),
     'lostpassword' => array(
         'headline' => 'Lost password',
