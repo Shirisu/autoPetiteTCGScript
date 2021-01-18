@@ -124,8 +124,18 @@
                                 <small id="languageHelp" class="form-text text-muted"><?php echo TRANSLATIONS[$GLOBALS['language']]['register']['language_hint']; ?></small>
                             </div>
                         </div>
+                        <div class="col col-12">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_register']; ?></button>
+                            </div>
+                        </div>
                     </div>
                 </form>
+                <div class="row">
+                    <div class="col col-12">
+                        <?php alert_box(TRANSLATIONS[$GLOBALS['language']]['register']['mistake_text']); ?>
+                    </div>
+                </div>
             <?php
             }
         }

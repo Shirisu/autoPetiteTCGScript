@@ -88,6 +88,7 @@ trading card game
         'dateofbirth_hint' => 'Kann sp&auml;ter deaktiviert werden! Nicht &auml;nderbar!',
         'gender_hint' => 'Nicht &auml;nderbar!',
         'language_hint' => 'Deine präferierte oder Muttersprache',
+        'mistake_text' => 'Solltest du dich vertippt haben, so kontaktiere <a href="mailto:'.TCG_META_OWNER.'?Subject='.TCG_NAME.' - Bei Registrierung vertippt">uns</a> bitte!',
     ),
 );
 ?>
