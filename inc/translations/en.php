@@ -88,6 +88,7 @@ trading card game
         'dateofbirth_hint' => 'Can be deactivated later! Can not be changed!',
         'gender_hint' => 'Can not be changed!',
         'language_hint' => 'Your preferred or native language',
+        'mistake_text' => 'Made a mistake? Then please contact <a href="mailto:'.TCG_META_OWNER.'?Subject='.TCG_NAME.' - Register mistake">us</a>!',
    ),
 );
 ?>

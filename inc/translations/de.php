@@ -53,9 +53,9 @@ $translations['de'] = array(
         'intro' => 'Du hast dein Passwort vergessen? Dann lasse dir ein neues zuschicken!',
         'hint_success' => 'Dir wurde ein <b>neues Passwort</b> zugeschickt!<br />
             Bitte &uuml;berpr&uuml;fe auch deinen <b>Spam-Ordner</b>.<br /><br />
-            Sollte die Email nach <b>10 Minuten</b> immer noch nicht ankommen sein, dann schreib bitte eine <a href="mailto:'.TCG_META_OWNER.'?Subject=Passwort vergessen"><b>email an den Admin</b></a>.',
-        'hint_notmatched' => 'Der Nickname und die email stimmen nicht &uuml;berein!',
-        'hint_empty' => 'Du musst deinen Nicknamen + email eingeben!',
+            Sollte die Email nach <b>10 Minuten</b> immer noch nicht ankommen sein, dann schreib bitte eine <a href="mailto:'.TCG_META_OWNER.'?Subject=Passwort vergessen"><b>Email an den Admin</b></a>.',
+        'hint_notmatched' => 'Der Nickname und die Email stimmen nicht &uuml;berein!',
+        'hint_empty' => 'Du musst deinen Nicknamen + Email eingeben!',
         'button' => 'Neues Passwort anfordern!',
         'hint_info' => '<b>P.S.:</b> Es kann sein, dass bei Hotmail-Adressen (@hotmail bzw @live) ein Fehler auftritt.<br />
             Sollte dies passieren, dann schreib bitte eine <a href="mailto:'.TCG_META_OWNER.'?Subject=Passwort vergessen"><b>Email an den Admin</b></a>!',
@@ -88,6 +88,7 @@ trading card game
         'dateofbirth_hint' => 'Kann sp&auml;ter deaktiviert werden! Nicht &auml;nderbar!',
         'gender_hint' => 'Nicht &auml;nderbar!',
         'language_hint' => 'Deine präferierte oder Muttersprache',
+        'mistake_text' => 'Solltest du dich vertippt haben, so kontaktiere <a href="mailto:'.TCG_META_OWNER.'?Subject='.TCG_NAME.' - Bei Registrierung vertippt">uns</a> bitte!',
     ),
 );
 ?>
