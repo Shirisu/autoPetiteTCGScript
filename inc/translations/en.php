@@ -9,6 +9,15 @@ $translations['en'] = array(
         'play_date_format' => 'h:i a',
         'play_date_text' => '',
 
+        'text_dateofbirth' => 'Date of birth',
+        'text_day' => 'Day',
+        'text_month' => 'Month',
+        'text_year' => 'Year',
+        'text_gender' => 'Gender',
+        'text_male' => 'male',
+        'text_female' => 'female',
+        'text_diverse' => 'diverse',
+
         'text_password' => 'Password',
         'text_lostpassword' => 'Lost Password?',
         'text_register' => 'Register',
@@ -35,6 +44,9 @@ $translations['en'] = array(
         'text_rank' => 'Rank',
         'text_status' => 'Status',
         'text_main_language' => 'Main language',
+
+        'text_nickname' => 'Nickname',
+        'text_email' => 'Email',
     ),
     'lostpassword' => array(
         'headline' => 'Lost password',
@@ -61,5 +73,21 @@ trading card game
 
 ** This message has been generated automatically! **',
     ),
+    'register' => array(
+        'already_registered' => 'You\'re already registered!<br />Multiple accounts are not permitted!!',
+        'nickname_hint' => 'You can use letters and numbers, no special characters or spaces.',
+        'email_hint' => 'Please make sure you use a <b>valid email address</b>, as you will need to use it to activate your <b>account</b>!<br />Avoid <i>hotmail, live and outlook</i> addresses.',
+        'password_hint' => 'Please choose a strong password!',
+        'password_hint_rule_1' => 'at least one capital letter',
+        'password_hint_rule_2' => 'at least one lowercase letter',
+        'password_hint_rule_3' => 'at least one number',
+        'password_hint_rule_4' => 'at least one special character (!, ?, +, -, _, #, *, &, $, &sect;, %)',
+        'password_hint_rule_5' => 'at least 8 characters',
+        'password_repeat' => 'Repeat password',
+        'password2_hint' => 'Please check if you have not mistyped!',
+        'dateofbirth_hint' => 'Can be deactivated later! Can not be changed!',
+        'gender_hint' => 'Can not be changed!',
+        'language_hint' => 'Your preferred or native language',
+   ),
 );
 ?>

@@ -9,6 +9,15 @@ $translations['de'] = array(
         'play_date_format' => 'H:i',
         'play_date_text' => ' Uhr',
 
+        'text_dateofbirth' => 'Geburtstag',
+        'text_day' => 'Tag',
+        'text_month' => 'Monat',
+        'text_year' => 'Jahr',
+        'text_gender' => 'Geschlecht',
+        'text_male' => 'm&auml;nnlich',
+        'text_female' => 'weiblich',
+        'text_diverse' => 'divers',
+
         'text_password' => 'Passwort',
         'text_lostpassword' => 'Passwort vergessen?',
         'text_register' => 'Registrierung',
@@ -35,6 +44,9 @@ $translations['de'] = array(
         'text_rank' => 'Rang',
         'text_status' => 'Status',
         'text_main_language' => 'Muttersprache',
+
+        'text_nickname' => 'Nickname',
+        'text_email' => 'Email',
     ),
     'lostpassword' => array(
         'headline' => 'Passwort vergessen',
@@ -60,6 +72,22 @@ das '.TCG_NAME.'-Team
 trading card game
 
 ** Diese Mail wurde automatisch erzeugt! **',
+    ),
+    'register' => array(
+        'already_registered' => 'Du bist bereits angemeldet!<br />Mehrfachanmeldungen sind nicht gestattet!!',
+        'nickname_hint' => 'Du kannst Buchstaben und Zahlen verwenden, keine Sonder- oder Leerzeichen.',
+        'email_hint' => 'Bitte beachte, dass du eine <b>g&uuml;ltige Email-Adresse</b> verwendest, da du damit deinen <b>Account freischalten</b> musst!<br />Vermeide <i>hotmail, live und outlook</i> Adressen.',
+        'password_hint' => 'Bitte w&auml;hle ein sicheres Passwort!',
+        'password_hint_rule_1' => 'mindestens einen Gro&szlig;buchtsabe',
+        'password_hint_rule_2' => 'mindestens einen Kleinbuchstaben',
+        'password_hint_rule_3' => 'mindestens eine Zahl',
+        'password_hint_rule_4' => 'mindestens ein Sonderzeichen (!, ?, +, -, _, #, *, &, $, &sect;, %)',
+        'password_hint_rule_5' => 'mindestens 8 Zeichen',
+        'password_repeat' => 'Password wiederholen',
+        'password2_hint' => 'Bitte pr&uuml;fe, ob du dich nicht vertippt hast!',
+        'dateofbirth_hint' => 'Kann sp&auml;ter deaktiviert werden! Nicht &auml;nderbar!',
+        'gender_hint' => 'Nicht &auml;nderbar!',
+        'language_hint' => 'Deine präferierte oder Muttersprache',
     ),
 );
 ?>
