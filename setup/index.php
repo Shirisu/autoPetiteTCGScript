@@ -3,11 +3,12 @@
 /**
  * Setup for automated petite TCG Script
  *
- * don't forget to adjust the ../inc/connection.php file
+ * don't forget to adjust the ../inc/constants.php file
  */
 
 // set up database connection
-require_once '../inc/connection.php';
+require_once("../inc/connection.php");
+require_once("../inc/constants.php");
 
 if (!$link) {
     echo "Error: could not connect to MySQL." . PHP_EOL;
@@ -47,9 +48,6 @@ if (isset($_GET['import'])) {
             (isset($_POST['member_nick']) && trim($_POST['member_nick']) != '') &&
             (isset($_POST['member_password']) && trim($_POST['member_password']) != '') &&
             (isset($_POST['member_email']) && trim($_POST['member_email']) != '') &&
-            (isset($_POST['member_birthdate_day']) && trim($_POST['member_birthdate_day']) != '') &&
-            (isset($_POST['member_birthdate_month']) && trim($_POST['member_birthdate_month']) != '') &&
-            (isset($_POST['member_birthdate_year']) && trim($_POST['member_birthdate_year']) != '') &&
             (isset($_POST['member_language']) && trim($_POST['member_language']) != '')
         ) {
             $nick = mysqli_real_escape_string($link, trim($_POST['member_nick']));
@@ -57,21 +55,15 @@ if (isset($_GET['import'])) {
             require_once('../inc/class.passwordhash_tcg.php');
             $password_hashed = create_hash_for_tcg($password);
             $email = mysqli_real_escape_string($link, trim($_POST['member_email']));
-            $birthdate_day = mysqli_real_escape_string($link, trim($_POST['member_birthdate_day']));
-            $birthdate_month = mysqli_real_escape_string($link, trim($_POST['member_birthdate_month']));
-            $birthdate_year = mysqli_real_escape_string($link, trim($_POST['member_birthdate_year']));
-            $birthdate_str = $birthdate_month.'/'.$birthdate_day.'/'.$birthdate_year.' 00:00:01';
-            $birthdate = strtotime($birthdate_str);
             $language = mysqli_real_escape_string($link, trim($_POST['member_language']));
 
             $query = "INSERT INTO member
-                      (member_id, member_nick, member_password, member_register, member_rank, member_birthdate, member_email, member_cards, member_language)
+                      (member_id, member_nick, member_password, member_register, member_rank, member_email, member_cards, member_language)
                       VALUES
-                      (1, '".$nick."','".$password_hashed."','".time()."','1','".$birthdate."','".$email."','".TCG_CARDS_STARTDECK."','".$language."')
+                      (1, '".$nick."','".$password_hashed."','".time()."','1','".$email."','".TCG_CARDS_START_PACKAGE."','".$language."')
                       ON DUPLICATE KEY UPDATE
                       member_nick = '".$nick."',
                       member_password = '".$password_hashed."',
-                      member_birthdate = '".$birthdate."',
                       member_email = '".$email."',
                       member_language = '".$language."'
                       ;";
@@ -90,32 +82,6 @@ if (isset($_GET['import'])) {
         <input type="text" id="member_password" name="member_password"><br />
         <label for="member_email">Email:</label>
         <input type="text" id="member_email" name="member_email"><br />
-        <label>Birthdate:</label>
-        <select id="member_birthdate_day" name="member_birthdate_day">
-            <option value="">Day</option>
-            <?php
-            for ($i = 1; $i <= 31; $i++) {
-                echo '<option value="'.$i.'">'.$i.'</option>';
-            }
-            ?>
-        </select>
-        <select id="member_birthdate_month" name="member_birthdate_month">
-            <option value="">Month</option>
-            <?php
-            for ($i = 1; $i <= 12; $i++) {
-                echo '<option value="'.$i.'">'.$i.'</option>';
-            }
-            ?>
-        </select>
-        <select id="member_birthdate_year" name="member_birthdate_year">
-            <option value="">Year</option>
-            <?php
-            for ($i = 1900; $i <= date('Y', time()); $i++) {
-                echo '<option value="'.$i.'">'.$i.'</option>';
-            }
-            ?>
-        </select>
-        <br />
         <label for="member_language">Language:</label>
         <select id="member_language" name="member_language">
             <option value="en">english</option>
@@ -126,6 +92,8 @@ if (isset($_GET['import'])) {
     </form>
     <?php
 }
-
+?>
+<a href="/">Back</a>
+<?php
     mysqli_close($link);
 ?>

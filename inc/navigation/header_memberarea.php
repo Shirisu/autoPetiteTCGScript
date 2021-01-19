@@ -7,16 +7,15 @@ $sql_tr = "SELECT *
 $result_tr = mysqli_query($link, $sql_tr);
 $anz_tr = mysqli_num_rows($result_tr);
 if ($anz_tr > 0) {
-    $text_trade = '<b>Trade History</b>';
+    navlink('<span class="font-weight-bold">'.TRANSLATIONS[$GLOBALS['language']]['general']['text_trade'].'</span>','trade');
 } else {
-    $text_trade = 'Trade History';
+    navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_trade'],'trade');
 }
 
-navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_trade'],'tcg/trade');
-navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_userarea'],'tcg/userarea');
-navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_collectlist'],'tcg/collectlist');
-navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_ownlog'],'tcg/memberlog');
+navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_userarea'],'userarea');
+navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_collectlist'],'collectlist');
+navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_ownlog'],'memberlog');
 navlink('Wish','tcg/wish');
-navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_contactlist'],'tcg/contactlist');
-navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_personalwishlist'],'tcg/ownwishlist');
+navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_contactlist'],'contactlist');
+navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_personalwishlist'],'ownwishlist');
 ?>

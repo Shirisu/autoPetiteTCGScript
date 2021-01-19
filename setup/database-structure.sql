@@ -4,6 +4,12 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 
+CREATE TABLE IF NOT EXISTS `member_activation` (
+  `member_activation_member_id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_activation_code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`member_activation_member_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS `member_rank` (
   `member_rank_id` int(11) NOT NULL AUTO_INCREMENT,
   `member_rank_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -32,6 +38,7 @@ CREATE TABLE IF NOT EXISTS `member` (
   `member_register` varchar(55) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   `member_last_login` varchar(15) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   `member_rank` int(11) NOT NULL DEFAULT '5',
+  `member_gender` int(1) NOT NULL DEFAULT '2',
   `member_birthdate` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
   `member_show_birthdate` int(1) NOT NULL DEFAULT '0',
   `member_level` int(11) NOT NULL DEFAULT '1',
@@ -63,38 +70,50 @@ CREATE TABLE IF NOT EXISTS `member` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-CREATE TABLE IF NOT EXISTS `sets_cat` (
-  `sets_cat_id` int(11) NOT NULL AUTO_INCREMENT,
-  `sets_cat_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`sets_cat_id`)
+CREATE TABLE IF NOT EXISTS `carddeck_cat` (
+  `carddeck_cat_id` int(11) NOT NULL AUTO_INCREMENT,
+  `carddeck_cat_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`carddeck_cat_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-CREATE TABLE IF NOT EXISTS `sets` (
-  `sets_id` int(11) NOT NULL AUTO_INCREMENT,
-  `sets_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `sets_by` int(11) NOT NULL,
-  `sets_serie` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `sets_copyright` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `sets_artist` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `sets_imagesources` text COLLATE utf8_unicode_ci NOT NULL,
-  `sets_cat` int(3) NOT NULL,
-  `sets_count_cards` int(3) NOT NULL DEFAULT '12',
-  `sets_active` int(1) NOT NULL DEFAULT '1',
-  `sets_date` int(11) NOT NULL,
-  PRIMARY KEY (`sets_id`),
-  KEY `sets_cat` (`sets_cat`),
-  KEY `sets_by` (`sets_by`),
-  KEY `sets_name` (`sets_name`),
-  CONSTRAINT `sets_ibfk_1` FOREIGN KEY (`sets_by`) REFERENCES `member` (`member_id`),
-  CONSTRAINT `sets_ibfk_2` FOREIGN KEY (`sets_cat`) REFERENCES `sets_cat` (`sets_cat_id`)
+CREATE TABLE IF NOT EXISTS `carddeck_sub_cat` (
+  `carddeck_sub_cat_id` int(11) NOT NULL AUTO_INCREMENT,
+  `carddeck_sub_cat_main_cat_id` int(11) NOT NULL,
+  `carddeck_sub_cat_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`carddeck_sub_cat_id`),
+  CONSTRAINT `carddeck_sub_cat_ibfk_1` FOREIGN KEY (`carddeck_sub_cat_main_cat_id`) REFERENCES `carddeck_cat` (`carddeck_cat_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `carddeck` (
+  `carddeck_id` int(11) NOT NULL AUTO_INCREMENT,
+  `carddeck_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `carddeck_creator` int(11) NOT NULL,
+  `carddeck_series` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `carddeck_copyright` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `carddeck_artist` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `carddeck_imagesources` text COLLATE utf8_unicode_ci NOT NULL,
+  `carddeck_cat` int(11) NOT NULL,
+  `carddeck_sub_cat` int(11) NOT NULL,
+  `carddeck_is_puzzle` int(1) NOT NULL DEFAULT '0',
+  `carddeck_active` int(1) NOT NULL DEFAULT '1',
+  `carddeck_date` int(11) NOT NULL,
+  PRIMARY KEY (`carddeck_id`),
+  KEY `carddeck_cat` (`carddeck_cat`),
+  KEY `carddeck_sub_cat` (`carddeck_sub_cat`),
+  KEY `carddeck_creator` (`carddeck_creator`),
+  KEY `carddeck_name` (`carddeck_name`),
+  CONSTRAINT `carddeck_ibfk_1` FOREIGN KEY (`carddeck_creator`) REFERENCES `member` (`member_id`),
+  CONSTRAINT `carddeck_ibfk_2` FOREIGN KEY (`carddeck_cat`) REFERENCES `carddeck_cat` (`carddeck_cat_id`),
+  CONSTRAINT `carddeck_ibfk_3` FOREIGN KEY (`carddeck_sub_cat`) REFERENCES `carddeck_sub_cat` (`carddeck_sub_cat_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `cardupdate` (
   `cardupdate_id` int(11) NOT NULL AUTO_INCREMENT,
   `cardupdate_date` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
-  `cardupdate_sets_id` text COLLATE utf8_unicode_ci NOT NULL,
+  `cardupdate_carddeck_id` text COLLATE utf8_unicode_ci NOT NULL,
   `cardupdate_count_cards` int(11) NOT NULL,
   PRIMARY KEY (`cardupdate_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -159,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `game_rightnumber` (
 
 CREATE TABLE IF NOT EXISTS `member_cards` (
   `member_cards_id` int(11) NOT NULL AUTO_INCREMENT,
-  `member_cards_sets_id` int(11) NOT NULL,
+  `member_cards_carddeck_id` int(11) NOT NULL,
   `member_cards_number` int(11) NOT NULL,
   `member_cards_member_id` int(11) NOT NULL,
   `member_cards_cat` enum('1','2','3','4','5','6','7') COLLATE utf8_unicode_ci NOT NULL DEFAULT '1',
@@ -168,8 +187,8 @@ CREATE TABLE IF NOT EXISTS `member_cards` (
   KEY `member_cards_number` (`member_cards_number`),
   KEY `member_cards_member_id` (`member_cards_member_id`),
   KEY `member_cards_cat` (`member_cards_cat`),
-  KEY `member_cards_sets_id` (`member_cards_sets_id`),
-  CONSTRAINT `member_cards_ibfk_1` FOREIGN KEY (`member_cards_sets_id`) REFERENCES `sets` (`sets_id`),
+  KEY `member_cards_carddeck_id` (`member_cards_carddeck_id`),
+  CONSTRAINT `member_cards_ibfk_1` FOREIGN KEY (`member_cards_carddeck_id`) REFERENCES `carddeck` (`carddeck_id`),
   CONSTRAINT `member_cards_ibfk_2` FOREIGN KEY (`member_cards_member_id`) REFERENCES `member` (`member_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -219,13 +238,13 @@ CREATE TABLE IF NOT EXISTS `member_log_points` (
 CREATE TABLE IF NOT EXISTS `member_master` (
   `member_master_id` int(11) NOT NULL AUTO_INCREMENT,
   `member_master_member_id` int(11) NOT NULL DEFAULT '0',
-  `member_master_sets_id` int(11) NOT NULL DEFAULT '0',
+  `member_master_carddeck_id` int(11) NOT NULL DEFAULT '0',
   `member_master_date` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`member_master_id`),
   KEY `member_master_member_id` (`member_master_member_id`),
-  KEY `member_master_sets_id` (`member_master_sets_id`),
+  KEY `member_master_carddeck_id` (`member_master_carddeck_id`),
   CONSTRAINT `member_master_ibfk_1` FOREIGN KEY (`member_master_member_id`) REFERENCES `member` (`member_id`),
-  CONSTRAINT `member_master_ibfk_2` FOREIGN KEY (`member_master_sets_id`) REFERENCES `sets` (`sets_id`)
+  CONSTRAINT `member_master_ibfk_2` FOREIGN KEY (`member_master_carddeck_id`) REFERENCES `carddeck` (`carddeck_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -238,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `member_online` (
 CREATE TABLE IF NOT EXISTS `member_update` (
   `member_update_id` int(11) NOT NULL AUTO_INCREMENT,
   `member_update_cardupdate_id` int(11) NOT NULL,
-  `member_update_sets_id` text COLLATE utf8_unicode_ci NOT NULL,
+  `member_update_carddeck_id` text COLLATE utf8_unicode_ci NOT NULL,
   `member_update_member_id` int(11) NOT NULL,
   `member_update_cards_count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`member_update_id`),
@@ -252,13 +271,13 @@ CREATE TABLE IF NOT EXISTS `member_update` (
 CREATE TABLE IF NOT EXISTS `member_wishlist` (
   `member_wishlist_id` int(11) NOT NULL AUTO_INCREMENT,
   `member_wishlist_member_id` int(11) NOT NULL,
-  `member_wishlist_sets_id` int(11) NOT NULL,
+  `member_wishlist_carddeck_id` int(11) NOT NULL,
   `member_wishlist_date` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`member_wishlist_id`),
   KEY `member_wishlist_member_id` (`member_wishlist_member_id`),
-  KEY `member_wishlist_sets_id` (`member_wishlist_sets_id`),
+  KEY `member_wishlist_carddeck_id` (`member_wishlist_carddeck_id`),
   CONSTRAINT `member_wishlist_ibfk_1` FOREIGN KEY (`member_wishlist_member_id`) REFERENCES `member` (`member_id`),
-  CONSTRAINT `member_wishlist_ibfk_2` FOREIGN KEY (`member_wishlist_sets_id`) REFERENCES `sets` (`sets_id`)
+  CONSTRAINT `member_wishlist_ibfk_2` FOREIGN KEY (`member_wishlist_carddeck_id`) REFERENCES `carddeck` (`carddeck_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

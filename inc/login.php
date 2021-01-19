@@ -1,5 +1,6 @@
 <?php
 require_once("connection.php");
+require_once("constants.php");
 // start session
 session_start ();
 require_once("function.php");

@@ -1,7 +1,7 @@
 <?php
-$sql_cat = "SELECT sets_cat_id, sets_cat_name
-            FROM sets_cat
-            ORDER BY sets_cat_name";
+$sql_cat = "SELECT carddeck_cat_id, carddeck_cat_name
+            FROM carddeck_cat
+            ORDER BY carddeck_cat_name";
 $result_cat = mysqli_query($link,$sql_cat) OR die(mysqli_error($link));
 $row_cat = mysqli_fetch_assoc($result_cat);
 if(mysqli_num_rows($result_cat)) {
@@ -10,21 +10,21 @@ if(mysqli_num_rows($result_cat)) {
         $sql_lc = "SELECT game_lucky_last_played
         		   FROM game_lucky
         		   WHERE game_lucky_member_id = '".$_SESSION['member_id']."'
-        		     AND game_lucky_cat_id = '".$row_cat['sets_cat_id']."'
+        		     AND game_lucky_cat_id = '".$row_cat['carddeck_cat_id']."'
                ORDER BY game_lucky_id DESC
                LIMIT 1";
         $result_lc = mysqli_query($link,$sql_lc) OR die(mysqli_error($link));
         $row_lc = mysqli_fetch_assoc($result_lc);
         if(mysqli_num_rows($result_lc)) {
             if( ($row_lc['game_lucky_last_played']+$anz_minutes_timestamp) <= time() ) {
-                $play_text = 'Lucky '.$row_cat['sets_cat_name'];
+                $play_text = 'Lucky '.$row_cat['carddeck_cat_name'];
             } else {
-                $play_text = '<span class="inactive">Lucky '.$row_cat['sets_cat_name'].'</span>';
+                $play_text = '<span class="inactive">Lucky '.$row_cat['carddeck_cat_name'].'</span>';
             }
         } else {
-            $play_text = 'Lucky '.$row_cat['sets_cat_name'];
+            $play_text = 'Lucky '.$row_cat['carddeck_cat_name'];
         }
-        navlink($play_text,'games/lucky/'.$row_cat['sets_cat_id']);
+        navlink($play_text,'games/lucky/'.$row_cat['carddeck_cat_id']);
 
     }
 }

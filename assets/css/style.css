@@ -1,78 +1,190 @@
+/** 
+* basic style
+**/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-bottom: 1.5rem;
+}
+
+h1,
+.heading1 {
+    font-size: 1.75rem;
+    line-height: 2rem;
+}
+h2,
+.heading2 {
+    font-size: 1.5rem;
+    line-height: 1.75rem;
+}
+h3,
+.heading3 {
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+}
+
+@media (max-width: 1023px) {
+    h1,
+    .heading1 {
+        font-size: 1.5rem;
+        line-height: 1.75rem;
+    }
+    h2,
+    .heading2 {
+        font-size: 1.25rem;
+        line-height: 1.5rem;
+    }
+    h3,
+    .heading3 {
+        font-size: 1rem;
+        line-height: 1.25rem;
+    }
+}
+
+#menu-toggle i::before {
+    content: "\f100";
+}
+.toggled #menu-toggle i::before {
+    content: "\f101";
+}
+@media (max-width: 767px) {
+    #menu-toggle i::before {
+        content: "\f101";
+    }
+    .toggled #menu-toggle i::before {
+        content: "\f100";
+    }
+}
+
+.breadcrumb {
+    font-size: 80%;
+    padding: 0.75rem 0;
+    background: none;
+    border-bottom: 1px dotted #ced4da;
+    border-radius: 0;
+}
+
+.form-required::after {
+    content: '*';
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 25px;
+    line-height: 38px;
+}
+.form-control:disabled, .form-control[readonly] {
+    background-color: #f4f5f7;
+}
+.input-group-prepend {
+    width: 22%;
+}
+.input-group-prepend .input-group-text {
+    width: 100%;
+    font-weight: bold;
+}
+
+@media (max-width: 1023px) {
+    .input-group-prepend {
+        width: 33%;
+    }
+
+    .input-group-prepend .input-group-text {
+        overflow-x: auto;
+    }
+}
+
+.custom-file-label {
+    overflow: hidden;
+}
+
+details {
+    border: 1px dotted #ced4da;
+}
+details > * {
+    margin: 5px;
+}
+details summary:focus {
+    outline: none;
+}
+
 /**
 * online style
 **/
 span.online {
-    color:#089408;
-    font-weight:bold;
+    color: #089408;
+    font-weight: bold;
 }
 span.offline {
-    color:#ff0000;
-    font-weight:bold;
+    color: #ff0000;
+    font-weight: bold;
 }
 span.inaktiv {
-    color:#a0a0a0;
-    font-style:italic;
+    color: #a0a0a0;
+    font-style: italic;
 }
 span.admin, a.admin {
-    color:#AA0000;
-    font-weight:bold;
+    color: #AA0000;
+    font-weight: bold;
 }
 span.admin:hover, a.admin:hover {
-    color:#860202;
-    font-weight:bold;
-    cursor:pointer;
+    color: #860202;
+    font-weight: bold;
+    cursor: pointer;
 }
 span.coadmin, a.coadmin {
-    color:#993333;
-    font-weight:bold;
+    color: #993333;
+    font-weight: bold;
 }
 span.coadmin:hover, a.coadmin:hover {
-    color:#822C2C;
-    font-weight:bold;
-    cursor:pointer;
+    color: #822C2C;
+    font-weight: bold;
+    cursor: pointer;
 }
 span.cm, a.cm {
-    color:#996633;
-    font-weight:bold;
+    color: #996633;
+    font-weight: bold;
 }
 span.cm:hover, a.cm:hover {
-    color:#865A2E;
-    font-weight:bold;
-    cursor:pointer;
+    color: #865A2E;
+    font-weight: bold;
+    cursor: pointer;
 }
 span.cmod {
-    color:#996699;
-    font-weight:bold;
+    color: #996699;
+    font-weight: bold;
 }
 span.cmod:hover {
-    color:#845784;
-    font-weight:bold;
-    cursor:pointer;
+    color: #845784;
+    font-weight: bold;
+    cursor: pointer;
 }
 span.gmod {
-    color:#663366;
-    font-weight:bold;
+    color: #663366;
+    font-weight: bold;
 }
 span.gmod:hover {
-    color:#582C58;
-    font-weight:bold;
-    cursor:pointer;
+    color: #582C58;
+    font-weight: bold;
+    cursor: pointer;
 }
 span.mod {
-    color:#336633;
-    font-weight:bold;
+    color: #336633;
+    font-weight: bold;
 }
 span.mod:hover {
-    color:#2B562B;
-    font-weight:bold;
-    cursor:pointer;
+    color: #2B562B;
+    font-weight: bold;
+    cursor: pointer;
 }
 span.invi {
-    color:#999999;
-    font-weight:bold;
+    color: #999999;
+    font-weight: bold;
 }
 span.invi:hover {
-    color:#8C8B8B;
-    font-weight:bold;
-    cursor:pointer;
+    color: #8C8B8B;
+    font-weight: bold;
+    cursor: pointer;
 }
