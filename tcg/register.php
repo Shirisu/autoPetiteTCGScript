@@ -1,10 +1,6 @@
-<div class="row">
-    <div class="col col-12">
-        <?php
-        title(TRANSLATIONS[$GLOBALS['language']]['general']['text_register']);
-        ?>
-    </div>
+<?php title(TRANSLATIONS[$GLOBALS['language']]['general']['text_register']); ?>
 
+<div class="row">
     <div class="col col-12">
         <?php
         if(isset($_SESSION['member_id'])) {
