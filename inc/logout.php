@@ -1,6 +1,7 @@
 <?php
 ob_start();
 require_once("connection.php");
+require_once("constants.php");
 
 session_start();
 if(isset($_SESSION['member_id'])) {

@@ -63,20 +63,10 @@ if (isset($_GET['language'])) {
     <meta name="siteinfo" content="robots.txt" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/bootstrap-table.min.css?<?php echo date('YmdH', time()); ?>" type="text/css" />
     <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/style.css?<?php echo date('YmdH', time()); ?>" type="text/css" />
     <?php if(isset($_SESSION['member_id'])) { ?>
         <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/cards.css?<?php echo date('YmdH', time()); ?>" type="text/css" />
-        <?php
-    }
-    if(mobile_device() !== 'desktop') {
-        ?>
-        <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/mobile.css?<?php echo date('YmdH', time()); ?>"
-              type="text/css"/>
-        <?php
-    }
-    if(mobile_device() == 'tablet') {
-        ?>
-        <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/tablet.css?<?php echo date('YmdH', time()); ?>" type="text/css" />
         <?php
     }
     ?>
@@ -89,10 +79,10 @@ require_once("inc/navigation/header.php");
 
 <div class="container mt-3">
     <div class="row">
-        <div class="col col-12 col-md-3" id="navigation">
+        <div class="col col-12 col-md-3 mb-4 mb-md-0 col-lg-3" id="navigation">
             <?php
             require_once("inc/navigation/quick.php");
             ?>
         </div>
 
-        <div class="col col-12 col-md-9" id="content">
+        <div class="col col-12 col-md-9 col-lg-8" id="content">

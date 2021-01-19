@@ -1,4 +1,10 @@
 <?php
+$breadcrumb = array(
+    '/' => 'Home',
+    '/team' => 'Team',
+);
+breadcrumb($breadcrumb);
+
 global $link;
 $sql_a = "SELECT member_id, member_nick, member_rank_name, member_language, member_active
           FROM member, member_rank
@@ -16,10 +22,10 @@ title('Team ('.$anz_a.')');
             if($row_a['member_active'] == 1) {
                 $status = TRANSLATIONS[$GLOBALS['language']]['general']['text_active'];
             } else {
-                $statuts = TRANSLATIONS[$GLOBALS['language']]['general']['text_inactive'];
+                $status = TRANSLATIONS[$GLOBALS['language']]['general']['text_inactive'];
             }
             ?>
-            <div class="col col-4">
+            <div class="col col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card">
                     <div class="card-header">
                         <a href="/tcg/member/<?php echo $row_a['member_id']; ?>"><?php echo $row_a['member_nick']; ?></a>
@@ -27,16 +33,16 @@ title('Team ('.$anz_a.')');
                     <div class="card-body">
                         <div class="card-text">
                             <p>
-                                <b><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_rank']; ?>:</b>
+                                 <span class="font-weight-bold"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_rank']; ?>:</span>
                                 <?php echo $row_a['member_rank_name']; ?>
                             </p>
                             <p>
-                                <b><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_status']; ?>:</b>
+                                 <span class="font-weight-bold"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_status']; ?>:</span>
                                 <?php echo $status; ?>
                             </p>
                             <p>
-                                <b><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_main_language']; ?>:</b>
-                                <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['language_'.$row_a['member_language'].'_text']; ?>
+                                 <span class="font-weight-bold"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_main_language']; ?>:</span>
+                                <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_language_'.$row_a['member_language'].'']; ?>
                             </p>
                         </div>
                     </div>

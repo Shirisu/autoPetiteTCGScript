@@ -54,43 +54,21 @@
                         </div>
                     </li>
                     <?php
-                    $sql = "SELECT *
-                            FROM member, message
-                            WHERE message_to_member_id = '".$_SESSION['member_id']."'
-                             AND message_from_member_id = member_id
-                             AND message_read = 0
-                            ORDER BY message_id DESC";
-                    $result = mysqli_query($link, $sql) or die(mysqli_error($link));
-                    $count = mysqli_num_rows($result);
-                    if ($count > 0) {
-                        $text_pn_count = '<b>'.TRANSLATIONS[$GLOBALS['language']]['general']['text_pm'].' ('.$count.')</b>';
-                    } else {
-                        $text_pn_count = TRANSLATIONS[$GLOBALS['language']]['general']['text_pm'];
+                    if(isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['member_rang'] == 4)) {
+                        ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAdmin" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Admin
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownAdmin">
+                                <?php
+                                require_once("header_admin.php");
+                                ?>
+                            </div>
+                        </li>
+                        <?php
                     }
-                    ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo HOST_URL; ?>/tcg/message"><?php echo $text_pn_count; ?></a>
-                    </li>
-
-                    <?php
-
-                    $sql = "SELECT *
-          				FROM member_cards
-          				WHERE member_cards_member_id = '".$_SESSION['member_id']."'
-          				 AND member_cards_cat = 1
-          				 AND member_cards_active = 1";
-                    $result = mysqli_query($link, $sql) or die(mysqli_error($link));
-                    $count = mysqli_num_rows($result);
-                    if ($count > 0) {
-                        $text_cards_count = '<b>'.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'].' ('.$count.')</b>';
-                    } else {
-                        $text_cards_count = TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'];
-                    }
-                    ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo HOST_URL; ?>/tcg/userarea/cards/new"><?php echo $text_cards_count; ?></a>
-                    </li>
-                    <?php
                 }
                 ?>
             </ul>
@@ -106,12 +84,12 @@
                     ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMemberarea" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['language_text']; ?>
+                            <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_language']; ?>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMemberarea">
                             <?php
-                            navlink_language(TRANSLATIONS[$GLOBALS['language']]['general']['language_en_text'],'en');
-                            navlink_language(TRANSLATIONS[$GLOBALS['language']]['general']['language_de_text'],'de');
+                            navlink_language(TRANSLATIONS[$GLOBALS['language']]['general']['text_language_en'],'en');
+                            navlink_language(TRANSLATIONS[$GLOBALS['language']]['general']['text_language_de'],'de');
                             ?>
                         </div>
                     </li>

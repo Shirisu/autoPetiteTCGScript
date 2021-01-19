@@ -1,4 +1,8 @@
 <?php
+function redirect($link) {
+    header('Location: '.$link);
+}
+
 function ip() {
     $ip = getenv("REMOTE_ADDR");
     return $ip;
@@ -19,15 +23,19 @@ function passwordgenerator() {
     return $password;
 }
 
-function title($first) {
-    echo '<h2>'.$first.'</h2>';
+function title($text) {
+    echo '<h2 class="mb-3">'.$text.'</h2>';
 }
 
-function member_rank_online($member,$showInDropdown = false,$invisible = false) {
+function title_small($text) {
+    echo '<h3 class="mb-3">'.$text.'</h3>';
+}
+
+function member_rank_online($member_id,$showInDropdown = false,$invisible = false) {
     global $link;
     $sql = "SELECT member_id, member_rank_name, member_nick, member_rank
           FROM member, member_rank
-          WHERE member_id = '".$member."'
+          WHERE member_id = '".$member_id."'
             AND member_rank = member_rank_id
           LIMIT 1";
     $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
@@ -57,7 +65,22 @@ function member_rank_online($member,$showInDropdown = false,$invisible = false) 
               <span class="'.$friendclass.$rankclass.'">
               '.$nick.'</span></a>';
     }
+
     return $rank;
+}
+
+function get_active_status($member_status) {
+    if ($member_status == 1) {
+        $status = TRANSLATIONS[$GLOBALS['language']]['general']['text_active'];
+    } elseif ($member_status == 2) {
+        $status = TRANSLATIONS[$GLOBALS['language']]['general']['text_blocked'];
+    } elseif ($member_status == 0) {
+        $status = TRANSLATIONS[$GLOBALS['language']]['general']['text_inactive'];
+    } else {
+        $status = 'unkown';
+    }
+
+    return $status;
 }
 
 function alert_box($text, $type = 'secondary') {
@@ -74,17 +97,64 @@ function navlink_language($name,$url) {
     echo '<a class="dropdown-item" href="'.HOST_URL.explode('?', $_SERVER['REQUEST_URI'], 2)[0].'?language='.$url.'">'.$name.'</a>';
 }
 
+function insert_cards($member_id, $quantity_cards) {
+    global $link;
 
-function title_h1($text) {
-    echo '<h1>'.$text.'</h1>';
-}
-function title2($last) {
-    echo '<h3>'.$last.'</h3>';
+    $sql = "SELECT carddeck_id, carddeck_name, carddeck_count_cards
+          FROM sets
+          WHERE carddeck_active = 1
+          ORDER BY RAND()
+          LIMIT ".$quantity_cards."";
+    $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
+
+    while($row = mysqli_fetch_assoc($result)) {
+        $cardnumber = mt_rand(1,$row['carddeck_count_cards']);
+        mysqli_query($link, "INSERT INTO member_cards (member_cards_carddeck_id, member_cards_number, member_cards_member_id) VALUES ('".$row['carddeck_id']."','".$cardnumber."','".$member_id."')") OR die(mysqli_error($link));
+        array_push($cardarray, $row['carddeck_name'].sprintf("%02d", $cardnumber));
+        $_SESSION['insert_cards'] = $cardarray;
+    }
+    mysqli_query($link, "UPDATE member SET member_cards = member_cards + '".$quantity_cards."' WHERE member_id = '".$member_id."' LIMIT 1") OR die(mysqli_error($link));
 }
 
-function redirect($link) {
-    header('Location: '.$link);
+function insert_log($topic, $text, $member_id) {
+    global $link;
+
+    mysqli_query($link, "INSERT INTO member_log
+               (member_log_member_id,member_log_date,member_log_cat,member_log_text)
+               VALUES
+               ('".$member_id."','".time()."','".$topic."','".$text."')
+               ") OR DIE(mysqli_error($link));
 }
+
+function breadcrumb($breadcrumb_array) {
+    ?>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <?php
+            foreach($breadcrumb_array as $link => $text) {
+                if ($link === array_key_last($breadcrumb_array)) {
+                    ?>
+                    <li class="breadcrumb-item active" aria-current="page"><?php echo $text; ?></li>
+                    <?php
+                } else {
+                    ?>
+                    <li class="breadcrumb-item"><a href="<?php echo $link; ?>"><?php echo $text; ?></a></li>
+                    <?php
+                }
+            }
+            ?>
+        </ol>
+    </nav>
+    <?php
+}
+
+
+
+
+
+
+
+
 
 function img_title() {
     header("Content-Type: image/png");
@@ -119,11 +189,11 @@ function navilink2($name,$url) {
     echo '<div class="l"><a href="http://'.$url.'">&raquo; '.$name.'</a></div>';
 }
 
-function online_rank($member) {
+function online_rank($member_id) {
     global $link;
     $sql_member_online = "SELECT member_id
                         FROM member_online
-                        WHERE member_id = '".$member."';";
+                        WHERE member_id = '".$member_id."';";
     $result_member_online  = mysqli_query($link, $sql_member_online) OR die(mysqli_error($link));
     $anz_member = mysqli_num_rows($result_member_online);
 
@@ -134,11 +204,11 @@ function online_rank($member) {
     }
 }
 
-function member_rank($member) {
+function member_rank($member_id) {
     global $link;
     $sql = "SELECT member_id, member_nick, member_rank, member_rank_name
           FROM member, member_rank
-          WHERE member_id = '".$member."'
+          WHERE member_id = '".$member_id."'
             AND member_rank = member_rank_id
           LIMIT 1";
     $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
@@ -176,11 +246,11 @@ function member_rank($member) {
     return $rank;
 }
 
-function getCM($hosturl,$member) {
+function getCM($hosturl,$member_id) {
     global $link;
     $sql = "SELECT member_id, member_nick
           FROM member, member_rank
-          WHERE member_id = '".$member."'
+          WHERE member_id = '".$member_id."'
             AND member_rank = member_rank_id
           LIMIT 1";
     $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
@@ -189,11 +259,11 @@ function getCM($hosturl,$member) {
     return '<a href="'.HOST_URL.'/tcg/member/'.$row['member_id'].'">'.$row['member_nick'].'</a>';
 }
 
-function card($anz,$member,$cat) {
+function card($anz,$member_id,$cat) {
     global $link;
-    $sql = "SELECT sets_id, sets_name, sets_anz
+    $sql = "SELECT carddeck_id, carddeck_name, carddeck_count_cards
           FROM sets
-          WHERE sets_active = 1
+          WHERE carddeck_active = 1
           ORDER BY RAND()
           LIMIT ".$anz."";
     $result = mysqli_query($link, $sql);
@@ -202,10 +272,10 @@ function card($anz,$member,$cat) {
     $cards = array();
     $allcards = '';
     while ($row1 = mysqli_fetch_array($result)) {
-        $zahl2 = mt_rand(1,$row1['sets_anz']);
-        echo '<img src="../'.$row1['sets_name'].','.$zahl2.'.png" alt="'.$row1['sets_name'].sprintf("%02s",$zahl2).'" title="'.$row1['sets_name'].sprintf("%02s",$zahl2).'" /> ';
-        mysqli_query($link, "INSERT INTO member_cards (member_cards_sets_id, member_cards_number, member_cards_member_id) VALUES (".$row1['sets_id'].",".$zahl2.",".($member).")");
-        array_push($cards, $row1['sets_name'].sprintf("%02s",$zahl2));
+        $zahl2 = mt_rand(1,$row1['carddeck_count_cards']);
+        echo '<img src="../'.$row1['carddeck_name'].','.$zahl2.'.png" alt="'.$row1['carddeck_name'].sprintf("%02s",$zahl2).'" title="'.$row1['carddeck_name'].sprintf("%02s",$zahl2).'" /> ';
+        mysqli_query($link, "INSERT INTO member_cards (member_cards_carddeck_id, member_cards_number, member_cards_member_id) VALUES (".$row1['carddeck_id'].",".$zahl2.",".($member_id).")");
+        array_push($cards, $row1['carddeck_name'].sprintf("%02s",$zahl2));
     }
     for ($i = 0; $i < $anz; $i++) {
         $allcards .= $cards[$i];
@@ -233,38 +303,38 @@ function card($anz,$member,$cat) {
     mysqli_query($link, "INSERT INTO member_log
 							 (member_log_member_id,member_log_date,member_log_cat,member_log_text)
 							 VALUES
-							 (".$member.",'".time()."','".$cat."','".$text."')");
+							 (".$member_id.",'".time()."','".$cat."','".$text."')");
     mysqli_query($link, "UPDATE member
 							 SET member_cards = member_cards + ".$anz."
-							 WHERE member_id = ".$member."");
+							 WHERE member_id = ".$member_id."");
 }
 
-function card_tradein($anz,$member,$cat,$cardoldid,$cardold) {
+function card_tradein($anz,$member_id,$cat,$cardoldid,$cardold) {
     global $link;
-    $sql = "SELECT sets_id, sets_name, sets_anz
+    $sql = "SELECT carddeck_id, carddeck_name, carddeck_count_cards
           FROM sets
-          WHERE sets_active = 1
+          WHERE carddeck_active = 1
           ORDER BY RAND()
           LIMIT ".$anz."";
     $result = mysqli_query($link, $sql);
     if (mysql_num_rows($result)) {
         mt_srand((double)microtime()*1000000);
         $cards = array();
-        $sets_anz = 12;
+        $carddeck_count_cards = 12;
         while ($row1 = mysqli_fetch_assoc($result)) {
-            if ($row1['sets_anz'] > 0) {
-                $sets_anz = $row1['sets_anz'];
+            if ($row1['carddeck_count_cards'] > 0) {
+                $carddeck_count_cards = $row1['carddeck_count_cards'];
             }
-            $zahl2 = mt_rand(1,$sets_anz);
-            echo '<img src="../'.$row1['sets_name'].','.$zahl2.'.png" alt="'.$row1['sets_name'].sprintf("%02s",$zahl2).'" title="'.$row1['sets_name'].sprintf("%02s",$zahl2).'" /> ';
+            $zahl2 = mt_rand(1,$carddeck_count_cards);
+            echo '<img src="../'.$row1['carddeck_name'].','.$zahl2.'.png" alt="'.$row1['carddeck_name'].sprintf("%02s",$zahl2).'" title="'.$row1['carddeck_name'].sprintf("%02s",$zahl2).'" /> ';
             mysqli_query($link, "UPDATE member_cards
-  								 SET member_cards_sets_id = ".$row1['sets_id'].",
+  								 SET member_cards_carddeck_id = ".$row1['carddeck_id'].",
   								 		 member_cards_number = ".$zahl2.",
   										 member_cards_cat = 1
   								 WHERE member_cards_member_id = ".$_SESSION['member_id']."
   								 	 AND member_cards_id = ".$cardoldid."
   								 LIMIT 1");
-            array_push($cards, $row1['sets_name'].sprintf("%02s",$zahl2));
+            array_push($cards, $row1['carddeck_name'].sprintf("%02s",$zahl2));
         }
         $allcards = '';
         for ($i = 0; $i < $anz; $i++) {
@@ -291,18 +361,18 @@ function card_tradein($anz,$member,$cat,$cardoldid,$cardold) {
         mysqli_query($link, "INSERT INTO member_log
   							 (member_log_member_id,member_log_date,member_log_cat,member_log_text)
   							 VALUES
-  							 (".$member.",'".time()."','".$cat."','".$text."')");
+  							 (".$member_id.",'".time()."','".$cat."','".$text."')");
     }
 }
 
-function card_master($anz,$member,$cat,$setname,$deck,$language) {
+function card_master($anz,$member_id,$cat,$setname,$deck,$language) {
     global $link;
     mysqli_query($link, "DELETE FROM member_wishlist
-               WHERE member_wishlist_member_id = ".$member."
-                AND member_wishlist_sets_id = ".$deck."
+               WHERE member_wishlist_member_id = ".$member_id."
+                AND member_wishlist_carddeck_id = ".$deck."
                LIMIT 1");
-    mysqli_query($link, "DELETE FROM member_cards WHERE member_cards_member_id = ".$member." AND member_cards_sets_id = ".$deck." AND member_cards_cat = 2");
-    mysqli_query($link, "INSERT INTO member_master (member_master_member_id,member_master_sets_id,member_master_date) VALUES (".$member.",".$deck.",".time().")");
+    mysqli_query($link, "DELETE FROM member_cards WHERE member_cards_member_id = ".$member_id." AND member_cards_carddeck_id = ".$deck." AND member_cards_cat = 2");
+    mysqli_query($link, "INSERT INTO member_master (member_master_member_id,member_master_carddeck_id,member_master_date) VALUES (".$member_id.",".$deck.",".time().")");
 
     if ($language == 'en') {
         $text = 'You mastered '.strtoupper($setname).' and got '.$anz.' wish';
@@ -312,19 +382,19 @@ function card_master($anz,$member,$cat,$setname,$deck,$language) {
     mysqli_query($link, "INSERT INTO member_log
 							 (member_log_member_id,member_log_date,member_log_cat,member_log_text)
 							 VALUES
-							 (".$member.",'".time()."','".$cat."','".$text."')");
+							 (".$member_id.",'".time()."','".$cat."','".$text."')");
     mysqli_query($link, "UPDATE member
 							 SET member_master = member_master + 1,
                    member_wish = member_wish + ".$anz."
-							 WHERE member_id = ".$member."
+							 WHERE member_id = ".$member_id."
                LIMIT 1");
 }
 
-function card_lvlup($anz,$member,$cat) {
+function card_lvlup($anz,$member_id,$cat) {
     global $link;
-    $sql = "SELECT sets_id, sets_name, sets_anz
+    $sql = "SELECT carddeck_id, carddeck_name, carddeck_count_cards
           FROM sets
-          WHERE sets_active = 1
+          WHERE carddeck_active = 1
           ORDER BY RAND()
           LIMIT ".$anz."";
     $result = mysqli_query($link, $sql);
@@ -334,10 +404,10 @@ function card_lvlup($anz,$member,$cat) {
     $allcards = '';
 
     while ($row1 = mysqli_fetch_array($result)) {
-        $zahl2 = mt_rand(1,$row1['sets_anz']);
-        echo '<img src="../'.$row1['sets_name'].','.$zahl2.'.png" alt="'.$row1['sets_name'].sprintf("%02s",$zahl2).'" title="'.$row1['sets_name'].sprintf("%02s",$zahl2).'" /> ';
-        mysqli_query($link, "INSERT INTO member_cards (member_cards_sets_id, member_cards_number, member_cards_member_id) VALUES (".$row1['sets_id'].",".$zahl2.",".($member).")");
-        array_push($cards, $row1['sets_name'].sprintf("%02s",$zahl2));
+        $zahl2 = mt_rand(1,$row1['carddeck_count_cards']);
+        echo '<img src="../'.$row1['carddeck_name'].','.$zahl2.'.png" alt="'.$row1['carddeck_name'].sprintf("%02s",$zahl2).'" title="'.$row1['carddeck_name'].sprintf("%02s",$zahl2).'" /> ';
+        mysqli_query($link, "INSERT INTO member_cards (member_cards_carddeck_id, member_cards_number, member_cards_member_id) VALUES (".$row1['carddeck_id'].",".$zahl2.",".($member_id).")");
+        array_push($cards, $row1['carddeck_name'].sprintf("%02s",$zahl2));
     }
     for ($i = 0; $i < $anz; $i++) {
         $allcards .= $cards[$i];
@@ -364,21 +434,21 @@ function card_lvlup($anz,$member,$cat) {
     mysqli_query($link, "INSERT INTO member_log
 							 (member_log_member_id,member_log_date,member_log_cat,member_log_text)
 							 VALUES
-							 (".$member.",'".time()."','".$cat."','".$text."')");
+							 (".$member_id.",'".time()."','".$cat."','".$text."')");
     mysqli_query($link, "UPDATE member
 							 SET member_cards = member_cards + ".$anz."
-							 WHERE member_id = ".$member."");
+							 WHERE member_id = ".$member_id."");
     mysqli_query($link, "INSERT INTO member_log_points
                (member_log_points_member_id,member_log_points_date,member_log_points_cat,member_log_points_points)
                VALUES
-               (".$member.",'".time()."','Master','5')");
+               (".$member_id.",'".time()."','Master','5')");
 }
 
-function card_game($anz,$member,$cat) {
+function card_game($anz,$member_id,$cat) {
     global $link;
-    $sql = "SELECT sets_id, sets_name, sets_anz
+    $sql = "SELECT carddeck_id, carddeck_name, carddeck_count_cards
           FROM sets
-          WHERE sets_active = 1
+          WHERE carddeck_active = 1
           ORDER BY RAND()
           LIMIT ".$anz."";
     $result = mysqli_query($link, $sql);
@@ -389,13 +459,13 @@ function card_game($anz,$member,$cat) {
 
     while ($row1 = mysqli_fetch_array($result)) {
         $zahl = 12;
-        if($row1['sets_anz'] && $row1['sets_anz'] != 0) {
-            $zahl = $row1['sets_anz'];
+        if($row1['carddeck_count_cards'] && $row1['carddeck_count_cards'] != 0) {
+            $zahl = $row1['carddeck_count_cards'];
         }
         $zahl2 = mt_rand(1,$zahl);
-        echo '<img src="../'.$row1['sets_name'].','.$zahl2.'.png" alt="'.strtoupper($row1['sets_name']).sprintf("%02s",$zahl2).'" title="'.strtoupper($row1['sets_name']).sprintf("%02s",$zahl2).'" /> ';
-        mysqli_query($link, "INSERT INTO member_cards (member_cards_sets_id, member_cards_number, member_cards_member_id) VALUES (".$row1['sets_id'].",".$zahl2.",".($member).")");
-        array_push($cards, $row1['sets_name'].sprintf("%02s",$zahl2));
+        echo '<img src="../'.$row1['carddeck_name'].','.$zahl2.'.png" alt="'.strtoupper($row1['carddeck_name']).sprintf("%02s",$zahl2).'" title="'.strtoupper($row1['carddeck_name']).sprintf("%02s",$zahl2).'" /> ';
+        mysqli_query($link, "INSERT INTO member_cards (member_cards_carddeck_id, member_cards_number, member_cards_member_id) VALUES (".$row1['carddeck_id'].",".$zahl2.",".($member_id).")");
+        array_push($cards, $row1['carddeck_name'].sprintf("%02s",$zahl2));
     }
     for ($i = 0; $i < $anz; $i++) {
         $allcards .= $cards[$i];
@@ -421,23 +491,23 @@ function card_game($anz,$member,$cat) {
     mysqli_query($link, "INSERT INTO member_log
 							 (member_log_member_id,member_log_date,member_log_cat,member_log_text)
 							 VALUES
-							 (".$member.",'".time()."','".$cat."','".$text."')");
+							 (".$member_id.",'".time()."','".$cat."','".$text."')");
     mysqli_query($link, "UPDATE member
 							 SET member_cards = member_cards + ".$anz."
-							 WHERE member_id = ".$member."");
+							 WHERE member_id = ".$member_id."");
 }
 
-function card_exchange($anz,$member,$what_cat,$points,$cat) {
+function card_exchange($anz,$member_id,$what_cat,$points,$cat) {
     global $link;
     if ($cat == 'random') {
         $stringcat = "";
     } else {
-        $stringcat = "AND sets_cat = '".$cat."'";
+        $stringcat = "AND carddeck_cat = '".$cat."'";
     }
 
-    $sql = "SELECT sets_id, sets_name, sets_anz
+    $sql = "SELECT carddeck_id, carddeck_name, carddeck_count_cards
           FROM sets
-          WHERE sets_active = 1
+          WHERE carddeck_active = 1
             ".$stringcat."
           ORDER BY RAND()
           LIMIT ".$anz."";
@@ -446,9 +516,9 @@ function card_exchange($anz,$member,$what_cat,$points,$cat) {
     $cards = array();
     $allcards = '';
     while ($row = mysqli_fetch_assoc($result)) {
-        $zahl2 = mt_rand(1,$row['sets_anz']);
-        mysqli_query($link, "INSERT INTO member_cards (member_cards_sets_id, member_cards_number, member_cards_member_id) VALUES (".$row['sets_id'].",".$zahl2.",".($member).")");
-        array_push($cards, $row['sets_name'].sprintf("%02s",$zahl2));
+        $zahl2 = mt_rand(1,$row['carddeck_count_cards']);
+        mysqli_query($link, "INSERT INTO member_cards (member_cards_carddeck_id, member_cards_number, member_cards_member_id) VALUES (".$row['carddeck_id'].",".$zahl2.",".($member_id).")");
+        array_push($cards, $row['carddeck_name'].sprintf("%02s",$zahl2));
     }
 
     for ($i = 0; $i < $anz; $i++) {
@@ -465,15 +535,15 @@ function card_exchange($anz,$member,$what_cat,$points,$cat) {
     mysqli_query($link, "INSERT INTO member_log
 							 (member_log_member_id,member_log_date,member_log_cat,member_log_text)
 							 VALUES
-							 (".$member.",'".time()."','".$what_cat."','".$text."')");
+							 (".$member_id.",'".time()."','".$what_cat."','".$text."')");
     mysqli_query($link, "UPDATE member
 							 SET member_cards = member_cards + ".$anz.",
                    member_points = member_points - ".$points."
-							 WHERE member_id = ".$member."
+							 WHERE member_id = ".$member_id."
                LIMIT 1");
 }
 
-function money($zahl,$member,$cat) {
+function money($zahl,$member_id,$cat) {
     global $link;
     mysqli_query($link, "UPDATE member SET member_grind = member_grind + ".$zahl." WHERE member_id = ".$_SESSION['member_id']."");
     if (isset($_SESSION['language']) && $_SESSION['language'] == 'en') {
@@ -484,10 +554,10 @@ function money($zahl,$member,$cat) {
     mysqli_query($link, "INSERT INTO member_log
 							 (member_log_member_id,member_log_date,member_log_cat,member_log_text)
 							 VALUES
-							 (".$member.",'".time()."','".$cat."','".$text."')");
+							 (".$member_id.",'".time()."','".$cat."','".$text."')");
 }
 
-function getPoints($zahl,$member,$cat) {
+function getPoints($zahl,$member_id,$cat) {
     global $link;
     mysqli_query($link, "UPDATE member SET member_points = member_points + ".$zahl.", member_points_max = member_points_max + ".$zahl." WHERE member_id = ".$_SESSION['member_id']."");
     if (isset($_SESSION['language']) && $_SESSION['language'] == 'en') {
@@ -508,24 +578,16 @@ function getPoints($zahl,$member,$cat) {
     mysqli_query($link, "INSERT INTO member_log
 							 (member_log_member_id,member_log_date,member_log_cat,member_log_text)
 							 VALUES
-							 (".$member.",'".time()."','".$cat."','".$text."')");
+							 (".$member_id.",'".time()."','".$cat."','".$text."')");
 
     mysqli_query($link, "INSERT INTO member_log_points
                (member_log_points_member_id,member_log_points_date,member_log_points_cat,member_log_points_points)
                VALUES
-               (".$member.",'".time()."','".$cat."','".$zahl."')");
+               (".$member_id.",'".time()."','".$cat."','".$zahl."')");
 }
 
-function insert_log($cat,$text) {
-    global $link;
-    mysqli_query($link, "INSERT INTO member_log
-               (member_log_member_id,member_log_date,member_log_cat,member_log_text)
-               VALUES
-               ('".$_SESSION['member_id']."','".time()."','".$cat."','".$text."')
-               ") OR DIE(mysqli_error($link));
-}
 
-function pagelog($perPage, $catname, $member) {
+function pagelog($perPage, $catname, $member_id) {
     global $link;
     if (!isset($_GET['go'])) {
         $_GET['go'] = 1;
@@ -537,7 +599,7 @@ function pagelog($perPage, $catname, $member) {
         $firsttext = 'erste';
         $lasttext = 'letzte';
     }
-    $thema = "WHERE member_log_member_id = '".$member."' AND member_log_active = 1";
+    $thema = "WHERE member_log_member_id = '".$member_id."' AND member_log_active = 1";
     $select= "SELECT * FROM member_log ".$thema."";
 
     $query = mysqli_query($link, $select);
@@ -569,20 +631,20 @@ function pagelog($perPage, $catname, $member) {
         $off = ($go - $davor);
         if ($go- $davor > 1) {
             $first = 1;
-            $links[] = "<a href='?id=".$member."&log&go=".$first."' class=\"kommentare\">&laquo; ".$firsttext." ...</a>\n";
+            $links[] = "<a href='?id=".$member_id."&log&go=".$first."' class=\"kommentare\">&laquo; ".$firsttext." ...</a>\n";
         }
         if ($go != 1) {
             $prev = $go-1;
         }
         for ($i = $off; $i <= ($go + $danach); $i++) {
             if ($i != $go) {
-                $links[] = "<a href='?id=".$member."&log&go=".$i."' class=\"kommentare\">$i</a>\n";
+                $links[] = "<a href='?id=".$member_id."&log&go=".$i."' class=\"kommentare\">$i</a>\n";
             }
             elseif ($i == $seiten) {
-                $links[] = " <b>$i</b> \n";
+                $links[] = " <span class=\"font-weight-bold\">$i</span> \n";
             }
             elseif ($i == $go) {
-                $links[] = " <b>$i</b> \n";
+                $links[] = " <span class=\"font-weight-bold\">$i</span> \n";
             }
         }
         if ($go != $seiten) {
@@ -590,7 +652,7 @@ function pagelog($perPage, $catname, $member) {
         }
         if ($seiten - $go - $p > 0 ) {
             $last = $seiten;
-            $links[] = "<a href='?id=".$member."&log&go=".$last."' class=\"kommentare\">... ".$lasttext." &raquo;</a>\n";
+            $links[] = "<a href='?id=".$member_id."&log&go=".$last."' class=\"kommentare\">... ".$lasttext." &raquo;</a>\n";
         }
         $start = ($go-1) * $perPage;
         $link_string = implode(" ", $links);
@@ -603,31 +665,31 @@ function pagelog($perPage, $catname, $member) {
 
 function cardsForMemberCardsearch($g_mid) {
     global $link;
-    $sql_ck = "SELECT sets_name, mc_me.member_cards_number, mc_me.member_cards_id, mc_me.member_cards_sets_id, sets_anz,
-                   (SELECT COUNT(member_wishlist_sets_id)
+    $sql_ck = "SELECT carddeck_name, mc_me.member_cards_number, mc_me.member_cards_id, mc_me.member_cards_carddeck_id, carddeck_count_cards,
+                   (SELECT COUNT(member_wishlist_carddeck_id)
                     FROM member_wishlist
                     WHERE member_wishlist_member_id = '".$_SESSION['member_id']."'
-                      AND member_wishlist_sets_id = sets_id
+                      AND member_wishlist_carddeck_id = carddeck_id
                     ) AS haveWishAnz,
-                   (SELECT COUNT(member_cards_sets_id)
+                   (SELECT COUNT(member_cards_carddeck_id)
                     FROM member_cards
                     WHERE member_cards_member_id = '".$g_mid."'
-                      AND member_cards_sets_id = sets_id
+                      AND member_cards_carddeck_id = carddeck_id
                       AND (member_cards_cat = 1
                         OR member_cards_cat = 2)
                     ) AS haveCollectAnz
             FROM member_cards mc_me
             INNER JOIN member_wishlist mw_other
-                    ON mc_me.member_cards_sets_id = mw_other.member_wishlist_sets_id
+                    ON mc_me.member_cards_carddeck_id = mw_other.member_wishlist_carddeck_id
             JOIN sets
-                    ON mc_me.member_cards_sets_id = sets_id
+                    ON mc_me.member_cards_carddeck_id = carddeck_id
             WHERE mc_me.member_cards_member_id = '".$_SESSION['member_id']."'
               AND mw_other.member_wishlist_member_id = '".$g_mid."'
               AND mc_me.member_cards_cat = 3
               AND mc_me.member_cards_active = 1
-              AND mw_other.member_wishlist_sets_id NOT IN
+              AND mw_other.member_wishlist_carddeck_id NOT IN
               (
-              SELECT member_cards_sets_id
+              SELECT member_cards_carddeck_id
               FROM member_cards
               WHERE (member_cards_cat = 1
                   OR member_cards_cat = 2)
@@ -643,10 +705,10 @@ function cardsForMemberCardsearch($g_mid) {
                   OR member_cards_cat = 2)
                 AND member_cards_member_id = '".$g_mid."'
                 AND member_cards_active = 1
-                AND member_cards_sets_id = mc_me.member_cards_sets_id
+                AND member_cards_carddeck_id = mc_me.member_cards_carddeck_id
               )
             GROUP BY mc_me.member_cards_id
-            ORDER BY sets_name, mc_me.member_cards_number ASC";
+            ORDER BY carddeck_name, mc_me.member_cards_number ASC";
     $result_ck = mysqli_query($link, $sql_ck);
     if (mysqli_num_rows($result_ck)) {
         return true;
