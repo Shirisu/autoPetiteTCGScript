@@ -19,68 +19,115 @@ Route::add("/",function() {
 /**
  * routes you shouldn't change
  */
-Route::add("/admin/memberadministration",function() {
-    require_once("admin/member_administration.php");
+Route::add("/administration",function() {
+    require_once("admin/administration.php");
 });
-Route::add("/admin/editmember/([a-z]*)",function($rank) {
+Route::add("/administration/editmember/([a-z]*)",function($rank) {
     require_once("admin/member_edit.php");
 });
-Route::add("/admin/editmember/([1-9]*)",function($memberId) {
+Route::add("/administration/editmember/([1-9]*)",function($memberId) {
     require_once("admin/member_edit.php");
 });
-Route::add("/admin/editmember/([1-9]*)",function($memberId) {
+Route::add("/administration/editmember/([1-9]*)",function($memberId) {
     require_once("admin/member_edit.php");
 }, "post");
-
-Route::add("/admin/categoryadministration",function() {
-    require_once("admin/category_administration.php");
+Route::add("/administration/distributecards",function() {
+    require_once("admin/member_card_distribute.php");
 });
-Route::add("/admin/addcategory",function() {
+Route::add("/administration/distributecards",function() {
+    require_once("admin/member_card_distribute.php");
+}, "post");
+Route::add("/administration/distributecurrency",function() {
+    require_once("admin/member_currency_distribute.php");
+});
+Route::add("/administration/distributecurrency",function() {
+    require_once("admin/member_currency_distribute.php");
+}, "post");
+Route::add("/administration/distributewish",function() {
+    require_once("admin/member_wish_distribute.php");
+});
+Route::add("/administration/distributewish",function() {
+    require_once("admin/member_wish_distribute.php");
+}, "post");
+Route::add("/administration/addcategory",function() {
     require_once("admin/category_add.php");
 });
-Route::add("/admin/addcategory",function() {
+Route::add("/administration/addcategory",function() {
     require_once("admin/category_add.php");
 }, "post");
-Route::add("/admin/editcategory",function() {
+Route::add("/administration/editcategory",function() {
     require_once("admin/category_edit.php");
 });
-Route::add("/admin/editcategory",function() {
+Route::add("/administration/editcategory",function() {
     require_once("admin/category_edit.php");
 }, "post");
-Route::add("/admin/editcategory/([1-9]*)",function($categoryId) {
+Route::add("/administration/editcategory/([1-9]*)",function($categoryId) {
     require_once("admin/category_edit.php");
 });
-Route::add("/admin/editcategory/([1-9]*)",function($categoryId) {
+Route::add("/administration/editcategory/([1-9]*)",function($categoryId) {
     require_once("admin/category_edit.php");
 }, "post");
-Route::add("/admin/addsubcategory",function() {
+Route::add("/administration/addsubcategory",function() {
     require_once("admin/subcategory_add.php");
 });
-Route::add("/admin/addsubcategory",function() {
+Route::add("/administration/addsubcategory",function() {
     require_once("admin/subcategory_add.php");
 }, "post");
-Route::add("/admin/editsubcategory",function() {
+Route::add("/administration/editsubcategory",function() {
     require_once("admin/subcategory_edit.php");
 });
-Route::add("/admin/editsubcategory",function() {
+Route::add("/administration/editsubcategory",function() {
     require_once("admin/subcategory_edit.php");
 }, "post");
-Route::add("/admin/editsubcategory/([1-9]*)",function($subcategoryId) {
+Route::add("/administration/editsubcategory/([1-9]*)",function($subcategoryId) {
     require_once("admin/subcategory_edit.php");
 });
-Route::add("/admin/editsubcategory/([1-9]*)",function($subcategoryId) {
+Route::add("/administration/editsubcategory/([1-9]*)",function($subcategoryId) {
     require_once("admin/subcategory_edit.php");
+}, "post");
+Route::add("/administration/addcarddeck",function() {
+    require_once("admin/carddeck_add.php");
+});
+Route::add("/administration/addcarddeck",function() {
+    require_once("admin/carddeck_add.php");
+}, "post");
+Route::add("/administration/editcarddeck",function() {
+    require_once("admin/carddeck_edit.php");
+});
+Route::add("/administration/editcarddeck",function() {
+    require_once("admin/carddeck_edit.php");
+}, "post");
+Route::add("/administration/editcarddeck/([1-9]*)",function($carddeckId) {
+    require_once("admin/carddeck_edit.php");
+});
+Route::add("/administration/editcarddeck/([1-9]*)",function($carddeckId) {
+    require_once("admin/carddeck_edit.php");
+}, "post");
+Route::add("/administration/addnews",function() {
+    require_once("admin/add_news.php");
+});
+Route::add("/administration/addnews",function() {
+    require_once("admin/add_news.php");
+}, "post");
+Route::add("/administration/editnews",function() {
+    require_once("admin/edit_news.php");
+});
+Route::add("/administration/editnews",function() {
+    require_once("admin/edit_news.php");
+}, "post");
+Route::add("/administration/editnews/([1-9]*)",function($newsId) {
+    require_once("admin/edit_news.php");
+});
+Route::add("/administration/editnews/([1-9]*)",function($newsId) {
+    require_once("admin/edit_news.php");
+}, "post");
+Route::add("/administration/addcardupdate",function() {
+    require_once("admin/cardupdate_add.php");
+});
+Route::add("/administration/addcardupdate",function() {
+    require_once("admin/cardupdate_add.php");
 }, "post");
 
-Route::add("/admin/carddeckadministration",function() {
-    require_once("admin/carddeck_administration.php");
-});
-Route::add("/admin/addcarddeck",function() {
-    require_once("admin/carddeck_add.php");
-});
-Route::add("/admin/addcarddeck",function() {
-    require_once("admin/carddeck_add.php");
-}, "post");
 
 Route::add("/lostpassword",function() {
     require_once("tcg/lostpassword.php");
@@ -101,7 +148,7 @@ Route::add("/register",function() {
     require_once("tcg/register.php");
 }, "post");
 // Route for account activation
-Route::add("/activation/([a-zA-Z0-9]*)(?=.{19,21})",function($activation_code) {
+Route::add("/activation/([a-zA-Z0-9]*)",function($activation_code) {
     require_once("tcg/activation.php");
 });
 

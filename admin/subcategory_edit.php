@@ -13,7 +13,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
         $subcategory_name = $row['carddeck_sub_cat_name'];
         $main_category_id = $row['carddeck_sub_cat_main_cat_id'];
         if (isset($_POST['subcategory_id']) && isset($_POST['main_category_id'])) {
-            $subcategory_name = mysqli_real_escape_string($link, $_POST['subcategory_name']);
+            $subcategory_name = mysqli_real_escape_string($link, strip_tags(trim($_POST['subcategory_name'])));
             $main_category_id = mysqli_real_escape_string($link, $_POST['main_category_id']);
 
             mysqli_query($link, "UPDATE carddeck_sub_cat
@@ -29,9 +29,9 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
 
         $breadcrumb = array(
             '/' => 'Home',
-            '/admin/categoryadministration' => 'Admin - '.TRANSLATIONS[$GLOBALS['language']]['admin']['category_administration_headline'],
-            '/admin/editsubcategory' => TRANSLATIONS[$GLOBALS['language']]['admin']['subcategory_edit_headline'],
-            '/admin/editsubcategory/'.$subcategoryId => $subcategory_name,
+            '/administration' => 'Administration',
+            '/administration/editsubcategory' => TRANSLATIONS[$GLOBALS['language']]['admin']['category_administration_headline'].' - '.TRANSLATIONS[$GLOBALS['language']]['admin']['subcategory_edit_headline'],
+            '/administration/editsubcategory/'.$subcategoryId => $subcategory_name,
         );
         breadcrumb($breadcrumb);
 
@@ -42,7 +42,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                     ORDER BY carddeck_cat_name ASC";
         $result_cat = mysqli_query($link, $sql_cat) OR die(mysqli_error($link));
         ?>
-        <form action="/admin/editsubcategory/<?php echo $subcategoryId; ?>" method="post">
+        <form action="/administration/editsubcategory/<?php echo $subcategoryId; ?>" method="post">
             <div class="row align-items-center">
                 <div class="form-group col col-12 mb-2">
                     <div class="input-group">
@@ -58,9 +58,8 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="ariaDescribedbyName">Name</span>
                         </div>
-                        <input type="text" class="form-control" id="subcategory_name" name="subcategory_name" aria-describedby="ariaDescribedbyName" pattern="[a-zA-Z 0-9]*" maxlength="255" value="<?php echo $subcategory_name; ?>" required />
+                        <input type="text" class="form-control" id="subcategory_name" name="subcategory_name" aria-describedby="ariaDescribedbyName" maxlength="255" value="<?php echo $subcategory_name; ?>" required />
                     </div>
-                    <small id="ariaDescribedbyName" class="form-text text-muted"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['hint_only_letter_numbers_and_spaces']; ?></small>
                 </div>
                 <div class="form-group col col-12 mb-2">
                     <?php
@@ -75,7 +74,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                                 <?php
                                 while ($row_cat = mysqli_fetch_assoc($result_cat)) {
                                     ?>
-                                    <option value="<?php echo $row_cat['carddeck_cat_id']; ?>"><?php echo $row_cat['carddeck_cat_name']; ?></option>
+                                    <option value="<?php echo $row_cat['carddeck_cat_id']; ?>" <?php echo ($main_category_id == $row_cat['carddeck_cat_id'] ? 'selected': ''); ?>><?php echo $row_cat['carddeck_cat_name']; ?></option>
                                     <?php
                                 }
                                 ?>
@@ -96,8 +95,8 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
     } else {
         $breadcrumb = array(
             '/' => 'Home',
-            '/admin/categoryadministration' => 'Admin - '.TRANSLATIONS[$GLOBALS['language']]['admin']['category_administration_headline'],
-            '/admin/editsubcategory' => TRANSLATIONS[$GLOBALS['language']]['admin']['subcategory_edit_headline'],
+            '/administration' => 'Administration',
+            '/administration/editsubcategory' => TRANSLATIONS[$GLOBALS['language']]['admin']['category_administration_headline'].' - '.TRANSLATIONS[$GLOBALS['language']]['admin']['subcategory_edit_headline'],
         );
         breadcrumb($breadcrumb);
 
@@ -130,7 +129,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                                 <td><?php echo $row['carddeck_sub_cat_id']; ?></td>
                                 <td><?php echo $row['carddeck_sub_cat_name']; ?></td>
                                 <td><?php echo $row['carddeck_cat_name']; ?></td>
-                                <td><a href="/admin/editsubcategory/<?php echo $row['carddeck_sub_cat_id']; ?>">Edit</a></td>
+                                <td><a href="/administration/editsubcategory/<?php echo $row['carddeck_sub_cat_id']; ?>">Edit</a></td>
                             </tr>
                             <?php
                         }

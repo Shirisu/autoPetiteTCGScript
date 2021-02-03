@@ -12,7 +12,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
 
         $category_name = $row['carddeck_cat_name'];
         if (isset($_POST['category_id'])) {
-            $category_name = mysqli_real_escape_string($link, $_POST['category_name']);
+            $category_name = mysqli_real_escape_string($link, strip_tags(trim($_POST['category_name'])));
 
             mysqli_query($link, "UPDATE carddeck_cat
                          SET carddeck_cat_name = '".$category_name."'
@@ -24,15 +24,15 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
 
         $breadcrumb = array(
             '/' => 'Home',
-            '/admin/categoryadministration' => 'Admin - '.TRANSLATIONS[$GLOBALS['language']]['admin']['category_administration_headline'],
-            '/admin/editcategory' => TRANSLATIONS[$GLOBALS['language']]['admin']['category_edit_headline'],
-            '/admin/editcategory/'.$categoryId => $category_name,
+            '/administration' => 'Administration',
+            '/administration/editcategory' => TRANSLATIONS[$GLOBALS['language']]['admin']['category_administration_headline'].' - '.TRANSLATIONS[$GLOBALS['language']]['admin']['category_edit_headline'],
+            '/administration/editcategory/'.$categoryId => $category_name,
         );
         breadcrumb($breadcrumb);
 
         title(TRANSLATIONS[$GLOBALS['language']]['admin']['category_edit_headline']);
         ?>
-        <form action="/admin/editcategory/<?php echo $categoryId; ?>" method="post">
+        <form action="/administration/editcategory/<?php echo $categoryId; ?>" method="post">
             <div class="row align-items-center">
                 <div class="form-group col col-12 mb-2">
                     <div class="input-group">
@@ -48,9 +48,8 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="ariaDescribedbyName">Name</span>
                         </div>
-                        <input type="text" class="form-control" id="category_name" name="category_name" aria-describedby="ariaDescribedbyName" pattern="[a-zA-Z 0-9]*" maxlength="255" value="<?php echo $category_name; ?>" required />
+                        <input type="text" class="form-control" id="category_name" name="category_name" aria-describedby="ariaDescribedbyName" maxlength="255" value="<?php echo $category_name; ?>" required />
                     </div>
-                    <small id="ariaDescribedbyName" class="form-text text-muted"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['hint_only_letter_numbers_and_spaces']; ?></small>
                 </div>
                 <div class="form-group col col-12">
                     <button type="submit" class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_save']; ?></button>
@@ -61,8 +60,8 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
     } else {
         $breadcrumb = array(
             '/' => 'Home',
-            '/admin/categoryadministration' => 'Admin - '.TRANSLATIONS[$GLOBALS['language']]['admin']['category_administration_headline'],
-            '/admin/editcategory' => TRANSLATIONS[$GLOBALS['language']]['admin']['category_edit_headline'],
+            '/administration' => 'Administration',
+            '/administration/editcategory' => TRANSLATIONS[$GLOBALS['language']]['admin']['category_administration_headline'].' - '.TRANSLATIONS[$GLOBALS['language']]['admin']['category_edit_headline'],
         );
         breadcrumb($breadcrumb);
 
@@ -92,7 +91,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                             <tr>
                                 <td><?php echo $row['carddeck_cat_id']; ?></td>
                                 <td><?php echo $row['carddeck_cat_name']; ?></td>
-                                <td><a href="/admin/editcategory/<?php echo $row['carddeck_cat_id']; ?>">Edit</a></td>
+                                <td><a href="/administration/editcategory/<?php echo $row['carddeck_cat_id']; ?>">Edit</a></td>
                             </tr>
                             <?php
                         }

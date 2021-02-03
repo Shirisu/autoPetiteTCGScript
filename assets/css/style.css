@@ -44,9 +44,31 @@ h3,
     }
 }
 
+#menu-toggle i::before {
+    content: "\f100";
+}
+.toggled #menu-toggle i::before {
+    content: "\f101";
+}
+@media (max-width: 767px) {
+    #menu-toggle i::before {
+        content: "\f101";
+    }
+    .toggled #menu-toggle i::before {
+        content: "\f100";
+    }
+    #top-menu-toggle.collapsed i:before {
+        content: '\f0c9';
+    }
+    #top-menu-toggle i:before {
+        content:'\f00d';
+    }
+}
+
+
 .breadcrumb {
     font-size: 80%;
-    padding: 0.75rem 0;
+    padding: 0 0 0.75rem;
     background: none;
     border-bottom: 1px dotted #ced4da;
     border-radius: 0;
@@ -64,7 +86,7 @@ h3,
     background-color: #f4f5f7;
 }
 .input-group-prepend {
-    width: 22%;
+    /*width: 22%;*/
 }
 .input-group-prepend .input-group-text {
     width: 100%;
@@ -93,6 +115,13 @@ details > * {
 }
 details summary:focus {
     outline: none;
+}
+
+.list-group-item .fas,
+.sidebar-subheading .fas {
+    width: 25px;
+    text-align: center;
+    padding-right: 5px;
 }
 
 /**

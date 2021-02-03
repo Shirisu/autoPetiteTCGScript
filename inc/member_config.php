@@ -2,7 +2,7 @@
 if (isset($_SESSION['member_id'])) {
     $sqlm = "SELECT member_level
              FROM member
-             WHERE member_id = '" . $_SESSION['member_id'] . "'
+             WHERE member_id = '".$_SESSION['member_id']."'
              LIMIT 1;";
     $resultm = mysqli_query($link, $sqlm) OR die(mysqli_error($link));
     $rowm = mysqli_fetch_assoc($resultm);

@@ -58,9 +58,9 @@ if (isset($_GET['import'])) {
             $language = mysqli_real_escape_string($link, trim($_POST['member_language']));
 
             $query = "INSERT INTO member
-                      (member_id, member_nick, member_password, member_register, member_rank, member_email, member_cards, member_language)
+                      (member_id, member_nick, member_password, member_register, member_rank, member_email, member_language, member_active)
                       VALUES
-                      (1, '".$nick."','".$password_hashed."','".time()."','1','".$email."','".TCG_CARDS_START_PACKAGE."','".$language."')
+                      (1, '".$nick."','".$password_hashed."','".time()."','1','".$email."','".$language."', '1')
                       ON DUPLICATE KEY UPDATE
                       member_nick = '".$nick."',
                       member_password = '".$password_hashed."',
@@ -92,6 +92,9 @@ if (isset($_GET['import'])) {
     </form>
     <?php
 }
-
+?>
+<br />
+<a href="/">Back</a>
+<?php
     mysqli_close($link);
 ?>

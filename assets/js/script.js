@@ -1,6 +1,26 @@
 $(document).ready(function() {
-    $('table').bootstrapTable('destroy').bootstrapTable({
+    $('#menu-toggle').on('click', function(e) {
+        e.preventDefault();
+        $('#wrapper').toggleClass('toggled');
+    });
+
+    $('.switch-language').on('click', function(e) {
+        e.preventDefault();
+        $.post('/inc/_switch_language.php',{ language:$(this).attr('data-language'),
+            rand:Math.random()} ,function(data) {;
+            if (data == 'switch') {
+                location.reload();
+            }
+        });
+    });
+    
+    $('table:not([data-paging="no"])').bootstrapTable('destroy').bootstrapTable({
         pagination: true,
+        search: true
+    });
+
+    $('table[data-paging="no"]').bootstrapTable('destroy').bootstrapTable({
+        pagination: false,
         search: true
     });
 
@@ -13,7 +33,7 @@ $(document).ready(function() {
         } else {
             fileName = '';
         }
-        //replace the "Choose a file" label
+        //replace the 'Choose a file' label
         $(this).next('.custom-file-label').html(fileName);
     });
 

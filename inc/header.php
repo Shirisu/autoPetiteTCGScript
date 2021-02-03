@@ -17,7 +17,7 @@ if((isset($_SESSION['member_id'])) && (isset($_SESSION['member_nick']))) {
         mysqli_query($link, "INSERT INTO member_online (member_id,member_time) VALUES ('".$_SESSION["member_id"]."', '".$online_time."')") or die(mysqli_error($link));
     }
 
-    // Member, die l�nger als 14 Tage nicht on waren, auf inaktiv setzen
+    // set member inactive after 14 days without login
     $sql_member_active = "SELECT member_id, member_last_login FROM member WHERE member_active = 1";
     $result_member_active = mysqli_query($link, $sql_member_active) OR die(mysqli_error($link));
     if(mysqli_num_rows($result_member_active)) {
@@ -31,18 +31,14 @@ if((isset($_SESSION['member_id'])) && (isset($_SESSION['member_nick']))) {
 }
 mysqli_query($link, "DELETE FROM member_online WHERE (member_time+300)<'".$online_time."';") or die(mysqli_error($link));
 
-$GLOBALS['language'] = TCG_MAIN_LANGUAGE;
-if (!isset($_SESSION['language'])) {
-    $GLOBALS['language'] = TCG_MAIN_LANGUAGE;
-} else {
+if (isset($_SESSION['language'])) {
     $GLOBALS['language'] = $_SESSION['language'];
 }
-if (isset($_GET['language'])) {
-    $language = mysqli_real_escape_string($link, $_GET['language']);
-    if ($language != 'en' && $language != 'de') {
-        $language = TCG_MAIN_LANGUAGE;
-    }
-    $GLOBALS['language'] = $language;
+if (isset($_COOKIE['language']) && !isset($_SESSION['language'])) {
+    $GLOBALS['language'] = $_COOKIE['language'];
+}
+if (!isset($GLOBALS['language'])) {
+    $GLOBALS['language'] = TCG_MAIN_LANGUAGE;
 }
 ?>
 
@@ -64,6 +60,8 @@ if (isset($_GET['language'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/bootstrap-table.min.css?<?php echo date('YmdH', time()); ?>" type="text/css" />
+    <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/font-awesome-all.min.css?<?php echo date('YmdH', time()); ?>" type="text/css" />
+    <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/simple-sidebar.css?<?php echo date('YmdH', time()); ?>" type="text/css" />
     <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/style.css?<?php echo date('YmdH', time()); ?>" type="text/css" />
     <?php if(isset($_SESSION['member_id'])) { ?>
         <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/cards.css?<?php echo date('YmdH', time()); ?>" type="text/css" />
@@ -73,16 +71,20 @@ if (isset($_GET['language'])) {
 </head>
 <body>
 
-<?php
-require_once("inc/navigation/header.php");
-?>
-
-<div class="container mt-3">
-    <div class="row">
-        <div class="col col-12 col-md-3 mb-4 mb-md-0 col-lg-3" id="navigation">
+<div class="d-flex" id="wrapper">
+    <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading">
+            <a href="<?php echo HOST_URL; ?>"><?php echo TCG_NAME; ?></a>
+        </div>
+        <div class="list-group list-group-flush">
             <?php
             require_once("inc/navigation/quick.php");
             ?>
         </div>
+    </div>
 
-        <div class="col col-12 col-md-9 col-lg-8" id="content">
+    <div id="page-content-wrapper">
+        <?php
+        require_once("inc/navigation/header.php");
+        ?>
+        <div class="container-fluid mt-3">

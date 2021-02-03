@@ -3,15 +3,16 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
     global $link;
     $breadcrumb = array(
         '/' => 'Home',
-        '/admin/categoryadministration' => 'Admin - '.TRANSLATIONS[$GLOBALS['language']]['admin']['category_administration_headline'],
-        '/admin/addsubcategory' => TRANSLATIONS[$GLOBALS['language']]['admin']['subcategory_add_headline'],
+        '/administration' => 'Administration',
+        '/administration/addsubcategory' => TRANSLATIONS[$GLOBALS['language']]['admin']['category_administration_headline'].' - '.TRANSLATIONS[$GLOBALS['language']]['admin']['subcategory_add_headline'],
     );
     breadcrumb($breadcrumb);
 
     title(TRANSLATIONS[$GLOBALS['language']]['admin']['subcategory_add_headline']);
 
     if (isset($_POST['subcategory_name']) && isset($_POST['main_category_id'])) {
-        $subcategory_name = mysqli_real_escape_string($link, trim($_POST['subcategory_name']));
+        $subcategory_name = mysqli_real_escape_string($link, strip_tags(trim($_POST['subcategory_name'])));
+
         $main_category_id = mysqli_real_escape_string($link, trim($_POST['main_category_id']));
 
         $sql = "SELECT carddeck_sub_cat_name
@@ -49,16 +50,15 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                 ORDER BY carddeck_cat_name ASC";
     $result_cat = mysqli_query($link, $sql_cat) OR die(mysqli_error($link));
     ?>
-    <form action="/admin/addsubcategory" method="post">
+    <form action="/administration/addsubcategory" method="post">
         <div class="row align-items-center">
             <div class="form-group col col-12 mb-2">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="ariaDescribedbyName">Name</span>
                     </div>
-                    <input type="text" class="form-control" id="subcategory_name" name="subcategory_name" aria-describedby="ariaDescribedbyName" pattern="^[^\s]+(\w\s+[^\s]+)*$" maxlength="255" value="" required />
+                    <input type="text" class="form-control" id="subcategory_name" name="subcategory_name" aria-describedby="ariaDescribedbyName" maxlength="255" value="" required />
                 </div>
-                <small id="ariaDescribedbyName" class="form-text text-muted"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['hint_only_letter_and_numbers']; ?></small>
             </div>
             <div class="form-group col col-12 mb-2">
                 <?php

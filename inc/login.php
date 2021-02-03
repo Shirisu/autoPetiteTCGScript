@@ -14,7 +14,8 @@ if ((isset($_REQUEST["member_nick"])) && isset($_REQUEST["member_password"])) {
     $sql = "SELECT member_id, member_ip, member_nick, member_password, member_rank, member_last_login, member_language, member_active
             FROM member
             WHERE member_nick = '".$nick."'
-                AND member_active != 2
+                AND (member_active = 1
+                  OR member_active = 0)
             LIMIT 1;";
     $result = mysqli_query($link,$sql) OR die(mysqli_error($link));
 

@@ -23,6 +23,17 @@ function passwordgenerator() {
     return $password;
 }
 
+function set_cookie($name, $value, $expire = null, $path = null) {
+    if ($expire == null) {
+        $expire = time()+60*60*24*30;
+    }
+    if ($path == null) {
+        $path = '/';
+    }
+
+    setcookie($name, $value, $expire, $path);
+}
+
 function title($text) {
     echo '<h2 class="mb-3">'.$text.'</h2>';
 }
@@ -55,12 +66,12 @@ function member_rank_online($member_id,$showInDropdown = false,$invisible = fals
         $rankclass = 'member';
     }
     if ($invisible != false) {
-        $rank = '<a class="useron'.($showInDropdown ? ' dropdown-item' : '' ).'" href="/tcg/member/'.$row['member_id'].'"
+        $rank = '<a class="useron'.($showInDropdown ? ' list-group-item list-group-item-action bg-light' : '' ).'" href="/member/'.$row['member_id'].'"
               title="'.$ranktitle.'">
               <span class="invi">
               '.$nick.'</span></a>';
     } else {
-        $rank = '<a class="useron'.($showInDropdown ? ' dropdown-item' : '' ).'" href="/tcg/member/'.$row['member_id'].'"
+        $rank = '<a class="useron'.($showInDropdown ? ' list-group-item list-group-item-action bg-light' : '' ).'" href="/member/'.$row['member_id'].'"
               title="'.$ranktitle.'">
               <span class="'.$friendclass.$rankclass.'">
               '.$nick.'</span></a>';
@@ -69,12 +80,16 @@ function member_rank_online($member_id,$showInDropdown = false,$invisible = fals
     return $rank;
 }
 
-function get_active_status($member_status) {
-    if ($member_status == 1) {
+function get_active_status($status) {
+    if ($status == 1) {
         $status = TRANSLATIONS[$GLOBALS['language']]['general']['text_active'];
-    } elseif ($member_status == 2) {
+    } elseif ($status == 2) {
         $status = TRANSLATIONS[$GLOBALS['language']]['general']['text_blocked'];
-    } elseif ($member_status == 0) {
+    } elseif ($status == 3) {
+        $status = TRANSLATIONS[$GLOBALS['language']]['general']['text_not_activated_yet'];
+    } elseif ($status == 4) {
+        $status = TRANSLATIONS[$GLOBALS['language']]['general']['text_deleted'];
+    } elseif ($status == 0) {
         $status = TRANSLATIONS[$GLOBALS['language']]['general']['text_inactive'];
     } else {
         $status = 'unkown';
@@ -93,37 +108,8 @@ function navlink($name,$url) {
     echo '<a class="dropdown-item" href="'.HOST_URL.'/'.$url.'">'.$name.'</a>';
 }
 
-function navlink_language($name,$url) {
-    echo '<a class="dropdown-item" href="'.HOST_URL.explode('?', $_SERVER['REQUEST_URI'], 2)[0].'?language='.$url.'">'.$name.'</a>';
-}
-
-function insert_cards($member_id, $quantity_cards) {
-    global $link;
-
-    $sql = "SELECT carddeck_id, carddeck_name, carddeck_count_cards
-          FROM sets
-          WHERE carddeck_active = 1
-          ORDER BY RAND()
-          LIMIT ".$quantity_cards."";
-    $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
-
-    while($row = mysqli_fetch_assoc($result)) {
-        $cardnumber = mt_rand(1,$row['carddeck_count_cards']);
-        mysqli_query($link, "INSERT INTO member_cards (member_cards_carddeck_id, member_cards_number, member_cards_member_id) VALUES ('".$row['carddeck_id']."','".$cardnumber."','".$member_id."')") OR die(mysqli_error($link));
-        array_push($cardarray, $row['carddeck_name'].sprintf("%02d", $cardnumber));
-        $_SESSION['insert_cards'] = $cardarray;
-    }
-    mysqli_query($link, "UPDATE member SET member_cards = member_cards + '".$quantity_cards."' WHERE member_id = '".$member_id."' LIMIT 1") OR die(mysqli_error($link));
-}
-
-function insert_log($topic, $text, $member_id) {
-    global $link;
-
-    mysqli_query($link, "INSERT INTO member_log
-               (member_log_member_id,member_log_date,member_log_cat,member_log_text)
-               VALUES
-               ('".$member_id."','".time()."','".$topic."','".$text."')
-               ") OR DIE(mysqli_error($link));
+function navlink_language($name,$language) {
+    echo '<a class="dropdown-item switch-language" href="#" data-language="'.$language.'">'.$name.'</a>';
 }
 
 function breadcrumb($breadcrumb_array) {
@@ -148,6 +134,57 @@ function breadcrumb($breadcrumb_array) {
     <?php
 }
 
+function insert_cards($member_id, $quantity) {
+    global $link;
+
+    $sql = "SELECT carddeck_id, carddeck_name
+            FROM carddeck
+            WHERE carddeck_active = 1
+            ORDER BY RAND()
+            LIMIT ".$quantity."";
+    $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
+
+    $cardarray = array();
+    while($row = mysqli_fetch_assoc($result)) {
+        $cardnumber = mt_rand(1, TCG_CARDDECK_MAX_CARDS );
+        mysqli_query($link, "INSERT INTO member_cards (member_cards_carddeck_id, member_cards_number, member_cards_member_id) VALUES ('".$row['carddeck_id']."','".$cardnumber."','".$member_id."')") OR die(mysqli_error($link));
+        array_push($cardarray, $row['carddeck_name'].sprintf("%02d", $cardnumber));
+        $_SESSION['insert_cards'] = $cardarray;
+    }
+    mysqli_query($link, "UPDATE member SET member_cards = member_cards + '".$quantity."' WHERE member_id = '".$member_id."' LIMIT 1") OR die(mysqli_error($link));
+}
+
+function insert_wish($member_id, $quantity) {
+    global $link;
+
+    mysqli_query($link, "UPDATE member SET member_wish = member_wish + '".$quantity."' WHERE member_id = '".$member_id."' LIMIT 1") OR die(mysqli_error($link));
+}
+
+function insert_currency($member_id, $quantity) {
+    global $link;
+
+    mysqli_query($link, "UPDATE member SET member_currency = member_currency + '".$quantity."' WHERE member_id = '".$member_id."' LIMIT 1") OR die(mysqli_error($link));
+}
+
+function insert_log($topic, $text, $member_id) {
+    global $link;
+
+    mysqli_query($link, "INSERT INTO member_log
+               (member_log_member_id,member_log_date,member_log_cat,member_log_text)
+               VALUES
+               ('".$member_id."','".time()."','".$topic."','".$text."')
+               ") OR DIE(mysqli_error($link));
+}
+
+function send_message($sender, $receiver, $subject, $text) {
+    global $link;
+
+    mysqli_query($link, "INSERT INTO message
+               (message_from_member_id, message_to_member_id, message_subject, message_text, message_date)
+               VALUES
+               ('".$sender."', '".$receiver."', '".$subject."', '".$text."', '".time()."')
+               ") OR DIE(mysqli_error($link));
+}
 
 
 
@@ -179,14 +216,8 @@ function content_header4($name) {
     echo '<h2 style="text-align:center;height:16px;">'.$name.'</h2>';
 }
 
-function navilink($name,$url) {
-    echo '<div class="l"><a href="'.HOST_URL.'/'.$url.'">&raquo; '.$name.'</a></div>';
-}
-function navilink1($name,$url) {
-    echo '<div class="l" style="width:100%;"><a href="'.HOST_URL.'/'.$url.'">&raquo; '.$name.'</a></div>';
-}
-function navilink2($name,$url) {
-    echo '<div class="l"><a href="http://'.$url.'">&raquo; '.$name.'</a></div>';
+function navilink($name,$url,$icon = null) {
+    echo '<a class="list-group-item list-group-item-action bg-light" href="'.HOST_URL.'/'.$url.'">'.($icon ? '<i class="fas fa-'.$icon.'"></i> ' : '').''.$name.'</a>';
 }
 
 function online_rank($member_id) {

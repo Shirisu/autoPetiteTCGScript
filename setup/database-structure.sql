@@ -33,29 +33,16 @@ CREATE TABLE IF NOT EXISTS `member` (
   `member_nick` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `member_password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `member_email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `member_active` int(1) NOT NULL DEFAULT '1',
-  `member_on` int(1) NOT NULL DEFAULT '1',
-  `member_register` varchar(55) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `member_active` int(1) NOT NULL DEFAULT '3',
+  `member_register` varchar(15) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   `member_last_login` varchar(15) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   `member_rank` int(11) NOT NULL DEFAULT '5',
-  `member_gender` int(1) NOT NULL DEFAULT '2',
-  `member_birthdate` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
-  `member_show_birthdate` int(1) NOT NULL DEFAULT '0',
   `member_level` int(11) NOT NULL DEFAULT '1',
-  `member_cards` int(11) NOT NULL DEFAULT '30',
+  `member_cards` int(11) NOT NULL,
   `member_master` int(11) NOT NULL,
-  `member_wish` int(11) NOT NULL DEFAULT '1',
-  `member_points` int(11) NOT NULL,
-  `member_points_max` int(11) NOT NULL,
-  `member_master_order` int(1) NOT NULL DEFAULT '1',
-  `member_letter` int(1) NOT NULL DEFAULT '0',
-  `member_search` int(2) NOT NULL DEFAULT '1',
-  `member_will` text COLLATE utf8_unicode_ci NOT NULL,
-  `member_might` text COLLATE utf8_unicode_ci NOT NULL,
-  `member_keep` text COLLATE utf8_unicode_ci NOT NULL,
-  `member_reserve` text COLLATE utf8_unicode_ci NOT NULL,
-  `member_collect` text COLLATE utf8_unicode_ci NOT NULL,
-  `member_style` int(2) NOT NULL DEFAULT '1',
+  `member_wish` int(11) NOT NULL,
+  `member_currency` int(11) NOT NULL,
+  `member_text` text COLLATE utf8_unicode_ci NOT NULL,
   `member_tradeable` int(1) NOT NULL DEFAULT '1' COMMENT '0 = nicht antauschbar, 1 = antauschbar',
   `member_showonlyusefultrades` int(1) NOT NULL DEFAULT '0',
   `member_language` varchar(2) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'en',
@@ -97,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `carddeck` (
   `carddeck_cat` int(11) NOT NULL,
   `carddeck_sub_cat` int(11) NOT NULL,
   `carddeck_is_puzzle` int(1) NOT NULL DEFAULT '0',
-  `carddeck_active` int(1) NOT NULL DEFAULT '1',
+  `carddeck_active` int(1) NOT NULL DEFAULT '0',
   `carddeck_date` int(11) NOT NULL,
   PRIMARY KEY (`carddeck_id`),
   KEY `carddeck_cat` (`carddeck_cat`),
@@ -105,8 +92,8 @@ CREATE TABLE IF NOT EXISTS `carddeck` (
   KEY `carddeck_creator` (`carddeck_creator`),
   KEY `carddeck_name` (`carddeck_name`),
   CONSTRAINT `carddeck_ibfk_1` FOREIGN KEY (`carddeck_creator`) REFERENCES `member` (`member_id`),
-  CONSTRAINT `carddeck_ibfk_2` FOREIGN KEY (`carddeck_cat`) REFERENCES `carddeck_cat` (`carddeck_cat_id`)
-  CONSTRAINT `carddeck_ibfk_2` FOREIGN KEY (`carddeck_sub_cat`) REFERENCES `carddeck_sub_sub_cat` (`carddeck_sub_cat_id`)
+  CONSTRAINT `carddeck_ibfk_2` FOREIGN KEY (`carddeck_cat`) REFERENCES `carddeck_cat` (`carddeck_cat_id`),
+  CONSTRAINT `carddeck_ibfk_3` FOREIGN KEY (`carddeck_sub_cat`) REFERENCES `carddeck_sub_cat` (`carddeck_sub_cat_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -121,13 +108,13 @@ CREATE TABLE IF NOT EXISTS `cardupdate` (
 
 CREATE TABLE IF NOT EXISTS `news` (
   `news_id` int(11) NOT NULL AUTO_INCREMENT,
-  `news_cat` int(11) NOT NULL,
-  `news_author` int(11) NOT NULL,
+  `news_member_id` int(11) NOT NULL,
   `news_text` longtext COLLATE utf8_unicode_ci NOT NULL,
   `news_date` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `news_cardupdate_id` INT(11) DEFAULT NULL,
   PRIMARY KEY (`news_id`),
-  KEY `news_author` (`news_author`),
-  CONSTRAINT `news_ibfk_1` FOREIGN KEY (`news_author`) REFERENCES `member` (`member_id`)
+  KEY `news_member_id` (`news_member_id`),
+  CONSTRAINT `news_ibfk_1` FOREIGN KEY (`news_member_id`) REFERENCES `member` (`member_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -223,18 +210,6 @@ CREATE TABLE IF NOT EXISTS `member_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-CREATE TABLE IF NOT EXISTS `member_log_points` (
-  `member_log_points_id` int(11) NOT NULL AUTO_INCREMENT,
-  `member_log_points_member_id` int(11) NOT NULL,
-  `member_log_points_date` int(11) NOT NULL,
-  `member_log_points_cat` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `member_log_points_points` int(11) NOT NULL,
-  PRIMARY KEY (`member_log_points_id`),
-  KEY `member_log_points_member_id` (`member_log_points_member_id`),
-  CONSTRAINT `member_log_points_ibfk_1` FOREIGN KEY (`member_log_points_member_id`) REFERENCES `member` (`member_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
 CREATE TABLE IF NOT EXISTS `member_master` (
   `member_master_id` int(11) NOT NULL AUTO_INCREMENT,
   `member_master_member_id` int(11) NOT NULL DEFAULT '0',
@@ -287,10 +262,8 @@ CREATE TABLE IF NOT EXISTS `message` (
   `message_to_member_id` int(11) NOT NULL,
   `message_subject` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `message_text` text COLLATE utf8_unicode_ci NOT NULL,
-  `message_date` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
-  `message_time` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
+  `message_date` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   `message_read` int(1) NOT NULL DEFAULT '0',
-  `message_ordner` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`message_id`),
   KEY `message_from_member_id` (`message_from_member_id`),
   KEY `message_to_member_id` (`message_to_member_id`),

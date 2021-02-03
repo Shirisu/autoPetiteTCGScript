@@ -54,8 +54,8 @@ if(isset($_POST['nickname'])) {
                 $receiver = $email;
 
                 $subject = TRANSLATIONS[$GLOBALS['language']]['register']['mail_subject'];
-                $text = 'Hi $nick!
-'.TRANSLATIONS[$GLOBALS['language']]['register']['mail_part_1'].' '.HOST_URL_PLAIN.'./activation/.'.$activationcode.'
+                $text = 'Hi '.$nickname.'!
+'.TRANSLATIONS[$GLOBALS['language']]['register']['mail_part_1'].' '.HOST_URL_PROTOCOL.HOST_URL_PLAIN.'/activation/'.$activationcode.'
 
 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_email_enclosure'];
 

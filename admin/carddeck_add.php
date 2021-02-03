@@ -1,10 +1,10 @@
 <?php
-if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
+if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['member_rank'] == 3) {
     global $link;
     $breadcrumb = array(
         '/' => 'Home',
-        '/admin/carddeckadministration' => 'Admin - '.TRANSLATIONS[$GLOBALS['language']]['admin']['carddeck_administration_headline'],
-        '/admin/addcarddeck' => TRANSLATIONS[$GLOBALS['language']]['admin']['carddeck_add_headline'],
+        '/administration' => 'Administration',
+        '/administration/addcarddeck' => TRANSLATIONS[$GLOBALS['language']]['admin']['carddeck_administration_headline'].' - '.TRANSLATIONS[$GLOBALS['language']]['admin']['carddeck_add_headline'],
     );
     breadcrumb($breadcrumb);
 
@@ -12,15 +12,15 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
 
     if (isset($_POST['carddeck_name'])) {
         $carddeck_name = mysqli_real_escape_string($link, trim(strtolower($_POST['carddeck_name'])));
-        $carddeck_series = mysqli_real_escape_string($link, trim(strtolower($_POST['carddeck_series'])));
+        $carddeck_series = mysqli_real_escape_string($link, strip_tags(trim($_POST['carddeck_series'])));
         $carddeck_creator = mysqli_real_escape_string($link, trim(strtolower($_POST['carddeck_creator'])));
         $carddeck_category = explode(';', mysqli_real_escape_string($link, trim(strtolower($_POST['carddeck_category'])))); // split
         $carddeck_cat = $carddeck_category[0];
         $carddeck_sub_cat = $carddeck_category[1];
         $carddeck_is_puzzle = mysqli_real_escape_string($link, trim(strtolower($_POST['carddeck_is_puzzle'])));
-        $carddeck_artist = mysqli_real_escape_string($link, trim(strtolower($_POST['carddeck_artist'])));
-        $carddeck_copyright = mysqli_real_escape_string($link, trim(strtolower($_POST['carddeck_copyright'])));
-        $carddeck_imagesources = mysqli_real_escape_string($link, trim(strtolower($_POST['carddeck_imagesources'])));
+        $carddeck_artist = mysqli_real_escape_string($link, strip_tags(trim($_POST['carddeck_artist'])));
+        $carddeck_copyright = mysqli_real_escape_string($link, strip_tags(trim(strtolower($_POST['carddeck_copyright']))));
+        $carddeck_imagesources = mysqli_real_escape_string($link, strip_tags(trim(strtolower($_POST['carddeck_imagesources']))));
 
         $sql = "SELECT carddeck_name
                 FROM carddeck
@@ -31,7 +31,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
         if (mysqli_num_rows($result)) {
             alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_carddeck_name_exists'], 'danger');
         } else {
-            $card_folder = './assets/cards';
+            $card_folder = '.'.TCG_CARDS_FOLDER;
             if (!is_dir($card_folder."/".$carddeck_name."")) {
                 mkdir($card_folder."/".$carddeck_name."", 0755);
             }
@@ -40,7 +40,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                 move_uploaded_file($file['tmp_name'], $card_folder."/".$carddeck_name."/".$carddeck_name."master.".TCG_CARDS_FILE_TYPE);
                 chmod($card_folder."/".$carddeck_name."/".$carddeck_name."master.".TCG_CARDS_FILE_TYPE, 0665);
             }
-            for ($i = 1; $i <= TCG_MAX_CARDS; $i++) {
+            for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS ; $i++) {
                 $file = $_FILES['cardFile' . $i];
                 if (!empty($file['name'])) {
                     move_uploaded_file($file['tmp_name'], $card_folder . "/" . $carddeck_name . "/" . $carddeck_name . sprintf("%'.02d", $i) . "." . TCG_CARDS_FILE_TYPE);
@@ -74,7 +74,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                      ORDER BY carddeck_cat_name ASC";
     $result_category = mysqli_query($link, $sql_category) OR die(mysqli_error($link));
     ?>
-    <form action="/admin/addcarddeck" method="post" enctype="multipart/form-data">
+    <form action="/administration/addcarddeck" method="post" enctype="multipart/form-data">
         <div class="row align-items-center">
             <div class="form-group col col-12 mb-2">
                 <div class="input-group">
@@ -85,16 +85,15 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                 </div>
                 <small id="ariaDescribedbyName" class="form-text text-muted"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['hint_only_small_letter_numbers_minus_and_underscore']; ?></small>
             </div>
-            <div class="form-group col col-12 mb-2">
+            <div class="form-group col col-12 col-md-6 mb-2">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="ariaDescribedbySeries"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_series']; ?></span>
                     </div>
-                    <input type="text" class="form-control" id="carddeck_series" name="carddeck_series" aria-describedby="ariaDescribedbySeries" pattern="[a-zA-ZäöüÄÖÜß 0-9]*" maxlength="255" value="" required />
+                    <input type="text" class="form-control" id="carddeck_series" name="carddeck_series" aria-describedby="ariaDescribedbySeries" maxlength="255" value="" required />
                 </div>
-                <small id="ariaDescribedbySeries" class="form-text text-muted"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['hint_only_letter_numbers_and_spaces']; ?></small>
             </div>
-            <div class="form-group col col-12 mb-3">
+            <div class="form-group col col-12 col-md-6 mb-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="ariaDescribedbyIsPuzzle"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_is_puzzle']; ?></span>
@@ -106,7 +105,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                     </select>
                 </div>
             </div>
-            <div class="form-group col col-12 mb-3">
+            <div class="form-group col col-12 col-md-6 mb-3">
                 <?php
                 if (mysqli_num_rows($result_member)) {
                     ?>
@@ -131,7 +130,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                 }
                 ?>
             </div>
-            <div class="form-group col col-12 mb-3">
+            <div class="form-group col col-12 col-md-6 mb-3">
                 <?php
                 if (mysqli_num_rows($result_category)) {
                     ?>
@@ -169,7 +168,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
             <details class="col col-12 mb-2">
                 <summary><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_optional_information']; ?></summary>
                 <div class="row">
-                    <div class="form-group col col-12 mb-2">
+                    <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="ariaDescribedbyArtist"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_artist']; ?></span>
@@ -178,7 +177,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                         </div>
                         <small id="ariaDescribedbyArtist" class="form-text text-muted"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['hint_artist']; ?></small>
                     </div>
-                    <div class="form-group col col-12 mb-2">
+                    <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="ariaDescribedbyCopyright"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_copyright']; ?></span>
@@ -208,26 +207,28 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                         <label class="custom-file-label" for="masterCardFile"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_choose_file']; ?></label>
                     </div>
                 </div>
-                <small id="ariaDescribedbyMastercard" class="form-text text-muted"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['hint_file_rename_after_upload']; ?></small>
             </div>
             <?php
-            for ($i = 1; $i <= TCG_MAX_CARDS; $i++) {
+            for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS ; $i++) {
                 ?>
                 <div class="form-group col col-12 col-md-6 mb-2">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="ariaDescribedbyMastercard">Card <?php echo $i; ?></span>
+                            <span class="input-group-text" id="ariaDescribedbyCard<?php echo $i; ?>">Card <?php echo $i; ?></span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="cardFile<?php echo $i; ?>" name="cardFile<?php echo $i; ?>" aria-describedby="ariaDescribedbyMastercard" required>
+                            <input type="file" class="custom-file-input" id="cardFile<?php echo $i; ?>" name="cardFile<?php echo $i; ?>" aria-describedby="ariaDescribedbyCard<?php echo $i; ?>" required>
                             <label class="custom-file-label" for="cardFile<?php echo $i; ?>"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_choose_file']; ?></label>
                         </div>
                     </div>
-                    <small id="ariaDescribedbyMastercard" class="form-text text-muted"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['hint_file_rename_after_upload']; ?></small>
                 </div>
                 <?php
             }
             ?>
+            <div class="form-group col col-12 mb-2">
+                <small id="ariaDescribedbyMastercard" class="form-text text-muted"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['hint_files_rename_after_upload']; ?></small>
+            </div>
+
 
             <div class="form-group col col-12">
                 <button type="submit" class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_add']; ?></button>
