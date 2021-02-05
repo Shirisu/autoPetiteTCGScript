@@ -265,7 +265,10 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                                 <td><?php echo ($row['member_active'] == 4 ? '---' : date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row['member_last_login'])); ?></td>
                                 <td><?php echo get_active_status($row['member_active']); ?></td>
                                 <td><?php echo ($row['member_active'] == 4 ? '---' : sprintf('%02d', $row['member_rank_id']) . ' - ' . $row['member_rank_name']); ?></td>
-                                <td><?php echo ($row['member_active'] == 4 ? '' : '<a href="/administration/editmember/'.$row['member_id'].'">Edit</a>'); ?></td>
+                                <td>
+                                    <?php echo ($row['member_active'] == 4 ? '' : '<a href="/administration/editmember/'.$row['member_id'].'">Edit</a>'); ?>
+                                    <?php echo ($row['member_active'] == 4 ? '' : '<br /><a href="/administration/deletemember/'.$row['member_id'].'">'.TRANSLATIONS[$GLOBALS['language']]['general']['text_delete'].'</a>'); ?>
+                                </td>
                             </tr>
                             <?php
                         }
@@ -279,7 +282,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
             ?>
             <div class="row">
                 <div class="form-group col mt-2">
-                    <?php alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_nodata'], 'danger'); ?>
+                    <?php alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_data'], 'danger'); ?>
                 </div>
             </div>
             <?php

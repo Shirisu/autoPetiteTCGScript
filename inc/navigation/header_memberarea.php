@@ -1,8 +1,8 @@
 <?php
 // recieved new cards
 $sql_tr = "SELECT *
-           FROM trade_history
-           WHERE trade_history_to_member_id = '".$_SESSION['member_id']."'
+           FROM trade
+           WHERE trade_to_member_id = '".$_SESSION['member_id']."'
              AND trade_seen = 0";
 $result_tr = mysqli_query($link, $sql_tr);
 $anz_tr = mysqli_num_rows($result_tr);

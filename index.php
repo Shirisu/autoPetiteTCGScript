@@ -31,6 +31,12 @@ Route::add("/administration/editmember/([1-9]*)",function($memberId) {
 Route::add("/administration/editmember/([1-9]*)",function($memberId) {
     require_once("admin/member_edit.php");
 }, "post");
+Route::add("/administration/deletemember/([1-9]*)",function($memberId) {
+    require_once("admin/member_delete.php");
+});
+Route::add("/administration/deletemember/([1-9]*)",function($memberId) {
+    require_once("admin/member_delete.php");
+}, "post");
 Route::add("/administration/distributecards",function() {
     require_once("admin/member_card_distribute.php");
 });

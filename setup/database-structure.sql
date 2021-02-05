@@ -272,16 +272,22 @@ CREATE TABLE IF NOT EXISTS `message` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-CREATE TABLE IF NOT EXISTS `trade_history` (
-  `trade_history_id` int(11) NOT NULL AUTO_INCREMENT,
-  `trade_history_from_member_id` int(11) NOT NULL,
-  `trade_history_to_member_id` int(11) NOT NULL,
-  `trade_history_text` text COLLATE utf8_unicode_ci NOT NULL,
-  `trade_history_date` varchar(55) NOT NULL,
+CREATE TABLE IF NOT EXISTS `trade` (
+  `trade_id` int(11) NOT NULL AUTO_INCREMENT,
+  `trade_from_member_id` int(11) NOT NULL,
+  `trade_from_member_card_id` int(11) NOT NULL,
+  `trade_to_member_id` int(11) NOT NULL,
+  `trade_to_member_card_id` int(11) NOT NULL,
+  `trade_text` text COLLATE utf8_unicode_ci NOT NULL,
+  `trade_date` varchar(55) NOT NULL,
   `trade_seen` int(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`trade_history_id`),
-  KEY `trade_history_from_member_id` (`trade_history_from_member_id`),
-  KEY `trade_history_to_member_id` (`trade_history_to_member_id`),
-  CONSTRAINT `trade_history_ibfk_1` FOREIGN KEY (`trade_history_from_member_id`) REFERENCES `member` (`member_id`),
-  CONSTRAINT `trade_history_ibfk_2` FOREIGN KEY (`trade_history_to_member_id`) REFERENCES `member` (`member_id`)
+  PRIMARY KEY (`trade_id`),
+  KEY `trade_from_member_id` (`trade_from_member_id`),
+  KEY `trade_from_member_card_id` (`trade_from_member_card_id`),
+  KEY `trade_to_member_id` (`trade_to_member_id`),
+  KEY `trade_to_member_card_id` (`trade_to_member_card_id`),
+  CONSTRAINT `trade_ibfk_1` FOREIGN KEY (`trade_from_member_id`) REFERENCES `member` (`member_id`),
+  CONSTRAINT `trade_ibfk_2` FOREIGN KEY (`trade_from_member_card_id`) REFERENCES `member_cards` (`member_cards_id`),
+  CONSTRAINT `trade_ibfk_3` FOREIGN KEY (`trade_to_member_id`) REFERENCES `member` (`member_id`),
+  CONSTRAINT `trade_ibfk_4` FOREIGN KEY (`trade_to_member_card_id`) REFERENCES `member_cards` (`member_cards_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

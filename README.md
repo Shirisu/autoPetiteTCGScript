@@ -42,6 +42,7 @@ Actual status: Work in progress!
     - distribute cards
     - distribute currency
     - distribute *wish*
+    - delete member
 - registration (activation via link in email)
 - login
 - logout
@@ -56,9 +57,6 @@ Actual status: Work in progress!
 
 
 ## up coming features
-- administration
-  - member administration
-    - delete member
 - main page
   - news
     - commenting system

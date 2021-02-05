@@ -337,7 +337,7 @@ function card($anz,$member_id,$cat) {
 							 (".$member_id.",'".time()."','".$cat."','".$text."')");
     mysqli_query($link, "UPDATE member
 							 SET member_cards = member_cards + ".$anz."
-							 WHERE member_id = ".$member_id."");
+							 WHERE member_id = '".$member_id."'");
 }
 
 function card_tradein($anz,$member_id,$cat,$cardoldid,$cardold) {
@@ -417,7 +417,7 @@ function card_master($anz,$member_id,$cat,$setname,$deck,$language) {
     mysqli_query($link, "UPDATE member
 							 SET member_master = member_master + 1,
                    member_wish = member_wish + ".$anz."
-							 WHERE member_id = ".$member_id."
+							 WHERE member_id = '".$member_id."'
                LIMIT 1");
 }
 
@@ -468,7 +468,7 @@ function card_lvlup($anz,$member_id,$cat) {
 							 (".$member_id.",'".time()."','".$cat."','".$text."')");
     mysqli_query($link, "UPDATE member
 							 SET member_cards = member_cards + ".$anz."
-							 WHERE member_id = ".$member_id."");
+							 WHERE member_id = '".$member_id."'");
     mysqli_query($link, "INSERT INTO member_log_points
                (member_log_points_member_id,member_log_points_date,member_log_points_cat,member_log_points_points)
                VALUES
@@ -525,7 +525,7 @@ function card_game($anz,$member_id,$cat) {
 							 (".$member_id.",'".time()."','".$cat."','".$text."')");
     mysqli_query($link, "UPDATE member
 							 SET member_cards = member_cards + ".$anz."
-							 WHERE member_id = ".$member_id."");
+							 WHERE member_id = '".$member_id."'");
 }
 
 function card_exchange($anz,$member_id,$what_cat,$points,$cat) {
@@ -570,7 +570,7 @@ function card_exchange($anz,$member_id,$what_cat,$points,$cat) {
     mysqli_query($link, "UPDATE member
 							 SET member_cards = member_cards + ".$anz.",
                    member_points = member_points - ".$points."
-							 WHERE member_id = ".$member_id."
+							 WHERE member_id = '".$member_id."'
                LIMIT 1");
 }
 

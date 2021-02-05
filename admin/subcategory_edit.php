@@ -143,7 +143,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
             ?>
             <div class="row">
                 <div class="form-group col mt-2">
-                    <?php alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_nodata'], 'danger'); ?>
+                    <?php alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_data'], 'danger'); ?>
                 </div>
             </div>
             <?php

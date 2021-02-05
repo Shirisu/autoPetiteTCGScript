@@ -15,11 +15,19 @@ if(isset($_POST['nickname'])) {
     ) {
         global $link;
         $nickname = mysqli_real_escape_string($link, trim($_POST['nickname']));
-        $sql_name = "SELECT member_nick FROM member WHERE member_nick LIKE '".$nickname."' LIMIT 1;";
+        $sql_name = "SELECT member_nick
+                     FROM member
+                     WHERE member_nick LIKE '".$nickname."'
+                       AND member_active != 4
+                     LIMIT 1;";
         $result_name = mysqli_query($link, $sql_name) OR die(mysqli_error($link));
 
         $email = mysqli_real_escape_string($link, trim($_POST['email']));
-        $sql_email = "SELECT member_email FROM member WHERE member_email LIKE '".$email."' LIMIT 1;";
+        $sql_email = "SELECT member_email
+                      FROM member
+                      WHERE member_email LIKE '".$email."'
+                       AND member_active != 4
+                      LIMIT 1;";
         $result_email = mysqli_query($link, $sql_email) OR die(mysqli_error($link));
         if (mysqli_num_rows($result_name)) {
             alert_box(TRANSLATIONS[$GLOBALS['language']]['register']['hint_nameinuse'], 'danger');
