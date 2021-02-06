@@ -22,19 +22,19 @@ Route::add("/",function() {
 Route::add("/administration",function() {
     require_once("admin/administration.php");
 });
-Route::add("/administration/editmember/([a-z]*)",function($rank) {
+Route::add("/administration/editmember/([a-z+].*)",function($rank) {
     require_once("admin/member_edit.php");
 });
-Route::add("/administration/editmember/([1-9]*)",function($memberId) {
+Route::add("/administration/editmember/([0-9+].*)",function($member_id) {
     require_once("admin/member_edit.php");
 });
-Route::add("/administration/editmember/([1-9]*)",function($memberId) {
+Route::add("/administration/editmember/([0-9+].*)",function($member_id) {
     require_once("admin/member_edit.php");
 }, "post");
-Route::add("/administration/deletemember/([1-9]*)",function($memberId) {
+Route::add("/administration/deletemember/([0-9+].*)",function($member_id) {
     require_once("admin/member_delete.php");
 });
-Route::add("/administration/deletemember/([1-9]*)",function($memberId) {
+Route::add("/administration/deletemember/([0-9+].*)",function($member_id) {
     require_once("admin/member_delete.php");
 }, "post");
 Route::add("/administration/distributecards",function() {
@@ -67,10 +67,10 @@ Route::add("/administration/editcategory",function() {
 Route::add("/administration/editcategory",function() {
     require_once("admin/category_edit.php");
 }, "post");
-Route::add("/administration/editcategory/([1-9]*)",function($categoryId) {
+Route::add("/administration/editcategory/([0-9+].*)",function($category_id) {
     require_once("admin/category_edit.php");
 });
-Route::add("/administration/editcategory/([1-9]*)",function($categoryId) {
+Route::add("/administration/editcategory/([0-9+].*)",function($category_id) {
     require_once("admin/category_edit.php");
 }, "post");
 Route::add("/administration/addsubcategory",function() {
@@ -85,10 +85,10 @@ Route::add("/administration/editsubcategory",function() {
 Route::add("/administration/editsubcategory",function() {
     require_once("admin/subcategory_edit.php");
 }, "post");
-Route::add("/administration/editsubcategory/([1-9]*)",function($subcategoryId) {
+Route::add("/administration/editsubcategory/([0-9+].*)",function($subcategory_id) {
     require_once("admin/subcategory_edit.php");
 });
-Route::add("/administration/editsubcategory/([1-9]*)",function($subcategoryId) {
+Route::add("/administration/editsubcategory/([0-9+].*)",function($subcategory_id) {
     require_once("admin/subcategory_edit.php");
 }, "post");
 Route::add("/administration/addcarddeck",function() {
@@ -103,29 +103,29 @@ Route::add("/administration/editcarddeck",function() {
 Route::add("/administration/editcarddeck",function() {
     require_once("admin/carddeck_edit.php");
 }, "post");
-Route::add("/administration/editcarddeck/([1-9]*)",function($carddeckId) {
+Route::add("/administration/editcarddeck/([0-9+].*)",function($carddeck_id) {
     require_once("admin/carddeck_edit.php");
 });
-Route::add("/administration/editcarddeck/([1-9]*)",function($carddeckId) {
+Route::add("/administration/editcarddeck/([0-9+].*)",function($carddeck_id) {
     require_once("admin/carddeck_edit.php");
 }, "post");
 Route::add("/administration/addnews",function() {
-    require_once("admin/add_news.php");
+    require_once("admin/news_add.php");
 });
 Route::add("/administration/addnews",function() {
-    require_once("admin/add_news.php");
+    require_once("admin/news_add.php");
 }, "post");
 Route::add("/administration/editnews",function() {
-    require_once("admin/edit_news.php");
+    require_once("admin/news_edit.php");
 });
 Route::add("/administration/editnews",function() {
-    require_once("admin/edit_news.php");
+    require_once("admin/news_edit.php");
 }, "post");
-Route::add("/administration/editnews/([1-9]*)",function($newsId) {
-    require_once("admin/edit_news.php");
+Route::add("/administration/editnews/([0-9+].*)",function($news_id) {
+    require_once("admin/news_edit.php");
 });
-Route::add("/administration/editnews/([1-9]*)",function($newsId) {
-    require_once("admin/edit_news.php");
+Route::add("/administration/editnews/([0-9+].*)",function($news_id) {
+    require_once("admin/news_edit.php");
 }, "post");
 Route::add("/administration/addcardupdate",function() {
     require_once("admin/cardupdate_add.php");
@@ -158,9 +158,13 @@ Route::add("/activation/([a-zA-Z0-9]*)",function($activation_code) {
     require_once("tcg/activation.php");
 });
 
+
 /**
  * routes you can change and add more
  */
+Route::add("/news/([0-9+].*)",function($news_id) {
+    require_once("main/news.php");
+});
 Route::add("/team",function() {
     require_once("main/team.php");
 });

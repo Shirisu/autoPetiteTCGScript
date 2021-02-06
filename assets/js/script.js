@@ -14,9 +14,17 @@ $(document).ready(function() {
         });
     });
     
-    $('table:not([data-paging="no"])').bootstrapTable('destroy').bootstrapTable({
+    $('table:not([data-paging="no"]):not(.optional)').bootstrapTable('destroy').bootstrapTable({
         pagination: true,
         search: true
+    });
+
+    $('table.news').bootstrapTable('destroy').bootstrapTable({
+        classes: 'table table-borderless',
+        pagination: true,
+        search: true,
+        pageSize: 6,
+        showHeader: false
     });
 
     $('table[data-paging="no"]').bootstrapTable('destroy').bootstrapTable({

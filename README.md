@@ -54,13 +54,16 @@ Actual status: Work in progress!
   - faq
   - rules
 - online list
+- main page
+  - news system
 
 
 ## up coming features
-- main page
-  - news
-    - commenting system
 - carddeck page
+  - show card deck overview
+    - all
+    - by main category
+    - by sub category
   - show cards and details
   - show collector, trader, master
   - add to wishlist
@@ -85,6 +88,12 @@ Actual status: Work in progress!
 - shop
   - change currency in cards
   - change wish in cards
+
+
+## possible features in the future
+- main page
+  - news system
+    - commenting system
 
 
 ## used frameworks and libraries

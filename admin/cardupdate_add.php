@@ -165,7 +165,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['
                             if (mysqli_num_rows($result_carddeck)) {
                                 $row_carddeck = mysqli_fetch_assoc($result_carddeck);
                                 ?>
-                                    <a href="/deck/<?php echo $row_carddeck['carddeck_name']; ?>"><img src="<?php echo TCG_CARDS_FOLDER.'/'.$row_carddeck['carddeck_name'].'/'.$row_carddeck['carddeck_name'].'01.'.TCG_CARDS_FILE_TYPE; ?>" /></a>
+                                    <a href="/carddeck/<?php echo $row_carddeck['carddeck_name']; ?>"><img src="<?php echo TCG_CARDS_FOLDER.'/'.$row_carddeck['carddeck_name'].'/'.$row_carddeck['carddeck_name'].'01.'.TCG_CARDS_FILE_TYPE; ?>" /></a>
                                 <?php
                             }
                         }

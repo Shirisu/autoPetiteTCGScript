@@ -109,27 +109,13 @@ CREATE TABLE IF NOT EXISTS `cardupdate` (
 CREATE TABLE IF NOT EXISTS `news` (
   `news_id` int(11) NOT NULL AUTO_INCREMENT,
   `news_member_id` int(11) NOT NULL,
+  `news_title` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
   `news_text` longtext COLLATE utf8_unicode_ci NOT NULL,
   `news_date` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
   `news_cardupdate_id` INT(11) DEFAULT NULL,
   PRIMARY KEY (`news_id`),
   KEY `news_member_id` (`news_member_id`),
   CONSTRAINT `news_ibfk_1` FOREIGN KEY (`news_member_id`) REFERENCES `member` (`member_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-CREATE TABLE IF NOT EXISTS `comment` (
-  `comment_id` int(11) NOT NULL AUTO_INCREMENT,
-  `comment_news_id` int(11) NOT NULL,
-  `comment_member_id` int(11) NOT NULL,
-  `comment_text` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `comment_date` int(11) NOT NULL,
-  `comment_active` int(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`comment_id`),
-  KEY `comment_news_id` (`comment_news_id`),
-  KEY `comment_member_id` (`comment_member_id`),
-  CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`comment_news_id`) REFERENCES `news` (`news_id`),
-  CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`comment_member_id`) REFERENCES `member` (`member_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

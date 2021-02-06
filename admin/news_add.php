@@ -10,14 +10,15 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
 
     title(TRANSLATIONS[$GLOBALS['language']]['admin']['news_add_headline']);
 
-    if (isset($_POST['news_text'])) {
+    if (isset($_POST['news_title']) && isset($_POST['news_text'])) {
+        $news_title = mysqli_real_escape_string($link, strip_tags(trim($_POST['news_title'])));
         $news_text = mysqli_real_escape_string($link, strip_tags(trim($_POST['news_text'])));
 
         mysqli_query($link, "
             INSERT INTO news
-            (news_member_id, news_text, news_date)
+            (news_member_id, news_title, news_text, news_date)
             VALUES
-            ('".$_SESSION['member_id']."', '".$news_text."', '".time()."')")
+            ('".$_SESSION['member_id']."', '".$news_title."', '".$news_text."', '".time()."')")
         OR die(mysqli_error($link));
 
         alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_success_news_add'], 'success');
@@ -26,7 +27,15 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
     ?>
     <form action="/administration/addnews" method="post">
         <div class="row align-items-center">
-            <div class="form-group col mb-2">
+            <div class="form-group col col-12 mb-2">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="ariaDescribedbyTitle"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_title']; ?></span>
+                    </div>
+                    <input type="text" class="form-control" id="news_title" name="news_title" aria-describedby="ariaDescribedbyTitle" maxlength="55" value="" required />
+                </div>
+            </div>
+            <div class="form-group col col-12 mb-2">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="ariaDescribedbyText">Text</span>

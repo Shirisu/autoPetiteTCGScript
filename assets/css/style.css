@@ -124,6 +124,38 @@ details summary:focus {
     padding-right: 5px;
 }
 
+@media (min-width: 768px) {
+    .news-container .fixed-table-container {
+        margin-left: -12px;
+        margin-right: -12px;
+    }
+    .news-container table.news tbody {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .news-container table.news tbody tr {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+    .news-container table.news tbody tr td {
+        display: block;
+        height: 100%;
+    }
+}
+
+@media (max-width: 767px) {
+    .news-container table.news tbody tr td {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+.news-container .news .card {
+    height: 100%;
+}
+.news-container .pagination-info {
+    display: none;
+}
+
 /**
 * online style
 **/
