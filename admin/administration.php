@@ -1,13 +1,12 @@
 <?php
-if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['member_rank'] == 3 || $_SESSION['member_rank'] == 4) {
+if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['member_rank'] == 3 || $_SESSION['member_rank'] == 4)) {
     global $link;
     $breadcrumb = array(
         '/' => 'Home',
         '/administration' => 'Administration',
     );
     breadcrumb($breadcrumb);
-
-    if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
+    if ($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
         title_small(TRANSLATIONS[$GLOBALS['language']]['admin']['category_administration_headline']);
         ?>
         <div class="row mb-5">
@@ -27,7 +26,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['
         <?php
     }
 
-    if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['member_rank'] == 3) {
+    if ($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['member_rank'] == 3) {
         title_small(TRANSLATIONS[$GLOBALS['language']]['admin']['carddeck_administration_headline']);
         ?>
         <div class="row mb-5">
@@ -62,7 +61,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['
         <?php
     }
 
-    if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['member_rank'] == 4) {
+    if ($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['member_rank'] == 4) {
         title_small(TRANSLATIONS[$GLOBALS['language']]['admin']['member_administration_headline']);
         ?>
         <div class="row">
@@ -92,5 +91,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['
         </div>
         <?php
     }
+} else {
+    show_no_access_message();
 }
 ?>

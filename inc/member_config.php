@@ -1,5 +1,5 @@
 <?php
-if (isset($_SESSION['member_id'])) {
+if (isset($_SESSION['member_rank'])) {
     $sqlm = "SELECT member_level
              FROM member
              WHERE member_id = '".$_SESSION['member_id']."'
@@ -8,7 +8,7 @@ if (isset($_SESSION['member_id'])) {
     $rowm = mysqli_fetch_assoc($resultm);
     $member_level = $rowm['member_level'];
 
-    if($member_level > 3) {
+    if ($member_level > 3) {
         $anz_minutes_timestamp = 3600;
     } else {
         $anz_minutes_timestamp = 1800;

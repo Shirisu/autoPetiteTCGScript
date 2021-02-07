@@ -1,5 +1,5 @@
 <?php
-if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['member_rank'] == 4) {
+if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['member_rank'] == 4)) {
     global $link;
     $breadcrumb = array(
         '/' => 'Home',
@@ -98,5 +98,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['
         </div>
     </form>
     <?php
+} else {
+    show_no_access_message();
 }
 ?>

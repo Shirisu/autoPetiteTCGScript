@@ -1,5 +1,5 @@
 <?php
-if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['member_rank'] == 3) {
+if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['member_rank'] == 3)) {
     global $link;
 
     if (isset($carddeck_id)) {
@@ -64,7 +64,8 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['
                         carddeck_is_puzzle = '" . $carddeck_is_puzzle . "',
                         carddeck_active = '" . $carddeck_active . "'
                     WHERE carddeck_id = " . $carddeck_id . "
-                    LIMIT 1") OR die(mysqli_error($link));
+                    LIMIT 1")
+                OR die(mysqli_error($link));
 
                 alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_carddeck_edit'], 'success');
             }
@@ -169,7 +170,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['
                             </div>
                             <?php
                         } else {
-                            alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_no_category_yet'], 'danger');
+                            alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_category_yet'], 'danger');
                         }
                         ?>
                     </div>
@@ -223,7 +224,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['
                             </div>
                             <?php
                         } else {
-                            alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_no_category_yet'], 'danger');
+                            alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_category_yet'], 'danger');
                         }
                         ?>
                     </div>
@@ -337,13 +338,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['
             breadcrumb($breadcrumb);
 
             title(TRANSLATIONS[$GLOBALS['language']]['admin']['carddeck_edit_headline']);
-            ?>
-            <div class="row">
-                <div class="form-group col mt-2">
-                    <?php alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_valid_id'], 'danger'); ?>
-                </div>
-            </div>
-            <?php
+            alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_valid_id'], 'danger');
         }
     } else {
         $breadcrumb = array(
@@ -396,15 +391,10 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['
             </div>
             <?php
         } else {
-            ?>
-            <div class="row">
-                <div class="form-group col mt-2">
-                    <?php alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_data'], 'danger'); ?>
-                </div>
-            </div>
-            <?php
+            alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_data'], 'danger');
         }
     }
-
+} else {
+    show_no_access_message();
 }
 ?>

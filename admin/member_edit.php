@@ -1,5 +1,5 @@
 <?php
-if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
+if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2)) {
     global $link;
     if (isset($member_id)) {
         $sql = "SELECT member_id, member_ip, member_nick, member_active, member_register, member_last_login, member_rank, member_email, member_language
@@ -26,7 +26,8 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                                  member_email = '".$member_email."',
                                  member_language = '".$member_language."'
                              WHERE member_id = ".$member_id."
-                             LIMIT 1") OR die(mysqli_error($link));
+                             LIMIT 1")
+                OR die(mysqli_error($link));
 
                 alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_success_save'], 'success');
             }
@@ -135,7 +136,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                                     </div>
                                     <select class="custom-select" id="member_rank" name="member_rank" aria-describedby="ariaDescribedbyRank" required>
                                         <?php
-                                        while($row_rank = mysqli_fetch_assoc($result_rank)) {
+                                        while ($row_rank = mysqli_fetch_assoc($result_rank)) {
                                             ?>
                                             <option value="<?php echo $row_rank['member_rank_id']; ?>" <?php echo ($row_rank['member_rank_id'] == $member_rank ? 'selected="selected"' : '') ?>><?php echo $row_rank['member_rank_name']; ?></option>
                                             <?php
@@ -151,8 +152,8 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                                     </div>
                                     <select class="custom-select" id="member_language" name="member_language" aria-describedby="ariaDescribedbyLanguage" required>
                                         <option selected disabled hidden value=""></option>
-                                        <option value="en" <?php if($member_language == 'en') { ?>selected="selected"<?php } ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_language_en']; ?></option>
-                                        <option value="de" <?php if($member_language == 'de') { ?>selected="selected"<?php } ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_language_de']; ?></option>
+                                        <option value="en" <?php if ($member_language == 'en') { ?>selected="selected"<?php } ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_language_en']; ?></option>
+                                        <option value="de" <?php if ($member_language == 'de') { ?>selected="selected"<?php } ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_language_de']; ?></option>
                                     </select>
                                 </div>
                             </div>
@@ -183,13 +184,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
             breadcrumb($breadcrumb);
 
             title(TRANSLATIONS[$GLOBALS['language']]['admin']['member_edit_headline']);
-            ?>
-            <div class="row">
-                <div class="form-group col mt-2">
-                    <?php alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_valid_id'], 'danger'); ?>
-                </div>
-            </div>
-            <?php
+            alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_valid_id'], 'danger');
         }
     } else {
         $breadcrumb = array(
@@ -201,40 +196,40 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
         title(TRANSLATIONS[$GLOBALS['language']]['admin']['member_edit_headline']);
         ?>
         <div class="row">
-            <div class="form-group col col-12 col-md-4">
+            <div class="col col-12 col-md-4">
                 <a href="/administration/editmember/all"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_all']; ?></a>
             </div>
-            <div class="form-group col col-12 col-md-4">
+            <div class="col col-12 col-md-4">
                 <a href="/administration/editmember/active"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_active']; ?></a>
             </div>
-            <div class="form-group col col-12 col-md-4">
+            <div class="col col-12 col-md-4">
                 <a href="/administration/editmember/inactive"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_inactive']; ?></a>
             </div>
-            <div class="form-group col col-12 col-md-4">
+            <div class="col col-12 col-md-4">
                 <a href="/administration/editmember/notactivatedyet"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_not_active']; ?></a>
             </div>
-            <div class="form-group col col-12 col-md-4">
+            <div class="col col-12 col-md-4">
                 <a href="/administration/editmember/deleted"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_deleted']; ?></a>
             </div>
-            <div class="form-group col col-12 col-md-4">
+            <div class="col col-12 col-md-4">
                 <a href="/administration/editmember/blocked"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_blocked']; ?></a>
             </div>
         </div>
 
         <?php
-        if(isset($_SESSION['member_edit_active_status'])) {
-            if(isset($rank)) {
-                if($rank == 'all') {
+        if (isset($_SESSION['member_edit_active_status'])) {
+            if (isset($rank)) {
+                if ($rank == 'all') {
                     $_SESSION['member_edit_active_status'] = 100;
-                } elseif($rank == 'active') {
+                } elseif ($rank == 'active') {
                     $_SESSION['member_edit_active_status'] = 1;
-                } elseif($rank == 'inactive') {
+                } elseif ($rank == 'inactive') {
                     $_SESSION['member_edit_active_status'] = 0;
-                } elseif($rank == 'blocked') {
+                } elseif ($rank == 'blocked') {
                     $_SESSION['member_edit_active_status'] = 2;
-                } elseif($rank == 'notactivatedyet') {
+                } elseif ($rank == 'notactivatedyet') {
                     $_SESSION['member_edit_active_status'] = 3;
-                } elseif($rank == 'deleted') {
+                } elseif ($rank == 'deleted') {
                     $_SESSION['member_edit_active_status'] = 4;
                 }
             }
@@ -255,7 +250,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                 GROUP BY member_id";
         $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
         $count = mysqli_num_rows($result);
-        if($count) {
+        if ($count) {
             ?>
             <div class="row">
                 <div class="col">
@@ -297,14 +292,10 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
             </div>
             <?php
         } else {
-            ?>
-            <div class="row">
-                <div class="form-group col mt-2">
-                    <?php alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_data'], 'danger'); ?>
-                </div>
-            </div>
-            <?php
+            alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_data'], 'danger');
         }
     }
+} else {
+    show_no_access_message();
 }
 ?>

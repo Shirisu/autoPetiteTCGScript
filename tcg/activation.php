@@ -1,11 +1,17 @@
 <?php
+$breadcrumb = array(
+    '/' => 'Home',
+    '/activation' => TRANSLATIONS[$GLOBALS['language']]['activation']['headline'],
+);
+breadcrumb($breadcrumb);
+
 title(TRANSLATIONS[$GLOBALS['language']]['activation']['headline']);
 ?>
 
 <div class="row">
     <div class="col col-12">
         <?php
-        if(isset($activation_code)) {
+        if (isset($activation_code)) {
             global $link;
             $activation_code = mysqli_real_escape_string($link, trim($activation_code));
             $sql_activation = "SELECT member_activation_member_id

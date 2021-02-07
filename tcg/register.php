@@ -9,7 +9,7 @@ breadcrumb($breadcrumb);
 
 title(TRANSLATIONS[$GLOBALS['language']]['general']['text_register']);
 
-if(isset($_POST['nickname'])) {
+if (isset($_POST['nickname'])) {
     if (!empty($_POST['nickname']) && isset($_POST['email']) && !empty($_POST['email']) &&
         isset($_POST['language'])
     ) {
@@ -55,7 +55,8 @@ if(isset($_POST['nickname'])) {
                 mysqli_query($link, "INSERT INTO member_activation
                              (member_activation_member_id,member_activation_code)
                              VALUES
-                             (".($new_member_id).",'".$activationcode."')");
+                             (".($new_member_id).",'".$activationcode."')")
+                OR die(mysqli_error($link));
 
                 $sender = TCG_NAME.' Admin';
                 $sendermail = TCG_META_OWNER;
@@ -82,7 +83,7 @@ if(isset($_POST['nickname'])) {
 <div class="row">
     <div class="col col-12">
         <?php
-        if(isset($_SESSION['member_id'])) {
+        if (isset($_SESSION['member_rank'])) {
             echo TRANSLATIONS[$GLOBALS['language']]['register']['already_registered'];
         } else {
         ?>

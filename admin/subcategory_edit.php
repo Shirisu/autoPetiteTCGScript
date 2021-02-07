@@ -1,5 +1,5 @@
 <?php
-if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
+if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2)) {
     global $link;
 
     if (isset($subcategory_id)) {
@@ -18,13 +18,14 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                 $main_category_id = mysqli_real_escape_string($link, $_POST['main_category_id']);
 
                 mysqli_query($link, "UPDATE carddeck_sub_cat
-                             SET carddeck_sub_cat_name = '".$subcategory_name."',
-                                 carddeck_sub_cat_main_cat_id = '".$main_category_id."'
-                             WHERE carddeck_sub_cat_id = ".$subcategory_id."
-                             LIMIT 1") OR die(mysqli_error($link));
+                                     SET carddeck_sub_cat_name = '".$subcategory_name."',
+                                         carddeck_sub_cat_main_cat_id = '".$main_category_id."'
+                                     WHERE carddeck_sub_cat_id = ".$subcategory_id."
+                                     LIMIT 1")
+                OR die(mysqli_error($link));
 
                 alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_success_save'], 'success');
-            } elseif(isset($_POST['subcategory_name']) && !isset($_POST['main_category_id'])) {
+            } elseif (isset($_POST['subcategory_name']) && !isset($_POST['main_category_id'])) {
                 alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_no_category_selected'], 'danger');
             }
 
@@ -83,7 +84,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                             </div>
                             <?php
                         } else {
-                            alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_no_category_yet'], 'danger');
+                            alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_category_yet'], 'danger');
                         }
                         ?>
                     </div>
@@ -102,13 +103,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
             breadcrumb($breadcrumb);
 
             title(TRANSLATIONS[$GLOBALS['language']]['admin']['subcategory_edit_headline']);
-            ?>
-            <div class="row">
-                <div class="form-group col mt-2">
-                    <?php alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_valid_id'], 'danger'); ?>
-                </div>
-            </div>
-            <?php
+            alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_valid_id'], 'danger');
         }
     } else {
         $breadcrumb = array(
@@ -158,14 +153,10 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
             </div>
             <?php
         } else {
-            ?>
-            <div class="row">
-                <div class="form-group col mt-2">
-                    <?php alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_data'], 'danger'); ?>
-                </div>
-            </div>
-            <?php
+            alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_data'], 'danger');
         }
     }
+} else {
+    show_no_access_message();
 }
 ?>

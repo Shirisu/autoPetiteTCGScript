@@ -1,5 +1,5 @@
 <?php
-if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
+if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2)) {
     global $link;
     if (isset($news_id)) {
         $sql = "SELECT news_title, news_text, news_cardupdate_id
@@ -21,7 +21,8 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                          SET news_title = '" . $news_title . "',
                              news_text = '" . $news_text_to_save . "'
                          WHERE news_id = " . $news_id . "
-                         LIMIT 1") OR die(mysqli_error($link));
+                         LIMIT 1")
+                OR die(mysqli_error($link));
 
                 alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_success_save'], 'success');
             }
@@ -75,7 +76,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                                            FROM cardupdate
                                            WHERE cardupdate_id = '" . $row['news_cardupdate_id'] . "'
                                            LIMIT 1";
-                            $result_cardupdate = mysqli_query($link, $sql_cardupdate);
+                            $result_cardupdate = mysqli_query($link, $sql_cardupdate) OR die(mysqli_error($link));
                             $count_cardupdate = mysqli_num_rows($result_cardupdate);
                             if ($count_cardupdate) {
                                 $row_cardupdate = mysqli_fetch_assoc($result_cardupdate);
@@ -88,7 +89,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                                                  FROM carddeck
                                                  WHERE carddeck_id = '" . $updatecarddecks_array[$i] . "'
                                                  LIMIT 1";
-                                    $result_carddeck = mysqli_query($link, $sql_carddeck);
+                                    $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
                                     if (mysqli_num_rows($result_carddeck)) {
                                         $row_carddeck = mysqli_fetch_assoc($result_carddeck);
                                         ?>
@@ -113,13 +114,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
             breadcrumb($breadcrumb);
 
             title(TRANSLATIONS[$GLOBALS['language']]['admin']['news_edit_headline']);
-            ?>
-            <div class="row">
-                <div class="form-group col mt-2">
-                    <?php alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_valid_id'], 'danger'); ?>
-                </div>
-            </div>
-            <?php
+            alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_valid_id'], 'danger');
         }
     } else {
         $breadcrumb = array(
@@ -137,7 +132,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                 GROUP BY news_id DESC";
         $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
         $count = mysqli_num_rows($result);
-        if($count) {
+        if ($count) {
             ?>
             <div class="row">
                 <div class="col">
@@ -175,14 +170,10 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
             </div>
             <?php
         } else {
-            ?>
-            <div class="row">
-                <div class="form-group col mt-2">
-                    <?php alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_data'], 'danger'); ?>
-                </div>
-            </div>
-            <?php
+            alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_data'], 'danger');
         }
     }
+} else {
+    show_no_access_message();
 }
 ?>

@@ -35,7 +35,7 @@
                 </div>
             </li>
             <?php
-            if(isset($_SESSION['member_id'])) {
+            if (isset($_SESSION['member_rank'])) {
                 ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownGames" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -63,7 +63,7 @@
         </ul>
         <ul class="navbar-nav">
             <?php
-            if (isset($_SESSION['member_id'])) {
+            if (isset($_SESSION['member_rank'])) {
                 ?>
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo HOST_URL; ?>/logout">Logout</a>

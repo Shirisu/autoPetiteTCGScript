@@ -1,5 +1,5 @@
 <?php
-if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
+if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2)) {
     global $link;
     if (isset($member_id)) {
         $sql = "SELECT member_nick, member_active
@@ -34,12 +34,14 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                                              SET member_cards_active = 1
                                              WHERE member_cards_id = '".$row_trade['trade_from_member_card_id']."'
                                                AND member_cards_member_id = '".$row_trade['trade_from_member_id']."'
-                                             LIMIT 1") OR die(mysqli_error($link));
+                                             LIMIT 1")
+                        OR die(mysqli_error($link));
                         mysqli_query($link, "UPDATE member_cards
                                              SET member_cards_active = 1
                                              WHERE member_cards_id = '".$row_trade['trade_to_member_card_id']."'
                                                AND member_cards_member_id = '".$row_trade['trade_to_member_id']."'
-                                             LIMIT 1") OR die(mysqli_error($link));
+                                             LIMIT 1")
+                        OR die(mysqli_error($link));
                     }
                 }
 
@@ -91,7 +93,8 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                                  member_currency = 0,
                                  member_text = ''
                              WHERE member_id = '".$member_id."'
-                             LIMIT 1") OR die(mysqli_error($link));
+                             LIMIT 1")
+                OR die(mysqli_error($link));
 
                 alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_success_member_deleted'], 'success');
             } else {
@@ -127,14 +130,10 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                 <?php
             }
         } else {
-            ?>
-            <div class="row">
-                <div class="col col-12 mt-2">
-                    <?php alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_data'], 'danger'); ?>
-                </div>
-            </div>
-            <?php
+            alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_data'], 'danger');
         }
     }
+} else {
+    show_no_access_message();
 }
 ?>

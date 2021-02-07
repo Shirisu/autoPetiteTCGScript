@@ -17,9 +17,9 @@ title('Team ('.$anz_a.')');
 ?>
 <div class="row">
     <?php
-    if($anz_a) {
-        while($row_a = mysqli_fetch_assoc($result_a)) {
-            if($row_a['member_active'] == 1) {
+    if ($anz_a) {
+        while ($row_a = mysqli_fetch_assoc($result_a)) {
+            if ($row_a['member_active'] == 1) {
                 $status = TRANSLATIONS[$GLOBALS['language']]['general']['text_active'];
             } else {
                 $status = TRANSLATIONS[$GLOBALS['language']]['general']['text_inactive'];

@@ -1,5 +1,5 @@
 <?php
-if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['member_rank'] == 3) {
+if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['member_rank'] == 3)) {
     global $link;
     $breadcrumb = array(
         '/' => 'Home',
@@ -47,7 +47,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['
         $updatedecks = $_POST['updatedecks'];
         $count_decks = sizeof($updatedecks);
         $updatecarddecks_array = array();
-        for($i = 0; $i < $count_decks; $i++) {
+        for ($i = 0; $i < $count_decks; $i++) {
             array_push($updatecarddecks_array, $updatedecks[$i]);
         }
         $updatecarddecks = implode(';', $updatecarddecks_array);
@@ -62,7 +62,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['
             FROM carddeck
             WHERE carddeck_active = 0
             ORDER BY carddeck_id ASC;";
-    $result = mysqli_query($link, $sql);
+    $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
     $count = mysqli_num_rows($result);
 
     if ($count) {
@@ -83,7 +83,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['
                         </thead>
                         <tbody>
                         <?php
-                        while($row = mysqli_fetch_assoc($result)) {
+                        while ($row = mysqli_fetch_assoc($result)) {
                             ?>
                             <tr>
                                 <td>
@@ -116,7 +116,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['
 
         $sql_cardupdate = "SELECT cardupdate_id
                            FROM cardupdate";
-        $result_cardupdate = mysqli_query($link, $sql_cardupdate);
+        $result_cardupdate = mysqli_query($link, $sql_cardupdate) OR die(mysqli_error($link));
         $count_cardupdate = mysqli_num_rows($result_cardupdate);
         $cardupdate_id = ($count_cardupdate + 1);
 
@@ -161,7 +161,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['
                                              FROM carddeck
                                              WHERE carddeck_id = '".$updatecarddecks_array[$i]."'
                                              LIMIT 1";
-                            $result_carddeck = mysqli_query($link, $sql_carddeck);
+                            $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
                             if (mysqli_num_rows($result_carddeck)) {
                                 $row_carddeck = mysqli_fetch_assoc($result_carddeck);
                                 ?>
@@ -180,5 +180,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['
         </form>
         <?php
     }
+} else {
+    show_no_access_message();
 }
 ?>

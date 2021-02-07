@@ -16,7 +16,7 @@ function passwordgenerator() {
 
     srand((double)microtime()*1000000);
 
-    for($i = 0; $i < 20; $i++) {
+    for ($i = 0; $i < 20; $i++) {
         $password .= substr($signs,(rand()%(strlen ($signs))), 1);
     }
 
@@ -32,6 +32,14 @@ function set_cookie($name, $value, $expire = null, $path = null) {
     }
 
     setcookie($name, $value, $expire, $path);
+}
+
+function show_no_access_message() {
+    $breadcrumb = array(
+        '/' => 'Home',
+    );
+    breadcrumb($breadcrumb);
+    alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_access'], 'danger');
 }
 
 function title($text) {
@@ -113,7 +121,7 @@ function breadcrumb($breadcrumb_array) {
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <?php
-            foreach($breadcrumb_array as $link => $text) {
+            foreach ($breadcrumb_array as $link => $text) {
                 if ($link === array_key_last($breadcrumb_array)) {
                     ?>
                     <li class="breadcrumb-item active" aria-current="page"><?php echo $text; ?></li>
@@ -141,7 +149,7 @@ function insert_cards($member_id, $quantity) {
     $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
 
     $cardarray = array();
-    while($row = mysqli_fetch_assoc($result)) {
+    while ($row = mysqli_fetch_assoc($result)) {
         $cardnumber = mt_rand(1, TCG_CARDDECK_MAX_CARDS );
         mysqli_query($link, "INSERT INTO member_cards (member_cards_carddeck_id, member_cards_number, member_cards_member_id) VALUES ('".$row['carddeck_id']."','".$cardnumber."','".$member_id."')") OR die(mysqli_error($link));
         array_push($cardarray, $row['carddeck_name'].sprintf("%02d", $cardnumber));
@@ -169,7 +177,8 @@ function insert_log($topic, $text, $member_id) {
                (member_log_member_id,member_log_date,member_log_cat,member_log_text)
                VALUES
                ('".$member_id."','".time()."','".$topic."','".$text."')
-               ") OR DIE(mysqli_error($link));
+               ")
+    OR DIE(mysqli_error($link));
 }
 
 function send_message($sender, $receiver, $subject, $text) {
@@ -179,7 +188,8 @@ function send_message($sender, $receiver, $subject, $text) {
                (message_from_member_id, message_to_member_id, message_subject, message_text, message_date)
                VALUES
                ('".$sender."', '".$receiver."', '".$subject."', '".$text."', '".time()."')
-               ") OR DIE(mysqli_error($link));
+               ")
+    OR DIE(mysqli_error($link));
 }
 
 function shorten_text($text, $length) {

@@ -1,19 +1,20 @@
 <?php
-$breadcrumb = array(
-    '/' => 'Home',
-);
-breadcrumb($breadcrumb);
-title('News');
-
 global $link;
 $sql_news = "SELECT news_id, news_member_id, news_title, news_text, news_date, news_cardupdate_id
              FROM news
              WHERE news_id = '".$news_id."'
              ORDER BY news_id DESC";
-$result_news = mysqli_query($link, $sql_news);
+$result_news = mysqli_query($link, $sql_news) OR die(mysqli_error($link));
 if (mysqli_num_rows($result_news)) {
     $row_news = mysqli_fetch_assoc($result_news);
     $has_cardupdate = ($row_news['news_cardupdate_id'] != NULL);
+
+    $breadcrumb = array(
+        '/' => 'Home',
+        '/news/'.$news_id => 'News - '.$row_news['news_title'],
+    );
+    breadcrumb($breadcrumb);
+    title($row_news['news_title']);
     ?>
     <div class="row news-container">
         <div class="col col-12">
@@ -30,7 +31,7 @@ if (mysqli_num_rows($result_news)) {
                                                FROM cardupdate
                                                WHERE cardupdate_id = '".$row_news['news_cardupdate_id']."'
                                                LIMIT 1";
-                            $result_cardupdate = mysqli_query($link, $sql_cardupdate);
+                            $result_cardupdate = mysqli_query($link, $sql_cardupdate) OR die(mysqli_error($link));
                             $count_cardupdate = mysqli_num_rows($result_cardupdate);
                             if ($count_cardupdate) {
                                 $row_cardupdate = mysqli_fetch_assoc($result_cardupdate);
@@ -43,7 +44,7 @@ if (mysqli_num_rows($result_news)) {
                                                      FROM carddeck
                                                      WHERE carddeck_id = '".$updatecarddecks_array[$i]."'
                                                      LIMIT 1";
-                                    $result_carddeck = mysqli_query($link, $sql_carddeck);
+                                    $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
                                     if (mysqli_num_rows($result_carddeck)) {
                                         $row_carddeck = mysqli_fetch_assoc($result_carddeck);
                                         ?>
@@ -73,12 +74,6 @@ if (mysqli_num_rows($result_news)) {
     </div>
     <?php
 }  else {
-    ?>
-    <div class="row">
-        <div class="form-group col mt-2">
-            <?php alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_valid_id'], 'danger'); ?>
-        </div>
-    </div>
-    <?php
+    alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_valid_id'], 'danger');
 }
 ?>

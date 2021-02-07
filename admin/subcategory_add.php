@@ -1,5 +1,5 @@
 <?php
-if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
+if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2)) {
     global $link;
     $breadcrumb = array(
         '/' => 'Home',
@@ -38,10 +38,10 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
 
                 alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_success_add'], 'success');
             } else {
-                alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_category_dont_exists'], 'danger');
+                alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_category_dont_exists'], 'danger');
             }
         }
-    } elseif(isset($_POST['subcategory_name']) && !isset($_POST['main_category_id'])) {
+    } elseif (isset($_POST['subcategory_name']) && !isset($_POST['main_category_id'])) {
         alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_no_category_selected'], 'danger');
     }
 
@@ -81,7 +81,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
                     </div>
                 <?php
                 } else {
-                    alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_no_category_yet'], 'danger');
+                    alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_category_yet'], 'danger');
                 }
                 ?>
             </div>
@@ -91,5 +91,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
         </div>
     </form>
     <?php
+} else {
+    show_no_access_message();
 }
 ?>

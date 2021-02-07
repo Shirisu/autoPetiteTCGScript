@@ -1,5 +1,5 @@
 <?php
-if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['member_rank'] == 3) {
+if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['member_rank'] == 3)) {
     global $link;
     $breadcrumb = array(
         '/' => 'Home',
@@ -126,7 +126,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['
                     </div>
                     <?php
                 } else {
-                    alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_no_category_yet'], 'danger');
+                    alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_category_yet'], 'danger');
                 }
                 ?>
             </div>
@@ -161,7 +161,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['
                     </div>
                     <?php
                 } else {
-                    alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_no_category_yet'], 'danger');
+                    alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_category_yet'], 'danger');
                 }
                 ?>
             </div>
@@ -236,5 +236,7 @@ if($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['
         </div>
     </form>
     <?php
+} else {
+    show_no_access_message();
 }
 ?>

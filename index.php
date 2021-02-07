@@ -7,6 +7,7 @@ require_once("inc/connection.php");
 require_once("inc/constants.php");
 require_once("inc/function.php");
 require_once("inc/_translations.php");
+require_once("inc/_language.php");
 require_once("inc/header.php");
 
 /**
@@ -134,6 +135,19 @@ Route::add("/administration/addcardupdate",function() {
     require_once("admin/cardupdate_add.php");
 }, "post");
 
+Route::add("/news/([0-9+].*)",function($news_id) {
+    require_once("main/news.php");
+});
+Route::add("/carddecks",function() {
+    require_once("tcg/carddecks.php");
+});
+Route::add("/carddecks/all",function() {
+    require_once("tcg/carddecks.php");
+});
+Route::add("/carddecks/([0-9+].*)",function($category_id) {
+    require_once("tcg/carddecks.php");
+});
+
 
 Route::add("/lostpassword",function() {
     require_once("tcg/lostpassword.php");
@@ -162,9 +176,6 @@ Route::add("/activation/([a-zA-Z0-9]*)",function($activation_code) {
 /**
  * routes you can change and add more
  */
-Route::add("/news/([0-9+].*)",function($news_id) {
-    require_once("main/news.php");
-});
 Route::add("/team",function() {
     require_once("main/team.php");
 });

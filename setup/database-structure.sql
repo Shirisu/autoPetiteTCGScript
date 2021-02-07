@@ -230,11 +230,10 @@ CREATE TABLE IF NOT EXISTS `member_update` (
 
 
 CREATE TABLE IF NOT EXISTS `member_wishlist` (
-  `member_wishlist_id` int(11) NOT NULL AUTO_INCREMENT,
   `member_wishlist_member_id` int(11) NOT NULL,
   `member_wishlist_carddeck_id` int(11) NOT NULL,
   `member_wishlist_date` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`member_wishlist_id`),
+  PRIMARY KEY (`member_wishlist_member_id`,`member_wishlist_carddeck_id`),
   KEY `member_wishlist_member_id` (`member_wishlist_member_id`),
   KEY `member_wishlist_carddeck_id` (`member_wishlist_carddeck_id`),
   CONSTRAINT `member_wishlist_ibfk_1` FOREIGN KEY (`member_wishlist_member_id`) REFERENCES `member` (`member_id`),

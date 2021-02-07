@@ -4,8 +4,8 @@ $sql_cat = "SELECT carddeck_cat_id, carddeck_cat_name
             ORDER BY carddeck_cat_name";
 $result_cat = mysqli_query($link,$sql_cat) OR die(mysqli_error($link));
 $row_cat = mysqli_fetch_assoc($result_cat);
-if(mysqli_num_rows($result_cat)) {
-    while($row_cat = mysqli_fetch_assoc($result_cat)) {
+if (mysqli_num_rows($result_cat)) {
+    while ($row_cat = mysqli_fetch_assoc($result_cat)) {
 
         $sql_lc = "SELECT game_lucky_last_played
         		   FROM game_lucky
@@ -15,8 +15,8 @@ if(mysqli_num_rows($result_cat)) {
                LIMIT 1";
         $result_lc = mysqli_query($link,$sql_lc) OR die(mysqli_error($link));
         $row_lc = mysqli_fetch_assoc($result_lc);
-        if(mysqli_num_rows($result_lc)) {
-            if( ($row_lc['game_lucky_last_played']+$anz_minutes_timestamp) <= time() ) {
+        if (mysqli_num_rows($result_lc)) {
+            if ( ($row_lc['game_lucky_last_played']+$anz_minutes_timestamp) <= time() ) {
                 $play_text = 'Lucky '.$row_cat['carddeck_cat_name'];
             } else {
                 $play_text = '<span class="inactive">Lucky '.$row_cat['carddeck_cat_name'].'</span>';
@@ -36,8 +36,8 @@ $sql_mm = "SELECT game_memory_last_played
            LIMIT 1";
 $result_mm = mysqli_query($link,$sql_mm) OR die(mysqli_error($link));
 $row_mm = mysqli_fetch_assoc($result_mm);
-if(mysqli_num_rows($result_mm)) {
-    if( ($row_mm['game_memory_last_played']+$anz_minutes_timestamp) <= time() ) {
+if (mysqli_num_rows($result_mm)) {
+    if ( ($row_mm['game_memory_last_played']+$anz_minutes_timestamp) <= time() ) {
         $play_text = 'Memory';
     } else {
         $play_text = '<span class="inactive">Memory</span>';
@@ -54,8 +54,8 @@ $sql_rn = "SELECT game_rightnumber_last_played
            LIMIT 1";
 $result_rn = mysqli_query($link,$sql_rn) OR die(mysqli_error($link));
 $row_rn = mysqli_fetch_assoc($result_rn);
-if(mysqli_num_rows($result_rn)) {
-    if( ($row_rn['game_rightnumber_last_played']+$anz_minutes_timestamp) <= time() ) {
+if (mysqli_num_rows($result_rn)) {
+    if ( ($row_rn['game_rightnumber_last_played']+$anz_minutes_timestamp) <= time() ) {
         $play_text = 'Right Number';
     } else {
         $play_text = '<span class="inactive">Right Number</span>';

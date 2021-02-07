@@ -117,6 +117,10 @@ details summary:focus {
     outline: none;
 }
 
+#wrapper {
+    overflow: hidden;
+}
+
 .list-group-item .fas,
 .sidebar-subheading .fas {
     width: 25px;
@@ -154,6 +158,22 @@ details summary:focus {
 }
 .news-container .pagination-info {
     display: none;
+}
+
+@media (max-width: 767px) {
+    table .card-view {
+        padding-bottom: 5px;
+    }
+}
+
+.add-to-wishlist,
+.remove-from-wishlist {
+    color: #007bff;
+    cursor: pointer;
+}
+.add-to-wishlist:hover,
+.remove-from-wishlist:hover {
+    color: #0056b3;;
 }
 
 /**

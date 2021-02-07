@@ -7,19 +7,19 @@ breadcrumb($breadcrumb);
 
 title(TRANSLATIONS[$GLOBALS['language']]['lostpassword']['headline']);
 
-if(isset($_POST['nickname']) && isset($_POST['email'])) {
+if (isset($_POST['nickname']) && isset($_POST['email'])) {
     global $link;
     $password = passwordgenerator();
     $nickname = mysqli_real_escape_string($link, $_POST['nickname']);
     $email = mysqli_real_escape_string($link, $_POST['email']);
-    if($nickname != '' && $email != '') {
+    if ($nickname != '' && $email != '') {
         $sql = "SELECT member_nick, member_email
                 FROM member
                 WHERE member_nick = '".$nickname."'
                   AND member_email = '".$email."'
                 LIMIT 1";
-        $result = mysqli_query($link, $sql);
-        if(mysqli_num_rows($result)) {
+        $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
+        if (mysqli_num_rows($result)) {
             $sender = TCG_NAME.' Admin';
             $sendermail = TCG_META_OWNER;
             $receiver = $email;
@@ -36,7 +36,7 @@ if(isset($_POST['nickname']) && isset($_POST['email'])) {
 
             mail($receiver, $subject, $text,
                 "From: $sender <$sendermail>");
-            mysqli_query($link, "UPDATE member SET member_password = '".$password_hashed."' WHERE member_nick = '".$nickname."' AND member_email = '".$email."' LIMIT 1");
+            mysqli_query($link, "UPDATE member SET member_password = '".$password_hashed."' WHERE member_nick = '".$nickname."' AND member_email = '".$email."' LIMIT 1") OR die(mysqli_error($link));
 
             alert_box(TRANSLATIONS[$GLOBALS['language']]['lostpassword']['hint_success'], 'success');
         } else {

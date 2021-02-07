@@ -9,7 +9,7 @@ global $link;
 $sql_news = "SELECT news_id, news_member_id, news_title, news_text, news_date, news_cardupdate_id
              FROM news
              ORDER BY news_id DESC";
-$result_news = mysqli_query($link, $sql_news);
+$result_news = mysqli_query($link, $sql_news) OR die(mysqli_error($link));
 if (mysqli_num_rows($result_news)) {
     ?>
     <div class="row news-container">
@@ -56,12 +56,6 @@ if (mysqli_num_rows($result_news)) {
     </div>
     <?php
 } else {
-    ?>
-    <div class="row">
-        <div class="form-group col mt-2">
-            <?php alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_news_yet'], 'danger'); ?>
-        </div>
-    </div>
-    <?php
+    show_no_access_message();
 }
 ?>
