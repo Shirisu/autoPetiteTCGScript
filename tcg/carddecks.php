@@ -12,8 +12,8 @@ if (isset($_SESSION['member_rank'])) {
             $row_carddeck_cat_name = mysqli_fetch_assoc($result_carddeck_cat_name);
             $breadcrumb = array(
                 '/' => 'Home',
-                '/carddeck' => TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks'],
-                '/carddeck/'.$category_id => $row_carddeck_cat_name['carddeck_cat_name'],
+                '/carddecks' => TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks'],
+                '/carddecks/'.$category_id => $row_carddeck_cat_name['carddeck_cat_name'],
             );
             $title = TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks'].' - '.$row_carddeck_cat_name['carddeck_cat_name'];
             $category_filter = "AND carddeck_cat_id = '".$category_id."'";
@@ -31,7 +31,7 @@ if (isset($_SESSION['member_rank'])) {
     } else {
         $breadcrumb = array(
             '/' => 'Home',
-            '/carddeck' => TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks'],
+            '/carddecks' => TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks'],
         );
         $title = TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks'];
         $category_filter = '';
@@ -68,6 +68,14 @@ if (isset($_SESSION['member_rank'])) {
                     <tbody>
                     <?php
                     while ($row_carddeck = mysqli_fetch_assoc($result_carddeck)) {
+                        $sql_mastered = "SELECT member_master_carddeck_id
+                                         FROM member_master
+                                         WHERE member_master_member_id = '".$_SESSION['member_id']."'
+                                           AND member_master_carddeck_id = '".$row_carddeck['carddeck_id']."'
+                                         LIMIT 1";
+                        $result_mastered = mysqli_query($link, $sql_mastered) OR die(mysqli_error($link));
+                        $already_mastered = mysqli_num_rows($result_mastered) > 0;
+
                         $sql_on_wishlist = "SELECT member_wishlist_carddeck_id
                                             FROM member_wishlist
                                             WHERE member_wishlist_member_id = '".$_SESSION['member_id']."'
@@ -79,13 +87,25 @@ if (isset($_SESSION['member_rank'])) {
                         <tr>
                             <td><a href="/carddeck/<?php echo $row_carddeck['carddeck_name']; ?>"><?php echo $row_carddeck['carddeck_name']; ?></a></td>
                             <td><?php echo $row_carddeck['carddeck_series']; ?></td>
-                            <td><?php echo ($category_filter == '' ? $row_carddeck['carddeck_cat_name'].' <i class="fas fa-chevron-right"></i>' : ''); ?> <?php echo $row_carddeck['carddeck_sub_cat_name']; ?></td>
+                            <td><?php echo ($category_filter == '' ? $row_carddeck['carddeck_cat_name'].' <i class="fas fa-angle-right"></i>' : ''); ?> <?php echo $row_carddeck['carddeck_sub_cat_name']; ?></td>
                             <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_carddeck['carddeck_date']); ?></td>
                             <td><?php echo member_link($row_carddeck['carddeck_creator']); ?></td>
-                            <td>
-                                <span class="<?php echo ($is_on_wishlist ? 'remove-from-wishlist' : 'add-to-wishlist'); ?>" data-carddeck-id="<?php echo $row_carddeck['carddeck_id']; ?>">
-                                    <i class="fas fa-star"></i><?php echo ($is_on_wishlist ? '<i class="fas fa-minus"></i>' : '<i class="fas fa-plus"></i>'); ?>
-                                </span>
+                            <td class="text-center">
+                                <?php
+                                if ($already_mastered) {
+                                    ?>
+                                    <span class="mastered"><i class="fas fa-medal"></i></span>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <span
+                                        class="<?php echo($is_on_wishlist ? 'remove-from-wishlist' : 'add-to-wishlist'); ?>"
+                                        data-carddeck-id="<?php echo $row_carddeck['carddeck_id']; ?>">
+                                        <i class="fas fa-star"></i><?php echo($is_on_wishlist ? '<i class="fas fa-minus"></i>' : '<i class="fas fa-plus"></i>'); ?>
+                                    </span>
+                                    <?php
+                                }
+                                ?>
                             </td>
                         </tr>
                         <?php

@@ -18,8 +18,9 @@ define('TCG_CARDDECK_MAX_CARDS', '12'); // max cards of carddecks
 define('TCG_CARDS_FILE_TYPE', 'png'); // file type for cards (allowed types: gif, jpg, png - use only one!)
 define('TCG_CARDS_WIDTH', '115'); // width of card
 define('TCG_CARDS_HEIGHT', '95'); // height of card
-define('TCG_MASTERCARDS_WIDTH', '150'); // width of master
-define('TCG_MASTERCARDS_HEIGHT', '120'); // height of master
+define('TCG_CARDS_PER_ROW', '4'); // how many cards are in one row
+define('TCG_MASTERCARDS_WIDTH', '153'); // width of master
+define('TCG_MASTERCARDS_HEIGHT', '123'); // height of master
 define('TCG_CARDS_START_PACKAGE', '12'); // cards of startdeck
 define('TCG_CURRENCY', 'Dollar'); // currency name
 define('TCG_WISH', 'Wish'); // wish name

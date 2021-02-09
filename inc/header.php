@@ -58,6 +58,22 @@ mysqli_query($link, "DELETE FROM member_online WHERE (member_time+300)<'".$onlin
         <?php
     }
     ?>
+    <style>
+        .carddeck_wrapper {
+            width: <?php echo (TCG_CARDS_WIDTH * TCG_CARDS_PER_ROW + (TCG_CARDS_PER_ROW * 4)); ?>px;
+        }
+        .carddeck_wrapper[data-is-puzzle="1"] {
+            width: <?php echo TCG_CARDS_WIDTH * TCG_CARDS_PER_ROW; ?>px;
+        }
+        .card_wrapper {
+            width: <?php echo TCG_CARDS_WIDTH; ?>px;
+            height: <?php echo TCG_CARDS_HEIGHT; ?>px;
+        }
+        .card_wrapper.mastercard {
+            width: <?php echo TCG_MASTERCARDS_WIDTH; ?>px;
+            height: <?php echo TCG_MASTERCARDS_HEIGHT; ?>px;
+        }
+    </style>
 </head>
 <body>
 

@@ -81,6 +81,11 @@ $(document).ready(function() {
                 $new_toast.toast('show');
                 $(current_target).removeClass('add-to-wishlist').addClass('remove-from-wishlist');
                 $(current_target).find('.fa-plus').removeClass('fa-plus').addClass('fa-minus');
+
+                var wishlist_text = $(current_target).next('.wishlist-text');
+                if (wishlist_text.length > 0) {
+                    wishlist_text.text(data_json.new_text);
+                }
             }
         });
     });
@@ -97,6 +102,11 @@ $(document).ready(function() {
                 $new_toast.toast('show');
                 $(current_target).removeClass('remove-from-wishlist').addClass('add-to-wishlist');
                 $(current_target).find('.fa-minus').removeClass('fa-minus').addClass('fa-plus');
+
+                var wishlist_text = $(current_target).next('.wishlist-text');
+                if (wishlist_text.length > 0) {
+                    wishlist_text.text(data_json.new_text);
+                }
             }
         });
     });

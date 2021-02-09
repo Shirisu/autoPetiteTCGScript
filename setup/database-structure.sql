@@ -34,8 +34,8 @@ CREATE TABLE IF NOT EXISTS `member` (
   `member_password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `member_email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `member_active` int(1) NOT NULL DEFAULT '3',
-  `member_register` varchar(15) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
-  `member_last_login` varchar(15) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `member_register` int(11) NOT NULL DEFAULT '0',
+  `member_last_login` int(11) NOT NULL DEFAULT '0',
   `member_rank` int(11) NOT NULL DEFAULT '5',
   `member_level` int(11) NOT NULL DEFAULT '1',
   `member_cards` int(11) NOT NULL,
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `carddeck` (
 
 CREATE TABLE IF NOT EXISTS `cardupdate` (
   `cardupdate_id` int(11) NOT NULL AUTO_INCREMENT,
-  `cardupdate_date` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
+  `cardupdate_date` int(11) NOT NULL,
   `cardupdate_carddeck_id` text COLLATE utf8_unicode_ci NOT NULL,
   `cardupdate_count_cards` int(11) NOT NULL,
   PRIMARY KEY (`cardupdate_id`)
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `news` (
   `news_member_id` int(11) NOT NULL,
   `news_title` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
   `news_text` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `news_date` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `news_date` int(11) DEFAULT NULL,
   `news_cardupdate_id` INT(11) DEFAULT NULL,
   PRIMARY KEY (`news_id`),
   KEY `news_member_id` (`news_member_id`),
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `game_lucky` (
   `game_lucky_id` int(11) NOT NULL AUTO_INCREMENT,
   `game_lucky_member_id` int(11) NOT NULL,
   `game_lucky_cat_id` int(11) NOT NULL,
-  `game_lucky_last_played` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
+  `game_lucky_last_played` int(11) NOT NULL,
   PRIMARY KEY (`game_lucky_id`),
   KEY `game_lucky_member_id` (`game_lucky_member_id`,`game_lucky_cat_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `game_lucky` (
 CREATE TABLE IF NOT EXISTS `game_memory` (
   `game_memory_id` int(11) NOT NULL AUTO_INCREMENT,
   `game_memory_member_id` int(11) NOT NULL,
-  `game_memory_last_played` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
+  `game_memory_last_played` int(11) NOT NULL,
   PRIMARY KEY (`game_memory_id`),
   KEY `game_memory_member_id` (`game_memory_member_id`),
   CONSTRAINT `game_memory_ibfk_1` FOREIGN KEY (`game_memory_member_id`) REFERENCES `member` (`member_id`)
@@ -142,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `game_memory` (
 CREATE TABLE IF NOT EXISTS `game_rightnumber` (
   `game_rightnumber_id` int(11) NOT NULL AUTO_INCREMENT,
   `game_rightnumber_member_id` int(11) NOT NULL,
-  `game_rightnumber_last_played` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
+  `game_rightnumber_last_played` int(11) NOT NULL,
   PRIMARY KEY (`game_rightnumber_id`),
   KEY `game_rightnumber_member_id` (`game_rightnumber_member_id`),
   CONSTRAINT `game_rightnumber_ibfk_1` FOREIGN KEY (`game_rightnumber_member_id`) REFERENCES `member` (`member_id`)
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `member_cards` (
   `member_cards_carddeck_id` int(11) NOT NULL,
   `member_cards_number` int(11) NOT NULL,
   `member_cards_member_id` int(11) NOT NULL,
-  `member_cards_cat` enum('1','2','3','4','5','6','7') COLLATE utf8_unicode_ci NOT NULL DEFAULT '1',
+  `member_cards_cat` enum('1','2','3') COLLATE utf8_unicode_ci NOT NULL DEFAULT '1' COMMENT '1 = new, 2 = collect, 3 = trade',
   `member_cards_active` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`member_cards_id`),
   KEY `member_cards_number` (`member_cards_number`),
@@ -200,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `member_master` (
   `member_master_id` int(11) NOT NULL AUTO_INCREMENT,
   `member_master_member_id` int(11) NOT NULL DEFAULT '0',
   `member_master_carddeck_id` int(11) NOT NULL DEFAULT '0',
-  `member_master_date` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `member_master_date` int(11) NOT NULL,
   PRIMARY KEY (`member_master_id`),
   KEY `member_master_member_id` (`member_master_member_id`),
   KEY `member_master_carddeck_id` (`member_master_carddeck_id`),
@@ -211,7 +211,7 @@ CREATE TABLE IF NOT EXISTS `member_master` (
 
 CREATE TABLE IF NOT EXISTS `member_online` (
   `member_id` int(11) NOT NULL DEFAULT '0',
-  `member_time` int(20) NOT NULL DEFAULT '0'
+  `member_time` int(15) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `member_update` (
 CREATE TABLE IF NOT EXISTS `member_wishlist` (
   `member_wishlist_member_id` int(11) NOT NULL,
   `member_wishlist_carddeck_id` int(11) NOT NULL,
-  `member_wishlist_date` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
+  `member_wishlist_date` int(11) NOT NULL,
   PRIMARY KEY (`member_wishlist_member_id`,`member_wishlist_carddeck_id`),
   KEY `member_wishlist_member_id` (`member_wishlist_member_id`),
   KEY `member_wishlist_carddeck_id` (`member_wishlist_carddeck_id`),
@@ -247,7 +247,7 @@ CREATE TABLE IF NOT EXISTS `message` (
   `message_to_member_id` int(11) NOT NULL,
   `message_subject` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `message_text` text COLLATE utf8_unicode_ci NOT NULL,
-  `message_date` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `message_date` int(11) NOT NULL,
   `message_read` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`message_id`),
   KEY `message_from_member_id` (`message_from_member_id`),
@@ -264,7 +264,7 @@ CREATE TABLE IF NOT EXISTS `trade` (
   `trade_to_member_id` int(11) NOT NULL,
   `trade_to_member_card_id` int(11) NOT NULL,
   `trade_text` text COLLATE utf8_unicode_ci NOT NULL,
-  `trade_date` varchar(55) NOT NULL,
+  `trade_date` int(11) NOT NULL,
   `trade_seen` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`trade_id`),
   KEY `trade_from_member_id` (`trade_from_member_id`),

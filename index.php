@@ -147,6 +147,9 @@ Route::add("/carddecks/all",function() {
 Route::add("/carddecks/([0-9+].*)",function($category_id) {
     require_once("tcg/carddecks.php");
 });
+Route::add("/carddeck/([a-z0-9+].*)",function($carddeck_name) {
+    require_once("tcg/carddeck_page.php");
+});
 
 
 Route::add("/lostpassword",function() {

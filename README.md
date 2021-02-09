@@ -61,13 +61,12 @@ Actual status: **Work in progress**!
     - all
     - by main category
     - functionality for add/remove wishlist
+  - show cards and details
+  - add to wishlist
+  - show collector, trader, master
 
 
 ## up coming features
-- carddeck page
-  - show cards and details
-  - show collector, trader, master
-  - add to wishlist
 - member profile
   - show profile
   - show cards, master, wishlist

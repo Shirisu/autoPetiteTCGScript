@@ -17,6 +17,7 @@ if (isset($_POST['action']) && isset($_POST['carddeck_id'])) {
         'icon' => 'star',
         'title' => TRANSLATIONS[$GLOBALS['language']]['general']['text_wishlist'],
         'text' => TRANSLATIONS[$GLOBALS['language']]['general']['text_error'],
+        'new_text' => '',
     ];
 
     $sql_carddeck = "SELECT carddeck_name
@@ -40,6 +41,7 @@ if (isset($_POST['action']) && isset($_POST['carddeck_id'])) {
                     'icon' => 'star',
                     'title' => TRANSLATIONS[$GLOBALS['language']]['general']['text_wishlist'],
                     'text' => '<span class="font-weight-bold">' . $row_carddeck['carddeck_name'] . '</span> ' . TRANSLATIONS[$GLOBALS['language']]['wishlist']['text_already_on_wishlist'],
+                    'new_text' => '',
                 ];
             } elseif ($action == 'remove') {
                 mysqli_query($link, "DELETE FROM member_wishlist
@@ -54,6 +56,7 @@ if (isset($_POST['action']) && isset($_POST['carddeck_id'])) {
                     'icon' => 'star',
                     'title' => TRANSLATIONS[$GLOBALS['language']]['general']['text_wishlist'],
                     'text' => '<span class="font-weight-bold">' . $row_carddeck['carddeck_name'] . '</span> ' . TRANSLATIONS[$GLOBALS['language']]['wishlist']['text_removed_from_wishlist'],
+                    'new_text' => html_entity_decode(TRANSLATIONS[$GLOBALS['language']]['wishlist']['text_add_to_wishlist']),
                 ];
             }
         } else {
@@ -70,6 +73,7 @@ if (isset($_POST['action']) && isset($_POST['carddeck_id'])) {
                     'icon' => 'star',
                     'title' => TRANSLATIONS[$GLOBALS['language']]['general']['text_wishlist'],
                     'text' => '<span class="font-weight-bold">' . $row_carddeck['carddeck_name'] . '</span> ' . TRANSLATIONS[$GLOBALS['language']]['wishlist']['text_added_to_wishlist'],
+                    'new_text' => html_entity_decode(TRANSLATIONS[$GLOBALS['language']]['wishlist']['text_remove_from_wishlist']),
                 ];
             } elseif ($action == 'remove') {
                 $toast_data = [
@@ -77,6 +81,7 @@ if (isset($_POST['action']) && isset($_POST['carddeck_id'])) {
                     'icon' => 'star',
                     'title' => TRANSLATIONS[$GLOBALS['language']]['general']['text_wishlist'],
                     'text' => '<span class="font-weight-bold">' . $row_carddeck['carddeck_name'] . '</span> ' . TRANSLATIONS[$GLOBALS['language']]['wishlist']['text_not_on_wishlist'],
+                    'new_text' => '',
                 ];
             }
         }
@@ -86,6 +91,7 @@ if (isset($_POST['action']) && isset($_POST['carddeck_id'])) {
             'icon' => 'star',
             'title' => TRANSLATIONS[$GLOBALS['language']]['wishlist']['text_wishlist'],
             'text' => TRANSLATIONS[$GLOBALS['language']]['general']['hint_carddeck_dont_exists'],
+            'new_text' => '',
         ];
     }
     echo json_encode($toast_data);

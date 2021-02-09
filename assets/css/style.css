@@ -166,6 +166,14 @@ details summary:focus {
     }
 }
 
+.card-same-height .card {
+    height: 100%;
+}
+
+
+/**
+* wishlist style
+**/
 .add-to-wishlist,
 .remove-from-wishlist {
     color: #007bff;
@@ -174,6 +182,51 @@ details summary:focus {
 .add-to-wishlist:hover,
 .remove-from-wishlist:hover {
     color: #0056b3;;
+}
+.mastered {
+    color: #007bff;
+}
+.wishlist-text {
+    padding-left: 5px;
+}
+
+/**
+* card style
+**/
+table.carddeck th {
+    width: 1%;
+    padding-left: 0;
+    white-space: nowrap;
+}
+table.carddeck td {
+    padding-right: 0;
+}
+.carddeck_wrapper {
+    font-size: 0;
+    margin: auto;
+    overflow-x: auto;
+}
+.carddeck_wrapper[data-is-puzzle="1"] {
+    font-size: 0;
+}
+.carddeck_wrapper .card_wrapper {
+    margin: 2px;
+}
+.carddeck_wrapper[data-is-puzzle="1"] .card_wrapper {
+    margin: 0;
+}
+.card_wrapper {
+    display: inline-block;
+    background-position: center;
+    background-origin: content-box;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.card_wrapper:not([style]) {
+    background-color: grey;
+}
+.carddeck_wrapper .card_wrapper.mastercard {
+    margin-top: 5px;
 }
 
 /**

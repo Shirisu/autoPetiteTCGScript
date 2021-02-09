@@ -11,6 +11,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                 LIMIT 1";
         $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
         if (mysqli_num_rows($result)) {
+            $remove_host = ['https://', 'https//', 'http://', 'http//', '://', '//'];
+
             $row = mysqli_fetch_assoc($result);
 
             $carddeck_name = $row['carddeck_name'];
@@ -20,8 +22,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
             $carddeck_is_puzzle = $row['carddeck_is_puzzle'];
             $carddeck_active = $row['carddeck_active'];
             $carddeck_artist = $row['carddeck_artist'];
-            $carddeck_copyright = $row['carddeck_copyright'];
-            $carddeck_imagesources = $row['carddeck_imagesources'];
+            $carddeck_copyright = str_replace($remove_host, '', $row['carddeck_copyright']);
+            $carddeck_imagesources = str_replace($remove_host, '', $row['carddeck_imagesources']);
             if (isset($_POST['carddeck_name']) && isset($_POST['carddeck_series'])) {
                 $carddeck_name = mysqli_real_escape_string($link, trim(strtolower($_POST['carddeck_name'])));
                 $carddeck_series = mysqli_real_escape_string($link, strip_tags(trim($_POST['carddeck_series'])));
@@ -34,7 +36,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                 $carddeck_active = mysqli_real_escape_string($link, trim(strtolower($_POST['carddeck_active'])));
                 $carddeck_artist = mysqli_real_escape_string($link, strip_tags(trim($_POST['carddeck_artist'])));
                 $carddeck_copyright = mysqli_real_escape_string($link, strip_tags(trim(strtolower($_POST['carddeck_copyright']))));
-                $carddeck_imagesources = mysqli_real_escape_string($link, strip_tags(trim(strtolower($_POST['carddeck_imagesources']))));
+                $carddeck_copyright = str_replace($remove_host, '', $carddeck_copyright);
+                $carddeck_imagesources = str_replace($remove_host, '', mysqli_real_escape_string($link, strip_tags(trim(strtolower($_POST['carddeck_imagesources'])))));
 
                 $card_folder = '.' . TCG_CARDS_FOLDER;
                 if (!is_dir($card_folder . "/" . $carddeck_name . "")) {
@@ -378,7 +381,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                             <tr>
                                 <td><?php echo $row['carddeck_id']; ?></td>
                                 <td><?php echo $row['carddeck_name']; ?></td>
-                                <td><?php echo $row['carddeck_cat_name']; ?> <i class="fas fa-chevron-right"></i> <?php echo $row['carddeck_sub_cat_name']; ?></td>
+                                <td><?php echo $row['carddeck_cat_name']; ?> <i class="fas fa-angle-right"></i> <?php echo $row['carddeck_sub_cat_name']; ?></td>
                                 <td><?php echo get_active_status($row['carddeck_active']); ?></td>
                                 <td><a href="/administration/editcarddeck/<?php echo $row['carddeck_id']; ?>">Edit</a></td>
                             </tr>
