@@ -156,6 +156,12 @@ Route::add("/member",function() {
 Route::add("/member/([0-9+].*)/([a-z+].*)",function($member_id, $category) {
     if ($category == 'trade') {
         require_once("tcg/member_page_trade.php");
+    } elseif ($category == 'collect') {
+        require_once("tcg/member_page_collect.php");
+    } elseif ($category == 'master') {
+        require_once("tcg/member_page_master.php");
+    } elseif ($category == 'wishlist') {
+        require_once("tcg/member_page_wishlist.php");
     } else {
         require_once("tcg/member_page.php");
     }

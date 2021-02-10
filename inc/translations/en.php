@@ -203,6 +203,7 @@ Please remember to change your password immediately afterwards!',
     'member' => array(
         'text_profile_no_cards_in_category' => 'No cards in this category',
         'text_profile_no_text' => 'No text or trade rules specified',
+        'text_profile_on_wishlist_since' => 'on wishlist since',
     ),
     'register' => array(
         'already_registered' => 'You\'re already registered!<br />Multiple accounts are not permitted!!',

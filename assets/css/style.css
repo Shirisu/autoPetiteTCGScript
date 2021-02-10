@@ -138,6 +138,9 @@ details summary:focus {
         padding-bottom: 5px;
     }
 }
+.bootstrap-table .fixed-table-container .table {
+    text-align: center;
+}
 .bootstrap-table .fixed-table-container .table tbody tr .card-view .card-view-title {
     overflow-x: auto;
 }
@@ -177,7 +180,7 @@ details summary:focus {
 .news-container .news .card {
     height: 100%;
 }
-.news-container .pagination-info {
+.news-container .pagination-detail {
     display: none;
 }
 
@@ -235,6 +238,7 @@ table.carddeck td {
     background-size: contain;
 }
 .card-wrapper:not([style]) {
+    position: relative;
     background-color: grey;
 }
 .carddeck-wrapper .card-wrapper.mastercard {
@@ -252,10 +256,47 @@ table.carddeck td {
     margin-left: -12px;
     margin-right: -12px;
 }
+.member-cards-container .profile-cards-wrapper {
+    position: relative;
+}
+.member-cards-container .profile-cards-wrapper.show-counter::after {
+    content: attr(data-count);
+    display: inline-block;
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    padding: 4px 4px;
+    font-size: 60%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color: rgba(248, 249, 250, 0.8);
+    border: 1px solid #4e555b;
+    border-radius: 50%;
+}
+.member-cards-container .profile-cards .carddeck-wrapper {
+    margin-top: 5px;
+}
+.member-cards-container table.profile-cards {
+    margin: auto;
+}
+.member-cards-container table.profile-cards thead {
+    display: none !important;
+}
+.member-cards-container table.profile-cards tbody tr {
+    vertical-align: top;
+}
+.member-cards-container table.profile-cards tbody tr td {
+    line-height: 1;
+    text-align: center;
+}
 @media (min-width: 768px) {
     .member-cards-container table.profile-cards tbody {
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
     }
     .member-cards-container table.profile-cards tbody tr td {
         display: block;
@@ -276,7 +317,8 @@ table.carddeck td {
         padding: 6px;
     }
 }
-.member-cards-container .pagination-info {
+.member-cards-container .pagination-detail,
+.member-wishlist-container .pagination-detail {
     display: none;
 }
 

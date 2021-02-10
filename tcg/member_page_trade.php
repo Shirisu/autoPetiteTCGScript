@@ -3,11 +3,10 @@ if (isset($_SESSION['member_rank'])) {
     global $link;
 
     if (isset($member_id)) {
-        $sql_member = "SELECT member_id, member_nick, member_level, member_cards, member_master, member_register, member_last_login, member_wish, member_currency, member_text, member_rank_name
-                       FROM member, member_rank
+        $sql_member = "SELECT member_nick
+                       FROM member
                        WHERE member_id = '".$member_id."'
                          AND member_active = 1
-                         AND member_rank = member_rank_id
                        LIMIT 1";
         $result_member = mysqli_query($link, $sql_member) OR die(mysqli_error($link));
         $count_member = mysqli_num_rows($result_member);
@@ -44,12 +43,21 @@ if (isset($_SESSION['member_rank'])) {
                 </div>
                 <div class="col col-12 mb-3 member-cards-container">
                     <?php
-                    $sql_cards = "SELECT member_cards_id, member_cards_number, carddeck_name
-                                  FROM member_cards, carddeck
+                    $sql_cards = "SELECT member_cards_id, member_cards_number, carddeck_name,
+                                     (SELECT COUNT(member_cards_id)
+                                      FROM member_cards
+                                      WHERE member_cards_member_id = '".$member_id."'
+                                        AND mc.member_cards_carddeck_id = member_cards_carddeck_id
+                                        AND mc.member_cards_number = member_cards_number
+                                        AND member_cards_cat = 3
+                                        AND member_cards_active = 1
+                                      GROUP BY member_cards_carddeck_id, member_cards_number) as card_count
+                                  FROM member_cards mc, carddeck
                                   WHERE member_cards_member_id = '".$member_id."'
                                     AND member_cards_cat = 3
                                     AND member_cards_active = 1
                                     AND member_cards_carddeck_id = carddeck_id
+                                  GROUP BY member_cards_carddeck_id, member_cards_number
                                   ORDER BY carddeck_name, member_cards_number ASC";
                     $result_cards = mysqli_query($link, $sql_cards) OR die(mysqli_error($link));
                     $count_cards = mysqli_num_rows($result_cards);
@@ -67,11 +75,14 @@ if (isset($_SESSION['member_rank'])) {
                             while ($row_cards = mysqli_fetch_assoc($result_cards)) {
                                 $carddeck_name = $row_cards['carddeck_name'];
                                 $cardnumber = sprintf("%'.02d", $row_cards['member_cards_number']);
+                                $card_count = $row_cards['card_count'];
                                 ?>
                                 <tr>
-                                    <td class="text-center">
-                                        <img src="<?php echo TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$cardnumber.'.'.TCG_CARDS_FILE_TYPE; ?>" alt="<?php echo $carddeck_name.$cardnumber; ?>"/>
-                                        <a href="/carddeck/<?php echo $carddeck_name; ?>"><?php echo $carddeck_name; ?></a>
+                                    <td>
+                                        <div class="profile-cards-wrapper<?php echo ($card_count > 1 ? ' show-counter" data-count="'.$card_count.'x"' : '"'); ?>>
+                                            <?php echo ($member_id != $_SESSION['member_id'] ? '<a href="/trade/'.$row_cards['member_cards_id'].'">' : ''); ?><img src="<?php echo TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$cardnumber.'.'.TCG_CARDS_FILE_TYPE; ?>" alt="<?php echo $carddeck_name.$cardnumber; ?>" /><?php echo ($member_id != $_SESSION['member_id'] ? '</a>' : ''); ?>
+                                            <a class="carddeck-link" href="/carddeck/<?php echo $carddeck_name; ?>"><small><?php echo $carddeck_name.$cardnumber; ?></small></a>
+                                        </div>
                                     </td>
                                 </tr>
                                 <?php

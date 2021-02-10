@@ -67,11 +67,12 @@ Actual status: **Work in progress**!
 - member overview
 - member profile
   - show profile
+  - show cards
+  - master, wishlist
 
 
 ## up coming features
 - member profile
-  - show cards, master, wishlist
   - change own profile
     - traderules
     - some personal stuff like language, email

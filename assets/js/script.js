@@ -58,7 +58,23 @@ $(document).ready(function() {
         showHeader: false
     });
 
-    $('table.profile-cards').bootstrapTable('destroy').bootstrapTable({
+    $('table.profile-cards.trade-cards').bootstrapTable('destroy').bootstrapTable({
+        classes: 'table table-borderless',
+        pagination: true,
+        search: true,
+        pageSize: 60,
+        showHeader: false
+    });
+
+    $('table.profile-cards.collect-cards').bootstrapTable('destroy').bootstrapTable({
+        classes: 'table table-borderless',
+        pagination: true,
+        search: true,
+        pageSize: 10,
+        showHeader: false
+    });
+
+    $('table.profile-cards.master-cards').bootstrapTable('destroy').bootstrapTable({
         classes: 'table table-borderless',
         pagination: true,
         search: true,

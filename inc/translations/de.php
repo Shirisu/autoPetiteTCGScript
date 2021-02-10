@@ -203,6 +203,7 @@ Bitte denke daran, dein Passwort danach sofort zu &auml;ndern!',
     'member' => array(
         'text_profile_no_cards_in_category' => 'Keine Karten in dieser Kategorie',
         'text_profile_no_text' => 'Kein Text oder Tauschregeln hinterlegt',
+        'text_profile_on_wishlist_since' => 'auf Wunschliste seit',
     ),
     'register' => array(
         'already_registered' => 'Du bist bereits angemeldet!<br />Mehrfachanmeldungen sind nicht gestattet!!',

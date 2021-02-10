@@ -5,6 +5,7 @@ define('HOST_URL', '//'.HOST_URL_PLAIN); // DO NOT EDIT THIS LINE
 define('TCG_CARDS_FOLDER', '/assets/cards'); // DO NOT EDIT THIS LINE
 
 // BELOW THIS YOU CAN EDIT EVERYTHING
+define('TCG_CARDS_FILLER_NAME', 'filler'); // name of the filler/search card - should be placed in the the folder "/assets/cards/"
 define('TCG_PATH', '/'); // path to your files
 define('TCG_NAME', 'auto petite TCG Script'); // for title-attribute & meta title
 define('TCG_SLOGAN', 'a simple mini Trading Card Game'); // for title-attribute & meta title

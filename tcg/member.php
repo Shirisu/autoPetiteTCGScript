@@ -24,7 +24,7 @@ if (isset($_SESSION['member_rank'])) {
             if ($count_member) {
                 ?>
                 <div class="table-responsive">
-                    <table id="member_table" data-mobile-responsive="true">
+                    <table id="member-table" data-mobile-responsive="true">
                         <thead>
                         <tr>
                             <th data-field="id" data-sortable="true">ID</th>
@@ -41,7 +41,7 @@ if (isset($_SESSION['member_rank'])) {
                             ?>
                             <tr>
                                 <td><?php echo $row_member['member_id']; ?></td>
-                                <td><?php echo member_link($row_member['member_id']); ?></td>
+                                <td><?php echo member_link($row_member['member_id'], '', true); ?></td>
                                 <td><?php echo $row_member['member_level']; ?></td>
                                 <td><?php echo $row_member['member_rank_name']; ?></td>
                                 <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_member['member_register']); ?></td>

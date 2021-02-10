@@ -74,11 +74,9 @@ mysqli_query($link, "DELETE FROM member_online WHERE (member_time+300)<'".$onlin
             height: <?php echo TCG_MASTERCARDS_HEIGHT; ?>px;
         }
 
-        @media (min-width: 768px) {
-            .member-cards-container table.profile-cards tbody tr {
-                flex: 0 0 <?php echo (TCG_CARDS_WIDTH + 12); ?>px;
-                max-width: <?php echo (TCG_CARDS_WIDTH + 12); ?>px;
-            }
+        .member-cards-container table.profile-cards.trade-cards tbody tr {
+            flex: 0 0 <?php echo (TCG_CARDS_WIDTH + 24); ?>px;
+            max-width: <?php echo (TCG_CARDS_WIDTH + 24); ?>px;
         }
     </style>
 </head>
