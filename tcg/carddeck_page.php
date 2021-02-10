@@ -122,12 +122,12 @@ if (isset($_SESSION['member_rank'])) {
                     </div>
                 </div>
                 <div class="col col-12 col-xl-7 text-center order-1 order-xl-2 mb-2 mb-xl-0 overflow-auto">
-                    <div class="carddeck_wrapper" data-is-puzzle="<?php echo ($row_carddeck['carddeck_is_puzzle'] ? $row_carddeck['carddeck_is_puzzle'] : 0); ?>">
+                    <div class="carddeck-wrapper" data-is-puzzle="<?php echo ($row_carddeck['carddeck_is_puzzle'] ? $row_carddeck['carddeck_is_puzzle'] : 0); ?>">
                         <?php
                         for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
                             $filename = TCG_CARDS_FOLDER . '/' . $carddeck_name . '/' . $carddeck_name . sprintf("%'.02d", $i) . '.' . TCG_CARDS_FILE_TYPE;
                             ?>
-                            <span class="card_wrapper" <?php echo (file_exists('.'.$filename) ? 'style="background-image:url('.$filename.');"' : ''); ?>></span>
+                            <span class="card-wrapper" <?php echo (file_exists('.'.$filename) ? 'style="background-image:url('.$filename.');"' : ''); ?>></span>
                             <?php
                             if (($i % TCG_CARDS_PER_ROW) == 0) {
                                 ?>
@@ -137,7 +137,7 @@ if (isset($_SESSION['member_rank'])) {
                         }
                         $filename_master = TCG_CARDS_FOLDER . '/' . $carddeck_name . '/' . $carddeck_name . 'master.' . TCG_CARDS_FILE_TYPE;
                         ?>
-                        <span class="card_wrapper mastercard" <?php echo (file_exists('.'.$filename_master) ? 'style="background-image:url('.$filename_master.');"' : ''); ?>></span>
+                        <span class="card-wrapper mastercard" <?php echo (file_exists('.'.$filename_master) ? 'style="background-image:url('.$filename_master.');"' : ''); ?>></span>
                     </div>
                 </div>
             </div>
@@ -145,7 +145,7 @@ if (isset($_SESSION['member_rank'])) {
                 <div class="col col-12 col-md-4 mb-3">
                     <div class="card">
                         <div class="card-header">
-                            Collect / Wishlist
+                            <i class="fas fa-heart"></i> Collect / <i class="fas fa-star"></i> Wishlist
                         </div>
                         <div class="card-body text-center">
                             <p class="card-text">
@@ -194,7 +194,7 @@ if (isset($_SESSION['member_rank'])) {
                 <div class="col col-12 col-md-4 mb-3">
                     <div class="card">
                         <div class="card-header">
-                            Trade
+                            <i class="fas fa-exchange-alt"></i> Trade
                         </div>
                         <div class="card-body text-center">
                             <p class="card-text">
@@ -228,7 +228,7 @@ if (isset($_SESSION['member_rank'])) {
                 <div class="col col-12 col-md-4 mb-3">
                     <div class="card">
                         <div class="card-header">
-                            Master
+                            <i class="fas fa-award"></i> Master
                         </div>
                         <div class="card-body text-center">
                             <p class="card-text">

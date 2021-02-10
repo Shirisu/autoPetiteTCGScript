@@ -65,11 +65,12 @@ Actual status: **Work in progress**!
   - add to wishlist
   - show collector, trader, master
 - member overview
+- member profile
+  - show profile
 
 
 ## up coming features
 - member profile
-  - show profile
   - show cards, master, wishlist
   - change own profile
     - traderules

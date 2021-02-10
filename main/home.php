@@ -14,7 +14,7 @@ if (mysqli_num_rows($result_news)) {
     ?>
     <div class="row news-container">
         <div class="col col-12">
-            <table class="optional news" data-mobile-responsive="true" data-locale="de-DE">
+            <table class="optional news" data-mobile-responsive="true">
                 <thead>
                     <tr>
                         <th>News</th>

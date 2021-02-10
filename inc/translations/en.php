@@ -82,6 +82,7 @@ $translations['en'] = array(
         'hint_files_rename_after_upload' => 'Files will be renamed after upload',
         'hint_imagesources' => 'Image sources - without http:// or https:// - separate links with <span class="font-weight-bold">2 semicolons (;;)</span> (example: google.com;;wikipedia.com)',
         'hint_irreversible' => 'This is irreversible!',
+        'hint_member_dont_exists' => 'This member does not exist',
         'hint_no_carddeck_yet' => 'There is no card deck yet',
         'hint_no_carddeck_in_this_category_yet' => 'There is no card deck in this category yet',
         'hint_no_category_yet' => 'There is no category yet',
@@ -198,6 +199,10 @@ trading card game
         'mail_part_2' => 'You can now login with your username and the new password.
 Please remember to change your password immediately afterwards!',
         'mail_subject' => 'Password request on '.TCG_NAME,
+    ),
+    'member' => array(
+        'text_profile_no_cards_in_category' => 'No cards in this category',
+        'text_profile_no_text' => 'No text or trade rules specified',
     ),
     'register' => array(
         'already_registered' => 'You\'re already registered!<br />Multiple accounts are not permitted!!',

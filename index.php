@@ -153,10 +153,16 @@ Route::add("/carddeck/([a-z0-9+].*)",function($carddeck_name) {
 Route::add("/member",function() {
     require_once("tcg/member.php");
 });
+Route::add("/member/([0-9+].*)/([a-z+].*)",function($member_id, $category) {
+    if ($category == 'trade') {
+        require_once("tcg/member_page_trade.php");
+    } else {
+        require_once("tcg/member_page.php");
+    }
+});
 Route::add("/member/([0-9+].*)",function($member_id) {
     require_once("tcg/member_page.php");
 });
-
 
 Route::add("/lostpassword",function() {
     require_once("tcg/lostpassword.php");

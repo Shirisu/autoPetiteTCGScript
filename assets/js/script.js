@@ -58,6 +58,14 @@ $(document).ready(function() {
         showHeader: false
     });
 
+    $('table.profile-cards').bootstrapTable('destroy').bootstrapTable({
+        classes: 'table table-borderless',
+        pagination: true,
+        search: true,
+        pageSize: 60,
+        showHeader: false
+    });
+
 
     // replace the "Choose a file" label
     $('input[type="file"]').on('change',function(e){
