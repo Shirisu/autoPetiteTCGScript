@@ -170,6 +170,13 @@ details summary:focus {
     height: 100%;
 }
 
+.bootstrap-table .fixed-table-container .table tbody tr .card-view .card-view-title {
+    overflow-x: auto;
+}
+.bootstrap-table .fixed-table-container .table tbody tr .card-view .card-view-value {
+    padding-left: 5px;
+}
+
 
 /**
 * wishlist style

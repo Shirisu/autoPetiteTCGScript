@@ -57,10 +57,10 @@ if (isset($_SESSION['member_rank'])) {
                 <table id="carddecks_table" data-mobile-responsive="true">
                     <thead>
                     <tr>
-                        <th data-field="name">Name (<?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_abbreviation']; ?>)</th>
-                        <th data-field="series"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_series']; ?></th>
-                        <th data-field="category"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_category']; ?></th>
-                        <th data-field="date"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_date']; ?></th>
+                        <th data-field="name" data-sortable="true">Name (<?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_abbreviation']; ?>)</th>
+                        <th data-field="series" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_series']; ?></th>
+                        <th data-field="category" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_category']; ?></th>
+                        <th data-field="date" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_date']; ?></th>
                         <th data-field="creator"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_creator']; ?></th>
                         <th data-field="options"></th>
                     </tr>

@@ -38,13 +38,15 @@ $(document).ready(function() {
     // use bootstrapTable for all tables without class "optional" or data-paging=no
     $('table:not([data-paging="no"]):not(.optional)').bootstrapTable('destroy').bootstrapTable({
         pagination: true,
-        search: true
+        search: true,
+        sortable: true
     });
 
     // use bootstrapTable without paging
     $('table[data-paging="no"]').bootstrapTable('destroy').bootstrapTable({
         pagination: false,
-        search: true
+        search: true,
+        sortable: true
     });
 
     // use boostrapTable with specific options

@@ -64,6 +64,7 @@ Actual status: **Work in progress**!
   - show cards and details
   - add to wishlist
   - show collector, trader, master
+- member overview
 
 
 ## up coming features

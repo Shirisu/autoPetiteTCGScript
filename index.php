@@ -150,6 +150,12 @@ Route::add("/carddecks/([0-9+].*)",function($category_id) {
 Route::add("/carddeck/([a-z0-9+].*)",function($carddeck_name) {
     require_once("tcg/carddeck_page.php");
 });
+Route::add("/member",function() {
+    require_once("tcg/member.php");
+});
+Route::add("/member/([0-9+].*)",function($member_id) {
+    require_once("tcg/member_page.php");
+});
 
 
 Route::add("/lostpassword",function() {

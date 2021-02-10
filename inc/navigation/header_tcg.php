@@ -2,7 +2,7 @@
 navlink('F.A.Q.','faq');
 navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_rules'],'rules');
 if (isset($_SESSION['member_rank'])) {
-    navlink('Members','member');
+    navlink('Member','member');
     navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks'],'carddecks');
     navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_cardsearch'],'cardsearch');
     navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_exchangeoffice'],'exchangeoffice');

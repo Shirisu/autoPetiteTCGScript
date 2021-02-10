@@ -24,5 +24,5 @@ define('TCG_MASTERCARDS_HEIGHT', '123'); // height of master
 define('TCG_CARDS_START_PACKAGE', '12'); // cards of startdeck
 define('TCG_CURRENCY', 'Dollar'); // currency name
 define('TCG_WISH', 'Wish'); // wish name
-define('TCG_MEMBER_MAX_LVL', '20'); // max level for members
+define('TCG_MEMBER_MAX_LVL', '20'); // max level for member
 ?>
