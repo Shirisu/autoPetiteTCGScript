@@ -28,16 +28,16 @@ if (isset($_SESSION['member_rank'])) {
                 <div class="col col-12 mb-3">
                     <div class="row">
                         <div class="col col-6 col-md-3 mb-2 mb-md-0">
-                            <a href="/member/<?php echo $member_id; ?>/trade" class="btn btn-outline-info btn-sm btn-block active"><i class="fas fa-exchange-alt"></i> Trade</a>
+                            <a href="<?php echo HOST_URL; ?>/member/<?php echo $member_id; ?>/trade" class="btn btn-outline-info btn-sm btn-block active"><i class="fas fa-exchange-alt"></i> Trade</a>
                         </div>
                         <div class="col col-6 col-md-3 mb-2 mb-md-0">
-                            <a href="/member/<?php echo $member_id; ?>/collect" class="btn btn-outline-info btn-sm btn-block"><i class="fas fa-heart"></i> Collect</a>
+                            <a href="<?php echo HOST_URL; ?>/member/<?php echo $member_id; ?>/collect" class="btn btn-outline-info btn-sm btn-block"><i class="fas fa-heart"></i> Collect</a>
                         </div>
                         <div class="col col-6 col-md-3 mb-2 mb-md-0">
-                            <a href="/member/<?php echo $member_id; ?>/master" class="btn btn-outline-info btn-sm btn-block"><i class="fas fa-award"></i> Master</a>
+                            <a href="<?php echo HOST_URL; ?>/member/<?php echo $member_id; ?>/master" class="btn btn-outline-info btn-sm btn-block"><i class="fas fa-award"></i> Master</a>
                         </div>
                         <div class="col col-6 col-md-3 mb-2 mb-md-0">
-                            <a href="/member/<?php echo $member_id; ?>/wishlist" class="btn btn-outline-info btn-sm btn-block"><i class="fas fa-star"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_wishlist']; ?></a>
+                            <a href="<?php echo HOST_URL; ?>/member/<?php echo $member_id; ?>/wishlist" class="btn btn-outline-info btn-sm btn-block"><i class="fas fa-star"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_wishlist']; ?></a>
                         </div>
                     </div>
                 </div>
@@ -80,8 +80,8 @@ if (isset($_SESSION['member_rank'])) {
                                 <tr>
                                     <td>
                                         <div class="profile-cards-wrapper<?php echo ($card_count > 1 ? ' show-counter" data-count="'.$card_count.'x"' : '"'); ?>>
-                                            <?php echo ($member_id != $_SESSION['member_id'] ? '<a href="/trade/'.$row_cards['member_cards_id'].'">' : ''); ?><img src="<?php echo TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$cardnumber.'.'.TCG_CARDS_FILE_TYPE; ?>" alt="<?php echo $carddeck_name.$cardnumber; ?>" /><?php echo ($member_id != $_SESSION['member_id'] ? '</a>' : ''); ?>
-                                            <a class="carddeck-link" href="/carddeck/<?php echo $carddeck_name; ?>"><small><?php echo $carddeck_name.$cardnumber; ?></small></a>
+                                            <?php echo ($member_id != $_SESSION['member_id'] ? '<a href="'.HOST_URL.'/trade/'.$row_cards['member_cards_id'].'">' : ''); ?><img src="<?php echo TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$cardnumber.'.'.TCG_CARDS_FILE_TYPE; ?>" alt="<?php echo $carddeck_name.$cardnumber; ?>" /><?php echo ($member_id != $_SESSION['member_id'] ? '</a>' : ''); ?>
+                                            <a class="carddeck-link" href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>"><small><?php echo $carddeck_name.$cardnumber; ?></small></a>
                                         </div>
                                     </td>
                                 </tr>

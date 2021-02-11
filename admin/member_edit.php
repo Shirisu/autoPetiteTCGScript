@@ -48,7 +48,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
             $count_rank = mysqli_num_rows($result_rank);
             if ($count_rank) {
                 ?>
-                <form action="/administration/editmember/<?php echo $member_id; ?>" method="post">
+                <form action="<?php echo HOST_URL; ?>/administration/editmember/<?php echo $member_id; ?>" method="post">
                     <div class="row align-items-center">
                         <div class="form-group col col-12 col-md-6 mb-2">
                             <div class="input-group">
@@ -197,22 +197,22 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         ?>
         <div class="row">
             <div class="col col-12 col-md-4">
-                <a href="/administration/editmember/all"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_all']; ?></a>
+                <a href="<?php echo HOST_URL; ?>/administration/editmember/all"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_all']; ?></a>
             </div>
             <div class="col col-12 col-md-4">
-                <a href="/administration/editmember/active"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_active']; ?></a>
+                <a href="<?php echo HOST_URL; ?>/administration/editmember/active"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_active']; ?></a>
             </div>
             <div class="col col-12 col-md-4">
-                <a href="/administration/editmember/inactive"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_inactive']; ?></a>
+                <a href="<?php echo HOST_URL; ?>/administration/editmember/inactive"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_inactive']; ?></a>
             </div>
             <div class="col col-12 col-md-4">
-                <a href="/administration/editmember/notactivatedyet"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_not_active']; ?></a>
+                <a href="<?php echo HOST_URL; ?>/administration/editmember/notactivatedyet"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_not_active']; ?></a>
             </div>
             <div class="col col-12 col-md-4">
-                <a href="/administration/editmember/deleted"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_deleted']; ?></a>
+                <a href="<?php echo HOST_URL; ?>/administration/editmember/deleted"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_deleted']; ?></a>
             </div>
             <div class="col col-12 col-md-4">
-                <a href="/administration/editmember/blocked"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_blocked']; ?></a>
+                <a href="<?php echo HOST_URL; ?>/administration/editmember/blocked"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_blocked']; ?></a>
             </div>
         </div>
 
@@ -273,14 +273,14 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                             <tr>
                                 <td><?php echo $row['member_id']; ?></td>
                                 <td><?php echo ($row['member_active'] == 4 ? '---' : $row['member_ip']); ?></td>
-                                <td><?php echo ($row['member_active'] == 4 ? $row['member_nick'] : '<a href="/member/'.$row['member_id'].'">'.$row['member_nick'].'</a>'); ?>
+                                <td><?php echo ($row['member_active'] == 4 ? $row['member_nick'] : '<a href="'.HOST_URL.'/member/'.$row['member_id'].'">'.$row['member_nick'].'</a>'); ?>
                                 </td>
                                 <td><?php echo ($row['member_active'] == 4 ? '---' : date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row['member_last_login'])); ?></td>
                                 <td><?php echo get_active_status($row['member_active']); ?></td>
                                 <td><?php echo ($row['member_active'] == 4 ? '---' : sprintf('%02d', $row['member_rank_id']) . ' - ' . $row['member_rank_name']); ?></td>
                                 <td>
-                                    <?php echo ($row['member_active'] == 4 ? '' : '<a href="/administration/editmember/'.$row['member_id'].'">Edit</a>'); ?>
-                                    <?php echo ($row['member_active'] == 4 ? '' : '<br /><a href="/administration/deletemember/'.$row['member_id'].'">'.TRANSLATIONS[$GLOBALS['language']]['general']['text_delete'].'</a>'); ?>
+                                    <?php echo ($row['member_active'] == 4 ? '' : '<a href="'.HOST_URL.'/administration/editmember/'.$row['member_id'].'">Edit</a>'); ?>
+                                    <?php echo ($row['member_active'] == 4 ? '' : '<br /><a href="'.HOST_URL.'/administration/deletemember/'.$row['member_id'].'">'.TRANSLATIONS[$GLOBALS['language']]['general']['text_delete'].'</a>'); ?>
                                 </td>
                             </tr>
                             <?php

@@ -54,7 +54,7 @@ if (isset($_POST['nickname']) && isset($_POST['email'])) {
         ?>
     </div>
     <div class="col col-12 col-md-6 mb-3">
-        <form action="/lostpassword" method="post">
+        <form action="<?php echo HOST_URL; ?>/lostpassword" method="post">
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-prepend">

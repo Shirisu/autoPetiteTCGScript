@@ -38,7 +38,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
             title(TRANSLATIONS[$GLOBALS['language']]['admin']['news_edit_headline']);
 
             ?>
-            <form action="/administration/editnews/<?php echo $news_id; ?>" method="post">
+            <form action="<?php echo HOST_URL; ?>/administration/editnews/<?php echo $news_id; ?>" method="post">
                 <div class="row align-items-center">
                     <div class="form-group col col-12 mb-2">
                         <div class="input-group">
@@ -93,7 +93,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                     if (mysqli_num_rows($result_carddeck)) {
                                         $row_carddeck = mysqli_fetch_assoc($result_carddeck);
                                         ?>
-                                        <a href="/carddeck/<?php echo $row_carddeck['carddeck_name']; ?>"><img
+                                        <a href="<?php echo HOST_URL; ?>/carddeck/<?php echo $row_carddeck['carddeck_name']; ?>"><img
                                                 src="<?php echo TCG_CARDS_FOLDER . '/' . $row_carddeck['carddeck_name'] . '/' . $row_carddeck['carddeck_name'] . '01.' . TCG_CARDS_FILE_TYPE; ?>"/></a>
                                         <?php
                                     }
@@ -159,7 +159,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                 <td><?php echo shorten_text($row['news_text'], 20); ?></td>
                                 <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row['news_date']); ?></td>
                                 <td><?php echo ($row['news_cardupdate_id'] != NULL ? TRANSLATIONS[$GLOBALS['language']]['general']['text_yes'] : TRANSLATIONS[$GLOBALS['language']]['general']['text_no']); ?></td>
-                                <td><a href="/administration/editnews/<?php echo $row['news_id']; ?>">Edit</a></td>
+                                <td><a href="<?php echo HOST_URL; ?>/administration/editnews/<?php echo $row['news_id']; ?>">Edit</a></td>
                             </tr>
                             <?php
                         }

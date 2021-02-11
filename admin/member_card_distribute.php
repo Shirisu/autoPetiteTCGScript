@@ -47,7 +47,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         $random_carddeck_quantity = 50;
     }
     ?>
-    <form action="/administration/distributecards" method="post">
+    <form action="<?php echo HOST_URL; ?>/administration/distributecards" method="post">
         <div class="row align-items-center">
             <div class="form-group col col-12 col-md-6 mb-2">
                 <?php

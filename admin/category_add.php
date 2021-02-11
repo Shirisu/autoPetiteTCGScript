@@ -34,7 +34,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
     }
 
     ?>
-    <form action="/administration/addcategory" method="post">
+    <form action="<?php echo HOST_URL; ?>/administration/addcategory" method="post">
         <div class="row align-items-center">
             <div class="form-group col mb-2">
                 <div class="input-group">

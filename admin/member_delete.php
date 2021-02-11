@@ -104,7 +104,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                         <?php alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_irreversible'] . ' ' . TRANSLATIONS[$GLOBALS['language']]['general']['hint_delete_all_data'], 'warning'); ?>
                     </div>
                     <div class="col col-12 mt-2">
-                        <form action="/administration/deletemember/<?php echo $member_id; ?>" method="post">
+                        <form action="<?php echo HOST_URL; ?>/administration/deletemember/<?php echo $member_id; ?>" method="post">
                             <div class="row">
                                 <div class="form-group col col-12 mb-2">
                                     <div class="input-group">

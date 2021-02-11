@@ -85,7 +85,7 @@ if (isset($_SESSION['member_rank'])) {
                         $is_on_wishlist = mysqli_num_rows($result_on_wishlist) > 0;
                         ?>
                         <tr>
-                            <td><a href="/carddeck/<?php echo $row_carddeck['carddeck_name']; ?>"><?php echo $row_carddeck['carddeck_name']; ?></a></td>
+                            <td><a href="<?php echo HOST_URL; ?>/carddeck/<?php echo $row_carddeck['carddeck_name']; ?>"><?php echo $row_carddeck['carddeck_name']; ?></a></td>
                             <td><?php echo $row_carddeck['carddeck_series']; ?></td>
                             <td><?php echo ($category_filter == '' ? $row_carddeck['carddeck_cat_name'].' <i class="fas fa-angle-right"></i>' : ''); ?> <?php echo $row_carddeck['carddeck_sub_cat_name']; ?></td>
                             <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_carddeck['carddeck_date']); ?></td>

@@ -11,16 +11,16 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         ?>
         <div class="row mb-5">
             <div class="col col-12 col-md-6">
-                <a href="/administration/addcategory"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['category_add_headline']; ?></a>
+                <a href="<?php echo HOST_URL; ?>/administration/addcategory"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['category_add_headline']; ?></a>
             </div>
             <div class="col col-12 col-md-6">
-                <a href="/administration/editcategory"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['category_edit_headline']; ?></a>
+                <a href="<?php echo HOST_URL; ?>/administration/editcategory"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['category_edit_headline']; ?></a>
             </div>
             <div class="col col-12 col-md-6">
-                <a href="/administration/addsubcategory"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['subcategory_add_headline']; ?></a>
+                <a href="<?php echo HOST_URL; ?>/administration/addsubcategory"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['subcategory_add_headline']; ?></a>
             </div>
             <div class="col col-12 col-md-6">
-                <a href="/administration/editsubcategory"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['subcategory_edit_headline']; ?></a>
+                <a href="<?php echo HOST_URL; ?>/administration/editsubcategory"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['subcategory_edit_headline']; ?></a>
             </div>
         </div>
         <?php
@@ -31,10 +31,10 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         ?>
         <div class="row mb-5">
             <div class="col col-12 col-md-6">
-                <a href="/administration/addcarddeck"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['carddeck_add_headline']; ?></a>
+                <a href="<?php echo HOST_URL; ?>/administration/addcarddeck"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['carddeck_add_headline']; ?></a>
             </div>
             <div class="col col-12 col-md-6">
-                <a href="/administration/editcarddeck"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['carddeck_edit_headline']; ?></a>
+                <a href="<?php echo HOST_URL; ?>/administration/editcarddeck"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['carddeck_edit_headline']; ?></a>
             </div>
         </div>
         <?php
@@ -43,7 +43,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         ?>
         <div class="row mb-5">
             <div class="col col-12 col-md-6">
-                <a href="/administration/addcardupdate"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['cardupdate_add_headline']; ?></a>
+                <a href="<?php echo HOST_URL; ?>/administration/addcardupdate"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['cardupdate_add_headline']; ?></a>
             </div>
         </div>
         <?php
@@ -52,10 +52,10 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         ?>
         <div class="row mb-5">
             <div class="col col-12 col-md-6">
-                <a href="/administration/addnews"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['news_add_headline']; ?></a>
+                <a href="<?php echo HOST_URL; ?>/administration/addnews"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['news_add_headline']; ?></a>
             </div>
             <div class="col col-12 col-md-6">
-                <a href="/administration/editnews"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['news_edit_headline']; ?></a>
+                <a href="<?php echo HOST_URL; ?>/administration/editnews"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['news_edit_headline']; ?></a>
             </div>
         </div>
         <?php
@@ -66,7 +66,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         ?>
         <div class="row">
             <div class="col col-12 col-md-6">
-                <a href="/administration/editmember/all"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_edit_headline']; ?></a>
+                <a href="<?php echo HOST_URL; ?>/administration/editmember/all"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_edit_headline']; ?></a>
             </div>
             <?php
             $sql_carddeck_yet = "SELECT carddeck_id
@@ -77,16 +77,16 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
             if (mysqli_num_rows($result_carddeck_yet)) {
                 ?>
                 <div class="col col-12 col-md-6">
-                    <a href="/administration/distributecards"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['card_distribute_headline']; ?></a>
+                    <a href="<?php echo HOST_URL; ?>/administration/distributecards"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['card_distribute_headline']; ?></a>
                 </div>
                 <?php
             }
             ?>
             <div class="col col-12 col-md-6">
-                <a href="/administration/distributecurrency"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['currency_distribute_headline']; ?></a>
+                <a href="<?php echo HOST_URL; ?>/administration/distributecurrency"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['currency_distribute_headline']; ?></a>
             </div>
             <div class="col col-12 col-md-6">
-                <a href="/administration/distributewish"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['wish_distribute_headline']; ?></a>
+                <a href="<?php echo HOST_URL; ?>/administration/distributewish"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['wish_distribute_headline']; ?></a>
             </div>
         </div>
         <?php

@@ -87,7 +87,7 @@ if (isset($_POST['nickname'])) {
             echo TRANSLATIONS[$GLOBALS['language']]['register']['already_registered'];
         } else {
         ?>
-            <form action="/register" method="post">
+            <form action="<?php echo HOST_URL; ?>/register" method="post">
                 <div class="form-row">
                     <div class="form-group col col-12 col-md-6">
                         <div class="input-group">

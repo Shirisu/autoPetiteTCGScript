@@ -94,7 +94,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                              ORDER BY carddeck_cat_name ASC";
             $result_category = mysqli_query($link, $sql_category) OR die(mysqli_error($link));
             ?>
-            <form action="/administration/editcarddeck/<?php echo $carddeck_id; ?>" method="post"
+            <form action="<?php echo HOST_URL; ?>/administration/editcarddeck/<?php echo $carddeck_id; ?>" method="post"
                   enctype="multipart/form-data">
                 <div class="row align-items-center">
                     <div class="form-group col col-12 col-md-6 mb-2">
@@ -383,7 +383,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                 <td><?php echo $row['carddeck_name']; ?></td>
                                 <td><?php echo $row['carddeck_cat_name']; ?> <i class="fas fa-angle-right"></i> <?php echo $row['carddeck_sub_cat_name']; ?></td>
                                 <td><?php echo get_active_status($row['carddeck_active']); ?></td>
-                                <td><a href="/administration/editcarddeck/<?php echo $row['carddeck_id']; ?>">Edit</a></td>
+                                <td><a href="<?php echo HOST_URL; ?>/administration/editcarddeck/<?php echo $row['carddeck_id']; ?>">Edit</a></td>
                             </tr>
                             <?php
                         }

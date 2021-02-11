@@ -34,7 +34,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
 
             title(TRANSLATIONS[$GLOBALS['language']]['admin']['category_edit_headline']);
             ?>
-            <form action="/administration/editcategory/<?php echo $category_id; ?>" method="post">
+            <form action="<?php echo HOST_URL; ?>/administration/editcategory/<?php echo $category_id; ?>" method="post">
                 <div class="row align-items-center">
                     <div class="form-group col col-12 mb-2">
                         <div class="input-group">
@@ -104,7 +104,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                             <tr>
                                 <td><?php echo $row['carddeck_cat_id']; ?></td>
                                 <td><?php echo $row['carddeck_cat_name']; ?></td>
-                                <td><a href="/administration/editcategory/<?php echo $row['carddeck_cat_id']; ?>">Edit</a></td>
+                                <td><a href="<?php echo HOST_URL; ?>/administration/editcategory/<?php echo $row['carddeck_cat_id']; ?>">Edit</a></td>
                             </tr>
                             <?php
                         }

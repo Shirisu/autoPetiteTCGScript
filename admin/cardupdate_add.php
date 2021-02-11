@@ -70,7 +70,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         ?>
         <div class="row mb-4">
             <div class="col">
-                <form action="/administration/addcardupdate" method="post">
+                <form action="<?php echo HOST_URL; ?>/administration/addcardupdate" method="post">
                     <table id="admin-member-edit-table" data-mobile-responsive="true" data-paging="no">
                         <thead>
                             <tr>
@@ -123,7 +123,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         $updatedecks = $_POST['updatedecks'];
         $count_decks = sizeof($updatedecks);
         ?>
-        <form action="/administration/addcardupdate" method="post">
+        <form action="<?php echo HOST_URL; ?>/administration/addcardupdate" method="post">
             <div class="row align-items-center">
                 <div class="form-group col col-12 col-md-6 mb-2">
                     <div class="input-group">
@@ -165,7 +165,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                             if (mysqli_num_rows($result_carddeck)) {
                                 $row_carddeck = mysqli_fetch_assoc($result_carddeck);
                                 ?>
-                                    <a href="/carddeck/<?php echo $row_carddeck['carddeck_name']; ?>"><img src="<?php echo TCG_CARDS_FOLDER.'/'.$row_carddeck['carddeck_name'].'/'.$row_carddeck['carddeck_name'].'01.'.TCG_CARDS_FILE_TYPE; ?>" /></a>
+                                    <a href="<?php echo HOST_URL; ?>/carddeck/<?php echo $row_carddeck['carddeck_name']; ?>"><img src="<?php echo TCG_CARDS_FOLDER.'/'.$row_carddeck['carddeck_name'].'/'.$row_carddeck['carddeck_name'].'01.'.TCG_CARDS_FILE_TYPE; ?>" /></a>
                                 <?php
                             }
                         }

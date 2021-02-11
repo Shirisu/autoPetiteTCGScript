@@ -41,7 +41,7 @@ if (isset($_SESSION['member_rank'])) {
                             </tr>
                             <tr>
                                 <th scope="row"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_category_main']; ?></th>
-                                <td><a href="/carddecks/<?php echo $row_carddeck['carddeck_cat']; ?>"><?php echo $row_carddeck['carddeck_cat_name']; ?></a></td>
+                                <td><a href="<?php echo HOST_URL; ?>/carddecks/<?php echo $row_carddeck['carddeck_cat']; ?>"><?php echo $row_carddeck['carddeck_cat_name']; ?></a></td>
                             </tr>
                             <tr>
                                 <th scope="row"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_category_sub']; ?></th>

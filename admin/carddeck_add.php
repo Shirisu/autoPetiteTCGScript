@@ -74,7 +74,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                      ORDER BY carddeck_cat_name ASC";
     $result_category = mysqli_query($link, $sql_category) OR die(mysqli_error($link));
     ?>
-    <form action="/administration/addcarddeck" method="post" enctype="multipart/form-data">
+    <form action="<?php echo HOST_URL; ?>/administration/addcarddeck" method="post" enctype="multipart/form-data">
         <div class="row align-items-center">
             <div class="form-group col col-12 mb-2">
                 <div class="input-group">

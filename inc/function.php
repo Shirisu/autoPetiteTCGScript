@@ -107,12 +107,12 @@ function member_link($member_id, $custom_link_class = '', $show_with_rank = fals
             $rankclass = 'member';
         }
 
-        return $rank = '<a '.($custom_link_class ? 'class="'.$custom_link_class.'"' : '').' href="/member/'.$row['member_id'].'"
+        return $rank = '<a '.($custom_link_class ? 'class="'.$custom_link_class.'"' : '').' href="'.HOST_URL.'/member/'.$row['member_id'].'"
                         title="'.$row['member_rank_name'].'">
                         <span class="'.$rankclass.'">'.$row['member_nick'].'</span>
                     </a>';
     } else {
-        return $rank = '<a '.($custom_link_class ? 'class="'.$custom_link_class.'"' : '').' href="/member/'.$row['member_id'].'">'.$row['member_nick'].'</a>';
+        return $rank = '<a '.($custom_link_class ? 'class="'.$custom_link_class.'"' : '').' href="'.HOST_URL.'/member/'.$row['member_id'].'">'.$row['member_nick'].'</a>';
     }
 }
 
@@ -128,7 +128,7 @@ function breadcrumb($breadcrumb_array) {
                     <?php
                 } else {
                     ?>
-                    <li class="breadcrumb-item"><a href="<?php echo $link; ?>"><?php echo $text; ?></a></li>
+                    <li class="breadcrumb-item"><a href="<?php echo HOST_URL.$link; ?>"><?php echo $text; ?></a></li>
                     <?php
                 }
             }

@@ -38,7 +38,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                    ORDER BY member_nick ASC";
     $result_member = mysqli_query($link, $sql_member) OR die(mysqli_error($link));
     ?>
-    <form action="/administration/distributecurrency" method="post">
+    <form action="<?php echo HOST_URL; ?>/administration/distributecurrency" method="post">
         <div class="row align-items-center">
             <div class="form-group col col-12 col-md-6 mb-2">
                 <?php

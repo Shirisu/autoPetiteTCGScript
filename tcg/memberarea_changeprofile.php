@@ -43,7 +43,7 @@ if (isset($_SESSION['member_rank'])) {
         ?>
         <div class="row">
             <div class="col">
-                <form action="/memberarea/changeprofile" method="post">
+                <form action="<?php echo HOST_URL; ?>/memberarea/changeprofile" method="post">
                     <div class="row align-items-center">
                         <div class="form-group col col-12 col-md-6 mb-2">
                             <div class="input-group">

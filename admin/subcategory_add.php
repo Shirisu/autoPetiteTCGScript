@@ -50,7 +50,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                 ORDER BY carddeck_cat_name ASC";
     $result_cat = mysqli_query($link, $sql_cat) OR die(mysqli_error($link));
     ?>
-    <form action="/administration/addsubcategory" method="post">
+    <form action="<?php echo HOST_URL; ?>/administration/addsubcategory" method="post">
         <div class="row align-items-center">
             <div class="form-group col col-12 mb-2">
                 <div class="input-group">

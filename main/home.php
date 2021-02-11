@@ -40,7 +40,7 @@ if (mysqli_num_rows($result_news)) {
                                                 </small>
                                             </div>
                                             <div class="col col-6 text-right">
-                                                <small><a href="/news/<?php echo $row_news['news_id']; ?>"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_news_read_more']; ?></a></small>
+                                                <small><a href="<?php echo HOST_URL; ?>/news/<?php echo $row_news['news_id']; ?>"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_news_read_more']; ?></a></small>
                                             </div>
                                         </div>
                                     </div>

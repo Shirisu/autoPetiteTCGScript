@@ -28,7 +28,7 @@ title('Team ('.$anz_a.')');
             <div class="col col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card">
                     <div class="card-header">
-                        <a href="/tcg/member/<?php echo $row_a['member_id']; ?>"><?php echo $row_a['member_nick']; ?></a>
+                        <?php echo member_link($row_a['member_id']); ?>
                     </div>
                     <div class="card-body">
                         <div class="card-text">

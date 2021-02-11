@@ -48,7 +48,7 @@ if (mysqli_num_rows($result_news)) {
                                     if (mysqli_num_rows($result_carddeck)) {
                                         $row_carddeck = mysqli_fetch_assoc($result_carddeck);
                                         ?>
-                                        <a href="/carddeck/<?php echo $row_carddeck['carddeck_name']; ?>"><img
+                                        <a href="<?php echo HOST_URL; ?>/carddeck/<?php echo $row_carddeck['carddeck_name']; ?>"><img
                                                 src="<?php echo TCG_CARDS_FOLDER . '/' . $row_carddeck['carddeck_name'] . '/' . $row_carddeck['carddeck_name'] . '01.' . TCG_CARDS_FILE_TYPE; ?>"/></a>
                                         <?php
                                     }
