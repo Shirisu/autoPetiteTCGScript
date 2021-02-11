@@ -14,12 +14,20 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         $quantity = mysqli_real_escape_string($link, trim($_POST['quantity']));
         $topic = mysqli_real_escape_string($link, strip_tags(trim($_POST['topic'])));
 
-        insert_currency($member_id, $quantity);
-        $inserted_currency_text = TRANSLATIONS[$GLOBALS['language']]['admin']['text_log_distribute_currency'].': '.$quantity;
+        $sql_language = "SELECT member_language
+                         FROM member
+                         WHERE member_id = '".$member_id."'
+                         LIMIT 1";
+        $result_language = mysqli_query($link, $sql_language) OR die(mysqli_error($link));
+        $row_language = mysqli_fetch_assoc($result_language);
+        $language = $row_language['member_language'];
 
-        insert_log(TRANSLATIONS[$GLOBALS['language']]['admin']['text_log_distribute_currency_topic'], $inserted_currency_text, $member_id);
-        $text = $inserted_currency_text.' - '.TRANSLATIONS[$GLOBALS['language']]['admin']['text_log_distribute_currency_topic'].': '.$topic;
-        send_message($_SESSION['member_id'], $member_id, $topic, $text);
+        insert_currency($member_id, $quantity);
+        $inserted_currency_text = TRANSLATIONS[$language]['admin']['text_log_distribute_currency'].': '.$quantity;
+
+        insert_log(TRANSLATIONS[$language]['admin']['text_log_distribute_currency_topic'], $inserted_currency_text, $member_id);
+        $text = TRANSLATIONS[$language]['admin']['text_distribution_topic'].': '.$topic.' - '.$inserted_currency_text;
+        send_message($_SESSION['member_id'], $member_id, TRANSLATIONS[$language]['admin']['text_log_distribute_currency_topic'], $text);
 
         alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_success_currency_add'], 'success');
     }
@@ -77,7 +85,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
             <div class="form-group col col-12 col-md-6 mb-2">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="ariaDescribedbyTopic"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_card_distribution_topic']; ?></span>
+                        <span class="input-group-text" id="ariaDescribedbyTopic"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_distribution_topic']; ?></span>
                     </div>
                     <input type="text" class="form-control" id="topic" name="topic" aria-describedby="ariaDescribedbyTopic" maxlength="255" value="" required />
                 </div>
