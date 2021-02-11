@@ -73,6 +73,9 @@ if (!isset($_SESSION['member_id'])) {
     }
     navilink($text_pn_count,'message',$icon);
 
+
+    navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_memberarea'],'memberarea','atom');
+
     // card deck main categories
     $sql_carddeck_cat = "SELECT carddeck_cat_id, carddeck_cat_name
                          FROM carddeck_cat
@@ -98,7 +101,7 @@ $sql_member_online = "SELECT member.member_id, member.member_nick, member.member
 $result_member_online = mysqli_query($link, $sql_member_online) OR die(mysqli_error($link));
 $count_member = mysqli_num_rows($result_member_online);
 ?>
-<div class="sidebar-subheading"><i class="fas fa-user"></i> Online: <?php echo $count_member; ?></div>
+<div class="sidebar-subheading"><i class="fas fa-users"></i> Online: <?php echo $count_member; ?></div>
 <?php
 if (isset($_SESSION['member_rank'])) {
     require_once("header_onlinemember.php");

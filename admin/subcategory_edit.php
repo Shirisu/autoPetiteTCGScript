@@ -125,7 +125,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
             ?>
             <div class="row">
                 <div class="col">
-                    <table id="admin_member_edit_table" data-mobile-responsive="true">
+                    <table id="admin-member-edit-table" data-mobile-responsive="true">
                         <thead>
                         <tr>
                             <th data-field="id">ID</th>

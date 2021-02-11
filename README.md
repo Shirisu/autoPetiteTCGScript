@@ -69,28 +69,31 @@ Actual status: **Work in progress**!
   - show profile
   - show cards
   - master, wishlist
-
-
-## up coming features
-- member profile
+- memberarea
+  - overview
   - change own profile
     - traderules
     - some personal stuff like language, email
+  - show log
+
+
+## up coming features
+- memberarea
+  - search
+    - missing cards for member
+  - shop
+    - change currency in cards
+    - change wish in cards
+  - cardupdate
+    - get new cards
 - managing of cards
   - sort in categories (trade, collect)
   - master full carddecks
 - games
-- cardupdate
-  - get new cards
 - message system
 - trade system
   - fully automatic
   - semi-automatic
-- search
-  - missing cards for member
-- shop
-  - change currency in cards
-  - change wish in cards
 
 
 ## possible features in the future

@@ -54,7 +54,7 @@ if (isset($_SESSION['member_rank'])) {
             <?php
             if ($count_carddeck) {
                 ?>
-                <table id="carddecks_table" data-mobile-responsive="true">
+                <table id="carddecks-table" data-mobile-responsive="true">
                     <thead>
                     <tr>
                         <th data-field="name" data-sortable="true">Name (<?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_abbreviation']; ?>)</th>

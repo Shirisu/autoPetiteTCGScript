@@ -71,7 +71,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         <div class="row mb-4">
             <div class="col">
                 <form action="/administration/addcardupdate" method="post">
-                    <table id="admin_member_edit_table" data-mobile-responsive="true" data-paging="no">
+                    <table id="admin-member-edit-table" data-mobile-responsive="true" data-paging="no">
                         <thead>
                             <tr>
                                 <th data-field="options"></th>

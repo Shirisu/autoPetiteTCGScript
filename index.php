@@ -169,6 +169,18 @@ Route::add("/member/([0-9+].*)/([a-z+].*)",function($member_id, $category) {
 Route::add("/member/([0-9+].*)",function($member_id) {
     require_once("tcg/member_page.php");
 });
+Route::add("/memberarea/changeprofile",function() {
+    require_once("tcg/memberarea_changeprofile.php");
+});
+Route::add("/memberarea/changeprofile",function() {
+    require_once("tcg/memberarea_changeprofile.php");
+}, "post");
+Route::add("/memberarea/log",function() {
+    require_once("tcg/memberarea_log.php");
+});
+Route::add("/memberarea",function() {
+    require_once("tcg/memberarea.php");
+});
 
 Route::add("/lostpassword",function() {
     require_once("tcg/lostpassword.php");

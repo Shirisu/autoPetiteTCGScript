@@ -189,7 +189,6 @@ CREATE TABLE IF NOT EXISTS `member_log` (
   `member_log_date` int(11) NOT NULL,
   `member_log_cat` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
   `member_log_text` text COLLATE utf8_unicode_ci NOT NULL,
-  `member_log_active` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`member_log_id`),
   KEY `member_log_member_id` (`member_log_member_id`),
   CONSTRAINT `member_log_ibfk_1` FOREIGN KEY (`member_log_member_id`) REFERENCES `member` (`member_id`)

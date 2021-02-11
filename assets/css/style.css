@@ -318,8 +318,12 @@ table.carddeck td {
     }
 }
 .member-cards-container .pagination-detail,
-.member-wishlist-container .pagination-detail {
+.member-wishlist-container .pagination-detail,
+.member-log-container .pagination-detail {
     display: none;
+}
+.memberarea .card .media a {
+    display: block;
 }
 
 

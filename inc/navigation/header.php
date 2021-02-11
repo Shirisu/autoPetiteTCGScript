@@ -47,16 +47,6 @@
                         ?>
                     </div>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMemberarea" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_memberarea']; ?>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMemberarea">
-                        <?php
-                        require_once("header_memberarea.php");
-                        ?>
-                    </div>
-                </li>
                 <?php
             }
             ?>
