@@ -18,9 +18,9 @@ if (isset($_SESSION['member_rank'])) {
     }
 
     $sql_carddeck = "SELECT carddeck_id, carddeck_name
-                         FROM carddeck
-                         WHERE carddeck_active = 1
-                         ORDER BY carddeck_name ASC";
+                     FROM carddeck
+                     WHERE carddeck_active = 1
+                     ORDER BY carddeck_name ASC";
     $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
     if (mysqli_num_rows($result_carddeck)) {
         ?>
@@ -88,7 +88,7 @@ if (isset($_SESSION['member_rank'])) {
         ?>
         <div class="row">
             <div class="col col-12 text-center mb-2">
-                <?php echo get_card($carddeck_id, $card_number); ?>
+                <?php echo show_card($carddeck_id, $card_number); ?>
             </div>
             <div class="col col-12 member-search-container">
                 <?php

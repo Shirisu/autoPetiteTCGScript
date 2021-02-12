@@ -1,9 +1,9 @@
 # autoPetiteTCGScript
 A simple and light script for a mini automated Trading Card Game (TCG).
 
-It's written in PHP and use jQuery and plain CSS.
+It's written in PHP and uses jQuery and plain CSS.
 
-It's based on the script of "Tasty TCG" from 2016 but it's almost completely reworked.
+It's based on the concept and script of "Tasty TCG" from 2016 but it's almost completely reworked.
 
 Actual status: **Work in progress**!
 
@@ -77,13 +77,13 @@ Actual status: **Work in progress**!
   - show log
   - search
     - missing cards for members
+  - shop
+    - change currency in cards
+    - change wish in cards
 
 
 ## up coming features
 - memberarea
-  - shop
-    - change currency in cards
-    - change wish in cards
   - cardupdate
     - get new cards
 - managing of cards

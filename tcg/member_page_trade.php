@@ -82,7 +82,7 @@ if (isset($_SESSION['member_rank'])) {
                                 <tr>
                                     <td>
                                         <div class="profile-cards-wrapper<?php echo ($card_count > 1 ? ' show-counter" data-count="'.$card_count.'x' : ''); ?>">
-                                            <?php echo ($member_id != $_SESSION['member_id'] ? '<a href="'.HOST_URL.'/trade/'.$row_cards['member_cards_id'].'">' : ''); ?><?php echo get_card($carddeck_id, $cardnumber_plain); ?><?php echo ($member_id != $_SESSION['member_id'] ? '</a>' : ''); ?>
+                                            <?php echo ($member_id != $_SESSION['member_id'] ? '<a href="'.HOST_URL.'/trade/'.$row_cards['member_cards_id'].'">' : ''); ?><?php echo show_card($carddeck_id, $cardnumber_plain); ?><?php echo ($member_id != $_SESSION['member_id'] ? '</a>' : ''); ?>
                                             <a class="carddeck-link" href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>"><small><?php echo $carddeck_name.$cardnumber; ?></small></a>
                                         </div>
                                     </td>

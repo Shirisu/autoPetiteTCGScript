@@ -175,6 +175,21 @@ function insert_cards($member_id, $quantity) {
     mysqli_query($link, "UPDATE member SET member_cards = member_cards + '".$quantity."' WHERE member_id = '".$member_id."' LIMIT 1") OR die(mysqli_error($link));
 }
 
+function insert_specific_cards($member_id, $carddeck_id, $card_number) {
+    global $link;
+
+    $sql = "SELECT carddeck_name
+            FROM carddeck
+            WHERE carddeck_id = '".$carddeck_id."'
+            LIMIT 1";
+    $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
+
+    if (mysqli_num_rows($result)) {
+        mysqli_query($link, "INSERT INTO member_cards (member_cards_carddeck_id, member_cards_number, member_cards_member_id) VALUES ('" . $carddeck_id . "','" . $card_number . "','" . $member_id . "')") OR die(mysqli_error($link));
+        mysqli_query($link, "UPDATE member SET member_cards = member_cards + 1 WHERE member_id = '" . $member_id . "' LIMIT 1") OR die(mysqli_error($link));
+    }
+}
+
 function insert_wish($member_id, $quantity) {
     global $link;
 
@@ -198,6 +213,45 @@ function insert_log($topic, $text, $member_id) {
     OR DIE(mysqli_error($link));
 }
 
+function insert_shop_random($member_id, $quantity) {
+    global $link;
+
+    if (get_member_currency($_SESSION['member_id']) / TCG_SHOP_CURRENCY_FOR_RANDOM >= $quantity) {
+        $currency_spent = $quantity * TCG_SHOP_CURRENCY_FOR_RANDOM;
+
+        mysqli_query($link, "UPDATE member SET member_currency = member_currency - '".$currency_spent."' WHERE member_id = '".$member_id."' LIMIT 1") OR die(mysqli_error($link));
+        insert_cards($member_id, $quantity);
+        $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['shop']['text_you_spent'].' '.$currency_spent.' '.TCG_CURRENCY.' '.TRANSLATIONS[$GLOBALS['language']]['shop']['text_and_got_following'].': '.implode(', ',$_SESSION['insert_cards']);
+        insert_log('Shop', $inserted_cards_text, $member_id);
+        return alert_box($inserted_cards_text, 'success');
+    } else {
+        return alert_box(TRANSLATIONS[$GLOBALS['language']]['shop']['hint_not_enough_currency'], 'danger');
+    }
+}
+
+function insert_shop_card($member_id, $carddeck_id, $card_number) {
+    global $link;
+
+    if (get_member_wish($_SESSION['member_id']) > 0) {
+        $sql_carddeck = "SELECT carddeck_name
+                         FROM carddeck
+                         WHERE carddeck_id = '".$carddeck_id."'
+                         LIMIT 1";
+        $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
+        if (mysqli_num_rows($result_carddeck)) {
+            $row_carddeck = mysqli_fetch_assoc($result_carddeck);
+            $carddeck_name = $row_carddeck['carddeck_name'];
+            mysqli_query($link, "UPDATE member SET member_wish = member_wish - 1 WHERE member_id = '".$member_id."' LIMIT 1") OR die(mysqli_error($link));
+            insert_specific_cards($member_id, $carddeck_id, $card_number);
+            $inserted_card_text = TRANSLATIONS[$GLOBALS['language']]['shop']['text_you_spent'] . ' 1 ' . TCG_WISH . ' ' . TRANSLATIONS[$GLOBALS['language']]['shop']['text_and_got_following'] . ': ' . $carddeck_name . sprintf('%02d', $card_number);
+            insert_log('Shop', $inserted_card_text, $member_id);
+            return alert_box($inserted_card_text, 'success');
+        }
+    } else {
+        return alert_box(TRANSLATIONS[$GLOBALS['language']]['shop']['hint_not_enough_wish'], 'danger');
+    }
+}
+
 function send_message($sender, $receiver, $subject, $text) {
     global $link;
 
@@ -217,7 +271,7 @@ function shorten_text($text, $length) {
     }
 }
 
-function get_card($carddeck_id, $card_number, $show_only_url = false, $show_inactive = false) {
+function show_card($carddeck_id, $card_number, $show_only_url = false, $show_inactive = false) {
     global $link;
 
     $active_query_string = ($show_inactive ? '' : 'AND carddeck_active = 1');
@@ -245,7 +299,38 @@ function get_card($carddeck_id, $card_number, $show_only_url = false, $show_inac
     }
 }
 
+function get_member_currency($member_id) {
+    global $link;
 
+    $sql = "SELECT member_currency
+            FROM member
+            WHERE member_id = '".$member_id."'
+            LIMIT 1";
+    $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
+    if (mysqli_num_rows($result)) {
+        $row = mysqli_fetch_assoc($result);
 
+        return $row['member_currency'];
+    }
+
+    return 0;
+}
+
+function get_member_wish($member_id) {
+    global $link;
+
+    $sql = "SELECT member_wish
+            FROM member
+            WHERE member_id = '".$member_id."'
+            LIMIT 1";
+    $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
+    if (mysqli_num_rows($result)) {
+        $row = mysqli_fetch_assoc($result);
+
+        return $row['member_wish'];
+    }
+
+    return 0;
+}
 
 ?>

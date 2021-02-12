@@ -68,7 +68,7 @@ if (isset($_SESSION['member_rank'])) {
                                 <tr>
                                     <td>
                                         <div class="profile-cards-wrapper">
-                                            <a class="carddeck-link" href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>"><?php echo get_card($carddeck_id, 'master'); ?></a><br />
+                                            <a class="carddeck-link" href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>"><?php echo show_card($carddeck_id, 'master'); ?></a><br />
                                             <small><span class="mastered"><i class="fas fa-medal"></i></span> <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_mastered_on']; ?> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_master['member_master_date']); ?></small>
                                         </div>
                                     </td>

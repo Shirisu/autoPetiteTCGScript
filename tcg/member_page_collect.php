@@ -91,7 +91,7 @@ if (isset($_SESSION['member_rank'])) {
                                             <?php
                                             for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
                                                 if (in_array($i, $cardnumbers)) {
-                                                    $filename = get_card($row_cards['member_cards_carddeck_id'], $i, true);
+                                                    $filename = show_card($row_cards['member_cards_carddeck_id'], $i, true);
                                                     ?>
                                                     <span class="card-wrapper" <?php echo(file_exists('.' . substr($filename, strlen(HOST_URL))) ? 'style="background-image:url(' . $filename . ');"' : ''); ?>></span>
                                                     <?php

@@ -181,6 +181,12 @@ Route::add("/memberarea/log",function() {
 Route::add("/memberarea/search",function() {
     require_once("tcg/memberarea_search.php");
 });
+Route::add("/memberarea/shop",function() {
+    require_once("tcg/memberarea_shop.php");
+});
+Route::add("/memberarea/shop",function() {
+    require_once("tcg/memberarea_shop.php");
+}, "post");
 Route::add("/memberarea",function() {
     require_once("tcg/memberarea.php");
 });

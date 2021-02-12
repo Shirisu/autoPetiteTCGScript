@@ -25,4 +25,5 @@ define('TCG_CARDS_START_PACKAGE', '12'); // cards of startdeck
 define('TCG_CURRENCY', 'Dollar'); // currency name
 define('TCG_WISH', 'Wish'); // wish name
 define('TCG_MEMBER_MAX_LVL', '20'); // max level for member
+define('TCG_SHOP_CURRENCY_FOR_RANDOM', '100'); // how much currency do 1 random cost?
 ?>

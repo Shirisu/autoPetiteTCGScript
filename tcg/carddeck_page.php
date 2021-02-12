@@ -126,7 +126,7 @@ if (isset($_SESSION['member_rank'])) {
                     <div class="carddeck-wrapper" data-is-puzzle="<?php echo ($row_carddeck['carddeck_is_puzzle'] ? $row_carddeck['carddeck_is_puzzle'] : 0); ?>">
                         <?php
                         for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
-                            $filename = get_card($row_carddeck['carddeck_id'], $i, true);
+                            $filename = show_card($row_carddeck['carddeck_id'], $i, true);
                             ?>
                             <span class="card-wrapper" <?php echo (file_exists('.'.substr($filename, strlen(HOST_URL))) ? 'style="background-image:url('.$filename.');"' : ''); ?>></span>
                             <?php
@@ -136,7 +136,7 @@ if (isset($_SESSION['member_rank'])) {
                                 <?php
                             }
                         }
-                        $filename_master = get_card($row_carddeck['carddeck_id'], 'master', true);
+                        $filename_master = show_card($row_carddeck['carddeck_id'], 'master', true);
                         ?>
                         <span class="card-wrapper mastercard" <?php echo (file_exists('.'.substr($filename_master, strlen(HOST_URL))) ? 'style="background-image:url('.$filename_master.');"' : ''); ?>></span>
                     </div>

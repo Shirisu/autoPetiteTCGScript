@@ -9,124 +9,161 @@ if (isset($_SESSION['member_rank'])) {
     breadcrumb($breadcrumb);
     title(TRANSLATIONS[$GLOBALS['language']]['member']['text_shop']);
 
+    $sql_carddeck = "SELECT carddeck_id, carddeck_name
+                     FROM carddeck
+                     WHERE carddeck_active = 1
+                     ORDER BY carddeck_name ASC";
+    $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
 
-    $carddeck_id = '';
-    $card_number = '';
-    if (isset($_GET['carddeck_id']) && isset($_GET['card_number'])) {
-        $carddeck_id = mysqli_real_escape_string($link, trim($_GET['carddeck_id']));
-        $card_number = mysqli_real_escape_string($link, trim($_GET['card_number']));
+    $member_currency = get_member_currency($_SESSION['member_id']);
+    $member_wish = get_member_wish($_SESSION['member_id']);
+    $prize_single_random = TCG_SHOP_CURRENCY_FOR_RANDOM;
+    $max_random = floor($member_currency / $prize_single_random);
+
+    if (isset($_POST['random_quantity'])) {
+        $random_quantity = mysqli_real_escape_string($link, trim($_POST['random_quantity']));
+
+        insert_shop_random($_SESSION['member_id'], $random_quantity);
+        $member_currency = get_member_currency($_SESSION['member_id']);
+        $max_random = floor($member_currency / $prize_single_random);
     }
 
-    $sql_carddeck = "SELECT carddeck_id, carddeck_name
-                         FROM carddeck
-                         WHERE carddeck_active = 1
-                         ORDER BY carddeck_name ASC";
-    $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
-    if (mysqli_num_rows($result_carddeck)) {
-        ?>
-        <div class="row">
-            <div class="col">
-                <form action="<?php echo HOST_URL; ?>/memberarea/search" method="get">
-                    <div class="row align-items-center">
-                        <div class="form-group col col-12 col-md-6 mb-2">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="ariaDescribedbyCarddeck"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_carddeck']; ?></span>
-                                </div>
-                                <select class="custom-select" id="carddeck_id" name="carddeck_id" aria-describedby="ariaDescribedbyCarddeck" required>
-                                    <option selected disabled hidden value=""></option>
-                                    <?php
-                                    while ($row_carddeck = mysqli_fetch_assoc($result_carddeck)) {
-                                        ?>
-                                        <option value="<?php echo $row_carddeck['carddeck_id']; ?>" <?php echo ($carddeck_id == $row_carddeck['carddeck_id'] ? 'selected' : ''); ?>><?php echo $row_carddeck['carddeck_name']; ?></option>
-                                        <?php
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group col col-12 col-md-6 mb-2">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="ariaDescribedbyNumber"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_number']; ?></span>
-                                </div>
-                                <select class="custom-select" id="card_number" name="card_number" aria-describedby="ariaDescribedbyNumber" required>
-                                    <option selected disabled hidden value=""></option>
-                                    <?php
-                                    for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
-                                        ?>
-                                        <option value="<?php echo $i; ?>" <?php echo ($card_number == $i ? 'selected' : ''); ?>><?php echo sprintf('%02d', $i); ?></option>
-                                        <?php
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group col col-12">
-                            <button type="submit"
-                                    class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_search_button']; ?></button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+    if (isset($_POST['carddeck_id']) && isset($_POST['card_number'])) {
+        $carddeck_id = mysqli_real_escape_string($link, trim($_POST['carddeck_id']));
+        $card_number = mysqli_real_escape_string($link, trim($_POST['card_number']));
+
+        insert_shop_card($_SESSION['member_id'], $carddeck_id, $card_number);
+        $member_wish = get_member_wish($_SESSION['member_id']);
+    }
+    ?>
+    <div class="row shop-container">
+        <div class="col col-12 mb-4 text-left text-md-center">
+            <span class="font-weight-bold"><?php echo TRANSLATIONS[$GLOBALS['language']]['shop']['text_you_currently_own']; ?>:</span>
+            <?php echo $member_currency.' '.TCG_CURRENCY; ?> &
+            <?php echo $member_wish.' '.TCG_WISH; ?>
         </div>
         <?php
-    } else {
-        alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_carddeck_yet'], 'danger');
-    }
-
-    if (isset($_GET['carddeck_id']) && isset($_GET['card_number'])) {
-        $sql_search = "SELECT member_id, member_last_login, member_cards_id
-                       FROM member_cards, member
-                       WHERE member_cards_carddeck_id = '".$carddeck_id."'
-                         AND member_cards_number = '".$card_number."'
-                         AND member_cards_member_id = member_id
-                         AND member_cards_cat = 3
-                       ORDER BY member_nick ASC";
-        $result_search = mysqli_query($link, $sql_search);
-        $count_search = mysqli_num_rows($result_search);
-        ?>
-        <div class="row">
-            <div class="col col-12 text-center mb-2">
-                <?php echo get_card($carddeck_id, $card_number); ?>
-            </div>
-            <div class="col col-12 member-search-container">
-                <?php
-                if ($count_search) {
-                    ?>
-                    <table id="member-search-table" data-mobile-responsive="true">
-                        <thead>
-                        <tr>
-                            <th data-field="member" data-sortable="true">Member</th>
-                            <th data-field="lastlogin" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastlogin']; ?></th>
-                            <th data-field="online" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_status']; ?></th>
-                            <th data-field="text"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+        if (mysqli_num_rows($result_carddeck)) {
+            ?>
+            <div class="col col-12 col-md-6">
+                <form action="<?php echo HOST_URL; ?>/memberarea/shop" method="post">
+                    <div class="row">
+                        <div class="col col-12 mb-2">
+                            <?php echo TCG_SHOP_CURRENCY_FOR_RANDOM; ?> <?php echo TCG_CURRENCY; ?> = 1 Random <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_card']; ?>
+                        </div>
                         <?php
-                        while ($row_search = mysqli_fetch_assoc($result_search)) {
+                        if ($max_random > 0) {
                             ?>
-                            <tr>
-                                <td><?php echo member_link($row_search['member_id'], '', true); ?></td>
-                                <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_search['member_last_login']); ?></td>
-                                <td><?php echo get_online_status($row_search['member_id']); ?></td>
-                                <td><?php echo ($row_search['member_id'] != $_SESSION['member_id'] ? '<a href="'.HOST_URL.'/trade/'.$row_search['member_cards_id'].'">'.TRANSLATIONS[$GLOBALS['language']]['general']['text_start_trade'].'</a>' : '-'); ?></td>
-                            </tr>
+                            <div class="form-group col col-12 mb-2">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"
+                                              id="ariaDescribedbyQuantity"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_quantity']; ?> <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']; ?></span>
+                                    </div>
+                                    <select class="custom-select" id="random_quantity" name="random_quantity"
+                                            aria-describedby="ariaDescribedbyQuantity" required>
+                                        <option selected disabled hidden value=""></option>
+                                        <?php
+                                        for ($i = 1; $i <= $max_random; $i++) {
+                                            ?>
+                                            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                            <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col col-12">
+                                <button type="submit"
+                                        class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['shop']['text_button_buy_random']; ?></button>
+                            </div>
+                            <?php
+                        } else {
+                            ?>
+                            <div class="col col-12 mb-2">
+                                <?php
+                                alert_box(TRANSLATIONS[$GLOBALS['language']]['shop']['hint_not_enough_currency'], 'danger');
+                                ?>
+                            </div>
                             <?php
                         }
                         ?>
-                        </tbody>
-                    </table>
-                    <?php
-                } else {
-                    alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_nobody_has_card_in_trade'], 'danger');
-                }
-                ?>
+                    </div>
+                </form>
             </div>
-        </div>
-        <?php
-    }
+            <div class="col col-12 col-md-6">
+                <form action="<?php echo HOST_URL; ?>/memberarea/shop" method="post">
+                    <div class="row">
+                        <div class="col col-12 mb-2">
+                            1 <?php echo TCG_WISH; ?> = 1 <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_card']; ?>
+                        </div>
+                        <?php
+                        if ($member_wish > 0) {
+                            $sql_carddeck = "SELECT carddeck_id, carddeck_name
+                                             FROM carddeck
+                                             WHERE carddeck_active = 1
+                                             ORDER BY carddeck_name ASC";
+                            $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
+                            ?>
+                            <div class="form-group col col-12 col-md-6 mb-2">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="ariaDescribedbyCarddeck"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_carddeck']; ?></span>
+                                    </div>
+                                    <select class="custom-select" id="carddeck_id" name="carddeck_id" aria-describedby="ariaDescribedbyCarddeck" required>
+                                        <option selected disabled hidden value=""></option>
+                                        <?php
+                                        while ($row_carddeck = mysqli_fetch_assoc($result_carddeck)) {
+                                            ?>
+                                            <option value="<?php echo $row_carddeck['carddeck_id']; ?>"><?php echo $row_carddeck['carddeck_name']; ?></option>
+                                            <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col col-12 col-md-6 mb-2">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="ariaDescribedbyNumber"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_number']; ?></span>
+                                    </div>
+                                    <select class="custom-select" id="card_number" name="card_number" aria-describedby="ariaDescribedbyNumber" required>
+                                        <option selected disabled hidden value=""></option>
+                                        <?php
+                                        for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
+                                            ?>
+                                            <option value="<?php echo $i; ?>"><?php echo sprintf('%02d', $i); ?></option>
+                                            <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col col-12">
+                                <button type="submit"
+                                        class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['shop']['text_button_buy_card']; ?></button>
+                            </div>
+                            <?php
+                        } else {
+                            ?>
+                            <div class="col col-12 mb-2">
+                                <?php
+                                alert_box(TRANSLATIONS[$GLOBALS['language']]['shop']['hint_not_enough_wish'], 'danger');
+                                ?>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                </form>
+            </div>
+            <?php
+        } else {
+            alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_carddeck_yet'], 'danger');
+        }
+        ?>
+    </div>
+    <?php
 } else {
     show_no_access_message();
 }
