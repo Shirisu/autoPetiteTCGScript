@@ -178,6 +178,9 @@ Route::add("/memberarea/changeprofile",function() {
 Route::add("/memberarea/log",function() {
     require_once("tcg/memberarea_log.php");
 });
+Route::add("/memberarea/search",function() {
+    require_once("tcg/memberarea_search.php");
+});
 Route::add("/memberarea",function() {
     require_once("tcg/memberarea.php");
 });

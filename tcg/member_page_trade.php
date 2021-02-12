@@ -22,7 +22,7 @@ if (isset($_SESSION['member_rank'])) {
             );
 
             breadcrumb($breadcrumb);
-            title($row_member['member_nick']);
+            title($row_member['member_nick'].' <small>'.get_online_status($member_id).'</small>');
             ?>
             <div class="row member-profile">
                 <div class="col col-12 mb-3">
@@ -43,7 +43,7 @@ if (isset($_SESSION['member_rank'])) {
                 </div>
                 <div class="col col-12 mb-3 member-cards-container">
                     <?php
-                    $sql_cards = "SELECT member_cards_id, member_cards_number, carddeck_name,
+                    $sql_cards = "SELECT member_cards_id, member_cards_number, carddeck_id, carddeck_name,
                                      (SELECT COUNT(member_cards_id)
                                       FROM member_cards
                                       WHERE member_cards_member_id = '".$member_id."'
@@ -73,14 +73,16 @@ if (isset($_SESSION['member_rank'])) {
                             <tbody>
                             <?php
                             while ($row_cards = mysqli_fetch_assoc($result_cards)) {
+                                $carddeck_id = $row_cards['carddeck_id'];
                                 $carddeck_name = $row_cards['carddeck_name'];
-                                $cardnumber = sprintf("%'.02d", $row_cards['member_cards_number']);
+                                $cardnumber_plain = $row_cards['member_cards_number'];
+                                $cardnumber = sprintf("%'.02d", $cardnumber_plain);
                                 $card_count = $row_cards['card_count'];
                                 ?>
                                 <tr>
                                     <td>
-                                        <div class="profile-cards-wrapper<?php echo ($card_count > 1 ? ' show-counter" data-count="'.$card_count.'x"' : '"'); ?>>
-                                            <?php echo ($member_id != $_SESSION['member_id'] ? '<a href="'.HOST_URL.'/trade/'.$row_cards['member_cards_id'].'">' : ''); ?><img src="<?php echo TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$cardnumber.'.'.TCG_CARDS_FILE_TYPE; ?>" alt="<?php echo $carddeck_name.$cardnumber; ?>" /><?php echo ($member_id != $_SESSION['member_id'] ? '</a>' : ''); ?>
+                                        <div class="profile-cards-wrapper<?php echo ($card_count > 1 ? ' show-counter" data-count="'.$card_count.'x' : ''); ?>">
+                                            <?php echo ($member_id != $_SESSION['member_id'] ? '<a href="'.HOST_URL.'/trade/'.$row_cards['member_cards_id'].'">' : ''); ?><?php echo get_card($carddeck_id, $cardnumber_plain); ?><?php echo ($member_id != $_SESSION['member_id'] ? '</a>' : ''); ?>
                                             <a class="carddeck-link" href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>"><small><?php echo $carddeck_name.$cardnumber; ?></small></a>
                                         </div>
                                     </td>

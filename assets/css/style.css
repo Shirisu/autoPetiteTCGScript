@@ -325,6 +325,12 @@ table.carddeck td {
 .memberarea .card .media a {
     display: block;
 }
+.memberarea .card .media .fas {
+    width: 20px;
+}
+.memberarea .card .media .fa-2x {
+    width: 40px;
+}
 
 
 /**
@@ -332,11 +338,9 @@ table.carddeck td {
 **/
 span.online {
     color: #089408;
-    font-weight: bold;
 }
 span.offline {
     color: #ff0000;
-    font-weight: bold;
 }
 span.inaktiv {
     color: #a0a0a0;
@@ -369,39 +373,12 @@ span.cm:hover, a.cm:hover {
     font-weight: bold;
     cursor: pointer;
 }
-span.cmod {
-    color: #996699;
-    font-weight: bold;
-}
-span.cmod:hover {
-    color: #845784;
-    font-weight: bold;
-    cursor: pointer;
-}
-span.gmod {
-    color: #663366;
-    font-weight: bold;
-}
-span.gmod:hover {
-    color: #582C58;
-    font-weight: bold;
-    cursor: pointer;
-}
-span.mod {
+span.mod, a.mo {
     color: #336633;
     font-weight: bold;
 }
-span.mod:hover {
+span.mod:hover, a.mod:hover {
     color: #2B562B;
-    font-weight: bold;
-    cursor: pointer;
-}
-span.invi {
-    color: #999999;
-    font-weight: bold;
-}
-span.invi:hover {
-    color: #8C8B8B;
     font-weight: bold;
     cursor: pointer;
 }

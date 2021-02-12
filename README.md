@@ -75,12 +75,12 @@ Actual status: **Work in progress**!
     - traderules
     - some personal stuff like language, email
   - show log
+  - search
+    - missing cards for members
 
 
 ## up coming features
 - memberarea
-  - search
-    - missing cards for member
   - shop
     - change currency in cards
     - change wish in cards

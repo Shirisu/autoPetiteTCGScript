@@ -283,8 +283,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                         <div class="row">
                             <div class="form-group col col-12 mb-2">
                                 <div class="mb-1">
-                                    <img
-                                        src="<?php echo TCG_CARDS_FOLDER . '/' . $carddeck_name . '/' . $carddeck_name . 'master.' . TCG_CARDS_FILE_TYPE; ?>"/>
+                                    <?php echo get_card($row['carddeck_id'], 'master', false, true); ?>
                                 </div>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -303,8 +302,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                 ?>
                                 <div class="form-group col col-12 col-md-6 mb-2">
                                     <div class="mb-1">
-                                        <img
-                                            src="<?php echo TCG_CARDS_FOLDER . '/' . $carddeck_name . '/' . $carddeck_name . sprintf("%'.02d", $i) . '.' . TCG_CARDS_FILE_TYPE; ?>"/>
+                                        <?php echo get_card($row['carddeck_id'], $i, false, true); ?>
                                     </div>
                                     <div class="input-group">
                                         <div class="input-group-prepend">

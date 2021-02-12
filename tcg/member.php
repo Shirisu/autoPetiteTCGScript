@@ -33,6 +33,7 @@ if (isset($_SESSION['member_rank'])) {
                             <th data-field="rank"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_rank']; ?></th>
                             <th data-field="registered" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_registered']; ?></th>
                             <th data-field="lastlogin" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastlogin']; ?></th>
+                            <th data-field="online" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_status']; ?></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -46,6 +47,7 @@ if (isset($_SESSION['member_rank'])) {
                                 <td><?php echo $row_member['member_rank_name']; ?></td>
                                 <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_member['member_register']); ?></td>
                                 <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_member['member_last_login']); ?></td>
+                                <td><?php echo get_online_status($row_member['member_id']); ?></td>
                             </tr>
                             <?php
                         }

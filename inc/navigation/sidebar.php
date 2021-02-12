@@ -95,7 +95,7 @@ if (!isset($_SESSION['member_id'])) {
 
 // online member
 $sql_member_online = "SELECT member.member_id, member.member_nick, member.member_rank, member_online.*
-                      FROM member,member_online
+                      FROM member, member_online
                       WHERE member.member_id = member_online.member_id
                       ORDER BY member_nick ASC;";
 $result_member_online = mysqli_query($link, $sql_member_online) OR die(mysqli_error($link));

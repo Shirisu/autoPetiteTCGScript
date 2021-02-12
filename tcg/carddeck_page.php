@@ -6,6 +6,7 @@ if (isset($_SESSION['member_rank'])) {
         $sql_carddeck = "SELECT carddeck_id, carddeck_name, carddeck_series, carddeck_date, carddeck_creator, carddeck_is_puzzle, carddeck_cat, carddeck_artist, carddeck_copyright, carddeck_imagesources, carddeck_cat_name, carddeck_sub_cat_name
                          FROM carddeck, carddeck_cat, carddeck_sub_cat
                          WHERE carddeck_name = '".$carddeck_name."'
+                           AND carddeck_active = 1
                            AND carddeck_cat = carddeck_cat_id
                            AND carddeck_sub_cat = carddeck_sub_cat_id
                          ORDER BY carddeck_name ASC";
@@ -125,9 +126,9 @@ if (isset($_SESSION['member_rank'])) {
                     <div class="carddeck-wrapper" data-is-puzzle="<?php echo ($row_carddeck['carddeck_is_puzzle'] ? $row_carddeck['carddeck_is_puzzle'] : 0); ?>">
                         <?php
                         for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
-                            $filename = TCG_CARDS_FOLDER . '/' . $carddeck_name . '/' . $carddeck_name . sprintf("%'.02d", $i) . '.' . TCG_CARDS_FILE_TYPE;
+                            $filename = get_card($row_carddeck['carddeck_id'], $i, true);
                             ?>
-                            <span class="card-wrapper" <?php echo (file_exists('.'.$filename) ? 'style="background-image:url('.$filename.');"' : ''); ?>></span>
+                            <span class="card-wrapper" <?php echo (file_exists('.'.substr($filename, strlen(HOST_URL))) ? 'style="background-image:url('.$filename.');"' : ''); ?>></span>
                             <?php
                             if (($i % TCG_CARDS_PER_ROW) == 0) {
                                 ?>
@@ -135,9 +136,9 @@ if (isset($_SESSION['member_rank'])) {
                                 <?php
                             }
                         }
-                        $filename_master = TCG_CARDS_FOLDER . '/' . $carddeck_name . '/' . $carddeck_name . 'master.' . TCG_CARDS_FILE_TYPE;
+                        $filename_master = get_card($row_carddeck['carddeck_id'], 'master', true);
                         ?>
-                        <span class="card-wrapper mastercard" <?php echo (file_exists('.'.$filename_master) ? 'style="background-image:url('.$filename_master.');"' : ''); ?>></span>
+                        <span class="card-wrapper mastercard" <?php echo (file_exists('.'.substr($filename_master, strlen(HOST_URL))) ? 'style="background-image:url('.$filename_master.');"' : ''); ?>></span>
                     </div>
                 </div>
             </div>

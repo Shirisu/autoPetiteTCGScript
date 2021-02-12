@@ -68,6 +68,21 @@ function get_active_status($status) {
     return $status;
 }
 
+function get_online_status($member_id) {
+    global $link;
+
+    $sql_member_online = "SELECT member_id
+                          FROM member_online
+                          WHERE member_id = '".$member_id."'
+                          LIMIT 1;";
+    $result_member_online = mysqli_query($link, $sql_member_online) OR die(mysqli_error($link));
+    if (mysqli_num_rows($result_member_online)) {
+        return '<span class="online">online</span>';
+    } else {
+        return '<span class="offline">offline</span>';
+    }
+}
+
 function alert_box($text, $type = 'secondary') {
     echo '<div class="alert alert-'.$type.'" role="alert">
             '.$text.'
@@ -103,6 +118,8 @@ function member_link($member_id, $custom_link_class = '', $show_with_rank = fals
             $rankclass = 'coadmin';
         } elseif ($row['member_rank'] == 3) {
             $rankclass = 'cm';
+        } elseif ($row['member_rank'] == 4) {
+            $rankclass = 'mod';
         } else {
             $rankclass = 'member';
         }
@@ -200,6 +217,33 @@ function shorten_text($text, $length) {
     }
 }
 
+function get_card($carddeck_id, $card_number, $show_only_url = false, $show_inactive = false) {
+    global $link;
+
+    $active_query_string = ($show_inactive ? '' : 'AND carddeck_active = 1');
+    $sql_carddeck = "SELECT carddeck_name
+                     FROM carddeck
+                     WHERE carddeck_id = '".$carddeck_id."'
+                       ".$active_query_string."
+                     LIMIT 1";
+    $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
+    if (mysqli_num_rows($result_carddeck)) {
+        $row_carddeck = mysqli_fetch_assoc($result_carddeck);
+        $carddeck_name = $row_carddeck['carddeck_name'];
+
+        if ($card_number == 'master') {
+            $card_number = 'master';
+        } else {
+            $card_number = sprintf('%02d', $card_number);
+        }
+
+        if ($show_only_url == true) {
+            return HOST_URL.TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$card_number.'.'.TCG_CARDS_FILE_TYPE;
+        } else {
+            return '<img src="'.HOST_URL.TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$card_number.'.'.TCG_CARDS_FILE_TYPE.'" alt="'.$carddeck_name.$card_number.'" />';
+        }
+    }
+}
 
 
 

@@ -44,7 +44,8 @@ if (isset($_SESSION['member_rank'])) {
                      FROM carddeck, carddeck_cat, carddeck_sub_cat
                      WHERE carddeck_cat = carddeck_cat_id
                        AND carddeck_sub_cat = carddeck_sub_cat_id
-                         ".$category_filter."
+                       AND carddeck_active = 1
+                       ".$category_filter."
                      ORDER BY carddeck_name ASC";
     $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
     $count_carddeck = mysqli_num_rows($result_carddeck);

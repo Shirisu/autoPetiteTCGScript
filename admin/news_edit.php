@@ -93,8 +93,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                     if (mysqli_num_rows($result_carddeck)) {
                                         $row_carddeck = mysqli_fetch_assoc($result_carddeck);
                                         ?>
-                                        <a href="<?php echo HOST_URL; ?>/carddeck/<?php echo $row_carddeck['carddeck_name']; ?>"><img
-                                                src="<?php echo TCG_CARDS_FOLDER . '/' . $row_carddeck['carddeck_name'] . '/' . $row_carddeck['carddeck_name'] . '01.' . TCG_CARDS_FILE_TYPE; ?>"/></a>
+                                        <a href="<?php echo HOST_URL; ?>/carddeck/<?php echo $row_carddeck['carddeck_name']; ?>">
+                                            <?php echo get_card($row_carddeck['carddeck_id'], 1); ?>
                                         <?php
                                     }
                                 }

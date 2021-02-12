@@ -6,7 +6,7 @@ if (isset($_SESSION['member_rank'])) {
         '/memberarea' => TRANSLATIONS[$GLOBALS['language']]['general']['text_memberarea'],
     );
     breadcrumb($breadcrumb);
-    title_small(TRANSLATIONS[$GLOBALS['language']]['general']['text_memberarea']);
+    title(TRANSLATIONS[$GLOBALS['language']]['general']['text_memberarea']);
     ?>
     <div class="row mb-5 memberarea">
         <div class="col col-12 col-md-6 mb-2">

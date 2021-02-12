@@ -7,7 +7,7 @@ if (isset($_SESSION['member_rank'])) {
         '/memberarea/changeprofile' => TRANSLATIONS[$GLOBALS['language']]['member']['text_profile_change'],
     );
     breadcrumb($breadcrumb);
-    title_small(TRANSLATIONS[$GLOBALS['language']]['member']['text_profile_change']);
+    title(TRANSLATIONS[$GLOBALS['language']]['member']['text_profile_change']);
 
     $member_id = $_SESSION['member_id'];
 

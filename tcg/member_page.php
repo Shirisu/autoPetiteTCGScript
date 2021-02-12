@@ -22,7 +22,7 @@ if (isset($_SESSION['member_rank'])) {
             );
 
             breadcrumb($breadcrumb);
-            title($row_member['member_nick']);
+            title($row_member['member_nick'].' <small>'.get_online_status($row_member['member_id']).'</small>');
             ?>
             <div class="row member-profile">
                 <div class="col col-12 mb-3">

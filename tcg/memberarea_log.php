@@ -7,7 +7,7 @@ if (isset($_SESSION['member_rank'])) {
         '/memberarea/log' => 'Log',
     );
     breadcrumb($breadcrumb);
-    title_small('Log');
+    title('Log');
 
     $member_id = $_SESSION['member_id'];
 

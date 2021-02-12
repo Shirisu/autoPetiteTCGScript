@@ -6,6 +6,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         '/administration' => 'Administration',
     );
     breadcrumb($breadcrumb);
+    title('Administration');
+
     if ($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
         title_small(TRANSLATIONS[$GLOBALS['language']]['admin']['category_administration_headline']);
         ?>

@@ -22,7 +22,7 @@ if (isset($_SESSION['member_rank'])) {
             );
 
             breadcrumb($breadcrumb);
-            title($row_member['member_nick']);
+            title($row_member['member_nick'].' <small>'.get_online_status($member_id).'</small>');
             ?>
             <div class="row member-profile">
                 <div class="col col-12 mb-3">
@@ -91,9 +91,9 @@ if (isset($_SESSION['member_rank'])) {
                                             <?php
                                             for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
                                                 if (in_array($i, $cardnumbers)) {
-                                                    $filename = TCG_CARDS_FOLDER . '/' . $carddeck_name . '/' . $carddeck_name . sprintf("%'.02d", $i) . '.' . TCG_CARDS_FILE_TYPE;
+                                                    $filename = get_card($row_cards['member_cards_carddeck_id'], $i, true);
                                                     ?>
-                                                    <span class="card-wrapper" <?php echo(file_exists('.' . $filename) ? 'style="background-image:url(' . $filename . ');"' : ''); ?>></span>
+                                                    <span class="card-wrapper" <?php echo(file_exists('.' . substr($filename, strlen(HOST_URL))) ? 'style="background-image:url(' . $filename . ');"' : ''); ?>></span>
                                                     <?php
                                                 } else {
                                                     $filename_filler = TCG_CARDS_FOLDER . '/'.TCG_CARDS_FILLER_NAME.'.' . TCG_CARDS_FILE_TYPE;

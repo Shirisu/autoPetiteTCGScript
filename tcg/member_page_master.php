@@ -22,7 +22,7 @@ if (isset($_SESSION['member_rank'])) {
             );
 
             breadcrumb($breadcrumb);
-            title($row_member['member_nick']);
+            title($row_member['member_nick'].' <small>'.get_online_status($member_id).'</small>');
             ?>
             <div class="row member-profile">
                 <div class="col col-12 mb-3">
@@ -43,7 +43,7 @@ if (isset($_SESSION['member_rank'])) {
                 </div>
                 <div class="col col-12 mb-3 member-cards-container">
                     <?php
-                    $sql_master = "SELECT member_master_id, member_master_date, carddeck_name
+                    $sql_master = "SELECT member_master_id, member_master_date, carddeck_id, carddeck_name
                                    FROM member_master, carddeck
                                    WHERE member_master_member_id = '".$member_id."'
                                      AND member_master_carddeck_id = carddeck_id
@@ -62,12 +62,13 @@ if (isset($_SESSION['member_rank'])) {
                             <tbody>
                             <?php
                             while ($row_master = mysqli_fetch_assoc($result_master)) {
+                                $carddeck_id = $row_master['carddeck_id'];
                                 $carddeck_name = $row_master['carddeck_name'];
                                 ?>
                                 <tr>
                                     <td>
                                         <div class="profile-cards-wrapper">
-                                            <a class="carddeck-link" href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>"><img src="<?php echo TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.'master.'.TCG_CARDS_FILE_TYPE; ?>" alt="<?php echo $carddeck_name; ?>master" /></a><br />
+                                            <a class="carddeck-link" href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>"><?php echo get_card($carddeck_id, 'master'); ?></a><br />
                                             <small><span class="mastered"><i class="fas fa-medal"></i></span> <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_mastered_on']; ?> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_master['member_master_date']); ?></small>
                                         </div>
                                     </td>
