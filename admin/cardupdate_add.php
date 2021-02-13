@@ -14,33 +14,44 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         $carddecks = mysqli_real_escape_string($link, strip_tags(trim($_POST['carddecks'])));
         $cardupdate_id = mysqli_real_escape_string($link, strip_tags(trim($_POST['cardupdate_id'])));
         $quantity = mysqli_real_escape_string($link, strip_tags(trim($_POST['quantity'])));
+        $news_title = mysqli_real_escape_string($link, strip_tags(trim($_POST['news_title'])));
         $news_text = mysqli_real_escape_string($link, strip_tags(trim($_POST['news_text'])));
 
-        $carddecks_array = explode(';', $carddecks);
+        $sql_check_before_insert = "SELECT cardupdate_id
+                                    FROM cardupdate
+                                    WHERE cardupdate_id = '".$cardupdate_id."'
+                                    ORDER BY cardupdate_id DESC
+                                    LIMIT 1";
+        $result_check_before_insert = mysqli_query($link, $sql_check_before_insert);
+        if (!mysqli_num_rows($result_check_before_insert)) {
+            $carddecks_array = explode(';', $carddecks);
 
-        for ($i = 0; $i < sizeof($carddecks_array); $i++) {
-            mysqli_query($link, "UPDATE carddeck
+            for ($i = 0; $i < sizeof($carddecks_array); $i++) {
+                mysqli_query($link, "UPDATE carddeck
                          SET carddeck_active = '1'
                          WHERE carddeck_id = " . $carddecks_array[$i] . "
                          LIMIT 1")
-            OR die(mysqli_error($link));
-        }
+                OR die(mysqli_error($link));
+            }
 
-        mysqli_query($link, "
+            mysqli_query($link, "
             INSERT INTO cardupdate
             (cardupdate_id, cardupdate_date, cardupdate_carddeck_id, cardupdate_count_cards)
             VALUES
-            ('".$cardupdate_id."', '".time()."', '".$carddecks."', '".$quantity."')")
-        OR die(mysqli_error($link));
+            ('" . $cardupdate_id . "', '" . time() . "', '" . $carddecks . "', '" . $quantity . "')")
+            OR die(mysqli_error($link));
 
-        mysqli_query($link, "
+            mysqli_query($link, "
             INSERT INTO news
-            (news_member_id, news_text, news_date, news_cardupdate_id)
+            (news_member_id, news_title, news_text, news_date, news_cardupdate_id)
             VALUES
-            ('".$_SESSION['member_id']."', '".$news_text."', '".time()."', '".$cardupdate_id."')")
-        OR die(mysqli_error($link));
+            ('" . $_SESSION['member_id'] . "', '" . $news_title . "', '" . $news_text . "', '" . time() . "', '" . $cardupdate_id . "')")
+            OR die(mysqli_error($link));
 
-        alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_success_cardupdate_add'], 'success');
+            alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_success_cardupdate_add'], 'success');
+        } else {
+            alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_duplicate_entry'], 'danger');
+        }
     }
 
     if (isset($_POST['updatedecks'])) {
@@ -141,6 +152,14 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                             <span class="input-group-text" id="ariaDescribedbyQuantity"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_carddecks_quantity_for_update']; ?></span>
                         </div>
                         <input type="number" class="form-control" aria-describedby="ariaDescribedbyWish" id="quantity" name="quantity" min="1" max="<?php echo $count_decks; ?>" value="<?php echo $quantity_cards; ?>" required />
+                    </div>
+                </div>
+                <div class="form-group col col-12 mb-2">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="ariaDescribedbyTitle"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_title']; ?></span>
+                        </div>
+                        <input type="text" class="form-control" id="news_title" name="news_title" aria-describedby="ariaDescribedbyTitle" maxlength="55" value="" required />
                     </div>
                 </div>
                 <div class="form-group col col-12 mb-2">

@@ -14,14 +14,24 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         $news_title = mysqli_real_escape_string($link, strip_tags(trim($_POST['news_title'])));
         $news_text = mysqli_real_escape_string($link, strip_tags(trim($_POST['news_text'])));
 
-        mysqli_query($link, "
+        $sql_check_before_insert = "SELECT news_id
+                                    FROM news
+                                    WHERE news_title = '".$news_title."'
+                                      AND news_text = '".$news_text."'
+                                    LIMIT 1";
+        $result_check_before_insert = mysqli_query($link, $sql_check_before_insert);
+        if (!mysqli_num_rows($result_check_before_insert)) {
+            mysqli_query($link, "
             INSERT INTO news
             (news_member_id, news_title, news_text, news_date)
             VALUES
-            ('".$_SESSION['member_id']."', '".$news_title."', '".$news_text."', '".time()."')")
-        OR die(mysqli_error($link));
+            ('" . $_SESSION['member_id'] . "', '" . $news_title . "', '" . $news_text . "', '" . time() . "')")
+            OR die(mysqli_error($link));
 
-        alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_success_news_add'], 'success');
+            alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_success_news_add'], 'success');
+        } else {
+            alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_duplicate_entry'], 'danger');
+        }
     }
 
     ?>

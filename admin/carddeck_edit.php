@@ -279,7 +279,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     </details>
 
                     <details class="col col-12 mb-2">
-                        <summary><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_only_if_should_be_changed']; ?></summary>
+                        <summary><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['hint_only_if_should_be_changed']; ?></summary>
                         <div class="row">
                             <div class="form-group col col-12 mb-2">
                                 <div class="mb-1">

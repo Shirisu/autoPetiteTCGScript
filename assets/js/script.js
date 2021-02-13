@@ -15,7 +15,6 @@ function create_toast(id, icon, title, text) {
     );
 }
 
-
 $(document).ready(function() {
     // toggle sidebar
     $('#menu-toggle').on('click', function(e) {

@@ -322,6 +322,7 @@ table.carddeck td {
 .member-log-container .pagination-detail {
     display: none;
 }
+.administration .card .media a,
 .memberarea .card .media a {
     display: block;
 }
