@@ -27,32 +27,36 @@ if (mysqli_num_rows($result_news)) {
                         <div class="text-center">
                             <?php
                             title_small(TRANSLATIONS[$GLOBALS['language']]['general']['text_new_card_decks']);
-                            $sql_cardupdate = "SELECT cardupdate_carddeck_id
+                            if (isset($_SESSION['member_rank'])) {
+                                $sql_cardupdate = "SELECT cardupdate_carddeck_id
                                                FROM cardupdate
-                                               WHERE cardupdate_id = '".$row_news['news_cardupdate_id']."'
+                                               WHERE cardupdate_id = '" . $row_news['news_cardupdate_id'] . "'
                                                LIMIT 1";
-                            $result_cardupdate = mysqli_query($link, $sql_cardupdate) OR die(mysqli_error($link));
-                            $count_cardupdate = mysqli_num_rows($result_cardupdate);
-                            if ($count_cardupdate) {
-                                $row_cardupdate = mysqli_fetch_assoc($result_cardupdate);
-                                $updatedecks = $row_cardupdate['cardupdate_carddeck_id'];
-                                $updatecarddecks_array = explode(';', $updatedecks);
-                                $count_decks = sizeof($updatecarddecks_array);
+                                $result_cardupdate = mysqli_query($link, $sql_cardupdate) OR die(mysqli_error($link));
+                                $count_cardupdate = mysqli_num_rows($result_cardupdate);
+                                if ($count_cardupdate) {
+                                    $row_cardupdate = mysqli_fetch_assoc($result_cardupdate);
+                                    $updatedecks = $row_cardupdate['cardupdate_carddeck_id'];
+                                    $updatecarddecks_array = explode(';', $updatedecks);
+                                    $count_decks = sizeof($updatecarddecks_array);
 
-                                for ($i = 0; $i < $count_decks; $i++) {
-                                    $sql_carddeck = "SELECT carddeck_id, carddeck_name
+                                    for ($i = 0; $i < $count_decks; $i++) {
+                                        $sql_carddeck = "SELECT carddeck_id, carddeck_name
                                                      FROM carddeck
-                                                     WHERE carddeck_id = '".$updatecarddecks_array[$i]."'
+                                                     WHERE carddeck_id = '" . $updatecarddecks_array[$i] . "'
                                                      LIMIT 1";
-                                    $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
-                                    if (mysqli_num_rows($result_carddeck)) {
-                                        $row_carddeck = mysqli_fetch_assoc($result_carddeck);
-                                        ?>
-                                        <a href="<?php echo HOST_URL; ?>/carddeck/<?php echo $row_carddeck['carddeck_name']; ?>"><img
-                                                src="<?php echo TCG_CARDS_FOLDER . '/' . $row_carddeck['carddeck_name'] . '/' . $row_carddeck['carddeck_name'] . '01.' . TCG_CARDS_FILE_TYPE; ?>"/></a>
-                                        <?php
+                                        $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
+                                        if (mysqli_num_rows($result_carddeck)) {
+                                            $row_carddeck = mysqli_fetch_assoc($result_carddeck);
+                                            ?>
+                                            <a href="<?php echo HOST_URL; ?>/carddeck/<?php echo $row_carddeck['carddeck_name']; ?>"><img
+                                                    src="<?php echo TCG_CARDS_FOLDER . '/' . $row_carddeck['carddeck_name'] . '/' . $row_carddeck['carddeck_name'] . '01.' . TCG_CARDS_FILE_TYPE; ?>"/></a>
+                                            <?php
+                                        }
                                     }
                                 }
+                            } else {
+                                alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_news_access_cardupdate'], 'danger');
                             }
                             ?>
                         </div>
@@ -62,7 +66,7 @@ if (mysqli_num_rows($result_news)) {
                 </div>
                 <div class="card-footer">
                     <div class="row">
-                        <div class="col col-6 text-left">
+                        <div class="col col-12 text-left">
                             <small class="text-muted">
                                 <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_news['news_date']); ?> - <?php echo member_link($row_news['news_member_id']); ?>
                             </small>

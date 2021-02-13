@@ -8,6 +8,7 @@ require_once("inc/constants.php");
 require_once("inc/function.php");
 require_once("inc/_translations.php");
 require_once("inc/_language.php");
+require_once("inc/_member_online_status.php");
 require_once("inc/header.php");
 
 /**

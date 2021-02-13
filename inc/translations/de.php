@@ -160,6 +160,7 @@ trading card game
         'text_nickname' => 'Nickname',
         'text_no' => 'nein',
         'hint_no_access' => 'Auf diesen Bereich hast du keinen Zugriff',
+        'hint_no_news_access_cardupdate' => 'Nur Member k&ouml;nnen die Karten sehen',
         'hint_no_news_yet' => 'Keine News bisher vorhanden',
         'hint_no_valid_id' => 'Diese ID existiert nicht',
         'text_not_activated_yet' => 'noch nicht aktiviert',
