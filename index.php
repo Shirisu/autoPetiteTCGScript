@@ -188,6 +188,12 @@ Route::add("/memberarea/shop",function() {
 Route::add("/memberarea/shop",function() {
     require_once("tcg/memberarea_shop.php");
 }, "post");
+Route::add("/memberarea/update",function() {
+    require_once("tcg/memberarea_update.php");
+});
+Route::add("/memberarea/update",function() {
+    require_once("tcg/memberarea_update.php");
+}, "post");
 Route::add("/memberarea",function() {
     require_once("tcg/memberarea.php");
 });

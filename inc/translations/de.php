@@ -70,6 +70,15 @@ $translations['de'] = array(
         'text_preview_for_cardupdate_subtext' => 'Wird automatisch zur News hinzugef&uuml;gt',
         'wish_distribute_headline' => TCG_WISH.' verteilen',
     ),
+    'cardupdate' => array(
+        'hint_already_taken' => 'Du hast dir bereits alle Karten genommen',
+        'text_new_carddecks' => 'neue Carddecks',
+        'text_get_cards_part_1' => 'du kannst dir',
+        'text_get_cards_part_2' => 'Karten daraus nehmen',
+        'text_get_cards_part_2_single' => 'Karte daraus nehmen',
+        'text_take_card' => 'Karte nehmen',
+        'text_you_got' => 'Du hast folgende Karte bekommen',
+    ),
     'general' => array(
         'date_format_date' => 'd.m.Y',
         'date_format_fulldatetime' => 'd.m.Y H:i',
@@ -162,6 +171,7 @@ trading card game
         'hint_no_access' => 'Auf diesen Bereich hast du keinen Zugriff',
         'hint_no_news_access_cardupdate' => 'Nur Member k&ouml;nnen die Karten sehen',
         'hint_no_news_yet' => 'Keine News bisher vorhanden',
+        'hint_no_update_yet' => 'Kein Cardupdate bisher vorhanden',
         'hint_no_valid_id' => 'Diese ID existiert nicht',
         'text_not_activated_yet' => 'noch nicht aktiviert',
         'text_notfound' => '404 nicht gefunden',

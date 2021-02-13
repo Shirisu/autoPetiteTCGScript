@@ -215,12 +215,11 @@ CREATE TABLE IF NOT EXISTS `member_online` (
 
 
 CREATE TABLE IF NOT EXISTS `member_update` (
-  `member_update_id` int(11) NOT NULL AUTO_INCREMENT,
   `member_update_cardupdate_id` int(11) NOT NULL,
   `member_update_carddeck_id` text COLLATE utf8_unicode_ci NOT NULL,
   `member_update_member_id` int(11) NOT NULL,
   `member_update_cards_count` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`member_update_id`),
+  PRIMARY KEY (`member_update_cardupdate_id`, `member_update_member_id`),
   KEY `member_update_cardupdate_id` (`member_update_cardupdate_id`),
   KEY `member_update_member_id` (`member_update_member_id`),
   CONSTRAINT `member_update_ibfk_1` FOREIGN KEY (`member_update_cardupdate_id`) REFERENCES `cardupdate` (`cardupdate_id`),

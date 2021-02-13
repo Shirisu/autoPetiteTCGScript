@@ -72,27 +72,24 @@ if (isset($_SESSION['member_rank'])) {
         <div class="col col-12 col-md-6 mb-2">
             <?php
             $sql_update = "SELECT cardupdate_id
-                           FROM cardupdate
-                           ORDER BY cardupdate_id DESC
-                           LIMIT 1";
+                           FROM cardupdate";
             $result_update = mysqli_query($link, $sql_update) OR die(mysqli_error($link));
             $row_update = mysqli_fetch_assoc($result_update);
             if (mysqli_num_rows($result_update)) {
-                $update_link = '/'.$row_update['cardupdate_id'];
-            } else {
-                $update_link = '';
-            }
-            ?>
-            <div class="card">
-                <div class="card-body">
-                    <div class="media">
-                        <i class="fas fa-gifts fa-2x mr-3"></i>
-                        <div class="media-body">
-                            <a href="<?php echo HOST_URL; ?>/memberarea/update<?php echo $update_link; ?>"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_cardupdate']; ?></a>
+                ?>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media">
+                            <i class="fas fa-gifts fa-2x mr-3"></i>
+                            <div class="media-body">
+                                <a href="<?php echo HOST_URL; ?>/memberarea/update"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_cardupdate']; ?></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <?php
+            }
+            ?>
         </div>
     </div>
     <?php

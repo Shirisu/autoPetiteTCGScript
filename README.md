@@ -80,12 +80,11 @@ Actual status: **Work in progress**!
   - shop
     - change currency in cards
     - change wish in cards
+  - cardupdate
+    - get new cards
 
 
 ## up coming features
-- memberarea
-  - cardupdate
-    - get new cards
 - managing of cards
   - sort in categories (trade, collect)
   - master full carddecks

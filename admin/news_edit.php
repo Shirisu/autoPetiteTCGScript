@@ -95,6 +95,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                         ?>
                                         <a href="<?php echo HOST_URL; ?>/carddeck/<?php echo $row_carddeck['carddeck_name']; ?>">
                                             <?php echo show_card($row_carddeck['carddeck_id'], 1); ?>
+                                        </a>
                                         <?php
                                     }
                                 }
