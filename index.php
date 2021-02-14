@@ -197,6 +197,35 @@ Route::add("/memberarea/update",function() {
 Route::add("/memberarea",function() {
     require_once("tcg/memberarea.php");
 });
+Route::add("/cards/([a-z+].*)",function($category) {
+    if ($category == 'new') {
+        require_once("tcg/cards_new.php");
+    } elseif ($category == 'trade') {
+        require_once("tcg/cards_trade.php");
+    } elseif ($category == 'collect') {
+        require_once("tcg/cards_collect.php");
+    } elseif ($category == 'master') {
+        require_once("tcg/cards_master.php");
+    } else {
+        require_once("tcg/cards_new.php");
+    }
+});
+Route::add("/cards/([a-z+].*)",function($category) {
+    if ($category == 'new') {
+        require_once("tcg/cards_new.php");
+    } elseif ($category == 'trade') {
+        require_once("tcg/cards_trade.php");
+    } elseif ($category == 'collect') {
+        require_once("tcg/cards_collect.php");
+    } elseif ($category == 'master') {
+        require_once("tcg/cards_master.php");
+    } else {
+        require_once("tcg/cards_new.php");
+    }
+}, "post");
+Route::add("/cards",function() {
+    require_once("tcg/cards_new.php");
+});
 
 Route::add("/lostpassword",function() {
     require_once("tcg/lostpassword.php");

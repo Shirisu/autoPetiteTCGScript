@@ -81,6 +81,14 @@ $(document).ready(function() {
         showHeader: false
     });
 
+    $('table.cards-sorting-table.new-cards, table.cards-sorting-table.trade-cards').bootstrapTable('destroy').bootstrapTable({
+        classes: 'table table-borderless',
+        pagination: true,
+        search: true,
+        pageSize: 60,
+        showHeader: false
+    });
+
 
     // replace the "Choose a file" label
     $('input[type="file"]').on('change',function(e){

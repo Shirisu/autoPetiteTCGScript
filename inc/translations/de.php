@@ -219,6 +219,7 @@ Bitte denke daran, dein Passwort danach sofort zu &auml;ndern!',
         'mail_subject' => 'Passwort Anforderung auf '.TCG_NAME,
     ),
     'member' => array(
+        'text_button_sort_cards' => 'Karten einsortieren',
         'text_log_topic' => 'Thema',
         'text_profile_change' => 'Profil bearbeiten',
         'text_profile_view' => 'Profil anzeigen',

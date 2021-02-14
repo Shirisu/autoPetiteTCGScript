@@ -219,6 +219,7 @@ Please remember to change your password immediately afterwards!',
         'mail_subject' => 'Password request on '.TCG_NAME,
     ),
     'member' => array(
+        'text_button_sort_cards' => 'Sort cards',
         'text_log_topic' => 'Topic',
         'text_profile_change' => 'Change profile',
         'text_profile_view' => 'View profile',

@@ -102,9 +102,10 @@ Actual status: **Work in progress**!
 
 
 ## used frameworks and libraries
-- Bootstrap v4.5.3 (https://getbootstrap.com/)
-- jQuery v3.5.1 (https://jquery.com/)
-- Font Awesome Free v5.15.2 (https://fontawesome.com/)
+- Bootstrap v4.5.3 (https://getbootstrap.com)
+- BootstrapTable v1.18.1 (https://bootstrap-table.com)
+- jQuery v3.5.1 (https://jquery.com)
+- Font Awesome Free v5.15.2 (https://fontawesome.com)
 
 
 ## credits for the script

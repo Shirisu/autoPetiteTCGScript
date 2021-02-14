@@ -247,25 +247,27 @@ table.carddeck td {
 
 
 /**
-* member style
+* member and card sorting style
 **/
 .member-profile .card {
     height: 100%;
 }
+.cards-sorting-container .fixed-table-container,
 .member-cards-container .fixed-table-container {
     margin-left: -12px;
     margin-right: -12px;
 }
-.member-cards-container .profile-cards-wrapper {
+.cards-sorting-container .cards-sorting-wrapper,
+.member-cards-container .cards-sorting-wrapper {
     position: relative;
 }
-.member-cards-container .profile-cards-wrapper.show-counter::after {
+.member-cards-container .cards-sorting-wrapper.show-counter::after {
     content: attr(data-count);
     display: inline-block;
     position: absolute;
     top: -3px;
     right: -3px;
-    padding: 4px 4px;
+    padding: 4px 5px;
     font-size: 60%;
     font-weight: 700;
     line-height: 1;
@@ -276,28 +278,53 @@ table.carddeck td {
     border: 1px solid #4e555b;
     border-radius: 50%;
 }
+.cards-sorting-container .cards-sorting-wrapper.mastered::after {
+    content: '\f559';
+    display: inline-block;
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    padding: 4px 5px;
+    font-size: 60%;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color: rgba(248, 249, 250, 0.8);
+    border: 1px solid #4e555b;
+    border-radius: 50%;
+}
+.cards-sorting-container .cards-sorting-table .carddeck-wrapper,
 .member-cards-container .profile-cards .carddeck-wrapper {
     margin-top: 5px;
 }
+.cards-sorting-container table.cards-sorting-table,
 .member-cards-container table.profile-cards {
     margin: auto;
 }
+.cards-sorting-container table.cards-sorting-table thead,
 .member-cards-container table.profile-cards thead {
     display: none !important;
 }
+.cards-sorting-container table.cards-sorting-table tbody tr,
 .member-cards-container table.profile-cards tbody tr {
     vertical-align: top;
 }
+.cards-sorting-container table.cards-sorting-table tbody tr td,
 .member-cards-container table.profile-cards tbody tr td {
     line-height: 1;
     text-align: center;
 }
 @media (min-width: 768px) {
+    .cards-sorting-container table.cards-sorting-table tbody,
     .member-cards-container table.profile-cards tbody {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
     }
+    .cards-sorting-container table.cards-sorting-table tbody tr td,
     .member-cards-container table.profile-cards tbody tr td {
         display: block;
         height: 100%;
@@ -305,32 +332,41 @@ table.carddeck td {
 }
 
 @media (min-width: 768px) {
+    .cards-sorting-container table.cards-sorting-table tbody tr td,
     .member-cards-container table.profile-cards tbody tr td {
         padding: 12px;
     }
 }
 @media (max-width: 767px) {
+    .cards-sorting-container table.cards-sorting-table tbody tr,
     .member-cards-container table.profile-cards tbody tr {
         display: inline-block;
     }
+    .cards-sorting-container table.cards-sorting-table tbody tr td,
     .member-cards-container table.profile-cards tbody tr td {
         padding: 6px;
     }
 }
+.cards-sorting-container .pagination-detail,
 .member-cards-container .pagination-detail,
 .member-wishlist-container .pagination-detail,
 .member-log-container .pagination-detail {
     display: none;
 }
 .administration .card .media a,
+.cards-sorting .card .media a,
 .memberarea .card .media a {
     display: block;
 }
+.cards-sorting .card .media .fas,
 .memberarea .card .media .fas {
     width: 20px;
+    text-align: center;
 }
+.cards-sorting .card .media .fa-2x,
 .memberarea .card .media .fa-2x {
     width: 40px;
+    text-align: center;
 }
 
 

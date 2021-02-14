@@ -62,12 +62,12 @@ if (isset($_SESSION['member_rank'])) {
                     $result_cards = mysqli_query($link, $sql_cards) OR die(mysqli_error($link));
                     $count_cards = mysqli_num_rows($result_cards);
                     if ($count_cards) {
-                        title_small($count_cards.' Trade cards');
+                        title_small($count_cards.' Trade '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']);
                         ?>
                         <table class="optional profile-cards trade-cards" data-mobile-responsive="true">
                             <thead>
                             <tr>
-                                <th><?php echo title_small($count_cards.' Trade cards'); ?></th>
+                                <th><?php echo title_small($count_cards.' Trade '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']); ?></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -94,7 +94,7 @@ if (isset($_SESSION['member_rank'])) {
                         </table>
                         <?php
                     } else {
-                        title_small('0 Trade cards');
+                        title_small('0 Trade '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']);
                         alert_box(TRANSLATIONS[$GLOBALS['language']]['member']['text_profile_no_cards_in_category'], 'danger');
                     }
                     ?>
