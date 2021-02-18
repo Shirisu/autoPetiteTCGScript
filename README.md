@@ -99,6 +99,7 @@ Actual status: **Work in progress**!
 - main page
   - news system
     - commenting system
+- bbcodes
 
 
 ## used frameworks and libraries

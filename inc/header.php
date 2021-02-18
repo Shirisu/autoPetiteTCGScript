@@ -19,12 +19,8 @@
     <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/bootstrap-table.min.css?<?php echo date('YmdH', time()); ?>" type="text/css" />
     <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/font-awesome-all.min.css?<?php echo date('YmdH', time()); ?>" type="text/css" />
-    <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/simple-sidebar.css?<?php echo date('YmdH', time()); ?>" type="text/css" />
     <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/style.css?<?php echo date('YmdH', time()); ?>" type="text/css" />
-    <?php if (isset($_SESSION['member_rank'])) { ?>
-        <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/cards.css?<?php echo date('YmdH', time()); ?>" type="text/css" />
-        <?php
-    }
+    <?php
 
     /**
      * do not remove the style block - you need it for displaying the cards!
