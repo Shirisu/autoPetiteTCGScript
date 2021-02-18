@@ -124,13 +124,25 @@ function member_link($member_id, $custom_link_class = '', $show_with_rank = fals
             $rankclass = 'member';
         }
 
-        return $rank = '<a '.($custom_link_class ? 'class="'.$custom_link_class.'"' : '').' href="'.HOST_URL.'/member/'.$row['member_id'].'"
-                        title="'.$row['member_rank_name'].'">
-                        <span class="'.$rankclass.'">'.$row['member_nick'].'</span>
-                    </a>';
+        return '<a '.($custom_link_class ? 'class="'.$custom_link_class.'"' : '').' href="'.HOST_URL.'/member/'.$row['member_id'].'"
+                    title="'.$row['member_rank_name'].'">
+                    <span class="'.$rankclass.'">'.$row['member_nick'].'</span>
+                </a>';
     } else {
-        return $rank = '<a '.($custom_link_class ? 'class="'.$custom_link_class.'"' : '').' href="'.HOST_URL.'/member/'.$row['member_id'].'">'.$row['member_nick'].'</a>';
+        return '<a '.($custom_link_class ? 'class="'.$custom_link_class.'"' : '').' href="'.HOST_URL.'/member/'.$row['member_id'].'">'.$row['member_nick'].'</a>';
     }
+}
+
+function member_link_plain($member_id) {
+    global $link;
+    $sql = "SELECT member_nick
+          FROM member
+          WHERE member_id = '".$member_id."'
+          LIMIT 1";
+    $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
+    $row = mysqli_fetch_assoc($result);
+
+    return $row['member_nick'];
 }
 
 function breadcrumb($breadcrumb_array) {
@@ -256,7 +268,7 @@ function send_message($sender, $receiver, $subject, $text) {
     global $link;
 
     mysqli_query($link, "INSERT INTO message
-               (message_from_member_id, message_to_member_id, message_subject, message_text, message_date)
+               (message_sender_member_id, message_receiver_member_id, message_subject, message_text, message_date)
                VALUES
                ('".$sender."', '".$receiver."', '".$subject."', '".$text."', '".time()."')
                ")

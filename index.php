@@ -226,6 +226,40 @@ Route::add("/cards/([a-z+].*)",function($category) {
 Route::add("/cards",function() {
     require_once("tcg/cards_new.php");
 });
+Route::add("/message/delete/([0-9+].*)",function($message_id) {
+    $action = 'delete';
+    require_once("tcg/message.php");
+});
+Route::add("/message/reply/([0-9+].*)",function($message_id) {
+    require_once("tcg/message_write.php");
+});
+Route::add("/message/reply/([0-9+].*)",function($message_id) {
+    require_once("tcg/message_write.php");
+}, "post");
+Route::add("/message/write/([0-9+].*)",function($receiver_id) {
+    require_once("tcg/message_write.php");
+});
+Route::add("/message/write",function() {
+    require_once("tcg/message_write.php");
+});
+Route::add("/message/write",function() {
+    require_once("tcg/message_write.php");
+}, "post");
+Route::add("/message/([0-9+].*)",function($message_id) {
+    require_once("tcg/message.php");
+});
+Route::add("/message",function() {
+    $message_box_type = 'inbox';
+    require_once("tcg/message.php");
+});
+Route::add("/message/inbox",function() {
+    $message_box_type = 'inbox';
+    require_once("tcg/message.php");
+});
+Route::add("/message/outbox",function() {
+    $message_box_type = 'outbox';
+    require_once("tcg/message.php");
+});
 
 Route::add("/lostpassword",function() {
     require_once("tcg/lostpassword.php");

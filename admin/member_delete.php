@@ -78,8 +78,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
 
                 // delete message from member
                 mysqli_query($link, "DELETE FROM message
-                                     WHERE (message_from_member_id = '".$member_id."'
-                                         OR message_to_member_id = '".$member_id."')")
+                                     WHERE (message_sender_member_id = '".$member_id."'
+                                         OR message_receiver_member_id = '".$member_id."')")
                 OR die(mysqli_error($link));
 
                 // reset member data - id and name needed for carddecks

@@ -58,8 +58,8 @@ if (!isset($_SESSION['member_id'])) {
     // messages
     $sql_messages = "SELECT message_id
                      FROM member, message
-                     WHERE message_to_member_id = '".$_SESSION['member_id']."'
-                       AND message_from_member_id = member_id
+                     WHERE message_receiver_member_id = '".$_SESSION['member_id']."'
+                       AND message_sender_member_id = member_id
                        AND message_read = 0
                      ORDER BY message_id DESC";
     $result_messages = mysqli_query($link, $sql_messages) or die(mysqli_error($link));

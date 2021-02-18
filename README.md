@@ -85,11 +85,11 @@ Actual status: **Work in progress**!
 - managing of cards
   - sort in categories (trade, collect)
   - master full carddecks
+- message system
 
 
 ## up coming features
 - games
-- message system
 - trade system
   - fully automatic
   - semi-automatic

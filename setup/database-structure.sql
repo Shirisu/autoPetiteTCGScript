@@ -241,17 +241,18 @@ CREATE TABLE IF NOT EXISTS `member_wishlist` (
 
 CREATE TABLE IF NOT EXISTS `message` (
   `message_id` int(11) NOT NULL AUTO_INCREMENT,
-  `message_from_member_id` int(11) NOT NULL,
-  `message_to_member_id` int(11) NOT NULL,
+  `message_sender_member_id` int(11) NOT NULL,
+  `message_receiver_member_id` int(11) NOT NULL,
   `message_subject` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `message_text` text COLLATE utf8_unicode_ci NOT NULL,
   `message_date` int(11) NOT NULL,
   `message_read` int(1) NOT NULL DEFAULT '0',
+  `message_system` enum('0','1') NOT NULL DEFAULT '0' COMMENT '0 = member, 1 = system',
   PRIMARY KEY (`message_id`),
-  KEY `message_from_member_id` (`message_from_member_id`),
-  KEY `message_to_member_id` (`message_to_member_id`),
-  CONSTRAINT `message_ibfk_1` FOREIGN KEY (`message_from_member_id`) REFERENCES `member` (`member_id`),
-  CONSTRAINT `message_ibfk_2` FOREIGN KEY (`message_to_member_id`) REFERENCES `member` (`member_id`)
+  KEY `message_sender_member_id` (`message_sender_member_id`),
+  KEY `message_receiver_member_id` (`message_receiver_member_id`),
+  CONSTRAINT `message_ibfk_1` FOREIGN KEY (`message_sender_member_id`) REFERENCES `member` (`member_id`),
+  CONSTRAINT `message_ibfk_2` FOREIGN KEY (`message_receiver_member_id`) REFERENCES `member` (`member_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
