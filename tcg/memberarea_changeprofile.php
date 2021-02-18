@@ -1,5 +1,7 @@
 <?php
 if (isset($_SESSION['member_rank'])) {
+    require_once('./inc/class.passwordhash_tcg.php');
+
     global $link;
     $breadcrumb = array(
         '/' => 'Home',
@@ -36,6 +38,24 @@ if (isset($_SESSION['member_rank'])) {
                                  LIMIT 1")
             OR die(mysqli_error($link));
 
+            if ((isset($_POST['password']) && $_POST['password'] != '') &&
+                (isset($_POST['password2']) && $_POST['password2'] != '')) {
+                $password = trim($_POST['password']);
+                $password2 = trim($_POST['password2']);
+
+                if ($password !== $password2) {
+                    alert_box(TRANSLATIONS[$GLOBALS['language']]['register']['hint_nomatch'], 'danger');
+                } else {
+                    $password_hashed = create_hash_for_tcg($password);
+
+                    mysqli_query($link, "UPDATE member
+                                     SET member_password = '" . $password_hashed . "'
+                                     WHERE member_id = " . $member_id . "
+                                     LIMIT 1")
+                    OR die(mysqli_error($link));
+                }
+            }
+
             $_SESSION['language'] = $member_language;
 
             alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_success_save'], 'success');
@@ -68,19 +88,47 @@ if (isset($_SESSION['member_rank'])) {
                                        value="<?php echo $member_email; ?>" required/>
                             </div>
                         </div>
+                        <div class="form-group col col-12 col-md-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="ariaDescribedbyPassword"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_password']; ?></span>
+                                </div>
+                                <input type="password" class="form-control" id="password" name="password" pattern="(?=.{8,}$)((?=.*[0-9])(?=.*[!?\+\-_#*&$§%]))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*" aria-describedby="ariaDescribedbyPassword" value="" />
+                            </div>
+                        </div>
+                        <div class="form-group col col-12 col-md-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="ariaDescribedbyPasswordRepeat"><?php echo TRANSLATIONS[$GLOBALS['language']]['register']['password_repeat']; ?></span>
+                                </div>
+                                <input type="password" class="form-control" id="password2" name="password2" pattern="(?=.{8,}$)((?=.*[0-9])(?=.*[!?\+\-_#*&$§%]))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*" aria-describedby="ariaDescribedbyPasswordRepeat" value="" />
+                            </div>
+                        </div>
                         <div class="form-group col col-12 mb-2">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="ariaDescribedbyText">Text</span>
                                 </div>
                                 <textarea class="form-control" id="member_text" name="member_text"
-                                      aria-describedby="ariaDescribedbyText" rows="10"
-                                      required><?php echo $member_text; ?></textarea>
+                                      aria-describedby="ariaDescribedbyText" rows="10"><?php echo $member_text; ?></textarea>
                             </div>
                         </div>
                         <div class="form-group col col-12">
                             <button type="submit"
                                     class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_save']; ?></button>
+                        </div>
+
+                        <div class="form-group col col-12 mt-2">
+                            <small id="ariaDescribedbyPassword" class="form-text text-muted">
+                                <span class="font-weight-bold"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_hint']; ?>:</span> <?php echo TRANSLATIONS[$GLOBALS['language']]['register']['hint_password']; ?>
+                                <ul>
+                                    <li><?php echo TRANSLATIONS[$GLOBALS['language']]['register']['hint_password_rule_1']; ?></li>
+                                    <li><?php echo TRANSLATIONS[$GLOBALS['language']]['register']['hint_password_rule_2']; ?></li>
+                                    <li><?php echo TRANSLATIONS[$GLOBALS['language']]['register']['hint_password_rule_3']; ?></li>
+                                    <li><?php echo TRANSLATIONS[$GLOBALS['language']]['register']['hint_password_rule_4']; ?></li>
+                                    <li><?php echo TRANSLATIONS[$GLOBALS['language']]['register']['hint_password_rule_5']; ?></li>
+                                </ul>
+                            </small>
                         </div>
                     </div>
                 </form>
