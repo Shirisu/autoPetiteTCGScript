@@ -82,12 +82,12 @@ Actual status: **Work in progress**!
     - change wish in cards
   - cardupdate
     - get new cards
-
-
-## up coming features
 - managing of cards
   - sort in categories (trade, collect)
   - master full carddecks
+
+
+## up coming features
 - games
 - message system
 - trade system

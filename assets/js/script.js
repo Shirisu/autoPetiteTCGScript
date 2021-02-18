@@ -89,6 +89,22 @@ $(document).ready(function() {
         showHeader: false
     });
 
+    $('table.cards-sorting-table.master-cards').bootstrapTable('destroy').bootstrapTable({
+        classes: 'table table-borderless',
+        pagination: true,
+        search: true,
+        pageSize: 60,
+        showHeader: false
+    });
+
+    $('table.cards-sorting-table.collect-cards').bootstrapTable('destroy').bootstrapTable({
+        classes: 'table table-borderless',
+        pagination: true,
+        search: true,
+        pageSize: 10,
+        showHeader: false
+    });
+
 
     // replace the "Choose a file" label
     $('input[type="file"]').on('change',function(e){
