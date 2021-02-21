@@ -111,7 +111,8 @@ if (isset($_SESSION['member_rank'])) {
         if ($message_box_type == 'inbox') {
             $wherestring = "WHERE message_receiver_member_id = '" . $member_id . "'";
         } elseif ($message_box_type == 'outbox') {
-            $wherestring = "WHERE message_sender_member_id = '" . $member_id . "'";
+            $wherestring = "WHERE message_sender_member_id = '" . $member_id . "'
+                              AND message_system = '0'";
         } else {
             $wherestring = "WHERE message_receiver_member_id = '" . $member_id . "'";
         }
@@ -175,7 +176,7 @@ if (isset($_SESSION['member_rank'])) {
                                     </td>
                                     <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_message['message_date']); ?></td>
                                     <td><?php echo($row_message['message_read'] == 0 ? '<span class="badge badge-secondary"><i class="fas fa-times"></i> ' . TRANSLATIONS[$GLOBALS['language']]['message']['text_unread'] . '</span>' : '<span class="badge badge-success"><i class="fas fa-check"></i> ' . TRANSLATIONS[$GLOBALS['language']]['message']['text_read'] . '</span>'); ?></td>
-                                    <td><a href="<?php echo HOST_URL; ?>/message/delete/<?php echo $row_message['message_id']; ?>" class="badge badge-secondary"><i class="fas fa-trash-alt"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['message']['text_button_delete']; ?></a></td>
+                                    <td><a href="<?php echo HOST_URL; ?>/message/delete/<?php echo $row_message['message_id']; ?>" class="badge badge-danger"><i class="fas fa-trash-alt"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['message']['text_button_delete']; ?></a></td>
                                 </tr>
                                 <?php
                             }
