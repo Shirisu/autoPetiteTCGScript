@@ -329,10 +329,10 @@ table.carddeck td {
     margin-right: -12px;
 }
 .cards-sorting-container .cards-sorting-wrapper,
-.member-cards-container .cards-sorting-wrapper {
+.member-cards-container .profile-cards-wrapper {
     position: relative;
 }
-.member-cards-container .cards-sorting-wrapper.show-counter::after {
+.member-cards-container .profile-cards-wrapper.show-counter::after {
     content: attr(data-count);
     display: inline-block;
     position: absolute;

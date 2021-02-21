@@ -44,14 +44,8 @@ if (isset($_SESSION['member_rank'])) {
                 <div class="col col-12 mb-3 member-cards-container">
                     <?php
                     $sql_cards = "SELECT member_cards_id, member_cards_number, carddeck_id, carddeck_name,
-                                     (SELECT COUNT(member_cards_id)
-                                      FROM member_cards
-                                      WHERE member_cards_member_id = '".$member_id."'
-                                        AND mc.member_cards_carddeck_id = member_cards_carddeck_id
-                                        AND mc.member_cards_number = member_cards_number
-                                        AND member_cards_cat = 3
-                                        AND member_cards_active = 1
-                                      GROUP BY member_cards_carddeck_id, member_cards_number) as card_count
+                                      COUNT(*) AS card_count,
+                                      SUM(COUNT(member_cards_number)) OVER() AS total_card_count
                                   FROM member_cards mc, carddeck
                                   WHERE member_cards_member_id = '".$member_id."'
                                     AND member_cards_cat = 3
@@ -62,7 +56,10 @@ if (isset($_SESSION['member_rank'])) {
                     $result_cards = mysqli_query($link, $sql_cards) OR die(mysqli_error($link));
                     $count_cards = mysqli_num_rows($result_cards);
                     if ($count_cards) {
-                        title_small($count_cards.' Trade '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']);
+                        $row_total_card_count = mysqli_fetch_assoc($result_cards);
+                        $total_card_count = $row_total_card_count['total_card_count'];
+                        title_small($total_card_count.' Trade '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']);
+                        mysqli_data_seek($result_cards, 0);
                         ?>
                         <table class="optional profile-cards trade-cards" data-mobile-responsive="true">
                             <thead>
