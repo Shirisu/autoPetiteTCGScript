@@ -260,6 +260,33 @@ Route::add("/message/outbox",function() {
     $message_box_type = 'outbox';
     require_once("tcg/message.php");
 });
+Route::add("/games",function() {
+    require_once("tcg/games/games.php");
+});
+Route::add("/games/lucky/([0-9+].*)",function($lucky_game_id) {
+    require_once("tcg/games/lucky.php");
+});
+Route::add("/games/lucky/([0-9+].*)",function($lucky_game_id) {
+    require_once("tcg/games/lucky.php");
+}, "post");
+Route::add("/games/([0-9+].*)",function($game_id) {
+    if ($game_id == 2) {
+        require_once("tcg/games/memory.php");
+    } elseif ($game_id == 3) {
+        require_once("tcg/games/right_number.php");
+    } else {
+        require_once("tcg/games/games.php");
+    }
+});
+Route::add("/games/([0-9+].*)",function($game_id) {
+    if ($game_id == 2) {
+        require_once("tcg/games/memory.php");
+    } elseif ($game_id == 3) {
+        require_once("tcg/games/right_number.php");
+    } else {
+        require_once("tcg/games/games.php");
+    }
+}, "post");
 
 Route::add("/lostpassword",function() {
     require_once("tcg/lostpassword.php");

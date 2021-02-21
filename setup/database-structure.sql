@@ -119,33 +119,33 @@ CREATE TABLE IF NOT EXISTS `news` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-CREATE TABLE IF NOT EXISTS `game_lucky` (
-  `game_lucky_id` int(11) NOT NULL AUTO_INCREMENT,
-  `game_lucky_member_id` int(11) NOT NULL,
-  `game_lucky_cat_id` int(11) NOT NULL,
-  `game_lucky_last_played` int(11) NOT NULL,
-  PRIMARY KEY (`game_lucky_id`),
-  KEY `game_lucky_member_id` (`game_lucky_member_id`,`game_lucky_cat_id`)
+CREATE TABLE IF NOT EXISTS `games` (
+  `games_id` int(11) NOT NULL AUTO_INCREMENT,
+  `games_name` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
+  `games_intervall` int(11) NOT NULL,
+  `games_icon` VARCHAR(30) NOT NULL,
+  `games_is_lucky_category_game` ENUM('0','1') NOT NULL DEFAULT '0' COMMENT '0 = normal, 1 = lucky category',
+  PRIMARY KEY (`games_id`),
+  KEY `games_id` (`games_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
-CREATE TABLE IF NOT EXISTS `game_memory` (
-  `game_memory_id` int(11) NOT NULL AUTO_INCREMENT,
-  `game_memory_member_id` int(11) NOT NULL,
-  `game_memory_last_played` int(11) NOT NULL,
-  PRIMARY KEY (`game_memory_id`),
-  KEY `game_memory_member_id` (`game_memory_member_id`),
-  CONSTRAINT `game_memory_ibfk_1` FOREIGN KEY (`game_memory_member_id`) REFERENCES `member` (`member_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+INSERT INTO `games` (games_name, games_intervall, games_is_lucky_category_game, games_icon)
+    VALUES
+    ('Lucky', 3600, '1', 'dice'),
+    ('Memory', 3600, '0', 'puzzle-piece'),
+    ('Right Number', 3600, '0', 'dice');
 
 
-CREATE TABLE IF NOT EXISTS `game_rightnumber` (
-  `game_rightnumber_id` int(11) NOT NULL AUTO_INCREMENT,
-  `game_rightnumber_member_id` int(11) NOT NULL,
-  `game_rightnumber_last_played` int(11) NOT NULL,
-  PRIMARY KEY (`game_rightnumber_id`),
-  KEY `game_rightnumber_member_id` (`game_rightnumber_member_id`),
-  CONSTRAINT `game_rightnumber_ibfk_1` FOREIGN KEY (`game_rightnumber_member_id`) REFERENCES `member` (`member_id`)
+CREATE TABLE IF NOT EXISTS `member_game_played` (
+  `member_game_played_id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_game_played_member_id` int(11) NOT NULL,
+  `member_game_played_game_id` int(11) NOT NULL,
+  `member_game_played_lucky_category_id` int(11) DEFAULT NULL,
+  `member_game_played_last_played` int(11) NOT NULL,
+  PRIMARY KEY (`member_game_played_id`),
+  KEY `member_game_played_member_id` (`member_game_played_member_id`,`member_game_played_game_id`),
+  CONSTRAINT `member_game_played_ibfk_1` FOREIGN KEY (`member_game_played_member_id`) REFERENCES `member` (`member_id`),
+  CONSTRAINT `member_game_played_ibfk_2` FOREIGN KEY (`member_game_played_game_id`) REFERENCES `games` (`games_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

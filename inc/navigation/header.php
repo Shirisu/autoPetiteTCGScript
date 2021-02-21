@@ -34,22 +34,6 @@
                     ?>
                 </div>
             </li>
-            <?php
-            if (isset($_SESSION['member_rank'])) {
-                ?>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownGames" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Games
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownGames">
-                        <?php
-                        require_once("header_games.php");
-                        ?>
-                    </div>
-                </li>
-                <?php
-            }
-            ?>
         </ul>
         <ul class="navbar-nav">
             <?php

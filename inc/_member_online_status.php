@@ -2,8 +2,6 @@
 global $link;
 $online_time = time();
 if ((isset($_SESSION['member_id'])) && (isset($_SESSION['member_nick']))) {
-    require_once("member_config.php");
-
     $sql_online = "SELECT member_id FROM member_online WHERE member_id= '".$_SESSION['member_id']."' LIMIT 1;";
     $result_online  = mysqli_query($link, $sql_online) OR die(mysqli_error($link));
     if (mysqli_num_rows($result_online)) {

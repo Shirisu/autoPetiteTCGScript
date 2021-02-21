@@ -33,7 +33,6 @@ $(document).ready(function() {
         });
     });
 
-
     // use bootstrapTable for all tables without class "optional" or data-paging=no
     $('table:not([data-paging="no"]):not(.optional)').bootstrapTable('destroy').bootstrapTable({
         pagination: true,

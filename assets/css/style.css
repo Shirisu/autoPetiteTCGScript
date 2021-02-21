@@ -440,6 +440,25 @@ table.carddeck td {
     text-align: center;
 }
 
+/**
+* games style
+**/
+table.memorygame {
+    margin: auto;
+}
+@media (min-width: 576px) {
+    table.memorygame {
+        display: inline-block;
+        width: auto;
+    }
+}
+.memory_found {
+    opacity: 0.25;
+}
+.memory_not_found {
+    opacity: 1;
+}
+
 
 /**
 * online style

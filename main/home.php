@@ -56,6 +56,6 @@ if (mysqli_num_rows($result_news)) {
     </div>
     <?php
 } else {
-    show_no_access_message();
+    alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_news_yet'], 'danger');
 }
 ?>

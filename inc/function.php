@@ -169,6 +169,7 @@ function breadcrumb($breadcrumb_array) {
 
 function insert_cards($member_id, $quantity) {
     global $link;
+    unset($_SESSION['insert_cards']);
 
     $sql = "SELECT carddeck_id, carddeck_name
             FROM carddeck
@@ -264,6 +265,64 @@ function insert_shop_card($member_id, $carddeck_id, $card_number) {
     }
 }
 
+function insert_lucky_game_played($member_id, $game_id, $lucky_game_id) {
+    global $link;
+
+    $sql_last_played = "SELECT member_game_played_last_played
+                        FROM member_game_played
+                        WHERE member_game_played_member_id = '" . $member_id . "'
+                          AND member_game_played_game_id = '" . $game_id . "'
+                          AND member_game_played_lucky_category_id = '" . $lucky_game_id . "'
+                        ORDER BY member_game_played_id DESC
+                        LIMIT 1";
+    $result_last_played = mysqli_query($link, $sql_last_played) OR die(mysqli_error($link));
+    if (mysqli_num_rows($result_last_played)) {
+        $query = "UPDATE member_game_played
+              SET member_game_played_last_played = '".time()."'
+              WHERE member_game_played_member_id = '".$member_id."'
+                AND member_game_played_game_id = '".$game_id."'
+                AND member_game_played_lucky_category_id = '".$lucky_game_id."'
+              LIMIT 1
+              ;";
+        mysqli_query($link, $query) or die(mysqli_error($link));
+    } else {
+        $query = "INSERT INTO member_game_played
+              (member_game_played_member_id, member_game_played_game_id, member_game_played_lucky_category_id, member_game_played_last_played)
+              VALUES
+              ('".$member_id."', '".$game_id."', '".$lucky_game_id."', '".time()."')
+              ;";
+        mysqli_query($link, $query) or die(mysqli_error($link));
+    }
+}
+
+function insert_game_played($member_id, $game_id) {
+    global $link;
+
+    $sql_last_played = "SELECT member_game_played_last_played
+                        FROM member_game_played
+                        WHERE member_game_played_member_id = '" . $member_id . "'
+                          AND member_game_played_game_id = '" . $game_id . "'
+                        ORDER BY member_game_played_id DESC
+                        LIMIT 1";
+    $result_last_played = mysqli_query($link, $sql_last_played) OR die(mysqli_error($link));
+    if (mysqli_num_rows($result_last_played)) {
+        $query = "UPDATE member_game_played
+              SET member_game_played_last_played = '".time()."'
+              WHERE member_game_played_member_id = '".$member_id."'
+                AND member_game_played_game_id = '".$game_id."'
+              LIMIT 1
+              ;";
+        mysqli_query($link, $query) or die(mysqli_error($link));
+    } else {
+        $query = "INSERT INTO member_game_played
+              (member_game_played_member_id, member_game_played_game_id, member_game_played_last_played)
+              VALUES
+              ('".$member_id."', '".$game_id."', '".time()."')
+              ;";
+        mysqli_query($link, $query) or die(mysqli_error($link));
+    }
+}
+
 function send_message($sender, $receiver, $subject, $text) {
     global $link;
 
@@ -308,6 +367,22 @@ function show_card($carddeck_id, $card_number, $show_only_url = false, $show_ina
         } else {
             return '<img src="'.HOST_URL.TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$card_number.'.'.TCG_CARDS_FILE_TYPE.'" alt="'.$carddeck_name.$card_number.'" />';
         }
+    }
+}
+
+function get_card_path_without_number($carddeck_id) {
+    global $link;
+
+    $sql_carddeck = "SELECT carddeck_name
+                     FROM carddeck
+                     WHERE carddeck_id = '".$carddeck_id."'
+                     LIMIT 1";
+    $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
+    if (mysqli_num_rows($result_carddeck)) {
+        $row_carddeck = mysqli_fetch_assoc($result_carddeck);
+        $carddeck_name = $row_carddeck['carddeck_name'];
+
+        return HOST_URL.TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name;
     }
 }
 

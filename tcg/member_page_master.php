@@ -81,7 +81,7 @@ if (isset($_SESSION['member_rank'])) {
                         <?php
                     } else {
                         title_small('0 Master');
-                        alert_box(TRANSLATIONS[$GLOBALS['language']]['member']['text_profile_no_master_in_category'], 'danger');
+                        alert_box(TRANSLATIONS[$GLOBALS['language']]['member']['text_profile_no_cards_in_category'], 'danger');
                     }
                     ?>
                 </div>

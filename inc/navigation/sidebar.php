@@ -24,6 +24,8 @@ if (!isset($_SESSION['member_id'])) {
     <?php navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_register'],'register'); ?>
     <?php
 } else {
+    navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'],'games','gamepad');
+
     // own cards
     $sql_cards = "SELECT member_cards_id
                   FROM member_cards
