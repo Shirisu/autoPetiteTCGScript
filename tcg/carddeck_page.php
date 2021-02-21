@@ -146,7 +146,7 @@ if (isset($_SESSION['member_rank'])) {
                 <div class="col col-12 col-md-4 mb-3">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fas fa-heart"></i> Collect / <i class="fas fa-star"></i> Wishlist
+                            <i class="fas fa-heart"></i> Collect / <i class="fas fa-star"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_wishlist']; ?>
                         </div>
                         <div class="card-body text-center">
                             <p class="card-text">
