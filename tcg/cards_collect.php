@@ -64,7 +64,22 @@ if (isset($_SESSION['member_rank'])) {
                                          WHERE member_id = '".$member_id."'
                                          LIMIT 1")
                     OR die(mysqli_error($link));
-                    alert_box($row_carddeck['carddeck_name'] . ' ' . TRANSLATIONS[$GLOBALS['language']]['general']['text_mastered'], 'success');
+
+                    insert_cards($member_id, TCG_MASTER_CARD_REWARD);
+                    $master_text = $row_carddeck['carddeck_name'] . ' ' . TRANSLATIONS[$GLOBALS['language']]['general']['text_mastered'].'. '.TRANSLATIONS[$GLOBALS['language']]['general']['text_reward'].' - '.TCG_MASTER_CARD_REWARD.' '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'].': '.implode(', ', $_SESSION['insert_cards']);
+
+                    if (TCG_USE_WISH == true) {
+                        $master_text .= ' &amp; 1 Wish';
+                        mysqli_query($link, "UPDATE member
+                                         SET member_wish = member_wish + 1
+                                         WHERE member_id = '".$member_id."'
+                                         LIMIT 1")
+                        OR die(mysqli_error($link));
+                    }
+
+                    insert_log('Master', $master_text, $member_id);
+
+                    alert_box($master_text, 'success');
                 } else {
                     alert_box(TRANSLATIONS[$GLOBALS['language']]['member']['text_carddeck_not_in_collect'], 'danger');
                 }

@@ -195,18 +195,20 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     </div>
                 </div>
             </div>
-            <div class="col col-12 col-md-6 mb-2">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="media">
-                            <i class="fas fa-plus-square fa-2x mr-3"></i>
-                            <div class="media-body">
-                                <a href="<?php echo HOST_URL; ?>/administration/distributewish"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['wish_distribute_headline']; ?></a>
+            <?php if (TCG_USE_WISH == true) { ?>
+                <div class="col col-12 col-md-6 mb-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="media">
+                                <i class="fas fa-plus-square fa-2x mr-3"></i>
+                                <div class="media-body">
+                                    <a href="<?php echo HOST_URL; ?>/administration/distributewish"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['wish_distribute_headline']; ?></a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            <?php } ?>
         </div>
         <?php
     }

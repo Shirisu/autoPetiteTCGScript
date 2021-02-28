@@ -213,6 +213,7 @@ trading card game
         'text_rank' => 'Rang',
         'text_register' => 'Registrierung',
         'text_registered' => 'Registrierdatum',
+        'text_reward' => 'Belohnung',
         'text_rules' => 'Regeln',
         'text_save' => 'Speichern',
         'text_series' => 'Serie',

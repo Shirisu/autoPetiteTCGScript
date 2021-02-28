@@ -68,7 +68,7 @@ $(document).ready(function() {
         classes: 'table table-borderless',
         pagination: true,
         search: true,
-        pageSize: 10,
+        pageSize: 12,
         showHeader: false
     });
 
@@ -100,7 +100,7 @@ $(document).ready(function() {
         classes: 'table table-borderless',
         pagination: true,
         search: true,
-        pageSize: 10,
+        pageSize: 12,
         showHeader: false
     });
 

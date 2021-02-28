@@ -54,9 +54,11 @@ if (isset($_SESSION['member_rank'])) {
                                 <div class="col col-6 col-md-3 mb-2 font-weight-bold">Master</div>
                                 <div class="col col-6 col-md-3 mb-2"><?php echo $row_member['member_master']; ?></div>
                                 <div class="col col-6 col-md-3 mb-2 font-weight-bold"><?php echo TCG_CURRENCY; ?></div>
-                                <div class="col col-6 col-md-3 mb-2"><?php echo $row_member['member_currency']; ?></div>
-                                <div class="col col-6 col-md-3 mb-2 font-weight-bold"><?php echo TCG_WISH; ?></div>
-                                <div class="col col-6 col-md-3 mb-2"><?php echo $row_member['member_wish']; ?></div>
+                                <div class="col col-6 <?php echo (TCG_USE_WISH == true ? 'col-md-3' : 'col-md-9'); ?> mb-2"><?php echo $row_member['member_currency']; ?></div>
+                                <?php if (TCG_USE_WISH == true) { ?>
+                                    <div class="col col-6 col-md-3 mb-2 font-weight-bold"><?php echo TCG_WISH; ?></div>
+                                    <div class="col col-6 col-md-3 mb-2"><?php echo $row_member['member_wish']; ?></div>
+                                <?php } ?>
                                 <div class="col col-6 col-md-6 mb-2 font-weight-bold"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_registered']; ?></div>
                                 <div class="col col-6 col-md-6 mb-2"><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_member['member_register']); ?></div>
                                 <div class="col col-6 col-md-6 mb-2 font-weight-bold"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastlogin']; ?></div>
