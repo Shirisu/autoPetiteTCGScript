@@ -27,7 +27,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
 
         insert_log(TRANSLATIONS[$language]['admin']['text_log_distribute_currency_topic'], $inserted_currency_text, $member_id);
         $text = TRANSLATIONS[$language]['admin']['text_distribution_topic'].': '.$topic.' - '.$inserted_currency_text;
-        send_message($_SESSION['member_id'], $member_id, TRANSLATIONS[$language]['admin']['text_log_distribute_currency_topic'], $text);
+        send_message($_SESSION['member_id'], $member_id, TRANSLATIONS[$language]['admin']['text_log_distribute_currency_topic'], $text, 1);
 
         alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_success_currency_add'], 'success');
     }

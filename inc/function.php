@@ -323,13 +323,13 @@ function insert_game_played($member_id, $game_id) {
     }
 }
 
-function send_message($sender, $receiver, $subject, $text) {
+function send_message($sender, $receiver, $subject, $text, $message_system = 0) {
     global $link;
 
     mysqli_query($link, "INSERT INTO message
-               (message_sender_member_id, message_receiver_member_id, message_subject, message_text, message_date)
+               (message_sender_member_id, message_receiver_member_id, message_subject, message_text, message_date, message_system)
                VALUES
-               ('".$sender."', '".$receiver."', '".$subject."', '".$text."', '".time()."')
+               ('".$sender."', '".$receiver."', '".$subject."', '".$text."', '".time()."', '".$message_system."')
                ")
     OR DIE(mysqli_error($link));
 }
