@@ -56,7 +56,8 @@ if (isset($_SESSION['member_rank'])) {
                         <table class="optional profile-cards master-cards" data-mobile-responsive="true">
                             <thead>
                             <tr>
-                                <th><?php echo title_small($count_master.' Master'); ?></th>
+                                <th></th>
+                                <th data-searchable="false"><?php echo title_small($count_master.' Master'); ?></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -66,6 +67,7 @@ if (isset($_SESSION['member_rank'])) {
                                 $carddeck_name = $row_master['carddeck_name'];
                                 ?>
                                 <tr>
+                                    <td class="d-none"><?php echo $carddeck_name; ?></td>
                                     <td>
                                         <div class="profile-cards-wrapper">
                                             <a class="carddeck-link" href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>"><?php echo show_card($carddeck_id, 'master'); ?></a><br />

@@ -133,7 +133,8 @@ if (isset($_SESSION['member_rank'])) {
                             <table class="optional cards-sorting-table new-cards" data-mobile-responsive="true">
                                 <thead>
                                 <tr>
-                                    <th><?php echo title_small($count_cards.' New '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']); ?></th>
+                                    <th></th>
+                                    <th data-searchable="false"><?php echo title_small($count_cards.' New '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']); ?></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -171,6 +172,7 @@ if (isset($_SESSION['member_rank'])) {
                                     }
                                     ?>
                                     <tr>
+                                        <td class="d-none"><?php echo $carddeck_name.$cardnumber; ?></td>
                                         <td>
                                             <div class="cards-sorting-wrapper<?php echo ($carddeck_already_mastered == 1 ? ' mastered' : ''); ?>">
                                                 <?php echo show_card($carddeck_id, $cardnumber_plain); ?>

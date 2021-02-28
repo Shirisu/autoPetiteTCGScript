@@ -37,6 +37,7 @@ $(document).ready(function() {
     $('table:not([data-paging="no"]):not(.optional)').bootstrapTable('destroy').bootstrapTable({
         pagination: true,
         search: true,
+        searchAccentNeutralise: true,
         sortable: true
     });
 
@@ -44,6 +45,7 @@ $(document).ready(function() {
     $('table[data-paging="no"]').bootstrapTable('destroy').bootstrapTable({
         pagination: false,
         search: true,
+        searchAccentNeutralise: true,
         sortable: true
     });
 
@@ -52,6 +54,7 @@ $(document).ready(function() {
         classes: 'table table-borderless',
         pagination: true,
         search: true,
+        searchAccentNeutralise: true,
         pageSize: 6,
         showHeader: false
     });
@@ -60,6 +63,7 @@ $(document).ready(function() {
         classes: 'table table-borderless',
         pagination: true,
         search: true,
+        searchAccentNeutralise: true,
         pageSize: 60,
         showHeader: false
     });
@@ -68,6 +72,7 @@ $(document).ready(function() {
         classes: 'table table-borderless',
         pagination: true,
         search: true,
+        searchAccentNeutralise: true,
         pageSize: 12,
         showHeader: false
     });
@@ -76,6 +81,7 @@ $(document).ready(function() {
         classes: 'table table-borderless',
         pagination: true,
         search: true,
+        searchAccentNeutralise: true,
         pageSize: 60,
         showHeader: false
     });
@@ -84,6 +90,7 @@ $(document).ready(function() {
         classes: 'table table-borderless',
         pagination: true,
         search: true,
+        searchAccentNeutralise: true,
         pageSize: 60,
         showHeader: false
     });
@@ -92,6 +99,7 @@ $(document).ready(function() {
         classes: 'table table-borderless',
         pagination: true,
         search: true,
+        searchAccentNeutralise: true,
         pageSize: 60,
         showHeader: false
     });
@@ -100,6 +108,7 @@ $(document).ready(function() {
         classes: 'table table-borderless',
         pagination: true,
         search: true,
+        searchAccentNeutralise: true,
         pageSize: 12,
         showHeader: false
     });

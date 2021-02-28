@@ -64,7 +64,8 @@ if (isset($_SESSION['member_rank'])) {
                         <table class="optional profile-cards trade-cards" data-mobile-responsive="true">
                             <thead>
                             <tr>
-                                <th><?php echo title_small($count_cards.' Trade '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']); ?></th>
+                                <th></th>
+                                <th data-searchable="false"><?php echo title_small($count_cards.' Trade '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']); ?></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -77,6 +78,7 @@ if (isset($_SESSION['member_rank'])) {
                                 $card_count = $row_cards['card_count'];
                                 ?>
                                 <tr>
+                                    <td class="d-none"><?php echo $carddeck_name.$cardnumber; ?></td>
                                     <td>
                                         <div class="profile-cards-wrapper<?php echo ($card_count > 1 ? ' show-counter" data-count="'.$card_count.'x' : ''); ?>">
                                             <?php echo ($member_id != $_SESSION['member_id'] ? '<a href="'.HOST_URL.'/trade/'.$row_cards['member_cards_id'].'">' : ''); ?><?php echo show_card($carddeck_id, $cardnumber_plain); ?><?php echo ($member_id != $_SESSION['member_id'] ? '</a>' : ''); ?>

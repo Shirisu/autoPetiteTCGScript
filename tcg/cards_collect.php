@@ -147,7 +147,8 @@ if (isset($_SESSION['member_rank'])) {
                         <table class="optional cards-sorting-table collect-cards" data-mobile-responsive="true">
                             <thead>
                             <tr>
-                                <th><?php echo title_small($count_cards.' Collect '.TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks']); ?></th>
+                                <th></th>
+                                <th data-searchable="false"><?php echo title_small($count_cards.' Collect '.TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks']); ?></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -184,6 +185,7 @@ if (isset($_SESSION['member_rank'])) {
                                 $mastered_yet = mysqli_num_rows($result_mastered_yet);
                                 ?>
                                 <tr>
+                                    <td class="d-none"><?php echo $carddeck_name; ?> <?php echo count($cardnumbers); ?>/<?php echo TCG_CARDDECK_MAX_CARDS; ?></td>
                                     <td>
                                         <form action="<?php echo HOST_URL; ?>/cards/collect" method="post">
                                             <small><a href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>">[<?php echo strtoupper($carddeck_name); ?>]</a> (<?php echo $cards_quantity; ?>/<?php echo TCG_CARDDECK_MAX_CARDS; ?>)</small>
@@ -211,8 +213,8 @@ if (isset($_SESSION['member_rank'])) {
                                                 ?>
                                             </div>
                                             <div class="col col-12 text-center mt-2">
-                                                <input type="hidden" id="carddeck_id" name="carddeck_id" value="<?php echo $carddeck_id; ?>"/>
-                                                <input type="hidden" id="action" name="action" value="<?php echo (($cards_quantity == TCG_CARDDECK_MAX_CARDS && !$mastered_yet) ? 'master' : 'dissolve'); ?>"/>
+                                                <input type="hidden" name="carddeck_id" value="<?php echo $carddeck_id; ?>"/>
+                                                <input type="hidden" name="action" value="<?php echo (($cards_quantity == TCG_CARDDECK_MAX_CARDS && !$mastered_yet) ? 'master' : 'dissolve'); ?>"/>
                                                 <button type="submit" class="btn btn-primary"><?php echo (($cards_quantity == TCG_CARDDECK_MAX_CARDS && !$mastered_yet) ? TRANSLATIONS[$GLOBALS['language']]['general']['text_master'] : TRANSLATIONS[$GLOBALS['language']]['member']['text_button_dissolve']); ?></button>
                                             </div>
                                         </form>

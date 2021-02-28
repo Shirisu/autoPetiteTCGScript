@@ -59,7 +59,8 @@ if (isset($_SESSION['member_rank'])) {
                         <table class="optional profile-cards collect-cards" data-mobile-responsive="true">
                             <thead>
                             <tr>
-                                <th><?php echo title_small($count_cards.' Collect '.TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks']); ?></th>
+                                <th></th>
+                                <th data-searchable="false"><?php echo title_small($count_cards.' Collect '.TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks']); ?></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -85,6 +86,7 @@ if (isset($_SESSION['member_rank'])) {
                                 }
                                 ?>
                                 <tr>
+                                    <td class="d-none"><?php echo $carddeck_name; ?> <?php echo count($cardnumbers); ?>/<?php echo TCG_CARDDECK_MAX_CARDS; ?></td>
                                     <td>
                                         <small><a href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>">[<?php echo strtoupper($carddeck_name); ?>]</a> (<?php echo count($cardnumbers); ?>/<?php echo TCG_CARDDECK_MAX_CARDS; ?>)</small>
                                         <div class="carddeck-wrapper" data-is-puzzle="<?php echo ($row_cards['carddeck_is_puzzle'] ? $row_cards['carddeck_is_puzzle'] : 0); ?>">
