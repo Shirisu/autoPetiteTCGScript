@@ -6,10 +6,9 @@ if (isset($_SESSION['member_rank'])) {
         global $link;
 
         $sql_lucky_game = "SELECT carddeck_cat_id, carddeck_cat_name, games_id, games_name, games_intervall
-                           FROM carddeck_cat, games, carddeck
-                           WHERE carddeck_cat_id = '".$lucky_game_id."'
-                             AND carddeck_cat_id = carddeck_cat
-                             AND games_is_lucky_category_game = '1'
+                           FROM games
+                           JOIN carddeck_cat ON carddeck_cat_id = '".$lucky_game_id."'
+                           WHERE games_is_lucky_category_game = '1'
                            LIMIT 1";
         $result_lucky_game = mysqli_query($link, $sql_lucky_game) OR die(mysqli_error($link));
         if (mysqli_num_rows($result_lucky_game)) {
@@ -99,7 +98,7 @@ if (isset($_SESSION['member_rank'])) {
                                             <button class="btn btn-secondary" type="submit" name="lucky"
                                                     id="<?php echo $row_carddeck['carddeck_name']; ?>"
                                                     value="<?php echo $row_carddeck['carddeck_name']; ?>">
-                                                <?php echo show_card($row_carddeck['carddeck_id'], rand(1, TCG_CARDDECK_MAX_CARDS)); ?>
+                                                <?php echo get_card($row_carddeck['carddeck_id'], rand(1, TCG_CARDDECK_MAX_CARDS)); ?>
                                             </button>
                                         </div>
                                     <?php } ?>

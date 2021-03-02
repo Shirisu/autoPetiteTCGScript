@@ -44,11 +44,11 @@ if (isset($_SESSION['member_rank'])) {
                 <div class="col col-12 mb-3 member-wishlist-container">
                     <?php
                     $sql_wishlist = "SELECT member_wishlist_date, carddeck_name, carddeck_series, carddeck_cat_name, carddeck_sub_cat_name
-                                     FROM member_wishlist, carddeck, carddeck_cat, carddeck_sub_cat
+                                     FROM member_wishlist
+                                     JOIN carddeck ON carddeck_id = member_wishlist_carddeck_id
+                                     JOIN carddeck_cat ON carddeck_cat_id = carddeck_cat
+                                     JOIN carddeck_sub_cat ON carddeck_sub_cat_id = carddeck_sub_cat
                                      WHERE member_wishlist_member_id = '".$member_id."'
-                                       AND member_wishlist_carddeck_id = carddeck_id
-                                       AND carddeck_cat = carddeck_cat_id
-                                       AND carddeck_sub_cat = carddeck_sub_cat_id
                                      ORDER BY carddeck_name ASC";
                     $result_wishlist = mysqli_query($link, $sql_wishlist) OR die(mysqli_error($link));
                     $count_wishlist = mysqli_num_rows($result_wishlist);

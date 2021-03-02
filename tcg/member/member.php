@@ -11,9 +11,9 @@ if (isset($_SESSION['member_rank'])) {
     title('Member');
 
     $sql_member = "SELECT member_id, member_nick, member_last_login, member_register, member_level, member_rank_name
-                   FROM member, member_rank
+                   FROM member
+                   JOIN member_rank ON member_rank_id = member_rank
                    WHERE member_active = 1
-                     AND member_rank = member_rank_id
                    ORDER BY member_nick ASC";
     $result_member = mysqli_query($link, $sql_member) OR die(mysqli_error($link));
     $count_member = mysqli_num_rows($result_member);

@@ -283,7 +283,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                         <div class="row">
                             <div class="form-group col col-12 mb-2">
                                 <div class="mb-1">
-                                    <?php echo show_card($row['carddeck_id'], 'master', false, true); ?>
+                                    <?php echo get_card($row['carddeck_id'], 'master', false, true); ?>
                                 </div>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -302,7 +302,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                 ?>
                                 <div class="form-group col col-12 col-md-6 mb-2">
                                     <div class="mb-1">
-                                        <?php echo show_card($row['carddeck_id'], $i, false, true); ?>
+                                        <?php echo get_card($row['carddeck_id'], $i, false, true); ?>
                                     </div>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -352,9 +352,9 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         title(TRANSLATIONS[$GLOBALS['language']]['admin']['carddeck_edit_headline']);
 
         $sql = "SELECT carddeck_id, carddeck_name, carddeck_active, carddeck_cat_name, carddeck_sub_cat_name
-                FROM carddeck, carddeck_cat, carddeck_sub_cat
-                WHERE carddeck_cat = carddeck_cat_id
-                  AND carddeck_sub_cat = carddeck_sub_cat_id
+                FROM carddeck
+                JOIN carddeck_cat ON carddeck_cat = carddeck_cat_id
+                JOIN carddeck_sub_cat ON carddeck_sub_cat = carddeck_sub_cat_id
                 ORDER BY carddeck_name";
         $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
         $count = mysqli_num_rows($result);

@@ -240,12 +240,12 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         if ($_SESSION['member_edit_active_status'] == 100) {
             $memberactive = '';
         } else {
-            $memberactive = 'AND member_active = "' . $_SESSION['member_edit_active_status'] . '"';
+            $memberactive = 'WHERE member_active = "' . $_SESSION['member_edit_active_status'] . '"';
         }
 
         $sql = "SELECT member_id, member_nick, member_active, member_register, member_last_login, member_rank_id, member_rank_name, member_ip
-                FROM member, member_rank
-                WHERE member_rank = member_rank_id
+                FROM member
+                JOIN member_rank ON member_rank = member_rank_id
                   " . $memberactive . "
                 GROUP BY member_id";
         $result = mysqli_query($link, $sql) OR die(mysqli_error($link));

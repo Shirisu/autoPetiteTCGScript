@@ -94,7 +94,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                         $row_carddeck = mysqli_fetch_assoc($result_carddeck);
                                         ?>
                                         <a href="<?php echo HOST_URL; ?>/carddeck/<?php echo $row_carddeck['carddeck_name']; ?>">
-                                            <?php echo show_card($row_carddeck['carddeck_id'], 1); ?>
+                                            <?php echo get_card($row_carddeck['carddeck_id'], 1); ?>
                                         </a>
                                         <?php
                                     }
@@ -128,8 +128,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         title(TRANSLATIONS[$GLOBALS['language']]['admin']['news_edit_headline']);
 
         $sql = "SELECT news_id, news_title, news_text, news_date, news_cardupdate_id, member_nick
-                FROM news, member
-                WHERE news_member_id = member_id
+                FROM news
+                JOIN member ON member_id = news_member_id
                 GROUP BY news_id DESC";
         $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
         $count = mysqli_num_rows($result);

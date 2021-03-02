@@ -4,10 +4,10 @@ if (isset($_SESSION['member_rank'])) {
 
     if (isset($member_id)) {
         $sql_member = "SELECT member_id, member_nick, member_level, member_cards, member_master, member_register, member_last_login, member_wish, member_currency, member_text, member_rank_name
-                       FROM member, member_rank
+                       FROM member
+                       JOIN member_rank ON member_rank_id = member_rank
                        WHERE member_id = '".$member_id."'
                          AND member_active = 1
-                         AND member_rank = member_rank_id
                        LIMIT 1";
         $result_member = mysqli_query($link, $sql_member) OR die(mysqli_error($link));
         $count_member = mysqli_num_rows($result_member);

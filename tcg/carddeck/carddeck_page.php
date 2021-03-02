@@ -4,11 +4,11 @@ if (isset($_SESSION['member_rank'])) {
 
     if (isset($carddeck_name)) {
         $sql_carddeck = "SELECT carddeck_id, carddeck_name, carddeck_series, carddeck_date, carddeck_creator, carddeck_is_puzzle, carddeck_cat, carddeck_artist, carddeck_copyright, carddeck_imagesources, carddeck_cat_name, carddeck_sub_cat_name
-                         FROM carddeck, carddeck_cat, carddeck_sub_cat
+                         FROM carddeck
+                         JOIN carddeck_cat ON carddeck_cat_id = carddeck_cat
+                         JOIN carddeck_sub_cat ON carddeck_sub_cat_id = carddeck_sub_cat
                          WHERE carddeck_name = '".$carddeck_name."'
                            AND carddeck_active = 1
-                           AND carddeck_cat = carddeck_cat_id
-                           AND carddeck_sub_cat = carddeck_sub_cat_id
                          ORDER BY carddeck_name ASC";
         $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
         $count_carddeck = mysqli_num_rows($result_carddeck);
@@ -126,7 +126,7 @@ if (isset($_SESSION['member_rank'])) {
                     <div class="carddeck-wrapper" data-is-puzzle="<?php echo ($row_carddeck['carddeck_is_puzzle'] ? $row_carddeck['carddeck_is_puzzle'] : 0); ?>">
                         <?php
                         for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
-                            $filename = show_card($row_carddeck['carddeck_id'], $i, true);
+                            $filename = get_card($row_carddeck['carddeck_id'], $i, true);
                             ?>
                             <span class="card-wrapper" <?php echo (file_exists('.'.substr($filename, strlen(HOST_URL))) ? 'style="background-image:url('.$filename.');"' : ''); ?>></span>
                             <?php
@@ -136,7 +136,7 @@ if (isset($_SESSION['member_rank'])) {
                                 <?php
                             }
                         }
-                        $filename_master = show_card($row_carddeck['carddeck_id'], 'master', true);
+                        $filename_master = get_card($row_carddeck['carddeck_id'], 'master', true);
                         ?>
                         <span class="card-wrapper mastercard" <?php echo (file_exists('.'.substr($filename_master, strlen(HOST_URL))) ? 'style="background-image:url('.$filename_master.');"' : ''); ?>></span>
                     </div>
@@ -153,9 +153,9 @@ if (isset($_SESSION['member_rank'])) {
                                 <?php
                                 $collect_wishlist_member = array();
                                 $sql_collect = "SELECT member_id, member_nick
-                                                FROM member_cards, member
+                                                FROM member_cards
+                                                JOIN member ON member_id = member_cards_member_id
                                                 WHERE member_cards_carddeck_id = '".$row_carddeck['carddeck_id']."'
-                                                   AND member_cards_member_id = member_id
                                                    AND member_cards_cat = 2
                                                 ORDER BY member_nick ASC";
                                 $result_collect = mysqli_query($link, $sql_collect);
@@ -167,9 +167,9 @@ if (isset($_SESSION['member_rank'])) {
                                 }
 
                                 $sql_wishlist = "SELECT member_id, member_nick
-                                                 FROM member, member_wishlist
+                                                 FROM member_wishlist
+                                                 JOIN member ON member_id = member_wishlist_member_id
                                                  WHERE member_wishlist_carddeck_id = '".$row_carddeck['carddeck_id']."'
-                                                   AND member_wishlist_member_id = member_id
                                                  ORDER BY member_nick ASC";
                                 $result_wishlist = mysqli_query($link, $sql_wishlist);
                                 $count_wishlist = mysqli_num_rows($result_wishlist);
@@ -202,9 +202,9 @@ if (isset($_SESSION['member_rank'])) {
                                 <?php
                                 $trade_member = array();
                                 $sql_trade = "SELECT member_id, member_nick
-                                              FROM member_cards, member
+                                              FROM member_cards
+                                              JOIN member ON member_id = member_cards_member_id
                                               WHERE member_cards_carddeck_id = '".$row_carddeck['carddeck_id']."'
-                                                AND member_cards_member_id = member_id
                                                 AND member_cards_cat = 3
                                               ORDER BY member_nick ASC";
                                 $result_trade = mysqli_query($link, $sql_trade);
@@ -236,9 +236,9 @@ if (isset($_SESSION['member_rank'])) {
                                 <?php
                                 $master_member = array();
                                 $sql_master = "SELECT member_id, member_nick
-                                               FROM member_master, member
+                                               FROM member_master
+                                              JOIN member ON member_id = member_master_member_id
                                                WHERE member_master_carddeck_id = '".$row_carddeck['carddeck_id']."'
-                                                 AND member_master_member_id = member_id
                                                ORDER BY member_nick ASC";
                                 $result_master = mysqli_query($link, $sql_master);
                                 $count_master = mysqli_num_rows($result_master);

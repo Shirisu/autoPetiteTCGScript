@@ -7,7 +7,7 @@ session_start();
 if (isset($_SESSION['member_rank'])) {
     global $link;
 
-    mysqli_query($link, "DELETE FROM member_online WHERE member_id = '".$_SESSION['member_id']."' LIMIT 1;") OR die(mysqli_error($link));
+    mysqli_query($link, "DELETE FROM member_online WHERE member_online_member_id = '".$_SESSION['member_id']."' LIMIT 1;") OR die(mysqli_error($link));
 }
 
 session_unset();

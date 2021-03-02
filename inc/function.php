@@ -119,9 +119,9 @@ function get_active_status($status) {
 function get_online_status($member_id) {
     global $link;
 
-    $sql_member_online = "SELECT member_id
+    $sql_member_online = "SELECT member_online_member_id
                           FROM member_online
-                          WHERE member_id = '".$member_id."'
+                          WHERE member_online_member_id = '".$member_id."'
                           LIMIT 1;";
     $result_member_online = mysqli_query($link, $sql_member_online) OR die(mysqli_error($link));
     if (mysqli_num_rows($result_member_online)) {
@@ -181,6 +181,144 @@ function get_member_nick_plain($member_id) {
     }
 
     return 'unkown';
+}
+
+function get_card($carddeck_id, $card_number, $show_only_url = false, $show_inactive = false) {
+    global $link;
+
+    $active_query_string = ($show_inactive ? '' : 'AND carddeck_active = 1');
+    $sql_carddeck = "SELECT carddeck_name
+                     FROM carddeck
+                     WHERE carddeck_id = '".$carddeck_id."'
+                       ".$active_query_string."
+                     LIMIT 1";
+    $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
+    if (mysqli_num_rows($result_carddeck)) {
+        $row_carddeck = mysqli_fetch_assoc($result_carddeck);
+        $carddeck_name = $row_carddeck['carddeck_name'];
+
+        if ($card_number == 'master') {
+            $card_number = 'master';
+        } else {
+            $card_number = sprintf('%02d', $card_number);
+        }
+
+        if ($show_only_url == true) {
+            return HOST_URL.TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$card_number.'.'.TCG_CARDS_FILE_TYPE;
+        } else {
+            return '<img src="'.HOST_URL.TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$card_number.'.'.TCG_CARDS_FILE_TYPE.'" alt="'.$carddeck_name.$card_number.'" />';
+        }
+    }
+}
+
+function get_card_path_without_number($carddeck_id) {
+    global $link;
+
+    $sql_carddeck = "SELECT carddeck_name
+                     FROM carddeck
+                     WHERE carddeck_id = '".$carddeck_id."'
+                     LIMIT 1";
+    $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
+    if (mysqli_num_rows($result_carddeck)) {
+        $row_carddeck = mysqli_fetch_assoc($result_carddeck);
+        $carddeck_name = $row_carddeck['carddeck_name'];
+
+        return HOST_URL.TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name;
+    }
+}
+
+function get_carddeck_id_from_member_cards_id($member_card_id) {
+    global $link;
+
+    $sql_carddeck = "SELECT member_cards_carddeck_id
+                     FROM member_cards
+                     WHERE member_cards_id = '".$member_card_id."'
+                     LIMIT 1";
+    $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
+    if (mysqli_num_rows($result_carddeck)) {
+        $row_carddeck = mysqli_fetch_assoc($result_carddeck);
+        return $row_carddeck['member_cards_carddeck_id'];
+    }
+}
+
+function get_carddeck_name_from_member_cards_id($member_card_id) {
+    global $link;
+
+    $sql_carddeck = "SELECT carddeck_name
+                     FROM member_cards
+                     INNER JOIN carddeck ON carddeck_id = member_cards_carddeck_id
+                     WHERE member_cards_id = '".$member_card_id."'
+                     LIMIT 1";
+    $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
+    if (mysqli_num_rows($result_carddeck)) {
+        $row_carddeck = mysqli_fetch_assoc($result_carddeck);
+        return $row_carddeck['carddeck_name'];
+    }
+}
+
+function get_card_number_from_member_cards_id($member_card_id) {
+    global $link;
+
+    $sql_carddeck = "SELECT member_cards_number
+                     FROM member_cards
+                     WHERE member_cards_id = '".$member_card_id."'
+                     LIMIT 1";
+    $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
+    if (mysqli_num_rows($result_carddeck)) {
+        $row_carddeck = mysqli_fetch_assoc($result_carddeck);
+        return $row_carddeck['member_cards_number'];
+    }
+}
+
+function get_member_language($member_id) {
+    global $link;
+
+    $sql_language = "SELECT member_language
+                     FROM member
+                     WHERE member_id = '".$member_id."'
+                     LIMIT 1";
+    $result_language = mysqli_query($link, $sql_language) OR die(mysqli_error($link));
+    if (mysqli_num_rows($result_language)) {
+        $row_language = mysqli_fetch_assoc($result_language);
+
+        return $row_language['member_language'];
+    }
+
+    return 'en';
+}
+
+function get_member_currency($member_id) {
+    global $link;
+
+    $sql = "SELECT member_currency
+            FROM member
+            WHERE member_id = '".$member_id."'
+            LIMIT 1";
+    $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
+    if (mysqli_num_rows($result)) {
+        $row = mysqli_fetch_assoc($result);
+
+        return $row['member_currency'];
+    }
+
+    return 0;
+}
+
+function get_member_wish($member_id) {
+    global $link;
+
+    $sql = "SELECT member_wish
+            FROM member
+            WHERE member_id = '".$member_id."'
+            LIMIT 1";
+    $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
+    if (mysqli_num_rows($result)) {
+        $row = mysqli_fetch_assoc($result);
+
+        return $row['member_wish'];
+    }
+
+    return 0;
 }
 
 function insert_cards($member_id, $quantity) {
@@ -350,143 +488,4 @@ function insert_message($sender, $receiver, $subject, $text, $message_system = 0
                ")
     OR DIE(mysqli_error($link));
 }
-
-function show_card($carddeck_id, $card_number, $show_only_url = false, $show_inactive = false) {
-    global $link;
-
-    $active_query_string = ($show_inactive ? '' : 'AND carddeck_active = 1');
-    $sql_carddeck = "SELECT carddeck_name
-                     FROM carddeck
-                     WHERE carddeck_id = '".$carddeck_id."'
-                       ".$active_query_string."
-                     LIMIT 1";
-    $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
-    if (mysqli_num_rows($result_carddeck)) {
-        $row_carddeck = mysqli_fetch_assoc($result_carddeck);
-        $carddeck_name = $row_carddeck['carddeck_name'];
-
-        if ($card_number == 'master') {
-            $card_number = 'master';
-        } else {
-            $card_number = sprintf('%02d', $card_number);
-        }
-
-        if ($show_only_url == true) {
-            return HOST_URL.TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$card_number.'.'.TCG_CARDS_FILE_TYPE;
-        } else {
-            return '<img src="'.HOST_URL.TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$card_number.'.'.TCG_CARDS_FILE_TYPE.'" alt="'.$carddeck_name.$card_number.'" />';
-        }
-    }
-}
-
-function get_card_path_without_number($carddeck_id) {
-    global $link;
-
-    $sql_carddeck = "SELECT carddeck_name
-                     FROM carddeck
-                     WHERE carddeck_id = '".$carddeck_id."'
-                     LIMIT 1";
-    $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
-    if (mysqli_num_rows($result_carddeck)) {
-        $row_carddeck = mysqli_fetch_assoc($result_carddeck);
-        $carddeck_name = $row_carddeck['carddeck_name'];
-
-        return HOST_URL.TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name;
-    }
-}
-
-function get_carddeck_id_from_member_cards_id($member_card_id) {
-    global $link;
-
-    $sql_carddeck = "SELECT member_cards_carddeck_id
-                     FROM member_cards
-                     WHERE member_cards_id = '".$member_card_id."'
-                     LIMIT 1";
-    $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
-    if (mysqli_num_rows($result_carddeck)) {
-        $row_carddeck = mysqli_fetch_assoc($result_carddeck);
-        return $row_carddeck['member_cards_carddeck_id'];
-    }
-}
-
-function get_carddeck_name_from_member_cards_id($member_card_id) {
-    global $link;
-
-    $sql_carddeck = "SELECT carddeck_name
-                     FROM member_cards
-                     INNER JOIN carddeck ON carddeck_id = member_cards_carddeck_id
-                     WHERE member_cards_id = '".$member_card_id."'
-                     LIMIT 1";
-    $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
-    if (mysqli_num_rows($result_carddeck)) {
-        $row_carddeck = mysqli_fetch_assoc($result_carddeck);
-        return $row_carddeck['carddeck_name'];
-    }
-}
-
-function get_card_number_from_member_cards_id($member_card_id) {
-    global $link;
-
-    $sql_carddeck = "SELECT member_cards_number
-                     FROM member_cards
-                     WHERE member_cards_id = '".$member_card_id."'
-                     LIMIT 1";
-    $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
-    if (mysqli_num_rows($result_carddeck)) {
-        $row_carddeck = mysqli_fetch_assoc($result_carddeck);
-        return $row_carddeck['member_cards_number'];
-    }
-}
-
-function get_member_language($member_id) {
-    global $link;
-
-    $sql_language = "SELECT member_language
-                     FROM member
-                     WHERE member_id = '".$member_id."'
-                     LIMIT 1";
-    $result_language = mysqli_query($link, $sql_language) OR die(mysqli_error($link));
-    if (mysqli_num_rows($result_language)) {
-        $row_language = mysqli_fetch_assoc($result_language);
-
-        return $row_language['member_language'];
-    }
-
-    return 'en';
-}
-
-function get_member_currency($member_id) {
-    global $link;
-
-    $sql = "SELECT member_currency
-            FROM member
-            WHERE member_id = '".$member_id."'
-            LIMIT 1";
-    $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
-    if (mysqli_num_rows($result)) {
-        $row = mysqli_fetch_assoc($result);
-
-        return $row['member_currency'];
-    }
-
-    return 0;
-}
-
-function get_member_wish($member_id) {
-    global $link;
-
-    $sql = "SELECT member_wish
-            FROM member
-            WHERE member_id = '".$member_id."'
-            LIMIT 1";
-    $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
-    if (mysqli_num_rows($result)) {
-        $row = mysqli_fetch_assoc($result);
-
-        return $row['member_wish'];
-    }
-
-    return 0;
-}
-
 ?>

@@ -50,7 +50,7 @@ if (mysqli_num_rows($result_news)) {
                                             $row_carddeck = mysqli_fetch_assoc($result_carddeck);
                                             ?>
                                             <a href="<?php echo HOST_URL; ?>/carddeck/<?php echo $row_carddeck['carddeck_name']; ?>">
-                                                <?php echo show_card($row_carddeck['carddeck_id'], 1); ?>
+                                                <?php echo get_card($row_carddeck['carddeck_id'], 1); ?>
                                             </a>
                                             <?php
                                         }

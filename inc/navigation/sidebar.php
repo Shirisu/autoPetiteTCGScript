@@ -97,9 +97,9 @@ if (!isset($_SESSION['member_id'])) {
 
 
 // online member
-$sql_member_online = "SELECT member.member_id, member.member_nick, member.member_rank, member_online.*
-                      FROM member, member_online
-                      WHERE member.member_id = member_online.member_id
+$sql_member_online = "SELECT member_id, member_nick, member_rank, member_online.*
+                      FROM member_online
+                      JOIN member ON member_id = member_online_member_id
                       ORDER BY member_nick ASC;";
 $result_member_online = mysqli_query($link, $sql_member_online) OR die(mysqli_error($link));
 $count_member = mysqli_num_rows($result_member_online);
@@ -107,7 +107,9 @@ $count_member = mysqli_num_rows($result_member_online);
 <div class="sidebar-subheading"><i class="fas fa-users"></i> Online: <?php echo $count_member; ?></div>
 <?php
 if (isset($_SESSION['member_rank'])) {
-    require_once("header_onlinemember.php");
+    while ($row_member_online = mysqli_fetch_assoc($result_member_online)) {
+        echo get_member_link($row_member_online['member_id'], "useron list-group-item list-group-item-action bg-light", true);
+    }
 }
 
 // show admin link

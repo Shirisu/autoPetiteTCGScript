@@ -41,10 +41,10 @@ if (isset($_SESSION['member_rank'])) {
     title($title);
 
     $sql_carddeck = "SELECT carddeck_id, carddeck_name, carddeck_series, carddeck_date, carddeck_creator, carddeck_cat_name, carddeck_sub_cat_name
-                     FROM carddeck, carddeck_cat, carddeck_sub_cat
-                     WHERE carddeck_cat = carddeck_cat_id
-                       AND carddeck_sub_cat = carddeck_sub_cat_id
-                       AND carddeck_active = 1
+                     FROM carddeck
+                     JOIN carddeck_cat ON carddeck_cat_id = carddeck_cat
+                     JOIN carddeck_sub_cat ON carddeck_sub_cat_id = carddeck_sub_cat
+                     WHERE carddeck_active = 1
                        ".$category_filter."
                      ORDER BY carddeck_name ASC";
     $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));

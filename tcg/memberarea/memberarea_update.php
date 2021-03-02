@@ -105,7 +105,7 @@ if (isset($_SESSION['member_rank'])) {
                                     <div class="card">
                                         <h5 class="card-header"><?php echo '[' . strtoupper($row_carddeck['carddeck_name']) . ']<br />' . $row_carddeck['carddeck_series']; ?></h5>
                                         <div class="card-body">
-                                            <?php for ($j = 1; $j <= TCG_CARDDECK_MAX_CARDS; $j++) { ?><?php echo show_card($row_carddeck['carddeck_id'], $j); ?><?php } ?>
+                                            <?php for ($j = 1; $j <= TCG_CARDDECK_MAX_CARDS; $j++) { ?><?php echo get_card($row_carddeck['carddeck_id'], $j); ?><?php } ?>
                                         </div>
                                         <div class="card-footer">
                                             <form action="<?php echo HOST_URL; ?>/memberarea/update" method="post">

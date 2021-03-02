@@ -2,12 +2,12 @@
 global $link;
 $online_time = time();
 if (isset($_SESSION['member_rank'])) {
-    $sql_online = "SELECT member_id FROM member_online WHERE member_id= '".$_SESSION['member_id']."' LIMIT 1;";
+    $sql_online = "SELECT member_online_member_id FROM member_online WHERE member_online_member_id= '".$_SESSION['member_id']."' LIMIT 1;";
     $result_online  = mysqli_query($link, $sql_online) OR die(mysqli_error($link));
     if (mysqli_num_rows($result_online)) {
-        mysqli_query($link, "UPDATE member_online SET member_time = '".$online_time."' WHERE member_id = '".$_SESSION["member_id"]."' LIMIT 1;") or die(mysqli_error($link));
+        mysqli_query($link, "UPDATE member_online SET member_online_member_time = '".$online_time."' WHERE member_online_member_id = '".$_SESSION["member_id"]."' LIMIT 1;") or die(mysqli_error($link));
     } else {
-        mysqli_query($link, "INSERT INTO member_online (member_id, member_time) VALUES ('".$_SESSION["member_id"]."', '".$online_time."')") or die(mysqli_error($link));
+        mysqli_query($link, "INSERT INTO member_online (member_online_member_id, member_online_member_time) VALUES ('".$_SESSION["member_id"]."', '".$online_time."')") or die(mysqli_error($link));
     }
 
     // set member inactive after 14 days without login
@@ -23,5 +23,5 @@ if (isset($_SESSION['member_rank'])) {
     }
 }
 // delete member from onlinelist after 1 minute of inactivation
-mysqli_query($link, "DELETE FROM member_online WHERE (member_time+60000)<'".$online_time."';") or die(mysqli_error($link));
+mysqli_query($link, "DELETE FROM member_online WHERE (member_online_member_time+60000) < '".$online_time."';") or die(mysqli_error($link));
 ?>

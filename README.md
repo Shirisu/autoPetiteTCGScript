@@ -21,7 +21,7 @@ Actual status: **Work in progress**!
 - delete the `setup` folder!
 
 
-## finished features
+## features
 - multilingual (english and german)
 - administration
   - category administration
@@ -89,10 +89,6 @@ Actual status: **Work in progress**!
 - games
 - trade system
   - semi-automatic
-
-
-## up coming features
-- none
 
 ## possible features in the future
 - main page

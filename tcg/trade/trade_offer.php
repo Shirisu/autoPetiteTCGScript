@@ -7,7 +7,7 @@ if (isset($_SESSION['member_rank'])) {
     if (isset($trade_member_id) && isset($card_id)) {
         $sql_trade_card = "SELECT member_cards_id, member_cards_carddeck_id, carddeck_name, member_cards_number
                            FROM member_cards
-                           INNER JOIN carddeck ON carddeck_id = member_cards_carddeck_id
+                           JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                            WHERE member_cards_id = '" . $card_id . "'
                              AND member_cards_member_id = '".$trade_member_id."'
                              AND member_cards_cat = 3
@@ -38,7 +38,7 @@ if (isset($_SESSION['member_rank'])) {
                 // check if card from trade member is available
                 $sql_trade_card = "SELECT member_cards_carddeck_id, carddeck_name, member_cards_number
                                    FROM member_cards
-                                   INNER JOIN carddeck ON carddeck_id = member_cards_carddeck_id
+                                   JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                                    WHERE member_cards_id = '" . $trade_card_id . "'
                                      AND member_cards_member_id = '".$trade_member_id."'
                                      AND member_cards_cat = 3
@@ -49,7 +49,7 @@ if (isset($_SESSION['member_rank'])) {
                 // check if own card is available
                 $sql_own_card = "SELECT member_cards_carddeck_id, carddeck_name, member_cards_number
                                    FROM member_cards
-                                   INNER JOIN carddeck ON carddeck_id = member_cards_carddeck_id
+                                   JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                                    WHERE member_cards_id = '" . $trade_own_card_id . "'
                                      AND member_cards_member_id = '".$member_id."'
                                      AND member_cards_cat = 3
@@ -100,7 +100,7 @@ if (isset($_SESSION['member_rank'])) {
                 $sql_own_cards = "SELECT member_cards_id, member_cards_carddeck_id, carddeck_name, member_cards_number,
                                       COUNT(*) AS card_count
                            FROM member_cards
-                           INNER JOIN carddeck ON carddeck_id = member_cards_carddeck_id
+                           JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                            WHERE member_cards_member_id = '" . $member_id . "'
                              AND member_cards_cat = 3
                              AND member_cards_active = 1
@@ -154,7 +154,7 @@ if (isset($_SESSION['member_rank'])) {
                             <div class="row">
                                 <div class="col col-12 text-center">
                                     <?php
-                                    $filename = show_card($trade_card_carddeck_id, $trade_card_number, true);
+                                    $filename = get_card($trade_card_carddeck_id, $trade_card_number, true);
                                     ?>
                                     <span class="card-wrapper trade-card" <?php echo(file_exists('.' . substr($filename, strlen(HOST_URL))) ? 'style="background-image:url(' . $filename . ');"' : ''); ?>></span>
                                 </div>

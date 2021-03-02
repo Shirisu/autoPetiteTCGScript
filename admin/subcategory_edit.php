@@ -116,8 +116,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         title(TRANSLATIONS[$GLOBALS['language']]['admin']['subcategory_edit_headline']);
 
         $sql = "SELECT carddeck_sub_cat_id, carddeck_sub_cat_name, carddeck_cat_name
-                FROM carddeck_sub_cat, carddeck_cat
-                WHERE carddeck_sub_cat_main_cat_id = carddeck_cat_id
+                FROM carddeck_sub_cat
+                JOIN carddeck_cat ON carddeck_cat_id = carddeck_sub_cat_main_cat_id
                 ORDER BY carddeck_sub_cat_name";
         $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
         $count = mysqli_num_rows($result);

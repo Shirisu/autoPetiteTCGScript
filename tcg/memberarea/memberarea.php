@@ -72,7 +72,8 @@ if (isset($_SESSION['member_rank'])) {
         <div class="col col-12 col-md-6 mb-2">
             <?php
             $sql_update = "SELECT cardupdate_id
-                           FROM cardupdate";
+                           FROM cardupdate
+                           LIMIT 1";
             $result_update = mysqli_query($link, $sql_update) OR die(mysqli_error($link));
             $row_update = mysqli_fetch_assoc($result_update);
             if (mysqli_num_rows($result_update)) {

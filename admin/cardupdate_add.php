@@ -104,7 +104,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                     </div>
                                 </td>
                                 <td><?php echo $row['carddeck_id']; ?></td>
-                                <td><?php echo show_card($row['carddeck_id'], 'master', false, true); ?></td>
+                                <td><?php echo get_card($row['carddeck_id'], 'master', false, true); ?></td>
                                 <td><?php echo $row['carddeck_name']; ?></td>
                                 <td><?php echo $row['carddeck_series']; ?></td>
                             </tr>
@@ -184,7 +184,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                             if (mysqli_num_rows($result_carddeck)) {
                                 $row_carddeck = mysqli_fetch_assoc($result_carddeck);
                                 ?>
-                                    <a href="<?php echo HOST_URL; ?>/carddeck/<?php echo $row_carddeck['carddeck_name']; ?>"><?php echo show_card($row_carddeck['carddeck_id'], 1, false, true); ?></a>
+                                    <a href="<?php echo HOST_URL; ?>/carddeck/<?php echo $row_carddeck['carddeck_name']; ?>"><?php echo get_card($row_carddeck['carddeck_id'], 1, false, true); ?></a>
                                 <?php
                             }
                         }

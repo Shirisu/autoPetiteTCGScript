@@ -17,10 +17,10 @@ if (isset($_SESSION['member_rank'])) {
             $card_category = mysqli_real_escape_string($link, $_POST['card_category'][$index]);
 
             $sql_carddeck = "SELECT carddeck_id, carddeck_name, member_cards_number
-                             FROM member_cards, carddeck
+                             FROM member_cards
+                             JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                              WHERE member_cards_member_id = '".$_SESSION['member_id']."'
                                AND member_cards_id = '".$card_id."'
-                               AND member_cards_carddeck_id = carddeck_id
                              LIMIT 1";
             $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
             if (mysqli_num_rows($result_carddeck)) {
@@ -116,11 +116,11 @@ if (isset($_SESSION['member_rank'])) {
                               WHERE member_master_member_id = '".$member_id."'
                                 AND mc.member_cards_carddeck_id = member_master_carddeck_id
                               GROUP BY member_master_carddeck_id) as carddeck_already_mastered
-                          FROM member_cards mc, carddeck
+                          FROM member_cards mc
+                          JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                           WHERE member_cards_member_id = '".$member_id."'
                             AND member_cards_cat = 1
                             AND member_cards_active = 1
-                            AND member_cards_carddeck_id = carddeck_id
                           ORDER BY carddeck_name, member_cards_number ASC";
             $result_cards = mysqli_query($link, $sql_cards) OR die(mysqli_error($link));
             $count_cards = mysqli_num_rows($result_cards);
@@ -175,7 +175,7 @@ if (isset($_SESSION['member_rank'])) {
                                         <td class="d-none"><?php echo $carddeck_name.$cardnumber; ?></td>
                                         <td>
                                             <div class="cards-sorting-wrapper<?php echo ($carddeck_already_mastered == 1 ? ' mastered' : ''); ?>">
-                                                <?php echo show_card($carddeck_id, $cardnumber_plain); ?>
+                                                <?php echo get_card($carddeck_id, $cardnumber_plain); ?>
                                                 <a class="carddeck-link" href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>"><small><?php echo $carddeck_name.$cardnumber; ?></small></a>
                                                 <br />
                                                 <div class="form-group mt-2">

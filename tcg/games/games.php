@@ -20,8 +20,8 @@ if (isset($_SESSION['member_rank'])) {
             while ($row_games = mysqli_fetch_assoc($result_games)) {
                 if ($row_games['games_is_lucky_category_game'] == '1') {
                     $sql_cat = "SELECT carddeck_cat_id, carddeck_cat_name
-                                FROM carddeck_cat, carddeck
-                                WHERE carddeck_cat_id = carddeck_cat
+                                FROM carddeck_cat
+                                JOIN carddeck ON carddeck_cat = carddeck_cat_id
                                 GROUP BY carddeck_cat_id
                                 ORDER BY carddeck_cat_name";
                     $result_cat = mysqli_query($link, $sql_cat) OR die(mysqli_error($link));

@@ -77,18 +77,19 @@ if (isset($_SESSION['member_rank'])) {
 
     if (isset($_GET['carddeck_id']) && isset($_GET['card_number'])) {
         $sql_search = "SELECT member_id, member_last_login, member_cards_id
-                       FROM member_cards, member
+                       FROM member_cards
+                       JOIN member ON member_id = member_cards_member_id
                        WHERE member_cards_carddeck_id = '".$carddeck_id."'
                          AND member_cards_number = '".$card_number."'
-                         AND member_cards_member_id = member_id
                          AND member_cards_cat = 3
+                       GROUP BY member_id
                        ORDER BY member_nick ASC";
         $result_search = mysqli_query($link, $sql_search);
         $count_search = mysqli_num_rows($result_search);
         ?>
         <div class="row">
             <div class="col col-12 text-center mb-2">
-                <?php echo show_card($carddeck_id, $card_number); ?>
+                <?php echo get_card($carddeck_id, $card_number); ?>
             </div>
             <div class="col col-12 member-search-container">
                 <?php

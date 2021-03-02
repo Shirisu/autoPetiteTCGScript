@@ -27,10 +27,10 @@ if (isset($_SESSION['member_rank'])) {
 
         if ($cards_quantity == TCG_CARDDECK_MAX_CARDS && $action == 'master') { // master carddeck
             $sql_mastered_yet = "SELECT member_master_member_id, carddeck_name
-                                 FROM member_master, carddeck
+                                 FROM member_master
+                                 JOIN carddeck ON carddeck_id = member_master_carddeck_id
                                  WHERE member_master_member_id = '" . $member_id . "'
                                    AND member_master_carddeck_id = '" . $carddeck_id . "'
-                                   AND member_master_carddeck_id = carddeck_id
                                  LIMIT 1";
             $result_mastered_yet = mysqli_query($link, $sql_mastered_yet) OR die(mysqli_error($link));
             if (mysqli_num_rows($result_mastered_yet)) {
@@ -38,12 +38,12 @@ if (isset($_SESSION['member_rank'])) {
                 alert_box($row_carddeck['carddeck_name'] . ' ' . TRANSLATIONS[$GLOBALS['language']]['member']['text_card_not_mastered'] . ' - ' . TRANSLATIONS[$GLOBALS['language']]['member']['text_already_mastered'], 'danger');
             } else {
                 $sql_carddeck = "SELECT carddeck_id, carddeck_name
-                         FROM member_cards mc, carddeck
+                         FROM member_cards
+                         JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                          WHERE member_cards_member_id = '" . $member_id . "'
                            AND member_cards_carddeck_id = '" . $carddeck_id . "'
                            AND member_cards_cat = 2
                            AND member_cards_active = 1
-                           AND member_cards_carddeck_id = carddeck_id
                          LIMIT 1";
                 $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
                 if (mysqli_num_rows($result_carddeck)) {
@@ -86,12 +86,12 @@ if (isset($_SESSION['member_rank'])) {
             }
         } else { // dissolve carddeck and move cards to new
             $sql_carddeck = "SELECT carddeck_id, carddeck_name
-                         FROM member_cards mc, carddeck
+                         FROM member_cards
+                         JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                          WHERE member_cards_member_id = '" . $member_id . "'
                            AND member_cards_carddeck_id = '" . $carddeck_id . "'
                            AND member_cards_cat = 2
                            AND member_cards_active = 1
-                           AND member_cards_carddeck_id = carddeck_id
                          LIMIT 1";
             $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
             if (mysqli_num_rows($result_carddeck)) {
@@ -130,11 +130,11 @@ if (isset($_SESSION['member_rank'])) {
         <div class="col col-12 mb-3 cards-sorting-container">
             <?php
             $sql_cards = "SELECT member_cards_carddeck_id, member_cards_number, carddeck_name, carddeck_is_puzzle
-                          FROM member_cards, carddeck
+                          FROM member_cards
+                          JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                           WHERE member_cards_member_id = '".$member_id."'
                             AND member_cards_cat = 2
                             AND member_cards_active = 1
-                            AND member_cards_carddeck_id = carddeck_id
                           GROUP BY member_cards_carddeck_id
                           ORDER BY carddeck_name, member_cards_number ASC";
             $result_cards = mysqli_query($link, $sql_cards) OR die(mysqli_error($link));
@@ -176,10 +176,10 @@ if (isset($_SESSION['member_rank'])) {
                                 $cards_quantity = count($cardnumbers);
 
                                 $sql_mastered_yet = "SELECT member_master_member_id, carddeck_name
-                                                     FROM member_master, carddeck
+                                                     FROM member_master
+                                                     JOIN carddeck ON carddeck_id = member_master_carddeck_id
                                                      WHERE member_master_member_id = '" . $member_id . "'
                                                        AND member_master_carddeck_id = '" .$row_cards['member_cards_carddeck_id'] . "'
-                                                       AND member_master_carddeck_id = carddeck_id
                                                      LIMIT 1";
                                 $result_mastered_yet = mysqli_query($link, $sql_mastered_yet) OR die(mysqli_error($link));
                                 $mastered_yet = mysqli_num_rows($result_mastered_yet);
@@ -193,7 +193,7 @@ if (isset($_SESSION['member_rank'])) {
                                                 <?php
                                                 for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
                                                     if (in_array($i, $cardnumbers)) {
-                                                        $filename = show_card($row_cards['member_cards_carddeck_id'], $i, true);
+                                                        $filename = get_card($row_cards['member_cards_carddeck_id'], $i, true);
                                                         ?>
                                                         <span class="card-wrapper" <?php echo(file_exists('.' . substr($filename, strlen(HOST_URL))) ? 'style="background-image:url(' . $filename . ');"' : ''); ?>></span>
                                                         <?php

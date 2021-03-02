@@ -209,8 +209,8 @@ CREATE TABLE IF NOT EXISTS `member_master` (
 
 
 CREATE TABLE IF NOT EXISTS `member_online` (
-  `member_id` int(11) NOT NULL DEFAULT '0',
-  `member_time` int(15) NOT NULL DEFAULT '0'
+  `member_online_member_id` int(11) NOT NULL DEFAULT '0',
+  `member_online_member_time` int(15) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

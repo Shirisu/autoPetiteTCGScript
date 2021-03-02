@@ -252,7 +252,7 @@ if (isset($_SESSION['member_rank'])) {
                                         $card_id = ($trade_box_type == 'inbox' ? $row_trade['trade_from_member_card_id'] : $row_trade['trade_to_member_card_id']);
                                         $trade_card_carddeck_id = get_carddeck_id_from_member_cards_id($card_id);
                                         $trade_card_number = get_card_number_from_member_cards_id($card_id);
-                                        $filename = show_card($trade_card_carddeck_id, $trade_card_number, true);
+                                        $filename = get_card($trade_card_carddeck_id, $trade_card_number, true);
                                         ?>
                                         <span
                                             class="card-wrapper" <?php echo(file_exists('.' . substr($filename, strlen(HOST_URL))) ? 'style="background-image:url(' . $filename . ');"' : ''); ?>></span>
@@ -262,7 +262,7 @@ if (isset($_SESSION['member_rank'])) {
                                         $card_id = ($trade_box_type == 'inbox' ? $row_trade['trade_to_member_card_id'] : $row_trade['trade_from_member_card_id']);
                                         $trade_card_carddeck_id = get_carddeck_id_from_member_cards_id($card_id);
                                         $trade_card_number = get_card_number_from_member_cards_id($card_id);
-                                        $filename = show_card($trade_card_carddeck_id, $trade_card_number, true);
+                                        $filename = get_card($trade_card_carddeck_id, $trade_card_number, true);
                                         ?>
                                         <span
                                             class="card-wrapper" <?php echo(file_exists('.' . substr($filename, strlen(HOST_URL))) ? 'style="background-image:url(' . $filename . ');"' : ''); ?>></span>
