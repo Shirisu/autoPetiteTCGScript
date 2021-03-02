@@ -34,7 +34,7 @@ $(document).ready(function() {
     });
 
     // use bootstrapTable for all tables without class "optional" or data-paging=no
-    $('table:not([data-paging="no"]):not(.optional)').bootstrapTable('destroy').bootstrapTable({
+    $('table:not([data-paging="no"]):not([data-search="no"]):not(.optional)').bootstrapTable('destroy').bootstrapTable({
         pagination: true,
         search: true,
         searchAccentNeutralise: true,
@@ -45,6 +45,14 @@ $(document).ready(function() {
     $('table[data-paging="no"]').bootstrapTable('destroy').bootstrapTable({
         pagination: false,
         search: true,
+        searchAccentNeutralise: true,
+        sortable: true
+    });
+
+    // use bootstrapTable without paging
+    $('table[data-search="no"]').bootstrapTable('destroy').bootstrapTable({
+        pagination: true,
+        search: false,
         searchAccentNeutralise: true,
         sortable: true
     });

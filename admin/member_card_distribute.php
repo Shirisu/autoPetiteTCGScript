@@ -13,14 +13,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         $member_id = mysqli_real_escape_string($link, trim($_POST['member_id']));
         $quantity = mysqli_real_escape_string($link, trim($_POST['quantity']));
         $topic = mysqli_real_escape_string($link, strip_tags(trim($_POST['topic'])));
-
-        $sql_language = "SELECT member_language
-                         FROM member
-                         WHERE member_id = '".$member_id."'
-                         LIMIT 1";
-        $result_language = mysqli_query($link, $sql_language) OR die(mysqli_error($link));
-        $row_language = mysqli_fetch_assoc($result_language);
-        $language = $row_language['member_language'];
+        $language = get_member_language($member_id);
 
         insert_cards($member_id, $quantity);
         $inserted_cards_text = TRANSLATIONS[$language]['admin']['text_log_distribute_cards'].': '.implode(', ',$_SESSION['insert_cards']);

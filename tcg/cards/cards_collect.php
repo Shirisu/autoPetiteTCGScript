@@ -200,7 +200,7 @@ if (isset($_SESSION['member_rank'])) {
                                                     } else {
                                                         $filename_filler = TCG_CARDS_FOLDER . '/'.TCG_CARDS_FILLER_NAME.'.' . TCG_CARDS_FILE_TYPE;
                                                         ?>
-                                                        <a href="<?php echo HOST_URL; ?>/memberarea/search?carddeck_id=<?php echo $row_cards['member_cards_carddeck_id']; ?>&card_number=<?php echo $i; ?>"><span class="card-wrapper" <?php echo(file_exists('.' . $filename_filler) ? 'style="background-image:url(' . $filename_filler . ');"' : ''); ?>></span></a>
+                                                        <a href="<?php echo HOST_URL; ?>/memberarea/search?carddeck_id=<?php echo $row_cards['member_cards_carddeck_id']; ?>&card_number=<?php echo $i; ?>"><span class="card-wrapper" <?php echo(file_exists('.' . $filename_filler) ? 'style="background-image:url(' . HOST_URL.$filename_filler . ');"' : ''); ?>></span></a>
                                                         <?php
                                                     }
                                                     if (($i % TCG_CARDS_PER_ROW) == 0) {
@@ -209,7 +209,6 @@ if (isset($_SESSION['member_rank'])) {
                                                         <?php
                                                     }
                                                 }
-                                                $filename_master = TCG_CARDS_FOLDER . '/' . $carddeck_name . '/' . $carddeck_name . 'master.' . TCG_CARDS_FILE_TYPE;
                                                 ?>
                                             </div>
                                             <div class="col col-12 text-center mt-2">

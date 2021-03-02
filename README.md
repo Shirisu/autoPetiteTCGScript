@@ -87,19 +87,20 @@ Actual status: **Work in progress**!
   - master full carddecks
 - message system
 - games
+- trade system
+  - semi-automatic
 
 
 ## up coming features
-- trade system
-  - fully automatic
-  - semi-automatic
-
+- none
 
 ## possible features in the future
 - main page
   - news system
     - commenting system
 - bbcodes
+- trade system
+  - fully automatic
 
 
 ## used frameworks and libraries

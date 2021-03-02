@@ -48,7 +48,7 @@ if (isset($_SESSION['member_rank'])) {
                        LIMIT 1";
                 $result_member = mysqli_query($link, $sql_member) OR die(mysqli_error($link));
 
-                $message_text = PHP_EOL.PHP_EOL.'-----------------'.PHP_EOL.member_link_plain($row_message['message_sender_member_id']).' '.TRANSLATIONS[$GLOBALS['language']]['message']['text_wrote_on'].' '.date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_message['message_date']).':'.PHP_EOL.$row_message['message_text'];
+                $message_text = PHP_EOL.PHP_EOL.'-----------------'.PHP_EOL.member_nick_plain($row_message['message_sender_member_id']).' '.TRANSLATIONS[$GLOBALS['language']]['message']['text_wrote_on'].' '.date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_message['message_date']).':'.PHP_EOL.$row_message['message_text'];
                 ?>
                 <form action="<?php echo HOST_URL; ?>/message/reply/<?php echo $message_id; ?>" method="post">
                     <div class="row message-container">

@@ -266,6 +266,36 @@ Route::add("/message/outbox",function() {
     $message_box_type = 'outbox';
     require_once("tcg/message/message.php");
 });
+Route::add("/trade",function() {
+    $trade_box_type = 'inbox';
+    require_once("tcg/trade/trade.php");
+});
+Route::add("/trade/inbox",function() {
+    $trade_box_type = 'inbox';
+    require_once("tcg/trade/trade.php");
+});
+Route::add("/trade/outbox",function() {
+    $trade_box_type = 'outbox';
+    require_once("tcg/trade/trade.php");
+});
+Route::add("/trade/([0-9+].*)/([0-9+].*)",function($trade_member_id, $card_id) {
+    require_once("tcg/trade/trade_offer.php");
+});
+Route::add("/trade/([0-9+].*)/([0-9+].*)",function($trade_member_id, $card_id) {
+    require_once("tcg/trade/trade_offer.php");
+}, "post");
+Route::add("/trade/([0-9+].*)/accept",function($trade_id) {
+    $action = 'accept';
+    require_once("tcg/trade/trade.php");
+});
+Route::add("/trade/([0-9+].*)/decline",function($trade_id) {
+    $action = 'decline';
+    require_once("tcg/trade/trade.php");
+});
+Route::add("/trade/([0-9+].*)/withdraw",function($trade_id) {
+    $action = 'withdraw';
+    require_once("tcg/trade/trade.php");
+});
 
 // games
 Route::add("/games",function() {
