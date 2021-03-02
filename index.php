@@ -140,125 +140,125 @@ Route::add("/news/([0-9+].*)",function($news_id) {
     require_once("main/news.php");
 });
 Route::add("/carddecks",function() {
-    require_once("tcg/carddecks.php");
+    require_once("tcg/carddeck/carddecks.php");
 });
 Route::add("/carddecks/all",function() {
-    require_once("tcg/carddecks.php");
+    require_once("tcg/carddeck/carddecks.php");
 });
 Route::add("/carddecks/([0-9+].*)",function($category_id) {
-    require_once("tcg/carddecks.php");
+    require_once("tcg/carddeck/carddecks.php");
 });
 Route::add("/carddeck/([a-z0-9+].*)",function($carddeck_name) {
-    require_once("tcg/carddeck_page.php");
+    require_once("tcg/carddeck/carddeck_page.php");
 });
 Route::add("/member",function() {
-    require_once("tcg/member.php");
+    require_once("tcg/member/member.php");
 });
 Route::add("/member/([0-9+].*)/([a-z+].*)",function($member_id, $category) {
     if ($category == 'trade') {
-        require_once("tcg/member_page_trade.php");
+        require_once("tcg/member/member_page_trade.php");
     } elseif ($category == 'collect') {
-        require_once("tcg/member_page_collect.php");
+        require_once("tcg/member/member_page_collect.php");
     } elseif ($category == 'master') {
-        require_once("tcg/member_page_master.php");
+        require_once("tcg/member/member_page_master.php");
     } elseif ($category == 'wishlist') {
-        require_once("tcg/member_page_wishlist.php");
+        require_once("tcg/member/member_page_wishlist.php");
     } else {
-        require_once("tcg/member_page.php");
+        require_once("tcg/member/member_page.php");
     }
 });
 Route::add("/member/([0-9+].*)",function($member_id) {
-    require_once("tcg/member_page.php");
+    require_once("tcg/member/member_page.php");
 });
 Route::add("/memberarea/changeprofile",function() {
-    require_once("tcg/memberarea_changeprofile.php");
+    require_once("tcg/memberarea/memberarea_changeprofile.php");
 });
 Route::add("/memberarea/changeprofile",function() {
-    require_once("tcg/memberarea_changeprofile.php");
+    require_once("tcg/memberarea/memberarea_changeprofile.php");
 }, "post");
 Route::add("/memberarea/log",function() {
-    require_once("tcg/memberarea_log.php");
+    require_once("tcg/memberarea/memberarea_log.php");
 });
 Route::add("/memberarea/search",function() {
-    require_once("tcg/memberarea_search.php");
+    require_once("tcg/memberarea/memberarea_search.php");
 });
 Route::add("/memberarea/shop",function() {
-    require_once("tcg/memberarea_shop.php");
+    require_once("tcg/memberarea/memberarea_shop.php");
 });
 Route::add("/memberarea/shop",function() {
-    require_once("tcg/memberarea_shop.php");
+    require_once("tcg/memberarea/memberarea_shop.php");
 }, "post");
 Route::add("/memberarea/update",function() {
-    require_once("tcg/memberarea_update.php");
+    require_once("tcg/memberarea/memberarea_update.php");
 });
 Route::add("/memberarea/update",function() {
-    require_once("tcg/memberarea_update.php");
+    require_once("tcg/memberarea/memberarea_update.php");
 }, "post");
 Route::add("/memberarea",function() {
-    require_once("tcg/memberarea.php");
+    require_once("tcg/memberarea/memberarea.php");
 });
 Route::add("/cards/([a-z+].*)",function($category) {
     if ($category == 'new') {
-        require_once("tcg/cards_new.php");
+        require_once("tcg/cards/cards_new.php");
     } elseif ($category == 'trade') {
-        require_once("tcg/cards_trade.php");
+        require_once("tcg/cards/cards_trade.php");
     } elseif ($category == 'collect') {
-        require_once("tcg/cards_collect.php");
+        require_once("tcg/cards/cards_collect.php");
     } elseif ($category == 'master') {
-        require_once("tcg/cards_master.php");
+        require_once("tcg/cards/cards_master.php");
     } else {
-        require_once("tcg/cards_new.php");
+        require_once("tcg/cards/cards_new.php");
     }
 });
 Route::add("/cards/([a-z+].*)",function($category) {
     if ($category == 'new') {
-        require_once("tcg/cards_new.php");
+        require_once("tcg/cards/cards_new.php");
     } elseif ($category == 'trade') {
-        require_once("tcg/cards_trade.php");
+        require_once("tcg/cards/cards_trade.php");
     } elseif ($category == 'collect') {
-        require_once("tcg/cards_collect.php");
+        require_once("tcg/cards/cards_collect.php");
     } elseif ($category == 'master') {
-        require_once("tcg/cards_master.php");
+        require_once("tcg/cards/cards_master.php");
     } else {
-        require_once("tcg/cards_new.php");
+        require_once("tcg/cards/cards_new.php");
     }
 }, "post");
 Route::add("/cards",function() {
-    require_once("tcg/cards_new.php");
+    require_once("tcg/cards/cards_new.php");
 });
 Route::add("/message/delete/([0-9+].*)",function($message_id) {
     $action = 'delete';
-    require_once("tcg/message.php");
+    require_once("tcg/message/message.php");
 });
 Route::add("/message/reply/([0-9+].*)",function($message_id) {
-    require_once("tcg/message_write.php");
+    require_once("tcg/message/message_write.php");
 });
 Route::add("/message/reply/([0-9+].*)",function($message_id) {
-    require_once("tcg/message_write.php");
+    require_once("tcg/message/message_write.php");
 }, "post");
 Route::add("/message/write/([0-9+].*)",function($receiver_id) {
-    require_once("tcg/message_write.php");
+    require_once("tcg/message/message_write.php");
 });
 Route::add("/message/write",function() {
-    require_once("tcg/message_write.php");
+    require_once("tcg/message/message_write.php");
 });
 Route::add("/message/write",function() {
-    require_once("tcg/message_write.php");
+    require_once("tcg/message/message_write.php");
 }, "post");
 Route::add("/message/([0-9+].*)",function($message_id) {
-    require_once("tcg/message.php");
+    require_once("tcg/message/message.php");
 });
 Route::add("/message",function() {
     $message_box_type = 'inbox';
-    require_once("tcg/message.php");
+    require_once("tcg/message/message.php");
 });
 Route::add("/message/inbox",function() {
     $message_box_type = 'inbox';
-    require_once("tcg/message.php");
+    require_once("tcg/message/message.php");
 });
 Route::add("/message/outbox",function() {
     $message_box_type = 'outbox';
-    require_once("tcg/message.php");
+    require_once("tcg/message/message.php");
 });
 Route::add("/games",function() {
     require_once("tcg/games/games.php");
