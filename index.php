@@ -21,6 +21,7 @@ Route::add("/",function() {
 /**
  * routes you shouldn't change
  */
+// administration
 Route::add("/administration",function() {
     require_once("admin/administration.php");
 });
@@ -136,9 +137,12 @@ Route::add("/administration/addcardupdate",function() {
     require_once("admin/cardupdate_add.php");
 }, "post");
 
+// news
 Route::add("/news/([0-9+].*)",function($news_id) {
     require_once("main/news.php");
 });
+
+// carddecks
 Route::add("/carddecks",function() {
     require_once("tcg/carddeck/carddecks.php");
 });
@@ -151,6 +155,8 @@ Route::add("/carddecks/([0-9+].*)",function($category_id) {
 Route::add("/carddeck/([a-z0-9+].*)",function($carddeck_name) {
     require_once("tcg/carddeck/carddeck_page.php");
 });
+
+// member
 Route::add("/member",function() {
     require_once("tcg/member/member.php");
 });
@@ -260,6 +266,8 @@ Route::add("/message/outbox",function() {
     $message_box_type = 'outbox';
     require_once("tcg/message/message.php");
 });
+
+// games
 Route::add("/games",function() {
     require_once("tcg/games/games.php");
 });
@@ -288,25 +296,20 @@ Route::add("/games/([0-9+].*)",function($game_id) {
     }
 }, "post");
 
+// lost password and register
 Route::add("/lostpassword",function() {
     require_once("tcg/lostpassword.php");
 });
-Route::add("/lostpassword",function() {
-    require_once("tcg/lostpassword.php");
-});
-// Route for submitting the form
 Route::add("/lostpassword",function() {
     require_once("tcg/lostpassword.php");
 }, "post");
-
 Route::add("/register",function() {
     require_once("tcg/register.php");
 });
-// Route for submitting the form
 Route::add("/register",function() {
     require_once("tcg/register.php");
 }, "post");
-// Route for account activation
+// account activation
 Route::add("/activation/([a-zA-Z0-9]*)",function($activation_code) {
     require_once("tcg/activation.php");
 });
