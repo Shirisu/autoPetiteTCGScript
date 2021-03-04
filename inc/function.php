@@ -34,7 +34,15 @@ function set_cookie($name, $value, $expire = null, $path = null) {
     setcookie($name, $value, $expire, $path);
 }
 
-function show_no_access_message() {
+function shorten_text($text, $length) {
+    if (strlen($text) >= $length) {
+        return preg_replace('/\s+?(\S+)?$/', '', substr($text, 0, $length)).'...';
+    } else {
+        return $text;
+    }
+}
+
+function show_no_access_message_with_breadcrumb() {
     $breadcrumb = array(
         '/' => 'Home',
     );
@@ -48,6 +56,46 @@ function title($text) {
 
 function title_small($text) {
     echo '<h3 class="mb-3">'.$text.'</h3>';
+}
+
+function alert_box($text, $type = 'secondary') {
+    echo '<div class="alert alert-'.$type.'" role="alert">
+            '.$text.'
+          </div>';
+}
+
+function navlink($name,$url) {
+    echo '<a class="dropdown-item" href="'.HOST_URL.'/'.$url.'">'.$name.'</a>';
+}
+
+function navlink_language($name,$language) {
+    echo '<a class="dropdown-item switch-language" href="#" data-language="'.$language.'">'.$name.'</a>';
+}
+
+function navilink($name,$url,$icon = null) {
+    echo '<a class="list-group-item list-group-item-action bg-light" href="'.HOST_URL.'/'.$url.'">'.($icon ? '<i class="fas fa-'.$icon.'"></i> ' : '').''.$name.'</a>';
+}
+
+function breadcrumb($breadcrumb_array) {
+    ?>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <?php
+            foreach ($breadcrumb_array as $link => $text) {
+                if ($link === array_key_last($breadcrumb_array)) {
+                    ?>
+                    <li class="breadcrumb-item active" aria-current="page"><?php echo $text; ?></li>
+                    <?php
+                } else {
+                    ?>
+                    <li class="breadcrumb-item"><a href="<?php echo HOST_URL.$link; ?>"><?php echo $text; ?></a></li>
+                    <?php
+                }
+            }
+            ?>
+        </ol>
+    </nav>
+    <?php
 }
 
 function get_active_status($status) {
@@ -83,88 +131,56 @@ function get_online_status($member_id) {
     }
 }
 
-function alert_box($text, $type = 'secondary') {
-    echo '<div class="alert alert-'.$type.'" role="alert">
-            '.$text.'
-          </div>';
-}
-
-function navlink($name,$url) {
-    echo '<a class="dropdown-item" href="'.HOST_URL.'/'.$url.'">'.$name.'</a>';
-}
-
-function navlink_language($name,$language) {
-    echo '<a class="dropdown-item switch-language" href="#" data-language="'.$language.'">'.$name.'</a>';
-}
-
-function navilink($name,$url,$icon = null) {
-    echo '<a class="list-group-item list-group-item-action bg-light" href="'.HOST_URL.'/'.$url.'">'.($icon ? '<i class="fas fa-'.$icon.'"></i> ' : '').''.$name.'</a>';
-}
-
-function member_link($member_id, $custom_link_class = '', $show_with_rank = false) {
+function get_member_link($member_id, $custom_link_class = '', $show_with_rank = false) {
     global $link;
     $sql = "SELECT member_id, member_rank_name, member_nick, member_rank
-          FROM member, member_rank
+          FROM member
+          INNER JOIN member_rank ON member_rank = member_rank_id
           WHERE member_id = '".$member_id."'
-            AND member_rank = member_rank_id
           LIMIT 1";
     $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
-    $row = mysqli_fetch_assoc($result);
+    if (mysqli_num_rows($result)) {
+        $row = mysqli_fetch_assoc($result);
 
-    if ($show_with_rank) {
-        if ($row['member_rank'] == 1) {
-            $rankclass = 'admin';
-        } elseif ($row['member_rank'] == 2) {
-            $rankclass = 'coadmin';
-        } elseif ($row['member_rank'] == 3) {
-            $rankclass = 'cm';
-        } elseif ($row['member_rank'] == 4) {
-            $rankclass = 'mod';
-        } else {
-            $rankclass = 'member';
-        }
+        if ($show_with_rank) {
+            if ($row['member_rank'] == 1) {
+                $rankclass = 'admin';
+            } elseif ($row['member_rank'] == 2) {
+                $rankclass = 'coadmin';
+            } elseif ($row['member_rank'] == 3) {
+                $rankclass = 'cm';
+            } elseif ($row['member_rank'] == 4) {
+                $rankclass = 'mod';
+            } else {
+                $rankclass = 'member';
+            }
 
-        return '<a '.($custom_link_class ? 'class="'.$custom_link_class.'"' : '').' href="'.HOST_URL.'/member/'.$row['member_id'].'"
-                    title="'.$row['member_rank_name'].'">
-                    <span class="'.$rankclass.'">'.$row['member_nick'].'</span>
+            return '<a ' . ($custom_link_class ? 'class="' . $custom_link_class . '"' : '') . ' href="' . HOST_URL . '/member/' . $row['member_id'] . '"
+                    title="' . $row['member_rank_name'] . '">
+                    <span class="' . $rankclass . '">' . $row['member_nick'] . '</span>
                 </a>';
-    } else {
-        return '<a '.($custom_link_class ? 'class="'.$custom_link_class.'"' : '').' href="'.HOST_URL.'/member/'.$row['member_id'].'">'.$row['member_nick'].'</a>';
+        } else {
+            return '<a ' . ($custom_link_class ? 'class="' . $custom_link_class . '"' : '') . ' href="' . HOST_URL . '/member/' . $row['member_id'] . '">' . $row['member_nick'] . '</a>';
+        }
     }
+
+    return 'unkown';
 }
 
-function member_nick_plain($member_id) {
+function get_member_nick_plain($member_id) {
     global $link;
     $sql = "SELECT member_nick
           FROM member
           WHERE member_id = '".$member_id."'
           LIMIT 1";
     $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
-    $row = mysqli_fetch_assoc($result);
+    if (mysqli_num_rows($result)) {
+        $row = mysqli_fetch_assoc($result);
 
-    return $row['member_nick'];
-}
+        return $row['member_nick'];
+    }
 
-function breadcrumb($breadcrumb_array) {
-    ?>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <?php
-            foreach ($breadcrumb_array as $link => $text) {
-                if ($link === array_key_last($breadcrumb_array)) {
-                    ?>
-                    <li class="breadcrumb-item active" aria-current="page"><?php echo $text; ?></li>
-                    <?php
-                } else {
-                    ?>
-                    <li class="breadcrumb-item"><a href="<?php echo HOST_URL.$link; ?>"><?php echo $text; ?></a></li>
-                    <?php
-                }
-            }
-            ?>
-        </ol>
-    </nav>
-    <?php
+    return 'unkown';
 }
 
 function insert_cards($member_id, $quantity) {
@@ -177,15 +193,16 @@ function insert_cards($member_id, $quantity) {
             ORDER BY RAND()
             LIMIT ".$quantity."";
     $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
-
-    $cardarray = array();
-    while ($row = mysqli_fetch_assoc($result)) {
-        $cardnumber = mt_rand(1, TCG_CARDDECK_MAX_CARDS );
-        mysqli_query($link, "INSERT INTO member_cards (member_cards_carddeck_id, member_cards_number, member_cards_member_id) VALUES ('".$row['carddeck_id']."','".$cardnumber."','".$member_id."')") OR die(mysqli_error($link));
-        array_push($cardarray, $row['carddeck_name'].sprintf("%02d", $cardnumber));
-        $_SESSION['insert_cards'] = $cardarray;
+    if (mysqli_num_rows($result)) {
+        $cardarray = array();
+        while ($row = mysqli_fetch_assoc($result)) {
+            $cardnumber = mt_rand(1, TCG_CARDDECK_MAX_CARDS);
+            mysqli_query($link, "INSERT INTO member_cards (member_cards_carddeck_id, member_cards_number, member_cards_member_id) VALUES ('" . $row['carddeck_id'] . "','" . $cardnumber . "','" . $member_id . "')") OR die(mysqli_error($link));
+            array_push($cardarray, $row['carddeck_name'] . sprintf("%02d", $cardnumber));
+            $_SESSION['insert_cards'] = $cardarray;
+        }
+        mysqli_query($link, "UPDATE member SET member_cards = member_cards + '" . $quantity . "' WHERE member_id = '" . $member_id . "' LIMIT 1") OR die(mysqli_error($link));
     }
-    mysqli_query($link, "UPDATE member SET member_cards = member_cards + '".$quantity."' WHERE member_id = '".$member_id."' LIMIT 1") OR die(mysqli_error($link));
 }
 
 function insert_specific_cards($member_id, $carddeck_id, $card_number) {
@@ -323,7 +340,7 @@ function insert_game_played($member_id, $game_id) {
     }
 }
 
-function send_message($sender, $receiver, $subject, $text, $message_system = 0) {
+function insert_message($sender, $receiver, $subject, $text, $message_system = 0) {
     global $link;
 
     mysqli_query($link, "INSERT INTO message
@@ -332,14 +349,6 @@ function send_message($sender, $receiver, $subject, $text, $message_system = 0) 
                ('".$sender."', '".$receiver."', '".$subject."', '".$text."', '".time()."', '".$message_system."')
                ")
     OR DIE(mysqli_error($link));
-}
-
-function shorten_text($text, $length) {
-    if (strlen($text) >= $length) {
-        return preg_replace('/\s+?(\S+)?$/', '', substr($text, 0, $length)).'...';
-    } else {
-        return $text;
-    }
 }
 
 function show_card($carddeck_id, $card_number, $show_only_url = false, $show_inactive = false) {

@@ -59,6 +59,7 @@
         </div>
         <div class="list-group list-group-flush">
             <?php
+            // sidebar navigation
             require_once("inc/navigation/sidebar.php");
             ?>
         </div>
@@ -66,6 +67,7 @@
 
     <div id="page-content-wrapper">
         <?php
+        // top navigation
         require_once("inc/navigation/header.php");
         ?>
         <div class="container-fluid mt-3">

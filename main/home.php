@@ -36,7 +36,7 @@ if (mysqli_num_rows($result_news)) {
                                         <div class="row">
                                             <div class="col col-8 text-left">
                                                 <small class="text-muted">
-                                                    <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_news['news_date']); ?> - <?php echo member_link($row_news['news_member_id']); ?>
+                                                    <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_news['news_date']); ?> - <?php echo get_member_link($row_news['news_member_id']); ?>
                                                 </small>
                                             </div>
                                             <div class="col col-4 text-right">

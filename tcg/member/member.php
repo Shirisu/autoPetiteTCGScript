@@ -42,7 +42,7 @@ if (isset($_SESSION['member_rank'])) {
                             ?>
                             <tr>
                                 <td><?php echo $row_member['member_id']; ?></td>
-                                <td><?php echo member_link($row_member['member_id'], '', true); ?></td>
+                                <td><?php echo get_member_link($row_member['member_id'], '', true); ?></td>
                                 <td><?php echo $row_member['member_level']; ?></td>
                                 <td><?php echo $row_member['member_rank_name']; ?></td>
                                 <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_member['member_register']); ?></td>
@@ -64,6 +64,6 @@ if (isset($_SESSION['member_rank'])) {
     </div>
     <?php
 } else {
-    show_no_access_message();
+    show_no_access_message_with_breadcrumb();
 }
 ?>

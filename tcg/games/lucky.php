@@ -133,6 +133,6 @@ if (isset($_SESSION['member_rank'])) {
         }
     }
 } else {
-    show_no_access_message();
+    show_no_access_message_with_breadcrumb();
 }
 ?>

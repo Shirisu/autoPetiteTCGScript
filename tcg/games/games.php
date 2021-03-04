@@ -134,6 +134,6 @@ if (isset($_SESSION['member_rank'])) {
         <?php
     }
 } else {
-    show_no_access_message();
+    show_no_access_message_with_breadcrumb();
 }
 ?>

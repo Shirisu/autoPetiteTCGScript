@@ -58,7 +58,7 @@ if (isset($_SESSION['member_rank'])) {
                                     <div class="col col-12 col-md-8 order-2 order-md-1">
                                         <small>
                                             <span class="font-weight-bold"><?php echo TRANSLATIONS[$GLOBALS['language']]['message']['text_sender'].':'; ?></span>
-                                            <?php echo($row_message['message_system'] == 1 ? TRANSLATIONS[$GLOBALS['language']]['message']['text_system_message'] : member_link($row_message['message_sender_member_id'], '', true)); ?>
+                                            <?php echo($row_message['message_system'] == 1 ? TRANSLATIONS[$GLOBALS['language']]['message']['text_system_message'] : get_member_link($row_message['message_sender_member_id'], '', true)); ?>
                                         </small>
                                     </div>
                                     <div class="col col-12 col-md-4 order-1 order-md-2 text-right">
@@ -169,7 +169,7 @@ if (isset($_SESSION['member_rank'])) {
                                 ?>
                                 <tr>
                                     <td>
-                                        <?php echo($row_message['message_system'] == 1 ? TRANSLATIONS[$GLOBALS['language']]['message']['text_system_message'] : ($message_box_type == 'inbox' ? member_link($row_message['message_sender_member_id'], '', true) : member_link($row_message['message_receiver_member_id'], '', true))); ?>
+                                        <?php echo($row_message['message_system'] == 1 ? TRANSLATIONS[$GLOBALS['language']]['message']['text_system_message'] : ($message_box_type == 'inbox' ? get_member_link($row_message['message_sender_member_id'], '', true) : get_member_link($row_message['message_receiver_member_id'], '', true))); ?>
                                     </td>
                                     <td>
                                         <a href="<?php echo HOST_URL; ?>/message/<?php echo $row_message['message_id']; ?>"><?php echo $row_message['message_subject']; ?></a>
@@ -194,6 +194,6 @@ if (isset($_SESSION['member_rank'])) {
         <?php
     }
 } else {
-    show_no_access_message();
+    show_no_access_message_with_breadcrumb();
 }
 ?>

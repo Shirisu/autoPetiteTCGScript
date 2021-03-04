@@ -28,7 +28,7 @@ if (isset($_SESSION['member_rank'])) {
                 $message_text = mysqli_real_escape_string($link, trim($_POST['message_text']));
                 $message_receiver = mysqli_real_escape_string($link, trim($_POST['message_receiver']));
 
-                send_message($member_id, $message_receiver, $message_subject, $message_text);
+                insert_message($member_id, $message_receiver, $message_subject, $message_text);
 
                 alert_box(TRANSLATIONS[$GLOBALS['language']]['message']['hint_message_sent'], 'success');
             } else {
@@ -48,7 +48,7 @@ if (isset($_SESSION['member_rank'])) {
                        LIMIT 1";
                 $result_member = mysqli_query($link, $sql_member) OR die(mysqli_error($link));
 
-                $message_text = PHP_EOL.PHP_EOL.'-----------------'.PHP_EOL.member_nick_plain($row_message['message_sender_member_id']).' '.TRANSLATIONS[$GLOBALS['language']]['message']['text_wrote_on'].' '.date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_message['message_date']).':'.PHP_EOL.$row_message['message_text'];
+                $message_text = PHP_EOL.PHP_EOL.'-----------------'.PHP_EOL.get_member_nick_plain($row_message['message_sender_member_id']).' '.TRANSLATIONS[$GLOBALS['language']]['message']['text_wrote_on'].' '.date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_message['message_date']).':'.PHP_EOL.$row_message['message_text'];
                 ?>
                 <form action="<?php echo HOST_URL; ?>/message/reply/<?php echo $message_id; ?>" method="post">
                     <div class="row message-container">
@@ -123,7 +123,7 @@ if (isset($_SESSION['member_rank'])) {
             $message_text = mysqli_real_escape_string($link, trim($_POST['message_text']));
             $message_receiver = mysqli_real_escape_string($link, trim($_POST['message_receiver']));
 
-            send_message($member_id, $message_receiver, $message_subject, $message_text);
+            insert_message($member_id, $message_receiver, $message_subject, $message_text);
 
             alert_box(TRANSLATIONS[$GLOBALS['language']]['message']['hint_message_sent'], 'success');
         } else {
@@ -194,6 +194,6 @@ if (isset($_SESSION['member_rank'])) {
         }
     }
 } else {
-    show_no_access_message();
+    show_no_access_message_with_breadcrumb();
 }
 ?>

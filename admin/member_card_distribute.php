@@ -19,7 +19,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         $inserted_cards_text = TRANSLATIONS[$language]['admin']['text_log_distribute_cards'].': '.implode(', ',$_SESSION['insert_cards']);
         insert_log(TRANSLATIONS[$language]['admin']['text_log_distribute_cards_topic'], $inserted_cards_text, $member_id);
         $text = TRANSLATIONS[$language]['admin']['text_distribution_topic'].': '.$topic.' - '.$inserted_cards_text;
-        send_message($_SESSION['member_id'], $member_id, TRANSLATIONS[$language]['admin']['text_log_distribute_cards_topic'], $text, 1);
+        insert_message($_SESSION['member_id'], $member_id, TRANSLATIONS[$language]['admin']['text_log_distribute_cards_topic'], $text, 1);
 
         alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_success_card_add'], 'success');
     }
@@ -100,6 +100,6 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
     </form>
     <?php
 } else {
-    show_no_access_message();
+    show_no_access_message_with_breadcrumb();
 }
 ?>

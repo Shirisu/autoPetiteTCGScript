@@ -50,7 +50,7 @@ if (isset($_SESSION['member_rank'])) {
                             </tr>
                             <tr>
                                 <th scope="row"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_creator']; ?></th>
-                                <td><?php echo member_link($row_carddeck['carddeck_creator']); ?></td>
+                                <td><?php echo get_member_link($row_carddeck['carddeck_creator']); ?></td>
                             </tr>
                             <tr>
                                 <th scope="row"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_date']; ?></th>
@@ -181,7 +181,7 @@ if (isset($_SESSION['member_rank'])) {
 
                                 if (count($collect_wishlist_member) > 0) {
                                     foreach ($collect_wishlist_member as $index => $member_id) {
-                                        echo member_link($member_id);
+                                        echo get_member_link($member_id);
                                         echo ($index != array_key_last($collect_wishlist_member) ? ', ' : '');
                                     }
                                 } else {
@@ -215,7 +215,7 @@ if (isset($_SESSION['member_rank'])) {
                                     }
 
                                     foreach ($trade_member as $index => $member_id) {
-                                        echo member_link($member_id);
+                                        echo get_member_link($member_id);
                                         echo ($index != array_key_last($trade_member) ? ', ' : '');
                                     }
                                 } else {
@@ -248,7 +248,7 @@ if (isset($_SESSION['member_rank'])) {
                                     }
 
                                     foreach ($master_member as $index => $member_id) {
-                                        echo member_link($member_id);
+                                        echo get_member_link($member_id);
                                         echo ($index != array_key_last($master_member) ? ', ' : '');
                                     }
                                 } else {
@@ -277,6 +277,6 @@ if (isset($_SESSION['member_rank'])) {
         alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['text_pagenotexist'], 'danger');
     }
 } else {
-    show_no_access_message();
+    show_no_access_message_with_breadcrumb();
 }
 ?>

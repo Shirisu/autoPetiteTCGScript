@@ -57,7 +57,7 @@ if (isset($_SESSION['member_rank'])) {
                     OR die(mysqli_error($link));
 
                     $trade_card_name = get_carddeck_name_from_member_cards_id($row_trade['trade_from_member_card_id']).sprintf("%'.02d", get_card_number_from_member_cards_id($row_trade['trade_from_member_card_id']));
-                    $trade_member_nick = member_nick_plain($row_trade['trade_from_member_id']);
+                    $trade_member_nick = get_member_nick_plain($row_trade['trade_from_member_id']);
                     $own_card_name = get_carddeck_name_from_member_cards_id($row_trade['trade_to_member_card_id']).sprintf("%'.02d", get_card_number_from_member_cards_id($row_trade['trade_to_member_card_id']));
 
                     // insert log for owner of trade
@@ -105,7 +105,7 @@ if (isset($_SESSION['member_rank'])) {
                     OR die(mysqli_error($link));
 
                     $trade_card_name = get_carddeck_name_from_member_cards_id($row_trade['trade_from_member_card_id']).sprintf("%'.02d", get_card_number_from_member_cards_id($row_trade['trade_from_member_card_id']));
-                    $trade_member_nick = member_nick_plain($row_trade['trade_from_member_id']);
+                    $trade_member_nick = get_member_nick_plain($row_trade['trade_from_member_id']);
                     $own_card_name = get_carddeck_name_from_member_cards_id($row_trade['trade_to_member_card_id']).sprintf("%'.02d", get_card_number_from_member_cards_id($row_trade['trade_to_member_card_id']));
 
                     // insert log for owner of trade
@@ -245,7 +245,7 @@ if (isset($_SESSION['member_rank'])) {
                                 ?>
                                 <tr>
                                     <td>
-                                        <?php echo($trade_box_type == 'inbox' ? member_link($row_trade['trade_from_member_id'], '', true) : member_link($row_trade['trade_to_member_id'], '', true)); ?>
+                                        <?php echo($trade_box_type == 'inbox' ? get_member_link($row_trade['trade_from_member_id'], '', true) : get_member_link($row_trade['trade_to_member_id'], '', true)); ?>
                                     </td>
                                     <td>
                                         <?php
@@ -309,6 +309,6 @@ if (isset($_SESSION['member_rank'])) {
         <?php
     }
 } else {
-    show_no_access_message();
+    show_no_access_message_with_breadcrumb();
 }
 ?>

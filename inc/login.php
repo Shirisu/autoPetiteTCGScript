@@ -8,6 +8,8 @@ require_once('class.passwordhash_tcg.php');
 $ip = ip();
 
 if ((isset($_REQUEST["member_nick"])) && isset($_REQUEST["member_password"])) {
+    global $link;
+
     $nick = mysqli_real_escape_string($link,$_REQUEST["member_nick"]);
     $pass = mysqli_real_escape_string($link,$_REQUEST["member_password"]);
 

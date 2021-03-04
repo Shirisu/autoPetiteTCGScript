@@ -96,5 +96,4 @@ if (isset($_POST['action']) && isset($_POST['carddeck_id'])) {
     }
     echo json_encode($toast_data);
 }
-
 ?>
