@@ -75,7 +75,6 @@ if (!isset($_SESSION['member_id'])) {
     }
     navilink($text_pn_count,'message',$icon);
 
-
     navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_memberarea'],'memberarea','atom');
 
     // card deck main categories
@@ -92,6 +91,8 @@ if (!isset($_SESSION['member_id'])) {
         }
         navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_all'],'carddecks/all');
     }
+
+    navilink('Member','member','address-book');
 }
 
 

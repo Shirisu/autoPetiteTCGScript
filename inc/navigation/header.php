@@ -20,7 +20,9 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMain">
                     <?php
-                    require_once("header_main.php");
+                    navlink('Team','team');
+                    navlink('Link in','linkin');
+                    navlink('Link out','linkout');
                     ?>
                 </div>
             </li>
@@ -30,7 +32,8 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownTCG">
                     <?php
-                    require_once("header_tcg.php");
+                    navlink('F.A.Q.','faq');
+                    navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_rules'],'rules');
                     ?>
                 </div>
             </li>
