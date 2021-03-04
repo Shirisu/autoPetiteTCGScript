@@ -53,7 +53,7 @@ if (isset($_SESSION['member_rank'])) {
                     $result_wishlist = mysqli_query($link, $sql_wishlist) OR die(mysqli_error($link));
                     $count_wishlist = mysqli_num_rows($result_wishlist);
                     if ($count_wishlist) {
-                        title_small($count_wishlist.' '.TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks'].' '.TRANSLATIONS[$GLOBALS['language']]['member']['text_profile_on_wishlist']);
+                        title_small($count_wishlist.' '.($count_wishlist == 1 ? TRANSLATIONS[$GLOBALS['language']]['general']['text_carddeck'] : TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks']).' '.TRANSLATIONS[$GLOBALS['language']]['member']['text_profile_on_wishlist']);
                         ?>
                         <table data-mobile-responsive="true">
                             <thead>

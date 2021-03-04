@@ -65,7 +65,7 @@ if (isset($_SESSION['member_rank'])) {
                             <thead>
                             <tr>
                                 <th></th>
-                                <th data-searchable="false"><?php echo title_small($count_cards.' Trade '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']); ?></th>
+                                <th data-searchable="false"><?php echo title_small($count_cards.' Trade '.($count_cards == 1 ? TRANSLATIONS[$GLOBALS['language']]['general']['text_card'] : TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'])); ?></th>
                             </tr>
                             </thead>
                             <tbody>

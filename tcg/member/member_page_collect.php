@@ -54,7 +54,7 @@ if (isset($_SESSION['member_rank'])) {
                     $result_cards = mysqli_query($link, $sql_cards) OR die(mysqli_error($link));
                     $count_cards = mysqli_num_rows($result_cards);
                     if ($count_cards) {
-                        title_small($count_cards.' Collect '.TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks']);
+                        title_small($count_cards.' Collect '.($count_cards == 1 ? TRANSLATIONS[$GLOBALS['language']]['general']['text_carddeck'] : TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks']));
                         ?>
                         <table class="optional profile-cards collect-cards" data-mobile-responsive="true">
                             <thead>

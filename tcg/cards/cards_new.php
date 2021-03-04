@@ -125,7 +125,7 @@ if (isset($_SESSION['member_rank'])) {
             $result_cards = mysqli_query($link, $sql_cards) OR die(mysqli_error($link));
             $count_cards = mysqli_num_rows($result_cards);
             if ($count_cards) {
-                title_small($count_cards.' New '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']);
+                title_small($count_cards.' New '.($count_cards == 1 ? TRANSLATIONS[$GLOBALS['language']]['general']['text_card'] : TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']));
                 ?>
                 <form action="<?php echo HOST_URL; ?>/cards/new" method="post">
                     <div class="row">
