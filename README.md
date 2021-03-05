@@ -5,7 +5,11 @@ It's written in PHP and uses jQuery and plain CSS.
 
 It's based on the concept and script of "Tasty TCG" from 2016 but it's almost completely reworked.
 
-Actual status: **Work in progress**!
+Actual version: 1.0.0
+
+![GitHub all releases](https://img.shields.io/github/downloads/Shirisu/autoPetiteTCGScript/total)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/w/Shirisu/autoPetiteTCGScript)
+![Lines of code](https://img.shields.io/tokei/lines/github/Shirisu/autoPetiteTCGScript)
 
 
 ## how to setup
@@ -99,11 +103,12 @@ Actual status: **Work in progress**!
   - fully automatic
 
 
-## used frameworks and libraries
+## used frameworks, libraries and others
 - Bootstrap v4.5.3 (https://getbootstrap.com)
 - BootstrapTable v1.18.1 (https://bootstrap-table.com)
 - jQuery v3.5.1 (https://jquery.com)
 - Font Awesome Free v5.15.2 (https://fontawesome.com)
+- PHP Routing (https://steampixel.de/einfaches-und-elegantes-url-routing-mit-php/)
 
 
 ## credits for the script
