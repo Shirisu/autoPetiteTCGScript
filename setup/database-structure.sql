@@ -122,18 +122,19 @@ CREATE TABLE IF NOT EXISTS `news` (
 CREATE TABLE IF NOT EXISTS `games` (
   `games_id` int(11) NOT NULL AUTO_INCREMENT,
   `games_name` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
-  `games_intervall` int(11) NOT NULL,
+  `games_interval` int(11) NOT NULL,
+  `games_status` ENUM('0','1') NOT NULL DEFAULT '0' COMMENT '0 = inactive, 1 = active',
   `games_icon` VARCHAR(30) NOT NULL,
   `games_is_lucky_category_game` ENUM('0','1') NOT NULL DEFAULT '0' COMMENT '0 = normal, 1 = lucky category',
   PRIMARY KEY (`games_id`),
   KEY `games_id` (`games_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `games` (games_name, games_intervall, games_is_lucky_category_game, games_icon)
+INSERT INTO `games` (games_name, games_interval, games_status, games_is_lucky_category_game, games_icon)
     VALUES
-    ('Lucky', 3600, '1', 'dice'),
-    ('Memory', 3600, '0', 'puzzle-piece'),
-    ('Right Number', 3600, '0', 'dice');
+    ('Lucky', 3600, '1', '1', 'dice'),
+    ('Memory', 3600, '1', '0', 'puzzle-piece'),
+    ('Right Number', 3600, '1', '0', 'dice');
 
 
 CREATE TABLE IF NOT EXISTS `member_game_played` (

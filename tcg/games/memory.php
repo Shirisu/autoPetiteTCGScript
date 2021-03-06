@@ -5,9 +5,10 @@ if (isset($_SESSION['member_rank'])) {
     if (isset($game_id)) {
         global $link;
 
-        $sql_lucky_game = "SELECT games_id, games_name, games_intervall
+        $sql_lucky_game = "SELECT games_id, games_name, games_interval
                            FROM games
                            WHERE games_id = '".$game_id."'
+                             AND games_status = '1'
                            LIMIT 1";
         $result_lucky_game = mysqli_query($link, $sql_lucky_game) OR die(mysqli_error($link));
         if (mysqli_num_rows($result_lucky_game)) {
@@ -33,7 +34,7 @@ if (isset($_SESSION['member_rank'])) {
             $result_last_played = mysqli_query($link, $sql_last_played) OR die(mysqli_error($link));
             $row_last_played = mysqli_fetch_assoc($result_last_played);
             if (mysqli_num_rows($result_last_played)) {
-                $next_game_time = $row_last_played['member_game_played_last_played'] + $row_lucky_game['games_intervall'];
+                $next_game_time = $row_last_played['member_game_played_last_played'] + $row_lucky_game['games_interval'];
 
                 if ($next_game_time <= time()) {
                     $can_play = true;

@@ -136,6 +136,24 @@ Route::add("/administration/addcardupdate",function() {
 Route::add("/administration/addcardupdate",function() {
     require_once("admin/cardupdate_add.php");
 }, "post");
+Route::add("/administration/addgame",function() {
+    require_once("admin/games_add.php");
+});
+Route::add("/administration/addgame",function() {
+    require_once("admin/games_add.php");
+}, "post");
+Route::add("/administration/editgame",function() {
+    require_once("admin/games_edit.php");
+});
+Route::add("/administration/editgame",function() {
+    require_once("admin/games_edit.php");
+}, "post");
+Route::add("/administration/editgame/([0-9+].*)",function($games_id) {
+    require_once("admin/games_edit.php");
+});
+Route::add("/administration/editgame/([0-9+].*)",function($games_id) {
+    require_once("admin/games_edit.php");
+}, "post");
 
 // news
 Route::add("/news/([0-9+].*)",function($news_id) {

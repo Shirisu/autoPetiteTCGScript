@@ -9,8 +9,9 @@ if (isset($_SESSION['member_rank'])) {
     breadcrumb($breadcrumb);
     title(TRANSLATIONS[$GLOBALS['language']]['general']['text_games']);
 
-    $sql_games = "SELECT games_id, games_name, games_intervall, games_icon, games_is_lucky_category_game
+    $sql_games = "SELECT games_id, games_name, games_interval, games_icon, games_is_lucky_category_game
                   FROM games
+                  WHERE games_status = '1'
                   ORDER BY games_name ASC";
     $result_games = mysqli_query($link, $sql_games) OR die(mysqli_error($link));
     if (mysqli_num_rows($result_games)) {
@@ -37,7 +38,7 @@ if (isset($_SESSION['member_rank'])) {
                             $result_last_played = mysqli_query($link, $sql_last_played) OR die(mysqli_error($link));
                             $row_last_played = mysqli_fetch_assoc($result_last_played);
                             if (mysqli_num_rows($result_last_played)) {
-                                $next_game_time = $row_last_played['member_game_played_last_played'] + $row_games['games_intervall'];
+                                $next_game_time = $row_last_played['member_game_played_last_played'] + $row_games['games_interval'];
 
                                 if ($next_game_time <= time()) {
                                     $can_play = true;
@@ -88,7 +89,7 @@ if (isset($_SESSION['member_rank'])) {
                     $result_last_played = mysqli_query($link, $sql_last_played) OR die(mysqli_error($link));
                     $row_last_played = mysqli_fetch_assoc($result_last_played);
                     if (mysqli_num_rows($result_last_played)) {
-                        $next_game_time = $row_last_played['member_game_played_last_played'] + $row_games['games_intervall'];
+                        $next_game_time = $row_last_played['member_game_played_last_played'] + $row_games['games_interval'];
 
                         if ($next_game_time <= time()) {
                             $can_play = true;

@@ -147,7 +147,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
     if ($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2 || $_SESSION['member_rank'] == 4) {
         title_small(TRANSLATIONS[$GLOBALS['language']]['admin']['member_administration_headline']);
         ?>
-        <div class="row administration">
+        <div class="row mb-3 administration">
             <div class="col col-12 col-md-6 mb-2">
                 <div class="card">
                     <div class="card-body">
@@ -209,6 +209,38 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     </div>
                 </div>
             <?php } ?>
+        </div>
+        <?php
+    }
+
+    if ($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2) {
+        title_small(TRANSLATIONS[$GLOBALS['language']]['admin']['games_administration_headline']);
+        ?>
+        <div class="row mb-3 administration">
+            <div class="col col-12 col-md-6 mb-2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media">
+                            <i class="fas fa-gamepad fa-2x mr-3"></i>
+                            <div class="media-body">
+                                <a href="<?php echo HOST_URL; ?>/administration/addgame"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['games_add_headline']; ?></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-12 col-md-6 mb-2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media">
+                            <i class="fas fa-gamepad fa-2x mr-3"></i>
+                            <div class="media-body">
+                                <a href="<?php echo HOST_URL; ?>/administration/editgame"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['games_edit_headline']; ?></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <?php
     }
