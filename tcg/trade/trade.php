@@ -31,7 +31,7 @@ if (isset($_SESSION['member_rank'])) {
 
                     // change owner of trade card accept
                     mysqli_query($link, "UPDATE member_cards
-                                         SET member_cards_cat = 1,
+                                         SET member_cards_cat = '".MEMBER_CARDS_NEW."',
                                              member_cards_active = 1,
                                              member_cards_member_id = '".$member_id."'
                                          WHERE member_cards_id = '".$row_trade['trade_from_member_card_id']."'
@@ -41,7 +41,7 @@ if (isset($_SESSION['member_rank'])) {
 
                     // change owner of own card accept
                     mysqli_query($link, "UPDATE member_cards
-                                         SET member_cards_cat = 1,
+                                         SET member_cards_cat = '".MEMBER_CARDS_NEW."',
                                              member_cards_active = 1,
                                              member_cards_member_id = '".$row_trade['trade_from_member_id']."'
                                          WHERE member_cards_id = '".$row_trade['trade_to_member_card_id']."'

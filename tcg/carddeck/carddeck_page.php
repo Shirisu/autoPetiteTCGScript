@@ -156,7 +156,7 @@ if (isset($_SESSION['member_rank'])) {
                                                 FROM member_cards
                                                 JOIN member ON member_id = member_cards_member_id
                                                 WHERE member_cards_carddeck_id = '".$row_carddeck['carddeck_id']."'
-                                                   AND member_cards_cat = 2
+                                                   AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
                                                 ORDER BY member_nick ASC";
                                 $result_collect = mysqli_query($link, $sql_collect);
                                 $count_collect = mysqli_num_rows($result_collect);
@@ -205,7 +205,7 @@ if (isset($_SESSION['member_rank'])) {
                                               FROM member_cards
                                               JOIN member ON member_id = member_cards_member_id
                                               WHERE member_cards_carddeck_id = '".$row_carddeck['carddeck_id']."'
-                                                AND member_cards_cat = 3
+                                                AND member_cards_cat = '".MEMBER_CARDS_TRADE."'
                                               ORDER BY member_nick ASC";
                                 $result_trade = mysqli_query($link, $sql_trade);
                                 $count_trade = mysqli_num_rows($result_trade);

@@ -47,7 +47,7 @@ if (isset($_SESSION['member_rank'])) {
                                   FROM member_cards
                                   JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                                   WHERE member_cards_member_id = '".$member_id."'
-                                    AND member_cards_cat = 2
+                                    AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
                                     AND member_cards_active = 1
                                   GROUP BY member_cards_carddeck_id
                                   ORDER BY carddeck_name, member_cards_number ASC";
@@ -73,7 +73,7 @@ if (isset($_SESSION['member_rank'])) {
                                                     FROM member_cards
                                                     WHERE member_cards_member_id = '".$member_id."'
                                                       AND member_cards_carddeck_id = '".$row_cards['member_cards_carddeck_id']."'
-                                                      AND member_cards_cat = 2
+                                                      AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
                                                       AND member_cards_active = 1
                                                     GROUP BY member_cards_number
                                                     ORDER BY member_cards_number ASC";

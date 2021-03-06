@@ -49,7 +49,7 @@ if (isset($_SESSION['member_rank'])) {
                                   FROM member_cards mc
                                   JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                                   WHERE member_cards_member_id = '".$member_id."'
-                                    AND member_cards_cat = 3
+                                    AND member_cards_cat = '".MEMBER_CARDS_TRADE."'
                                     AND member_cards_active = 1
                                   GROUP BY member_cards_carddeck_id, member_cards_number
                                   ORDER BY carddeck_name, member_cards_number ASC";

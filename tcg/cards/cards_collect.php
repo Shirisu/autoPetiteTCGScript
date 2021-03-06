@@ -19,7 +19,7 @@ if (isset($_SESSION['member_rank'])) {
                             FROM member_cards
                             WHERE member_cards_member_id = '".$member_id."'
                               AND member_cards_carddeck_id = '".$carddeck_id."'
-                              AND member_cards_cat = 2
+                              AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
                               AND member_cards_active = 1
                             GROUP BY member_cards_number";
         $result_card_number = mysqli_query($link, $sql_card_number) OR die(mysqli_error($link));
@@ -42,7 +42,7 @@ if (isset($_SESSION['member_rank'])) {
                          JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                          WHERE member_cards_member_id = '" . $member_id . "'
                            AND member_cards_carddeck_id = '" . $carddeck_id . "'
-                           AND member_cards_cat = 2
+                           AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
                            AND member_cards_active = 1
                          LIMIT 1";
                 $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
@@ -51,7 +51,7 @@ if (isset($_SESSION['member_rank'])) {
                     mysqli_query($link, "DELETE FROM member_cards
                                          WHERE member_cards_carddeck_id = '".$carddeck_id."'
                                            AND member_cards_member_id = '".$member_id."'
-                                           AND member_cards_cat = 2
+                                           AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
                                            AND member_cards_active = 1")
                     OR die(mysqli_error($link));
                     mysqli_query($link, "INSERT INTO member_master
@@ -90,17 +90,17 @@ if (isset($_SESSION['member_rank'])) {
                          JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                          WHERE member_cards_member_id = '" . $member_id . "'
                            AND member_cards_carddeck_id = '" . $carddeck_id . "'
-                           AND member_cards_cat = 2
+                           AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
                            AND member_cards_active = 1
                          LIMIT 1";
             $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
             if (mysqli_num_rows($result_carddeck)) {
                 $row_carddeck = mysqli_fetch_assoc($result_carddeck);
                 mysqli_query($link, "UPDATE member_cards
-                                 SET member_cards_cat = 1
+                                 SET member_cards_cat = '".MEMBER_CARDS_NEW."'
                                  WHERE member_cards_carddeck_id = '" . $carddeck_id . "'
                                    AND member_cards_member_id = '" . $member_id . "'
-                                   AND member_cards_cat = 2
+                                   AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
                                    AND member_cards_active = 1")
                 OR die(mysqli_error($link));
                 alert_box($row_carddeck['carddeck_name'] . ' ' . TRANSLATIONS[$GLOBALS['language']]['member']['text_dissolved'], 'success');
@@ -133,7 +133,7 @@ if (isset($_SESSION['member_rank'])) {
                           FROM member_cards
                           JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                           WHERE member_cards_member_id = '".$member_id."'
-                            AND member_cards_cat = 2
+                            AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
                             AND member_cards_active = 1
                           GROUP BY member_cards_carddeck_id
                           ORDER BY carddeck_name, member_cards_number ASC";
@@ -162,7 +162,7 @@ if (isset($_SESSION['member_rank'])) {
                                                 FROM member_cards
                                                 WHERE member_cards_member_id = '".$member_id."'
                                                   AND member_cards_carddeck_id = '".$row_cards['member_cards_carddeck_id']."'
-                                                  AND member_cards_cat = 2
+                                                  AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
                                                   AND member_cards_active = 1
                                                 GROUP BY member_cards_number
                                                 ORDER BY member_cards_number ASC";

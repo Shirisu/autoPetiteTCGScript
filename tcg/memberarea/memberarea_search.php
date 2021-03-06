@@ -81,7 +81,7 @@ if (isset($_SESSION['member_rank'])) {
                        JOIN member ON member_id = member_cards_member_id
                        WHERE member_cards_carddeck_id = '".$carddeck_id."'
                          AND member_cards_number = '".$card_number."'
-                         AND member_cards_cat = 3
+                         AND member_cards_cat = '".MEMBER_CARDS_TRADE."'
                        GROUP BY member_id
                        ORDER BY member_nick ASC";
         $result_search = mysqli_query($link, $sql_search);

@@ -30,7 +30,7 @@ if (!isset($_SESSION['member_id'])) {
     $sql_cards = "SELECT member_cards_id
                   FROM member_cards
                   WHERE member_cards_member_id = '".$_SESSION['member_id']."'
-                    AND member_cards_cat = 1
+                    AND member_cards_cat = '".MEMBER_CARDS_NEW."'
                     AND member_cards_active = 1";
     $result_cards = mysqli_query($link, $sql_cards) or die(mysqli_error($link));
     $count_cards = mysqli_num_rows($result_cards);

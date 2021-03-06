@@ -43,7 +43,7 @@ if (isset($_SESSION['member_rank'])) {
                                            WHERE member_cards_member_id = '" . $_SESSION['member_id'] . "'
                                              AND member_cards_carddeck_id = '" . $row_carddeck['carddeck_id'] . "'
                                              AND member_cards_number = '" . $row_carddeck['member_cards_number'] . "'
-                                             AND member_cards_cat = 2
+                                             AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
                                            LIMIT 1";
                         $result_in_collect_yet = mysqli_query($link, $sql_in_collect_yet) OR die(mysqli_error($link));
                         if (mysqli_num_rows($result_in_collect_yet)) {
@@ -95,7 +95,7 @@ if (isset($_SESSION['member_rank'])) {
                               FROM member_cards
                               WHERE member_cards_member_id = '".$member_id."'
                                 AND mc.member_cards_carddeck_id = member_cards_carddeck_id
-                                AND member_cards_cat = 2
+                                AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
                                 AND member_cards_active = 1
                               GROUP BY member_cards_carddeck_id) as carddeck_in_collect,
                              EXISTS (SELECT member_cards_id
@@ -103,7 +103,7 @@ if (isset($_SESSION['member_rank'])) {
                               WHERE member_cards_member_id = '".$member_id."'
                                 AND mc.member_cards_carddeck_id = member_cards_carddeck_id
                                 AND mc.member_cards_number = member_cards_number
-                                AND member_cards_cat = 2
+                                AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
                                 AND member_cards_active = 1
                               GROUP BY member_cards_carddeck_id, member_cards_number) as card_already_in_collect,
                              EXISTS (SELECT member_wishlist_member_id
@@ -119,7 +119,7 @@ if (isset($_SESSION['member_rank'])) {
                           FROM member_cards mc
                           JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                           WHERE member_cards_member_id = '".$member_id."'
-                            AND member_cards_cat = 1
+                            AND member_cards_cat = '".MEMBER_CARDS_NEW."'
                             AND member_cards_active = 1
                           ORDER BY carddeck_name, member_cards_number ASC";
             $result_cards = mysqli_query($link, $sql_cards) OR die(mysqli_error($link));

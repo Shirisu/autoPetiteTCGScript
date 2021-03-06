@@ -3,6 +3,9 @@ define('HOST_URL_PROTOCOL', stripos($_SERVER['SERVER_PROTOCOL'],'https') === 0 ?
 define('HOST_URL_PLAIN', $_SERVER['SERVER_NAME']); // DO NOT EDIT THIS LINE
 define('HOST_URL', '//'.HOST_URL_PLAIN); // DO NOT EDIT THIS LINE
 define('TCG_CARDS_FOLDER', '/assets/cards'); // DO NOT EDIT THIS LINE
+define('MEMBER_CARDS_NEW', '1'); // DO NOT EDIT THIS LINE
+define('MEMBER_CARDS_COLLECT', '2'); // DO NOT EDIT THIS LINE
+define('MEMBER_CARDS_TRADE', '3'); // DO NOT EDIT THIS LINE
 
 // BELOW THIS YOU CAN EDIT THE VALUES - BUT BE CAREFUL!
 define('TCG_CARDS_FILLER_NAME', 'filler'); // name of the filler/search card - should be placed in the the folder "/assets/cards/"
