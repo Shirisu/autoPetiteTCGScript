@@ -111,5 +111,10 @@ Actual version: 1.0.0
 - PHP Routing (https://steampixel.de/einfaches-und-elegantes-url-routing-mit-php/)
 
 
+# requirements
+- MySQL 8.0 or higher / MariaDB 10.2 or higher
+- PHP 7.4 or higher
+
+
 ## credits for the script
 - Shirisu (also known as Etna or Pleinar) - [Github](https://github.com/Shirisu/)
