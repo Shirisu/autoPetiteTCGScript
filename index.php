@@ -154,6 +154,24 @@ Route::add("/administration/editgame/([0-9+].*)",function($games_id) {
 Route::add("/administration/editgame/([0-9+].*)",function($games_id) {
     require_once("admin/games_edit.php");
 }, "post");
+Route::add("/administration/addlevel",function() {
+    require_once("admin/level_add.php");
+});
+Route::add("/administration/addlevel",function() {
+    require_once("admin/level_add.php");
+}, "post");
+Route::add("/administration/editlevel",function() {
+    require_once("admin/level_edit.php");
+});
+Route::add("/administration/editlevel",function() {
+    require_once("admin/level_edit.php");
+}, "post");
+Route::add("/administration/editlevel/([0-9+].*)",function($level_id) {
+    require_once("admin/level_edit.php");
+});
+Route::add("/administration/editlevel/([0-9+].*)",function($level_id) {
+    require_once("admin/level_edit.php");
+}, "post");
 
 // news
 Route::add("/news/([0-9+].*)",function($news_id) {

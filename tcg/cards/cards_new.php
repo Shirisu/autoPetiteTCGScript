@@ -11,6 +11,8 @@ if (isset($_SESSION['member_rank'])) {
 
     $member_id = $_SESSION['member_id'];
 
+    member_level_up($member_id);
+
     if (isset($_POST['card_id']) && isset($_POST['card_category'])) {
         foreach ($_POST['card_id'] as $index => $card) {
             $card_id = mysqli_real_escape_string($link, $card);
