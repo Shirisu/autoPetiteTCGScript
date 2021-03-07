@@ -5,7 +5,7 @@ It's written in PHP and uses jQuery and plain CSS.
 
 It's based on the concept and script of "Tasty TCG" from 2016 but it's almost completely reworked.
 
-Actual version: 1.0.0
+Actual version: 1.1.0
 
 ![GitHub all releases](https://img.shields.io/github/downloads/Shirisu/autoPetiteTCGScript/total)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/Shirisu/autoPetiteTCGScript)
@@ -93,6 +93,7 @@ Actual version: 1.0.0
 - games
 - trade system
   - semi-automatic
+- level up system
 
 ## possible features in the future
 - main page

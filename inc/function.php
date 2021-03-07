@@ -98,6 +98,45 @@ function breadcrumb($breadcrumb_array) {
     <?php
 }
 
+function member_level_up($member_id) {
+    global $link;
+
+    $sql_cards_count = "SELECT member_cards_id
+	      					 FROM member_cards
+	      					 WHERE member_cards_member_id = '".$member_id."'";
+    $result_cards_count = mysqli_query($link, $sql_cards_count) OR die(mysqli_error($link));
+    $count_cards = mysqli_num_rows($result_cards_count);
+
+    $sql_count_master = "SELECT member_master_id
+                            FROM member_master
+                            JOIN carddeck ON carddeck_id = member_master_carddeck_id
+                            WHERE member_master_member_id = '".$member_id."';";
+    $result_count_master = mysqli_query($link, $sql_count_master) OR die(mysqli_error($link));
+    $count_master = mysqli_num_rows($result_count_master);
+    $count_master_with_cards_count = $count_master * TCG_CARDDECK_MAX_CARDS;
+    $cards_count_total = ($count_cards + $count_master_with_cards_count);
+
+    $sql_level = "SELECT member_level_id, member_level_name FROM member_level WHERE '".$cards_count_total."' BETWEEN member_level_from AND member_level_to LIMIT 1";
+    $result_level = mysqli_query($link, $sql_level) OR die(mysqli_error($link));
+    $row_level = mysqli_fetch_assoc($result_level);
+
+    $sql_member = "SELECT member_level FROM member WHERE member_id = '".$member_id."' LIMIT 1";
+    $result_member = mysqli_query($link, $sql_member) OR die(mysqli_error($link));
+    $row_member = mysqli_fetch_assoc($result_member);
+
+    if(($row_member['member_level'] != $row_level['member_level_id']) && ($row_member['member_level'] < $row_level['member_level_id'])) {
+        insert_cards($member_id, TCG_LEVEL_UP_CARD_REWARD);
+        $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['general']['text_level_up_reward'].': '.implode(', ',$_SESSION['insert_cards']);
+        insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_level_up'].' - '.sprintf('%02d', $row_level['member_level_id']), $inserted_cards_text, $member_id);
+
+        mysqli_query($link, "UPDATE member SET member_level = '".$row_level['member_level_id']."' WHERE member_id = '".$member_id."' LIMIT 1");
+
+        alert_box(
+            TRANSLATIONS[$GLOBALS['language']]['general']['text_level_up'].': '.TRANSLATIONS[$GLOBALS['language']]['general']['text_level_up_reward'].': '.implode(', ',$_SESSION['insert_cards'])
+            , 'success');
+    }
+}
+
 function get_active_status($status) {
     if ($status == 1) {
         $status = TRANSLATIONS[$GLOBALS['language']]['general']['text_active'];

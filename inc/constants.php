@@ -29,6 +29,7 @@ define('TCG_CURRENCY', 'Dollar'); // currency name
 define('TCG_USE_WISH', true); // will you use wish? (yes = true - no = false)
 define('TCG_WISH', 'Wish'); // wish name
 define('TCG_MASTER_CARD_REWARD', '3'); // reward card amount for mastering
+define('TCG_LEVEL_UP_CARD_REWARD', '3'); // reward card amount for level up
 define('TCG_MEMBER_MAX_LVL', '20'); // max level for member
 define('TCG_SHOP_CURRENCY_FOR_RANDOM', '100'); // how much currency do 1 random cost?
 ?>
