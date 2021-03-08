@@ -5,7 +5,7 @@ It's written in PHP and uses jQuery and plain CSS.
 
 It's based on the concept and script of "Tasty TCG" from 2016 but it's almost completely reworked.
 
-Actual version: 1.1.0
+Actual version: 1.2.0
 
 ![GitHub all releases](https://img.shields.io/github/downloads/Shirisu/autoPetiteTCGScript/total)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/Shirisu/autoPetiteTCGScript)
@@ -110,11 +110,6 @@ Actual version: 1.1.0
 - jQuery v3.5.1 (https://jquery.com)
 - Font Awesome Free v5.15.2 (https://fontawesome.com)
 - PHP Routing (https://steampixel.de/einfaches-und-elegantes-url-routing-mit-php/)
-
-
-# requirements
-- MySQL 8.0 or higher / MariaDB 10.2 or higher
-- PHP 7.4 or higher
 
 
 ## credits for the script
