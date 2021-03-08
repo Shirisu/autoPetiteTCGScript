@@ -43,60 +43,68 @@ if (isset($_SESSION['member_rank'])) {
     <div class="row shop-container">
         <div class="col col-12 mb-4 text-left text-md-center">
             <span class="font-weight-bold"><?php echo TRANSLATIONS[$GLOBALS['language']]['shop']['text_you_currently_own']; ?>:</span>
-            <?php echo $member_currency.' '.TCG_CURRENCY; ?>
-            <?php if (TCG_USE_WISH == true) { ?>& <?php echo $member_wish.' '.TCG_WISH; ?><?php } ?>
+            <?php if (TCG_USE_CURRENCY == true) { ?><?php echo $member_currency.' '.TCG_CURRENCY; ?><?php } ?>
+            <?php if (TCG_USE_CURRENCY == true && TCG_USE_WISH == true) { ?>& <?php } ?>
+            <?php if (TCG_USE_WISH == true) { ?><?php echo $member_wish.' '.TCG_WISH; ?><?php } ?>
         </div>
         <?php
         if (mysqli_num_rows($result_carddeck)) {
             ?>
-            <div class="col col-12 <?php echo (TCG_USE_WISH == true ? 'col-md-6' : 'col-md-12'); ?>">
-                <form action="<?php echo HOST_URL; ?>/memberarea/shop" method="post">
-                    <div class="row">
-                        <div class="col <?php echo (TCG_USE_WISH == true ? 'col-md-12' : 'col-md-6'); ?> mb-2">
-                            <?php echo TCG_SHOP_CURRENCY_FOR_RANDOM; ?> <?php echo TCG_CURRENCY; ?> = 1 Random <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_card']; ?>
-                        </div>
-                        <?php
-                        if ($max_random > 0) {
-                            ?>
-                            <div class="form-group col <?php echo (TCG_USE_WISH == true ? 'col-12' : 'col-12 col-md-6'); ?> mb-2">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"
-                                              id="ariaDescribedbyQuantity"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_quantity']; ?> <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']; ?></span>
-                                    </div>
-                                    <select class="custom-select" id="random_quantity" name="random_quantity"
-                                            aria-describedby="ariaDescribedbyQuantity" required>
-                                        <option selected disabled hidden value=""></option>
-                                        <?php
-                                        for ($i = 1; $i <= $max_random; $i++) {
-                                            ?>
-                                            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                                            <?php
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group col col-12">
-                                <button type="submit"
-                                        class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['shop']['text_button_buy_random']; ?></button>
+            <?php if (TCG_USE_CURRENCY == true) { ?>
+                <div class="col col-12 <?php echo(TCG_USE_WISH == true ? 'col-md-6' : 'col-md-12'); ?>">
+                    <form action="<?php echo HOST_URL; ?>/memberarea/shop" method="post">
+                        <div class="row">
+                            <div class="col <?php echo(TCG_USE_WISH == true ? 'col-md-12' : 'col-md-6'); ?> mb-2">
+                                <?php echo TCG_SHOP_CURRENCY_FOR_RANDOM; ?> <?php echo TCG_CURRENCY; ?> = 1
+                                Random <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_card']; ?>
                             </div>
                             <?php
-                        } else {
-                            ?>
-                            <div class="col <?php echo (TCG_USE_WISH == true ? 'col-12' : 'col-12 col-md-6'); ?> mb-2">
-                                <?php
-                                alert_box(TRANSLATIONS[$GLOBALS['language']]['shop']['hint_not_enough_currency'], 'danger');
+                            if ($max_random > 0) {
                                 ?>
-                            </div>
-                            <?php
-                        }
-                        ?>
-                    </div>
-                </form>
-            </div>
-            <?php if (TCG_USE_WISH == true) { ?>
-                <div class="col col-12 col-md-6">
+                                <div
+                                    class="form-group col <?php echo(TCG_USE_WISH == true ? 'col-12' : 'col-12 col-md-6'); ?> mb-2">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text"
+                                              id="ariaDescribedbyQuantity"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_quantity']; ?><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']; ?></span>
+                                        </div>
+                                        <select class="custom-select" id="random_quantity" name="random_quantity"
+                                                aria-describedby="ariaDescribedbyQuantity" required>
+                                            <option selected disabled hidden value=""></option>
+                                            <?php
+                                            for ($i = 1; $i <= $max_random; $i++) {
+                                                ?>
+                                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                                <?php
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col col-12">
+                                    <button type="submit"
+                                            class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['shop']['text_button_buy_random']; ?></button>
+                                </div>
+                                <?php
+                            } else {
+                                ?>
+                                <div
+                                    class="col <?php echo(TCG_USE_WISH == true ? 'col-12' : 'col-12 col-md-6'); ?> mb-2">
+                                    <?php
+                                    alert_box(TRANSLATIONS[$GLOBALS['language']]['shop']['hint_not_enough_currency'], 'danger');
+                                    ?>
+                                </div>
+                                <?php
+                            }
+                            ?>
+                        </div>
+                    </form>
+                </div>
+                <?php
+            }
+
+            if (TCG_USE_WISH == true) { ?>
+                <div class="col col-12 <?php echo (TCG_USE_CURRENCY == true ? 'col-md-6' : 'col-md-12'); ?>">
                     <form action="<?php echo HOST_URL; ?>/memberarea/shop" method="post">
                         <div class="row">
                             <div class="col col-12 mb-2">

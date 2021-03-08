@@ -57,18 +57,20 @@ if (isset($_SESSION['member_rank'])) {
                 </div>
             </div>
         </div>
-        <div class="col col-12 col-md-6 mb-2">
-            <div class="card">
-                <div class="card-body">
-                    <div class="media">
-                        <i class="fas fa-store-alt fa-2x mr-3"></i>
-                        <div class="media-body">
-                            <a href="<?php echo HOST_URL; ?>/memberarea/shop"><?php echo TRANSLATIONS[$GLOBALS['language']]['member']['text_shop']; ?></a>
+        <?php if (TCG_USE_CURRENCY == true) { ?>
+            <div class="col col-12 col-md-6 mb-2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media">
+                            <i class="fas fa-store-alt fa-2x mr-3"></i>
+                            <div class="media-body">
+                                <a href="<?php echo HOST_URL; ?>/memberarea/shop"><?php echo TRANSLATIONS[$GLOBALS['language']]['member']['text_shop']; ?></a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php } ?>
         <div class="col col-12 col-md-6 mb-2">
             <?php
             $sql_update = "SELECT cardupdate_id

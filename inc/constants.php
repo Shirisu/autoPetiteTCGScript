@@ -26,6 +26,7 @@ define('TCG_CARDS_PER_ROW', '4'); // how many cards are in one row
 define('TCG_MASTERCARDS_WIDTH', '153'); // width of master
 define('TCG_MASTERCARDS_HEIGHT', '123'); // height of master
 define('TCG_CARDS_START_PACKAGE', '12'); // cards of startdeck
+define('TCG_USE_CURRENCY', true); // will you use the currency? (yes = true - no = false)
 define('TCG_CURRENCY', 'Dollar'); // currency name
 define('TCG_USE_WISH', true); // will you use wish? (yes = true - no = false)
 define('TCG_WISH', 'Wish'); // wish name
