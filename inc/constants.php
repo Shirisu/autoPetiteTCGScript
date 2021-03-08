@@ -1,4 +1,5 @@
 <?php
+define('MYSQL_VERSION', mysqli_get_client_info());
 define('HOST_URL_PROTOCOL', stripos($_SERVER['SERVER_PROTOCOL'],'https') === 0 ? 'https://' : 'http://'); // DO NOT EDIT THIS LINE
 define('HOST_URL_PLAIN', $_SERVER['SERVER_NAME']); // DO NOT EDIT THIS LINE
 define('HOST_URL', '//'.HOST_URL_PLAIN); // DO NOT EDIT THIS LINE
