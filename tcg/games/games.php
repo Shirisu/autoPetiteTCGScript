@@ -9,7 +9,7 @@ if (isset($_SESSION['member_rank'])) {
     breadcrumb($breadcrumb);
     title(TRANSLATIONS[$GLOBALS['language']]['general']['text_games']);
 
-    $sql_games = "SELECT games_id, games_name, games_interval, games_icon, games_is_lucky_category_game
+    $sql_games = "SELECT games_id, games_name, games_interval, games_type, games_is_lucky_category_game
                   FROM games
                   WHERE games_status = '1'
                   ORDER BY games_name ASC";
@@ -53,13 +53,13 @@ if (isset($_SESSION['member_rank'])) {
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="media">
-                                            <i class="fas fa-<?php echo $row_games['games_icon']; ?> fa-2x mr-3"></i>
+                                            <i class="fas fa-dice fa-2x mr-3"></i>
                                             <div class="media-body">
                                                 <?php
                                                 if ($can_play) {
                                                     ?>
                                                     <span class="font-weight-bold"><?php echo $row_games['games_name'].' ' . $row_cat['carddeck_cat_name']; ?></span><br />
-                                                    <a href="<?php echo HOST_URL; ?>/games/lucky/<?php echo $row_cat['carddeck_cat_id']; ?>">Jetzt spielen</a>
+                                                    <a href="<?php echo HOST_URL; ?>/games/lucky_cat/<?php echo $row_cat['carddeck_cat_id']; ?>">Jetzt spielen</a>
                                                     <?php
                                                 } else {
                                                     ?>
@@ -104,13 +104,13 @@ if (isset($_SESSION['member_rank'])) {
                         <div class="card">
                             <div class="card-body">
                                 <div class="media">
-                                    <i class="fas fa-<?php echo $row_games['games_icon']; ?> fa-2x mr-3"></i>
+                                    <i class="fas fa-<?php echo (($row_games['games_type'] == '1' || $row_games['games_is_lucky_category_game'] == 1) ? 'dice' : 'puzzle-piece'); ?> fa-2x mr-3"></i>
                                     <div class="media-body">
                                         <?php
                                         if ($can_play) {
                                             ?>
                                             <span class="font-weight-bold"><?php echo $row_games['games_name']; ?></span><br />
-                                            <a href="<?php echo HOST_URL; ?>/games/<?php echo $row_games['games_id']; ?>">Jetzt spielen</a>
+                                            <a href="<?php echo HOST_URL; ?>/games/<?php echo ($row_games['games_type'] == 1 ? 'lucky' : 'skill'); ?>/<?php echo $row_games['games_id']; ?>">Jetzt spielen</a>
                                             <?php
                                         } else {
                                             ?>

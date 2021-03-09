@@ -5,7 +5,7 @@ It's written in PHP and uses jQuery and plain CSS.
 
 It's based on the concept and script of "Tasty TCG" from 2016 but it's almost completely reworked.
 
-Actual version: 1.3.0
+Actual version: 1.4.0
 
 ![GitHub all releases](https://img.shields.io/github/downloads/Shirisu/autoPetiteTCGScript/total)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/Shirisu/autoPetiteTCGScript)
@@ -41,12 +41,18 @@ Actual version: 1.3.0
   - news administration
     - add news
     - edit news
+  - level administration
+    - add level
+    - edit level
   - member administration
     - edit member data (status, rank, language, email)
     - distribute cards
     - distribute currency
     - distribute *wish*
     - delete member
+  - game administration
+    - add game
+    - edit game
 - registration (activation via link in email)
 - login
 - logout

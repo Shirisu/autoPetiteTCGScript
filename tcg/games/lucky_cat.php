@@ -2,33 +2,34 @@
 if (isset($_SESSION['member_rank'])) {
     $member_id = $_SESSION['member_id'];
 
-    if (isset($game_id)) {
+    if (isset($lucky_cat_game_id)) {
         global $link;
 
-        $sql_lucky_game = "SELECT games_id, games_name, games_interval
+        $sql_lucky_game = "SELECT carddeck_cat_id, carddeck_cat_name, games_id, games_name, games_interval
                            FROM games
-                           WHERE games_id = '".$game_id."'
+                           JOIN carddeck_cat ON carddeck_cat_id = '".$lucky_cat_game_id."'
+                           WHERE games_is_lucky_category_game = '1'
                              AND games_status = '1'
                            LIMIT 1";
         $result_lucky_game = mysqli_query($link, $sql_lucky_game) OR die(mysqli_error($link));
         if (mysqli_num_rows($result_lucky_game)) {
             $row_lucky_game = mysqli_fetch_assoc($result_lucky_game);
             $game_id = $row_lucky_game['games_id'];
-            $game_name = $row_lucky_game['games_name'];
+            $lucky_game_name = $row_lucky_game['carddeck_cat_name'];
 
             $breadcrumb = array(
                 '/' => 'Home',
                 '/games' => TRANSLATIONS[$GLOBALS['language']]['general']['text_games'],
-                '/games/lucky/' . $game_id => $game_name,
+                '/games/lucky_cat/' . $lucky_cat_game_id => 'Lucky '.$lucky_game_name,
             );
             breadcrumb($breadcrumb);
-            title($game_name);
+            title('Lucky '.$lucky_game_name);
 
             $can_play = true;
             $sql_last_played = "SELECT member_game_played_last_played
                                 FROM member_game_played
                                 WHERE member_game_played_member_id = '" . $member_id . "'
-                                  AND member_game_played_game_id = '" . $game_id . "'
+                                  AND member_game_played_lucky_category_id = '" . $row_lucky_game['carddeck_cat_id'] . "'
                                 ORDER BY member_game_played_id DESC
                                 LIMIT 1";
             $result_last_played = mysqli_query($link, $sql_last_played) OR die(mysqli_error($link));
@@ -47,58 +48,65 @@ if (isset($_SESSION['member_rank'])) {
             ?>
                 <?php
                 if ($can_play) {
-                    if (isset($_POST['right_number'])) {
-                        $right_number_choice = mysqli_real_escape_string($link, $_POST['right_number']);
-                        $random_choice = mt_rand(1, 6);
+                    if (isset($_POST['lucky'])) {
+                        $lucky_choice = mysqli_real_escape_string($link, $_POST['lucky']);
+                        $random_choice = mt_rand(1, 3);
 
-                        if ($random_choice == 1 || $random_choice == 4) {
+                        if ($random_choice == 1) {
                             alert_box(
-                                TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice'].': '.strtoupper($right_number_choice).
+                                TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice'].': '.strtoupper($lucky_choice).
                                 '. '.TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_lost'].'...'
                                 , 'danger');
-                            insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - '.$game_name, TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_lost'], $member_id);
-                        } elseif ($random_choice == 2 || $random_choice == 5) {
+                            insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - Lucky '.$lucky_game_name, TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_lost'], $member_id);
+                        } elseif ($random_choice == 2) {
                             insert_cards($member_id, 2);
                             $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['games']['text_game_log_win_2_cards'].': '.implode(', ',$_SESSION['insert_cards']);
-                            insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - '.$game_name, $inserted_cards_text, $member_id);
+                            insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - Lucky '.$lucky_game_name, $inserted_cards_text, $member_id);
 
                             alert_box(
-                                TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice'].': '.strtoupper($right_number_choice).
+                                TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice'].': '.strtoupper($lucky_choice).
                                 '. '.TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_win'].'!<br />2 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'].': '.implode(', ',$_SESSION['insert_cards'])
                                 , 'success');
-                        } elseif ($random_choice == 3 || $random_choice == 6) {
+                        } elseif ($random_choice == 3) {
                             insert_cards($member_id, 1);
                             $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['games']['text_game_log_win_1_card'].': '.implode(', ',$_SESSION['insert_cards']);
-                            insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - '.$game_name, $inserted_cards_text, $member_id);
+                            insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - Lucky '.$lucky_game_name, $inserted_cards_text, $member_id);
 
                             alert_box(
-                                TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice'].': '.strtoupper($right_number_choice).
+                                TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice'].': '.strtoupper($lucky_choice).
                                 '. '.TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_win'].'!<br />1 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_card'].': '.implode(', ',$_SESSION['insert_cards'])
                                 , 'success');
                         }
 
-                        insert_game_played($member_id, $game_id);
+                        insert_lucky_game_played($member_id, $game_id, $lucky_cat_game_id);
                     } else {
-                        ?>
-                        <form action="<?php echo HOST_URL; ?>/games/lucky/<?php echo $game_id; ?>" method="post">
-                            <div class="row mb-5 games-lucky-container">
-                                <div class="col col-12 mb-3 text-center">
-                                    <?php echo TRANSLATIONS[$GLOBALS['language']]['games']['text_right_number_game']; ?>
-                                </div>
-                                <?php
-                                $right_number = array(1 => 'one', 2 => 'two', 3 => 'three', 4 => 'four', 5 => 'five', 6 => 'six');
-                                for ($i = 1; $i <= count($right_number); $i++) { ?>
-                                    <div class="col col-4 col-md-2 mb-2 text-center">
-                                        <button class="btn btn-secondary" type="submit" name="right_number"
-                                                id="<?php echo $i; ?>"
-                                                value="<?php echo $i; ?>">
-                                            <i class="fas fa-dice-<?php echo $right_number[$i]; ?> fa-3x"></i>
-                                        </button>
+                        $sql_carddeck = "SELECT carddeck_id, carddeck_name
+                                         FROM carddeck
+                                         WHERE carddeck_cat = '".$lucky_cat_game_id."'
+                                           AND carddeck_active = 1
+                                         ORDER BY RAND()
+                                         LIMIT 3";
+                        $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
+                        if (mysqli_num_rows($result_carddeck)) {
+                            ?>
+                            <form action="<?php echo HOST_URL; ?>/games/lucky_cat/<?php echo $lucky_cat_game_id; ?>" method="post">
+                                <div class="row mb-5 games-lucky-container">
+                                    <div class="col col-12 mb-3 text-center">
+                                        <?php echo TRANSLATIONS[$GLOBALS['language']]['games']['text_lucky_cat_game']; ?>
                                     </div>
-                                <?php } ?>
-                            </div>
-                        </form>
-                        <?php
+                                    <?php while ($row_carddeck = mysqli_fetch_assoc($result_carddeck)) { ?>
+                                        <div class="col col-12 col-md-4 mb-2 text-center">
+                                            <button class="btn btn-secondary" type="submit" name="lucky"
+                                                    id="<?php echo $row_carddeck['carddeck_name']; ?>"
+                                                    value="<?php echo $row_carddeck['carddeck_name']; ?>">
+                                                <?php echo get_card($row_carddeck['carddeck_id'], rand(1, TCG_CARDDECK_MAX_CARDS)); ?>
+                                            </button>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            </form>
+                            <?php
+                        }
                     }
                 ?>
                 <?php } else { ?>

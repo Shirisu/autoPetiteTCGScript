@@ -10,24 +10,30 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
 
     title(TRANSLATIONS[$GLOBALS['language']]['admin']['games_add_headline']);
 
-    if (isset($_POST['games_name']) && isset($_POST['games_interval']) && isset($_POST['games_icon'])) {
+    if (isset($_POST['games_name']) && isset($_POST['games_interval']) && isset($_POST['games_type'])) {
         $games_name = mysqli_real_escape_string($link, strip_tags(trim($_POST['games_name'])));
         $games_interval = mysqli_real_escape_string($link, strip_tags(trim($_POST['games_interval'])));
-        $games_icon = mysqli_real_escape_string($link, strip_tags(trim($_POST['games_icon'])));
+        $games_type = mysqli_real_escape_string($link, strip_tags(trim($_POST['games_type'])));
+        if ($games_type == 1) {
+            $games_lucky_choices = mysqli_real_escape_string($link, strip_tags(trim($_POST['games_lucky_choices'])));
+        } else {
+            $games_lucky_choices = '';
+        }
 
         $sql_check_before_insert = "SELECT games_id
                                     FROM games
                                     WHERE games_name = '".$games_name."'
                                       AND games_interval = '".$games_interval."'
-                                      AND games_icon = '".$games_icon."'
+                                      AND games_type = '".$games_type."'
+                                      AND games_lucky_choices = '".$games_lucky_choices."'
                                     LIMIT 1";
         $result_check_before_insert = mysqli_query($link, $sql_check_before_insert);
         if (!mysqli_num_rows($result_check_before_insert)) {
             mysqli_query($link, "
             INSERT INTO games
-            (games_name, games_interval, games_icon)
+            (games_name, games_interval, games_type, games_lucky_choices)
             VALUES
-            ('" . $games_name . "', '" . $games_interval . "', '" . $games_icon . "')")
+            ('" . $games_name . "', '" . $games_interval . "', '" . $games_type . "', '" . $games_lucky_choices . "')")
             OR die(mysqli_error($link));
 
             alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_success_games_add'], 'success');
@@ -66,12 +72,23 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="ariaDescribedbyIcon"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type']; ?></span>
                     </div>
-                    <select class="custom-select" id="games_icon" name="games_icon" aria-describedby="ariaDescribedbyIcon" required>
+                    <select class="custom-select" id="games_type" name="games_type" aria-describedby="ariaDescribedbyIcon" required>
                         <option selected disabled hidden value=""></option>
-                        <option value="dice"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type_lucky']; ?></option>
-                        <option value="puzzle-piece"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type_skill']; ?></option>
+                        <option value="1"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type_lucky']; ?></option>
+                        <option value="2"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type_skill']; ?></option>
                     </select>
                 </div>
+            </div>
+            <div class="form-group col col-12 mb-2">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="ariaDescribedbyChoices"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_choices']; ?></span>
+                    </div>
+                    <textarea class="form-control" id="games_lucky_choices" name="games_lucky_choices" aria-describedby="ariaDescribedbyChoices" rows="2"></textarea>
+                </div>
+                <small id="ariaDescribedbyPassword" class="form-text text-muted">
+                    <?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['hint_game_choices']; ?>
+                </small>
             </div>
             <div class="form-group col col-12">
                 <button type="submit" class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_add']; ?></button>

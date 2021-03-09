@@ -124,17 +124,18 @@ CREATE TABLE IF NOT EXISTS `games` (
   `games_name` varchar(55) COLLATE utf8_unicode_ci NOT NULL,
   `games_interval` int(11) NOT NULL,
   `games_status` ENUM('0','1') NOT NULL DEFAULT '0' COMMENT '0 = inactive, 1 = active',
-  `games_icon` VARCHAR(30) NOT NULL,
+  `games_type` ENUM('1','2') NOT NULL DEFAULT '1' COMMENT '1 = lucky, 2 = skill',
+  `games_lucky_choices` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `games_is_lucky_category_game` ENUM('0','1') NOT NULL DEFAULT '0' COMMENT '0 = normal, 1 = lucky category',
   PRIMARY KEY (`games_id`),
   KEY `games_id` (`games_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `games` (games_name, games_interval, games_status, games_is_lucky_category_game, games_icon)
+INSERT INTO `games` (games_name, games_interval, games_status, games_type, games_lucky_choices, games_is_lucky_category_game)
     VALUES
-    ('Lucky', 3600, '1', '1', 'dice'),
-    ('Memory', 3600, '1', '0', 'puzzle-piece'),
-    ('Right Number', 3600, '1', '0', 'dice');
+    ('Lucky', 3600, '1', '1', NULL, '1'),
+    ('Memory', 3600, '1', '2', NULL, '0'),
+    ('Right Number', 3600, '1', '1', NULL, '0');
 
 
 CREATE TABLE IF NOT EXISTS `member_game_played` (

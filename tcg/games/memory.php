@@ -19,7 +19,7 @@ if (isset($_SESSION['member_rank'])) {
             $breadcrumb = array(
                 '/' => 'Home',
                 '/games' => TRANSLATIONS[$GLOBALS['language']]['general']['text_games'],
-                '/games/' . $game_id => $game_name,
+                '/games/skill/' . $game_id => $game_name,
             );
             breadcrumb($breadcrumb);
             title($game_name);
@@ -229,7 +229,7 @@ if (isset($_SESSION['member_rank'])) {
                                                             change_field(field, image_path + image_act_number + '.<?php echo TCG_CARDS_FILE_TYPE; ?>');
                                                             //alert('<?php echo TRANSLATIONS[$GLOBALS['language']]['games']['text_memory_all_found']; ?>');
                                                             document.cookie = 'memory_points=' + points_count;
-                                                            //window.location.href = '<?php echo HOST_URL; ?>/games/<?php echo $game_id; ?>';
+                                                            //window.location.href = '<?php echo HOST_URL; ?>/games/skill/<?php echo $game_id; ?>';
                                                             document.memory.submit();
                                                         }
                                                     } else {
@@ -269,7 +269,7 @@ if (isset($_SESSION['member_rank'])) {
                             </div>
                             <div class="col col-12 col-md-6 mb-3 text-center">
                                 <table class="memorygame optional">
-                                    <form name="memory" action="<?php echo HOST_URL; ?>/games/<?php echo $game_id; ?>" method="post">
+                                    <form name="memory" action="<?php echo HOST_URL; ?>/games/skill/<?php echo $game_id; ?>" method="post">
                                         <tr>
                                             <td><b><?php echo TRANSLATIONS[$GLOBALS['language']]['games']['text_memory_points']; ?></b></td>
                                             <td><b><?php echo TRANSLATIONS[$GLOBALS['language']]['games']['text_memory_attempts']; ?></b></td>
