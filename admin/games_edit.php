@@ -2,7 +2,7 @@
 if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2)) {
     global $link;
     if (isset($games_id)) {
-        $sql = "SELECT games_name, games_interval, games_status, games_icon
+        $sql = "SELECT games_name, games_interval, games_status, games_type, games_lucky_choices
                 FROM games
                 WHERE games_id = '".$games_id."'
                 LIMIT 1";
@@ -12,19 +12,26 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
 
             $games_name = $row['games_name'];
             $games_interval = $row['games_interval'];
-            $games_icon = $row['games_icon'];
+            $games_type = $row['games_type'];
+            $games_lucky_choices = $row['games_lucky_choices'];
             $games_status = $row['games_status'];
-            if (isset($_POST['games_name']) && isset($_POST['games_interval']) && isset($_POST['games_icon']) && isset($_POST['games_status'])) {
+            if (isset($_POST['games_name']) && isset($_POST['games_interval']) && isset($_POST['games_type']) && isset($_POST['games_status'])) {
                 $games_name = mysqli_real_escape_string($link, strip_tags(trim($_POST['games_name'])));
                 $games_interval = mysqli_real_escape_string($link, strip_tags(trim($_POST['games_interval'])));
-                $games_icon = mysqli_real_escape_string($link, strip_tags(trim($_POST['games_icon'])));
+                $games_type = mysqli_real_escape_string($link, strip_tags(trim($_POST['games_type'])));
+                if ($games_type == 1) {
+                    $games_lucky_choices = mysqli_real_escape_string($link, strip_tags(trim($_POST['games_lucky_choices'])));
+                } else {
+                    $games_lucky_choices = NULL;
+                }
                 $games_status = mysqli_real_escape_string($link, strip_tags(trim($_POST['games_status'])));
 
                 if ($games_id > 3) {
                     mysqli_query($link, "UPDATE games
                          SET games_name = '" . $games_name . "',
                              games_interval = '" . $games_interval . "',
-                             games_icon = '" . $games_icon . "',
+                             games_type = '" . $games_type . "',
+                             games_lucky_choices = '" . $games_lucky_choices . "',
                              games_status = '" . $games_status . "'
                          WHERE games_id = " . $games_id . "
                          LIMIT 1")
@@ -91,19 +98,19 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="ariaDescribedbyIcon"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type']; ?></span>
+                                <span class="input-group-text" id="ariaDescribedbyType"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type']; ?></span>
                             </div>
                             <?php if ($games_id > 3) { ?>
-                                <select class="custom-select" id="games_icon" name="games_icon" aria-describedby="ariaDescribedbyIcon" required>
-                                    <option value="dice" <?php echo ($games_icon == 'dice' ? 'selected' : ''); ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type_lucky']; ?></option>
-                                    <option value="puzzle-piece" <?php echo ($games_icon == 'puzzle-piece' ? 'selected' : ''); ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type_skill']; ?></option>
+                                <select class="custom-select" id="games_type" name="games_type" aria-describedby="ariaDescribedbyType" required>
+                                    <option value="1" <?php echo ($games_type == '1' ? 'selected' : ''); ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type_lucky']; ?></option>
+                                    <option value="2" <?php echo ($games_type == '2' ? 'selected' : ''); ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type_skill']; ?></option>
                                 </select>
                             <?php } else {?>
                                 <select class="custom-select" disabled>
-                                    <option value="dice" <?php echo ($games_icon == 'dice' ? 'selected' : ''); ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type_lucky']; ?></option>
-                                    <option value="puzzle-piece" <?php echo ($games_icon == 'puzzle-piece' ? 'selected' : ''); ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type_skill']; ?></option>
+                                    <option value="1" <?php echo ($games_type == '1' ? 'selected' : ''); ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type_lucky']; ?></option>
+                                    <option value="2" <?php echo ($games_type == '2' ? 'selected' : ''); ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type_skill']; ?></option>
                                 </select>
-                                <input type="hidden" id="games_icon" name="games_icon" aria-describedby="ariaDescribedbyIcon" maxlength="55" value="<?php echo $games_icon; ?>" required />
+                                <input type="hidden" id="games_type" name="games_type" aria-describedby="ariaDescribedbyType" maxlength="55" value="<?php echo $games_type; ?>" required />
                             <?php } ?>
                         </div>
                     </div>
@@ -122,9 +129,25 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                     <option value="1" <?php echo ($games_status == 1 ? 'selected' : ''); ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_active']; ?></option>
                                     <option value="0" <?php echo ($games_status == 0 ? 'selected' : ''); ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_inactive']; ?></option>
                                 </select>
-                                <input type="hidden" id="games_status" name="games_status" aria-describedby="ariaDescribedbyStatus" maxlength="55" value="<?php echo $games_icon; ?>" required />
+                                <input type="hidden" id="games_status" name="games_status" aria-describedby="ariaDescribedbyStatus" maxlength="55" value="<?php echo $games_type; ?>" required />
                             <?php } ?>
                         </div>
+                    </div>
+                    <div class="form-group col col-12 mb-2">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="ariaDescribedbyChoices"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_choices']; ?></span>
+                            </div>
+                            <?php if ($games_id > 3) { ?>
+                                <textarea class="form-control" id="games_lucky_choices" name="games_lucky_choices" aria-describedby="ariaDescribedbyChoices" rows="2"><?php echo $games_lucky_choices; ?></textarea>
+                            <?php } else {?>
+                                <textarea class="form-control" disabled aria-describedby="ariaDescribedbyChoices" rows="2"><?php echo $games_lucky_choices; ?></textarea>
+                                <input type="hidden" id="games_lucky_choices" name="games_lucky_choices" aria-describedby="ariaDescribedbyChoices" value="<?php echo $games_lucky_choices; ?>" />
+                            <?php } ?>
+                        </div>
+                        <small id="ariaDescribedbyPassword" class="form-text text-muted">
+                            <?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['hint_game_choices']; ?>
+                        </small>
                     </div>
                     <div class="form-group col col-12">
                         <button type="submit"
@@ -154,7 +177,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
 
         title(TRANSLATIONS[$GLOBALS['language']]['admin']['games_edit_headline']);
 
-        $sql = "SELECT games_id, games_name, games_interval, games_status, games_icon, games_is_lucky_category_game
+        $sql = "SELECT games_id, games_name, games_interval, games_status, games_type, games_lucky_choices, games_is_lucky_category_game
                 FROM games
                 GROUP BY games_id ASC";
         $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
@@ -169,7 +192,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                             <th data-field="id">ID</th>
                             <th data-field="name"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_name']; ?></th>
                             <th data-field="interval"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_interval']; ?></th>
-                            <th data-field="icon"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type']; ?></th>
+                            <th data-field="type"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type']; ?></th>
+                            <th data-field="choices"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_choices']; ?></th>
                             <th data-field="active"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_active']; ?></th>
                             <th data-field="options"></th>
                         </tr>
@@ -179,7 +203,13 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                         while ($row = mysqli_fetch_assoc($result)) {
                             $games_interval = $row['games_interval'];
                             $games_status = $row['games_status'];
-                            $games_icon = $row['games_icon'];
+                            $games_lucky_choices = $row['games_lucky_choices'];
+                            if ($games_lucky_choices != NULL || $games_lucky_choices != '') {
+                                $games_choices = explode(';', $games_lucky_choices);
+                            } else {
+                                $games_choices = array();
+                            }
+                            $games_type = $row['games_type'];
                             ?>
                             <tr>
                                 <td><?php echo $row['games_id']; ?></td>
@@ -205,7 +235,14 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                     }
                                     ?>
                                 </td>
-                                <td><?php echo ($games_icon == 'dice' || $row['games_is_lucky_category_game'] == 1 ? TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type_lucky'] : TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type_skill']); ?></td>
+                                <td><?php echo ($games_type == '1' || $row['games_is_lucky_category_game'] == 1 ? TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type_lucky'] : TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type_skill']); ?></td>
+                                <td>
+                                    <?php if (count($games_choices) > 0) {
+                                        for ($i = 0; $i < count($games_choices); $i++) {
+                                            echo $games_choices[$i].'<br />';
+                                        }
+                                    } ?>
+                                </td>
                                 <td><?php echo ($games_status == 1 ? TRANSLATIONS[$GLOBALS['language']]['general']['text_active'] : TRANSLATIONS[$GLOBALS['language']]['general']['text_inactive']); ?></td>
                                 <td><a href="<?php echo HOST_URL; ?>/administration/editgame/<?php echo $row['games_id']; ?>">Edit</a></td>
                             </tr>
