@@ -10,13 +10,42 @@ if (isset($_SESSION['member_rank'])) {
         $result_carddeck_cat_name = mysqli_query($link, $sql_carddeck_cat_name) OR die(mysqli_error($link));
         if (mysqli_num_rows($result_carddeck_cat_name)) {
             $row_carddeck_cat_name = mysqli_fetch_assoc($result_carddeck_cat_name);
-            $breadcrumb = array(
-                '/' => 'Home',
-                '/carddecks' => TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks'],
-                '/carddecks/'.$category_id => $row_carddeck_cat_name['carddeck_cat_name'],
-            );
-            $title = TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks'].' - '.$row_carddeck_cat_name['carddeck_cat_name'];
-            $category_filter = "AND carddeck_cat_id = '".$category_id."'";
+
+            if (isset($sub_category_id)) {
+                $sql_carddeck_sub_cat_name = "SELECT carddeck_sub_cat_name
+                                  FROM carddeck_sub_cat
+                                  WHERE carddeck_sub_cat_id = '".$sub_category_id."'
+                                  LIMIT 1";
+                $result_carddeck_sub_cat_name = mysqli_query($link, $sql_carddeck_sub_cat_name) OR die(mysqli_error($link));
+                if (mysqli_num_rows($result_carddeck_sub_cat_name)) {
+                    $row_carddeck_sub_cat_name = mysqli_fetch_assoc($result_carddeck_sub_cat_name);
+
+                    $breadcrumb = array(
+                        '/' => 'Home',
+                        '/carddecks' => TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks'],
+                        '/carddecks/' . $category_id => $row_carddeck_cat_name['carddeck_cat_name'],
+                        '/carddecks/' . $category_id. '/' . $sub_category_id =>  $row_carddeck_sub_cat_name['carddeck_sub_cat_name'],
+                    );
+                    $title = TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks'] . ' - ' . $row_carddeck_cat_name['carddeck_cat_name'] . ' / ' . $row_carddeck_sub_cat_name['carddeck_sub_cat_name'];
+                    $category_filter = "AND carddeck_cat_id = '" . $category_id . "' AND carddeck_sub_cat_id = '" . $sub_category_id . "'";
+                } else {
+                    $breadcrumb = array(
+                        '/' => 'Home',
+                        '/carddecks' => TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks'],
+                        '/carddecks/' . $category_id => $row_carddeck_cat_name['carddeck_cat_name'],
+                    );
+                    $title = TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks'] . ' - ' . $row_carddeck_cat_name['carddeck_cat_name'];
+                    $category_filter = "AND carddeck_cat_id = '" . $category_id . "'";
+                }
+            } else {
+                $breadcrumb = array(
+                    '/' => 'Home',
+                    '/carddecks' => TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks'],
+                    '/carddecks/' . $category_id => $row_carddeck_cat_name['carddeck_cat_name'],
+                );
+                $title = TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks'] . ' - ' . $row_carddeck_cat_name['carddeck_cat_name'];
+                $category_filter = "AND carddeck_cat_id = '" . $category_id . "'";
+            }
         } else {
             $breadcrumb = array(
                 '/' => 'Home',
@@ -51,7 +80,44 @@ if (isset($_SESSION['member_rank'])) {
     $count_carddeck = mysqli_num_rows($result_carddeck);
     ?>
     <div class="row">
-        <div class="col">
+        <div class="col col-12 mb-3">
+                <div class="row">
+                    <div class="col col-12 text-center">
+                        <?php
+                        if (isset($category_id) && !isset($sub_category_id)) {
+                            $sql_carddeck_sub_cat = "SELECT carddeck_sub_cat_id, carddeck_sub_cat_name
+                                                 FROM carddeck_sub_cat
+                                                 WHERE carddeck_sub_cat_main_cat_id = '".$category_id."'
+                                                 ORDER BY carddeck_sub_cat_name ASC";
+                            $result_carddeck_sub_cat = mysqli_query($link, $sql_carddeck_sub_cat) OR die(mysqli_error($link));
+                            if (mysqli_num_rows($result_carddeck_sub_cat)) {
+                                while($row_carddeck_sub_cat = mysqli_fetch_assoc($result_carddeck_sub_cat)) {
+                                ?>
+                                    <a href="<?php echo HOST_URL; ?>/carddecks/<?php echo $category_id; ?>/<?php echo $row_carddeck_sub_cat['carddeck_sub_cat_id']; ?>" class="btn btn-outline-info btn-sm"><?php echo $row_carddeck_sub_cat['carddeck_sub_cat_name']; ?></a>
+                                <?php
+                                }
+                            }
+                        }
+
+                        if (!isset($category_id)) {
+                            $sql_carddeck_cat = "SELECT carddeck_cat_id, carddeck_cat_name
+                                                 FROM carddeck_cat
+                                                 ORDER BY carddeck_cat_name ASC";
+                            $result_carddeck_cat = mysqli_query($link, $sql_carddeck_cat) OR die(mysqli_error($link));
+                            if (mysqli_num_rows($result_carddeck_cat)) {
+                                while($row_carddeck_cat = mysqli_fetch_assoc($result_carddeck_cat)) {
+                                ?>
+                                    <a href="<?php echo HOST_URL; ?>/carddecks/<?php echo $row_carddeck_cat['carddeck_cat_id']; ?>" class="btn btn-outline-info btn-sm"><?php echo $row_carddeck_cat['carddeck_cat_name']; ?></a>
+                                <?php
+                                }
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col col-12">
             <?php
             if ($count_carddeck) {
                 ?>

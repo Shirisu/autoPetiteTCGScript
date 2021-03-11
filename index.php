@@ -185,6 +185,9 @@ Route::add("/carddecks",function() {
 Route::add("/carddecks/all",function() {
     require_once("tcg/carddeck/carddecks.php");
 });
+Route::add("/carddecks/([0-9+].*)/([0-9+].*)",function($category_id, $sub_category_id) {
+    require_once("tcg/carddeck/carddecks.php");
+});
 Route::add("/carddecks/([0-9+].*)",function($category_id) {
     require_once("tcg/carddeck/carddecks.php");
 });
