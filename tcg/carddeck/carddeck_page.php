@@ -3,7 +3,7 @@ if (isset($_SESSION['member_rank'])) {
     global $link;
 
     if (isset($carddeck_name)) {
-        $sql_carddeck = "SELECT carddeck_id, carddeck_name, carddeck_series, carddeck_date, carddeck_creator, carddeck_is_puzzle, carddeck_cat, carddeck_artist, carddeck_copyright, carddeck_imagesources, carddeck_cat_name, carddeck_sub_cat_name
+        $sql_carddeck = "SELECT carddeck_id, carddeck_name, carddeck_series, carddeck_date, carddeck_creator, carddeck_is_puzzle, carddeck_cat, carddeck_sub_cat, carddeck_artist, carddeck_copyright, carddeck_imagesources, carddeck_cat_name, carddeck_sub_cat_name
                          FROM carddeck
                          JOIN carddeck_cat ON carddeck_cat_id = carddeck_cat
                          JOIN carddeck_sub_cat ON carddeck_sub_cat_id = carddeck_sub_cat
@@ -46,7 +46,7 @@ if (isset($_SESSION['member_rank'])) {
                             </tr>
                             <tr>
                                 <th scope="row"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_category_sub']; ?></th>
-                                <td><?php echo $row_carddeck['carddeck_sub_cat_name']; ?></td>
+                                <td><a href="<?php echo HOST_URL; ?>/carddecks/<?php echo $row_carddeck['carddeck_cat']; ?>/<?php echo $row_carddeck['carddeck_sub_cat']; ?>"><?php echo $row_carddeck['carddeck_sub_cat_name']; ?></a></td>
                             </tr>
                             <tr>
                                 <th scope="row"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_creator']; ?></th>
