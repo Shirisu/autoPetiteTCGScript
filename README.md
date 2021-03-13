@@ -5,7 +5,7 @@ It's written in PHP and uses jQuery and plain CSS.
 
 It's based on the concept and script of "Tasty TCG" from 2016 but it's almost completely reworked.
 
-Actual version: 1.6.0
+Actual version: 1.6.1
 
 [Documentation - how to use autoPetiteTCGScript](https://github.com/Shirisu/autoPetiteTCGScript/blob/master/DOCUMENTATION.md)
 

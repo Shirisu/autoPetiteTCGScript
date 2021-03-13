@@ -347,10 +347,18 @@ Route::add("/games/lucky_cat/([0-9+].*)",function($lucky_cat_game_id) {
     require_once("tcg/games/lucky_cat.php");
 }, "post");
 Route::add("/games/lucky/([0-9+].*)",function($game_id) {
-    require_once("tcg/games/lucky.php");
+    if ($game_id == 3) {
+        require_once("tcg/games/right_number.php");
+    } else {
+        require_once("tcg/games/lucky.php");
+    }
 });
 Route::add("/games/lucky/([0-9+].*)",function($game_id) {
-    require_once("tcg/games/lucky.php");
+    if ($game_id == 3) {
+        require_once("tcg/games/right_number.php");
+    } else {
+        require_once("tcg/games/lucky.php");
+    }
 }, "post");
 Route::add("/games/skill/([0-9+].*)",function($game_id) {
     if ($game_id == 2) {
