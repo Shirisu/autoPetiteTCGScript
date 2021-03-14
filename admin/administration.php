@@ -226,7 +226,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     </div>
                 </div>
             </div>
-            <?php if (TCG_USE_WISH == true) { ?>
+            <?php if (TCG_WISH_USE == true) { ?>
                 <div class="col col-12 col-md-6 mb-2">
                     <div class="card">
                         <div class="card-body">

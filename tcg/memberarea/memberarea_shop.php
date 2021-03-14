@@ -16,7 +16,7 @@ if (isset($_SESSION['member_rank'])) {
     $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
 
     $member_currency = get_member_currency($_SESSION['member_id']);
-    if (TCG_USE_WISH == true) {
+    if (TCG_WISH_USE == true) {
         $member_wish = get_member_wish($_SESSION['member_id']);
     }
     $prize_single_random = TCG_SHOP_CURRENCY_FOR_RANDOM;
@@ -35,7 +35,7 @@ if (isset($_SESSION['member_rank'])) {
         $card_number = mysqli_real_escape_string($link, trim($_POST['card_number']));
 
         insert_shop_card($_SESSION['member_id'], $carddeck_id, $card_number);
-        if (TCG_USE_WISH == true) {
+        if (TCG_WISH_USE == true) {
             $member_wish = get_member_wish($_SESSION['member_id']);
         }
     }
@@ -43,18 +43,18 @@ if (isset($_SESSION['member_rank'])) {
     <div class="row shop-container">
         <div class="col col-12 mb-4 text-left text-md-center">
             <span class="font-weight-bold"><?php echo TRANSLATIONS[$GLOBALS['language']]['shop']['text_you_currently_own']; ?>:</span>
-            <?php if (TCG_USE_CURRENCY == true) { ?><?php echo $member_currency.' '.TCG_CURRENCY; ?><?php } ?>
-            <?php if (TCG_USE_CURRENCY == true && TCG_USE_WISH == true) { ?>& <?php } ?>
-            <?php if (TCG_USE_WISH == true) { ?><?php echo $member_wish.' '.TCG_WISH; ?><?php } ?>
+            <?php if (TCG_CURRENCY_USE == true) { ?><?php echo $member_currency.' '.TCG_CURRENCY; ?><?php } ?>
+            <?php if (TCG_CURRENCY_USE == true && TCG_WISH_USE == true) { ?>& <?php } ?>
+            <?php if (TCG_WISH_USE == true) { ?><?php echo $member_wish.' '.TCG_WISH; ?><?php } ?>
         </div>
         <?php
         if (mysqli_num_rows($result_carddeck)) {
             ?>
-            <?php if (TCG_USE_CURRENCY == true) { ?>
-                <div class="col col-12 <?php echo(TCG_USE_WISH == true ? 'col-md-6' : 'col-md-12'); ?>">
+            <?php if (TCG_CURRENCY_USE == true) { ?>
+                <div class="col col-12 <?php echo(TCG_WISH_USE == true ? 'col-md-6' : 'col-md-12'); ?>">
                     <form action="<?php echo HOST_URL; ?>/memberarea/shop" method="post">
                         <div class="row">
-                            <div class="col <?php echo(TCG_USE_WISH == true ? 'col-md-12' : 'col-md-6'); ?> mb-2">
+                            <div class="col <?php echo(TCG_WISH_USE == true ? 'col-md-12' : 'col-md-6'); ?> mb-2">
                                 <?php echo TCG_SHOP_CURRENCY_FOR_RANDOM; ?> <?php echo TCG_CURRENCY; ?> = 1
                                 Random <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_card']; ?>
                             </div>
@@ -62,7 +62,7 @@ if (isset($_SESSION['member_rank'])) {
                             if ($max_random > 0) {
                                 ?>
                                 <div
-                                    class="form-group col <?php echo(TCG_USE_WISH == true ? 'col-12' : 'col-12 col-md-6'); ?> mb-2">
+                                    class="form-group col <?php echo(TCG_WISH_USE == true ? 'col-12' : 'col-12 col-md-6'); ?> mb-2">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                         <span class="input-group-text"
@@ -89,7 +89,7 @@ if (isset($_SESSION['member_rank'])) {
                             } else {
                                 ?>
                                 <div
-                                    class="col <?php echo(TCG_USE_WISH == true ? 'col-12' : 'col-12 col-md-6'); ?> mb-2">
+                                    class="col <?php echo(TCG_WISH_USE == true ? 'col-12' : 'col-12 col-md-6'); ?> mb-2">
                                     <?php
                                     alert_box(TRANSLATIONS[$GLOBALS['language']]['shop']['hint_not_enough_currency'], 'danger');
                                     ?>
@@ -103,8 +103,8 @@ if (isset($_SESSION['member_rank'])) {
                 <?php
             }
 
-            if (TCG_USE_WISH == true) { ?>
-                <div class="col col-12 <?php echo (TCG_USE_CURRENCY == true ? 'col-md-6' : 'col-md-12'); ?>">
+            if (TCG_WISH_USE == true) { ?>
+                <div class="col col-12 <?php echo (TCG_CURRENCY_USE == true ? 'col-md-6' : 'col-md-12'); ?>">
                     <form action="<?php echo HOST_URL; ?>/memberarea/shop" method="post">
                         <div class="row">
                             <div class="col col-12 mb-2">
