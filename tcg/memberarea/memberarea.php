@@ -57,7 +57,7 @@ if (isset($_SESSION['member_rank'])) {
                 </div>
             </div>
         </div>
-        <?php if (TCG_USE_CURRENCY == true) { ?>
+        <?php if (TCG_CURRENCY_USE == true) { ?>
             <div class="col col-12 col-md-6 mb-2">
                 <div class="card">
                     <div class="card-body">

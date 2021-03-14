@@ -68,7 +68,7 @@ if (isset($_SESSION['member_rank'])) {
                     insert_cards($member_id, TCG_MASTER_CARD_REWARD);
                     $master_text = $row_carddeck['carddeck_name'] . ' ' . TRANSLATIONS[$GLOBALS['language']]['general']['text_mastered'].'. '.TRANSLATIONS[$GLOBALS['language']]['general']['text_reward'].' - '.TCG_MASTER_CARD_REWARD.' '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'].': '.implode(', ', $_SESSION['insert_cards']);
 
-                    if (TCG_USE_WISH == true) {
+                    if (TCG_WISH_USE == true) {
                         $master_text .= ' &amp; 1 Wish';
                         mysqli_query($link, "UPDATE member
                                          SET member_wish = member_wish + 1

@@ -9,45 +9,14 @@
 
 ## Constants.php
 You can define some settings in the [constants.php](https://github.com/Shirisu/autoPetiteTCGScript/blob/master/inc/constants.php)
-- **TCG_CARDS_FILLER_NAME** - default: 'filler'
-  - name of the filler/search card - should be placed in the the folder "/assets/cards/"
-  - will be used for missing cards in the member profile and cards page
-- **TCG_NAME**
-  - for title-attribute & meta title
-  - the name of your TCG
-- **TCG_SLOGAN**
-  - for title-attribute & meta title
-- **TCG_META_TITLE**
-  - title-tag & meta title
-  - meta tags are used for search engine pages like google, bing, ...
-- **TCG_META_DESC**
-  - short description of your TCG
-  - meta tags are used for search engine pages like google, bing, ...
-- **TCG_META_KEYWORDS**
-  - keywords for your TCG
-  - meta tags are used for search engine pages like google, bing, ...
-- **TCG_META_OWNER**
-  - email address to contact the TCG owner and for mails (forget password, questions, ...)
-  - meta tags are used for search engine pages like google, bing, ...
-  - will be used for all mailings (contact admin)
-- **TCG_META_AUTHOR*
-  - name of the TCG owner
-  - meta tags are used for search engine pages like google, bing, ...
-- **TCG_MAIN_LANGUAGE** - default: `'en'`
-  - main language of the TCG
-  - accepted values: `'en'` and `'de'`
-- **TCG_CARDDECK_MAX_CARDS** - default: `12`
-  - card amount of a card deck
-  - accepted values: from `1` to whatever you like
-  - all card decks have the same amount of cards
+
 - **TCG_CARDS_FILE_TYPE** - default `'png'`
   - file type of cards
   - accepted values: `'gif'`, `'jpg'`, `'png'`
   - use only one!
-- **TCG_CARDS_WIDTH** - default: `100`
-  - width of a single card
-  - accepted values: from `1` to whatever you like
-  - all cards have the same width
+- **TCG_CARDS_FILLER_NAME** - default: `'filler'`
+  - name of the filler/search card - should be placed in the the folder "/assets/cards/"
+  - will be used for missing cards in the member profile and cards page
 - **TCG_CARDS_HEIGHT** - default: `100`
   - height of a single card
   - accepted values: from `1` to whatever you like
@@ -56,38 +25,70 @@ You can define some settings in the [constants.php](https://github.com/Shirisu/a
   - how many cards are in one row
   - accepted values: from `1` to whatever you like
   - will be used on card deck pages and in member profile "collect"
-- **TCG_MASTERCARDS_WIDTH** - default: `100`
-  - width of a single master card
+- **TCG_CARDS_WIDTH** - default: `100`
+  - width of a single card
   - accepted values: from `1` to whatever you like
-  - all master cards have the same width
-- **TCG_MASTERCARDS_HEIGHT** - default: `100`
-  - height of a single master card
-  - accepted values: from `1` to whatever you like
-  - all master cards have the same height
+  - all cards have the same width
 - **TCG_CARDS_START_PACKAGE** - default `12`
   - card amount of start package after successful registration with account activation
   - accepted values: from `1` to whatever you like
-- **TCG_USE_CURRENCY** - default: `true`
-  - will you use the currency?
-  - accepted values: `true` (means yes), `false` (means no)
+- **TCG_CARDDECK_MAX_CARDS** - default: `12`
+  - card amount of a card deck
+  - accepted values: from `1` to whatever you like
+  - all card decks have the same amount of cards
 - **TCG_CURRENCY** - default: `'Dollar'`
   - currency name
   - accepted values: whatever you like
   - will be used for the shop to buy cards
-- **TCG_USE_WISH** - default: `true`
-  - will you use wish?
+- **TCG_CURRENCY_USE** - default: `true`
+  - will you use the currency?
   - accepted values: `true` (means yes), `false` (means no)
+- **TCG_LEVEL_UP_CARD_REWARD** - default `3`
+  - reward card amount for level up
+- **TCG_MAIN_LANGUAGE** - default: `'en'`
+  - main language of the TCG
+  - accepted values: `'en'` and `'de'`
+- **TCG_MASTER_CARD_REWARD** - default: `3`
+  - reward card amount for mastering a card deck
+- **TCG_MASTERCARDS_HEIGHT** - default: `100`
+  - height of a single master card
+  - accepted values: from `1` to whatever you like
+  - all master cards have the same height
+- **TCG_MASTERCARDS_WIDTH** - default: `100`
+  - width of a single master card
+  - accepted values: from `1` to whatever you like
+  - all master cards have the same width
+- **TCG_META_AUTHOR**
+  - name of the TCG owner
+  - meta tags are used for search engine pages like google, bing, ...
+- **TCG_META_DESC**
+  - short description of your TCG
+  - meta tags are used for search engine pages like google, bing, ...
+- **TCG_META_KEYWORDS**
+  - keywords for your TCG
+  - meta tags are used for search engine pages like google, bing, ...
+- **TCG_META_TITLE**
+  - title-tag & meta title
+  - meta tags are used for search engine pages like google, bing, ...
+- **TCG_META_OWNER**
+  - email address to contact the TCG owner and for mails (forget password, questions, ...)
+  - meta tags are used for search engine pages like google, bing, ...
+  - will be used for all mailings (contact admin)
+- **TCG_NAME**
+  - for title-attribute & meta title
+  - the name of your TCG
+- **TCG_SHOP_CURRENCY_FOR_RANDOM** - default `100`
+  - how much currency do 1 random cost?
+  - accepted values: from `1` to whatever you like
+- **TCG_SLOGAN**
+  - for title-attribute & meta title
 - **TCG_WISH** - default: `'Wish'`
   - wish name
   - accepted values: whatever you like
   - will be used for the shop to change into specific card
-- **TCG_MASTER_CARD_REWARD** - default: `3`
-  - reward card amount for mastering a card deck
-- **TCG_LEVEL_UP_CARD_REWARD** - default `3`
-  - reward card amount for level up
-- **TCG_SHOP_CURRENCY_FOR_RANDOM** - default `100`
-  - how much currency do 1 random cost?
-  - accepted values: from `1` to whatever you like
+- **TCG_WISH_USE** - default: `true`
+  - will you use wish?
+  - accepted values: `true` (means yes), `false` (means no)
 
 
 ## Add new page
