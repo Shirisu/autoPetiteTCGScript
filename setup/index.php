@@ -9,6 +9,7 @@
 // set up database connection
 require_once("../inc/connection.php");
 require_once("../inc/constants.php");
+require_once("../inc/function.php");
 
 if (!$link) {
     echo "Error: could not connect to MySQL." . PHP_EOL;
@@ -58,14 +59,15 @@ if (isset($_GET['import'])) {
             $language = mysqli_real_escape_string($link, trim($_POST['member_language']));
 
             $query = "INSERT INTO member
-                      (member_id, member_nick, member_password, member_register, member_rank, member_email, member_language, member_active)
+                      (member_id, member_nick, member_password, member_register, member_rank, member_email, member_language, member_active, member_ip)
                       VALUES
-                      (1, '".$nick."','".$password_hashed."','".time()."','1','".$email."','".$language."', '1')
+                      (1, '" . $nick . "','" . $password_hashed . "','" . time() . "','1','" . $email . "','" . $language . "', '1', '" . ip() . "')
                       ON DUPLICATE KEY UPDATE
-                      member_nick = '".$nick."',
-                      member_password = '".$password_hashed."',
-                      member_email = '".$email."',
-                      member_language = '".$language."'
+                      member_nick = '" . $nick . "',
+                      member_password = '" . $password_hashed . "',
+                      member_email = '" . $email . "',
+                      member_language = '" . $language . "',
+                      member_ip = '" . ip() . "'
                       ;";
             mysqli_query($link, $query) or die(mysqli_error($link));
 
@@ -77,24 +79,24 @@ if (isset($_GET['import'])) {
     ?>
     <form action="index.php?add_admin" method="POST">
         <label for="member_nick">Nickname:</label>
-        <input type="text" id="member_nick" name="member_nick"><br />
+        <input type="text" id="member_nick" name="member_nick"><br/>
         <label for="member_password">Password:</label>
-        <input type="text" id="member_password" name="member_password"><br />
+        <input type="password" id="member_password" name="member_password"><br/>
         <label for="member_email">Email:</label>
-        <input type="text" id="member_email" name="member_email"><br />
+        <input type="text" id="member_email" name="member_email"><br/>
         <label for="member_language">Language:</label>
         <select id="member_language" name="member_language">
             <option value="en">english</option>
             <option value="de">german</option>
         </select>
-        <br />
+        <br/>
         <button type="submit" name="submit">Create account</button>
     </form>
     <?php
 }
 ?>
-<br />
-<a href="/">Back</a>
+    <br/>
+    <a href="/">Back</a>
 <?php
-    mysqli_close($link);
+mysqli_close($link);
 ?>
