@@ -59,7 +59,7 @@ if (isset($_SESSION['member_rank'])) {
                                                 if ($can_play) {
                                                     ?>
                                                     <span class="font-weight-bold"><?php echo $row_games['games_name'].' ' . $row_cat['carddeck_cat_name']; ?></span><br />
-                                                    <a href="<?php echo HOST_URL; ?>/games/lucky_cat/<?php echo $row_cat['carddeck_cat_id']; ?>">Jetzt spielen</a>
+                                                    <a href="<?php echo HOST_URL; ?>/games/lucky_cat/<?php echo $row_cat['carddeck_cat_id']; ?>"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['play_now'] ?></a>
                                                     <?php
                                                 } else {
                                                     ?>
@@ -110,7 +110,7 @@ if (isset($_SESSION['member_rank'])) {
                                         if ($can_play) {
                                             ?>
                                             <span class="font-weight-bold"><?php echo $row_games['games_name']; ?></span><br />
-                                            <a href="<?php echo HOST_URL; ?>/games/<?php echo ($row_games['games_type'] == 1 ? 'lucky' : 'skill'); ?>/<?php echo $row_games['games_id']; ?>">Jetzt spielen</a>
+                                            <a href="<?php echo HOST_URL; ?>/games/<?php echo ($row_games['games_type'] == 1 ? 'lucky' : 'skill'); ?>/<?php echo $row_games['games_id']; ?>"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['play_now'] ?></a>
                                             <?php
                                         } else {
                                             ?>
