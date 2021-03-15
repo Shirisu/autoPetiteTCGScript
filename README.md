@@ -112,6 +112,11 @@ Current version: 1.0.1
   - fully automatic
 
 
+# requirements
+- MySQL 5.7 or higher
+- PHP 7.4 or higher
+
+
 ## used frameworks, libraries and others
 - Bootstrap v4.5.3 (https://getbootstrap.com)
 - BootstrapTable v1.18.1 (https://bootstrap-table.com)
