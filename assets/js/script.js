@@ -25,7 +25,7 @@ $(document).ready(function() {
     // switch language
     $('.switch-language').on('click', function(e) {
         e.preventDefault();
-        $.post('/inc/_switch_language.php',{ language:$(this).attr('data-language'),
+        $.post(tcgHostUrl+'/inc/_switch_language.php',{ language:$(this).attr('data-language'),
             rand:Math.random()} ,function(data) {;
             if (data == 'switch') {
                 location.reload();
@@ -137,7 +137,7 @@ $(document).ready(function() {
     // add carddeck to wishlist
     $(document).on('click', '.add-to-wishlist', function(e) {
         var current_target = e.currentTarget;
-        $.post('/inc/_manage_wishlist.php',{ action:'add',carddeck_id:$(this).attr('data-carddeck-id'),
+        $.post(tcgHostUrl+'/inc/_manage_wishlist.php',{ action:'add',carddeck_id:$(this).attr('data-carddeck-id'),
             rand:Math.random()} ,function(data) {;
             var data_json = $.parseJSON(data);
             if ($('#'+ data_json.id).length == 0) {
@@ -158,7 +158,7 @@ $(document).ready(function() {
     // remove carddeck from wishlist
     $(document).on('click', '.remove-from-wishlist', function(e) {
         var current_target = e.currentTarget;
-        $.post('/inc/_manage_wishlist.php',{ action:'remove',carddeck_id:$(this).attr('data-carddeck-id'),
+        $.post(tcgHostUrl+'/inc/_manage_wishlist.php',{ action:'remove',carddeck_id:$(this).attr('data-carddeck-id'),
             rand:Math.random()} ,function(data) {;
             var data_json = $.parseJSON(data);
             if ($('#'+ data_json.id).length == 0) {

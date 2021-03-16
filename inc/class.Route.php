@@ -10,7 +10,7 @@ class Route{
 
     public static function add($expression, $function, $method = 'get'){
         array_push(self::$routes,Array(
-            'expression' => $expression,
+            'expression' => (HOST_URL_SUBFOLDER != '' ? '/'.HOST_URL_SUBFOLDER : '').$expression,
             'function' => $function,
             'method' => $method
         ));
@@ -56,8 +56,6 @@ class Route{
 
             // Add 'find string end' automatically
             $route['expression'] = $route['expression'].'$';
-
-            // echo $route['expression'].'<br/>';
 
             // Check path match
             if (preg_match('#'.$route['expression'].'#',$path,$matches)){

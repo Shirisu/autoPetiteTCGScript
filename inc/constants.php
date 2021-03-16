@@ -1,6 +1,12 @@
 <?php
+/**
+ * when you will use the script without top level or sub domain (for example "www.yourtcg.com/tcg" instead of "tcg.yourtcg.com" or "www.yourtcg.com")
+ * not recommended!
+*/
+define('HOST_URL_SUBFOLDER', ''); // name of your subfolder ("tcg" of url for example "www.yourtcg.com/tcg")
+
 define('HOST_URL_PROTOCOL', stripos($_SERVER['SERVER_PROTOCOL'],'https') === 0 ? 'https://' : 'http://'); // DO NOT EDIT THIS LINE
-define('HOST_URL_PLAIN', $_SERVER['SERVER_NAME']); // DO NOT EDIT THIS LINE
+define('HOST_URL_PLAIN', $_SERVER['SERVER_NAME'].(HOST_URL_SUBFOLDER != '' ? '/'.HOST_URL_SUBFOLDER : '')); // DO NOT EDIT THIS LINE
 define('HOST_URL', '//'.HOST_URL_PLAIN); // DO NOT EDIT THIS LINE
 define('MEMBER_CARDS_NEW', '1'); // DO NOT EDIT THIS LINE
 define('MEMBER_CARDS_COLLECT', '2'); // DO NOT EDIT THIS LINE
