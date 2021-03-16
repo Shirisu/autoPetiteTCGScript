@@ -15,4 +15,4 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 # Push every request to index.php
-RewriteRule . index.php [QSA,L]
+RewriteRule ^([A-Za-z0-9\-\.\_\~\!\$\&\'\(\)\*\+\,\;\=\:\@\%]+/)?.* $1index.php [QSA,L]
