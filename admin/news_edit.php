@@ -130,7 +130,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         $sql = "SELECT news_id, news_title, news_text, news_date, news_cardupdate_id, member_nick
                 FROM news
                 JOIN member ON member_id = news_member_id
-                GROUP BY news_id DESC";
+                ORDER BY news_id DESC";
         $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
         $count = mysqli_num_rows($result);
         if ($count) {

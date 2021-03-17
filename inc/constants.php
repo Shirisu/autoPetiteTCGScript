@@ -21,18 +21,18 @@ define('TCG_META_TITLE', TCG_NAME .' :: '.TCG_SLOGAN); // title-tag & meta title
 
 define('TCG_CARDS_FILE_TYPE', 'png'); // file type for cards (allowed types: gif, jpg, png - use only one!)
 define('TCG_CARDS_FILLER_NAME', 'filler'); // name of the filler/search card - should be placed in the the folder "/assets/cards/"
-define('TCG_CARDS_HEIGHT', 95); // height of card
+define('TCG_CARDS_HEIGHT', 100); // height of card
 define('TCG_CARDS_PER_ROW', 4); // how many cards are in one row
 define('TCG_CARDS_START_PACKAGE', 12); // cards of start package
-define('TCG_CARDS_WIDTH', 115); // width of card
+define('TCG_CARDS_WIDTH', 100); // width of card
 define('TCG_CARDDECK_MAX_CARDS', 12); // max cards of carddecks
 define('TCG_CURRENCY', 'Dollar'); // currency name
 define('TCG_CURRENCY_USE', true); // will you use the currency? (yes = true - no = false)
 define('TCG_LEVEL_UP_CARD_REWARD', 3); // reward card amount for level up
 define('TCG_MAIN_LANGUAGE', 'en'); // main language (en or de)
 define('TCG_MASTER_CARD_REWARD', 3); // reward card amount for mastering
-define('TCG_MASTERCARDS_HEIGHT', 123); // height of master
-define('TCG_MASTERCARDS_WIDTH', 153); // width of master
+define('TCG_MASTERCARDS_HEIGHT', 100); // height of master
+define('TCG_MASTERCARDS_WIDTH', 100); // width of master
 define('TCG_META_AUTHOR', 'Admin'); // meta author
 define('TCG_META_DESC', 'a mini TCG'); // meta description
 define('TCG_META_KEYWORDS', 'TCG, tcg, tgc, trading card game, trade card game, trade, card, game, ccg, collectible card game, virtual card game, vcg'); // meta keywords

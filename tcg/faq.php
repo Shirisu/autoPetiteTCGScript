@@ -12,7 +12,7 @@ title_small(TRANSLATIONS[$GLOBALS['language']]['general']['text_level_overview']
 global $link;
 $sql = "SELECT member_level_id, member_level_name, member_level_from, member_level_to
         FROM member_level
-        GROUP BY member_level_id ASC";
+        ORDER BY member_level_id ASC";
 $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
 $count = mysqli_num_rows($result);
 if ($count) {
