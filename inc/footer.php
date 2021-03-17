@@ -12,6 +12,9 @@
         </div>
     </div>
 
+    <script>
+        var tcgHostUrl = '<?php echo HOST_URL ?>';
+    </script>
     <script src="<?php echo HOST_URL; ?>/assets/js/jquery.min.js" type="text/javascript"></script>
     <script src="<?php echo HOST_URL; ?>/assets/js/popper.min.js" type="text/javascript"></script>
     <script src="<?php echo HOST_URL; ?>/assets/js/bootstrap.min.js" type="text/javascript"></script>

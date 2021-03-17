@@ -5,6 +5,7 @@
 * [Constants.php](#constantsphp)
 * [Add new page](#add-new-page)
 * [Add new translations](#add-new-translations)
+* [How to run in subfolder](#how-to-run-in-subfolder)
 
 
 ## Constants.php
@@ -94,18 +95,18 @@ You can define some settings in the [constants.php](https://github.com/Shirisu/a
 ## Add new page
 To add a new page you must follow these steps
 - open the file `index.php`
-- search for `* routes you can change and add more`
-- paste the following code after the last `Route::add` block
+    - search for `* routes you can change and add more`
+    - paste the following code after the last `Route::add` block
 ```
 Route::add("/PAGEURL",function() {
     require_once("PATHTOFILE/FILENAME.php");
 });
 ```
-- change `PAGEURL` - something which should be in the browser url bar - example `about` (don't delete the `/`!)
-- change `PATHTOFILE/FILENAME` - the place where you put the file - example `main/about.php`
+    - change `PAGEURL` - something which should be in the browser url bar - example `about` (don't delete the `/`!)
+    - change `PATHTOFILE/FILENAME` - the place where you put the file - example `main/about.php`
 - create your PHP-file in the defined path from above - example file `about.php` in `/main/`
 - open your created PHP-file - example `/main/about.php`
-- paste the following code
+    - paste the following code
 ```
 <?php
 $breadcrumb = array(
@@ -127,13 +128,13 @@ title('PAGENAME');
 - change `PAGENAME` - the subject of your created page - example `About the site`
 - change `TEXT` - here you can add your text/code of your new page
 - open the file `/inc/navigation/header.php`
-- search for `<div class="dropdown-menu" aria-labelledby="navbarDropdownMain">`
-- paste the following code after the last `navlink()` line
+    - search for `<div class="dropdown-menu" aria-labelledby="navbarDropdownMain">`
+    - paste the following code after the last `navlink()` line
 ```
 navlink('PAGENAME','PAGEURL');
 ```
-- change `PAGENAME` - the defined subject from above - example `About the site`
-- change `PAGEURL` - the defined string form above - example `about`
+    - change `PAGENAME` - the defined subject from above - example `About the site`
+    - change `PAGEURL` - the defined string form above - example `about`
 
 Done.
 You can now open your TCG and hover in the top menu over `Main` - you should see the created page link `About the site`.
@@ -143,18 +144,18 @@ After clicking on it you will be redirected to the new created page.
 ## Add new translations
 To add new translations you must follow these steps
 - open the file `/inc/translations/en.php`
-- you can create a new block for your new texts
-- go to the end of the file and paste the following code
+    - you can create a new block for your new texts
+    - go to the end of the file and paste the following code
 ```
 'newtexts' => array(
   'KEY' => 'VALUE',
 ),
 ```
-- change `KEY` - example `text_about_headline`
-- change `VALUE` - example `About the site`
+    - change `KEY` - example `text_about_headline`
+    - change `VALUE` - example `About the site`
 - do the same with the other translation file `/inc/translations/de.php`
-- `KEY` must be the same like in the `en.php` file
-- `VALUE` should be the translated text in german - example `Über die Seite` (_hint:_ use HTML Codes for umlauts - example `&Uuml;` for `Ü`)
+    - `KEY` must be the same like in the `en.php` file
+    - `VALUE` should be the translated text in german - example `Über die Seite` (_hint:_ use HTML Codes for umlauts - example `&Uuml;` for `Ü`)
 
 To use your added translations use following code
 ```
@@ -164,3 +165,13 @@ in our example
 ```
 TRANSLATIONS[$GLOBALS['language']]['newtexts']['text_about_headline']
 ```
+
+## How to run in subfolder
+To run the script in subfolder you must follow there steps
+- open the file `/inc/constants.php`
+    - fill `HOST_URL_SUBFOLDER` with your subfolder name - example `tcg`
+- open the file `/.htaccess`
+    - search for `RewriteBase /`
+    - add the subfolder name after `/` - example `RewriteBase /tcg`
+    - search for `RewriteRule ^(login|logout)/?$ /inc/$1.php [L]`
+    - add the subfolder name before `/inc` - example `RewriteRule ^(login|logout)/?$ /tcg/inc/$1.php [L]`
