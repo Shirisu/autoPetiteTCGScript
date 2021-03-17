@@ -6,6 +6,7 @@
 * [Add new page](#add-new-page)
 * [Add new translations](#add-new-translations)
 * [How to run in subfolder](#how-to-run-in-subfolder)
+* [Frequently asked questions](#frequently-asked-questions)
 
 
 ## Constants.php
@@ -175,3 +176,12 @@ To run the script in subfolder you must follow there steps
     - add the subfolder name after `/` - example `RewriteBase /tcg`
     - search for `RewriteRule ^(login|logout)/?$ /inc/$1.php [L]`
     - add the subfolder name before `/inc` - example `RewriteRule ^(login|logout)/?$ /tcg/inc/$1.php [L]`
+
+
+## Frequently asked questions
+1) Why can't I select a category at a card deck?
+- You must add at least 1 main and 1 sub category then you can select a category
+2) Why don't I see any active games?
+- You must add at least 3 card decks to see the active games
+3) Why can't I activate my account using the link in the activation email?
+- You must add at least the amount of card decks you specify in `TCG_CARDS_START_PACKAGE` in the `constants.php`
