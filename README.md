@@ -9,7 +9,6 @@ Current version: 1.0.5
 
 [Documentation - how to use autoPetiteTCGScript](https://github.com/Shirisu/autoPetiteTCGScript/blob/master/DOCUMENTATION.md)
 
-![GitHub all releases](https://img.shields.io/github/downloads/Shirisu/autoPetiteTCGScript/total)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/Shirisu/autoPetiteTCGScript)
 ![Lines of code](https://img.shields.io/tokei/lines/github/Shirisu/autoPetiteTCGScript)
 
