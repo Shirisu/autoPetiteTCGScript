@@ -26,7 +26,6 @@ if ($count) {
                     <th data-field="name"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_name']; ?></th>
                     <th data-field="from"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_level_from']; ?></th>
                     <th data-field="to"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_level_to']; ?></th>
-                    <th data-field="options"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -38,9 +37,6 @@ if ($count) {
                         <td><?php echo $row['member_level_name']; ?></td>
                         <td><?php echo $row['member_level_from']; ?></td>
                         <td><?php echo $row['member_level_to']; ?></td>
-                        <td>
-                            <a href="<?php echo HOST_URL; ?>/administration/editlevel/<?php echo $row['member_level_id']; ?>">Edit</a>
-                        </td>
                     </tr>
                     <?php
                 }
