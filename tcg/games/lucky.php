@@ -67,17 +67,29 @@ if (isset($_SESSION['member_rank'])) {
                             '. '.TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_win'].'!<br />2 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'].': '.implode(', ',$_SESSION['insert_cards'])
                             , 'success');
                     } elseif ($random_choice == 3 || $random_choice == 6) {
-                        insert_cards($member_id, 1);
-                        $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['games']['text_game_log_win_1_card'].': '.implode(', ',$_SESSION['insert_cards']);
-                        insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - '.$game_name, $inserted_cards_text, $member_id);
+                        if (TCG_CURRENCY_USE) {
+                            $amount_currency = 50;
+                            insert_currency($member_id, $amount_currency);
+                            $inserted_currency_text = TRANSLATIONS[$GLOBALS['language']]['games']['text_game_log_win'] . ': '.$amount_currency.' '.TCG_CURRENCY;
+                            insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - '.$game_name, $inserted_currency_text, $member_id);
 
-                        alert_box(
-                            TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice'].': '.strtoupper($lucky_choice).
-                            '. '.TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_win'].'!<br />1 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_card'].': '.implode(', ',$_SESSION['insert_cards'])
-                            , 'success');
+                            alert_box(
+                                TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice'].': '.strtoupper($lucky_choice).
+                                '. '.TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_win'].'!<br />'.$amount_currency.' '.TCG_CURRENCY
+                                , 'success');
+                        } else {
+                            insert_cards($member_id, 1);
+                            $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['games']['text_game_log_win_1_card'] . ': ' . implode(', ', $_SESSION['insert_cards']);
+                            insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - '.$game_name, $inserted_cards_text, $member_id);
+
+                            alert_box(
+                                TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice'].': '.strtoupper($lucky_choice).
+                                '. '.TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_win'].'!<br />1 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_card'].': '.implode(', ',$_SESSION['insert_cards'])
+                                , 'success');
+                        }
                     }
 
-                    //insert_game_played($member_id, $game_id);
+                    insert_game_played($member_id, $game_id);
                 } else {
                     ?>
                     <form action="<?php echo HOST_URL; ?>/games/lucky/<?php echo $game_id; ?>" method="post">

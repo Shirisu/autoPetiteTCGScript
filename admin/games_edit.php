@@ -179,7 +179,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
 
         $sql = "SELECT games_id, games_name, games_interval, games_status, games_type, games_lucky_choices, games_is_lucky_category_game
                 FROM games
-                GROUP BY games_id ASC";
+                ORDER BY games_id ASC";
         $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
         $count = mysqli_num_rows($result);
         if ($count) {
