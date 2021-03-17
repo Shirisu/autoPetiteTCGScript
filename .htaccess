@@ -8,7 +8,7 @@ RewriteEngine on
 RewriteBase /
 
 # Push login request to login.php
-RewriteRule ^(login|logout)/?$ /inc/$1.php [L]
+RewriteRule ^([A-Za-z0-9\-\.\_\~\!\$\&\'\(\)\*\+\,\;\=\:\@\%]+/)?(login|logout)/?$ /$1inc/$2.php [L]
 
 # Deliver the folder or file directly if it exists on the server
 RewriteCond %{REQUEST_FILENAME} !-f
