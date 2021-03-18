@@ -23,5 +23,5 @@ if (isset($_SESSION['member_rank'])) {
     }
 }
 // delete member from onlinelist after 1 minute of inactivation
-mysqli_query($link, "DELETE FROM member_online WHERE (member_online_member_time+60000) < '".$online_time."';") or die(mysqli_error($link));
+mysqli_query($link, "DELETE FROM member_online WHERE (member_online_member_time+60) < '".$online_time."';") or die(mysqli_error($link));
 ?>
