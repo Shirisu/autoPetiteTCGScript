@@ -197,7 +197,7 @@ if (isset($_SESSION['member_rank'])) {
                         var own_card_carddeck_name = own_card[1];
                         var own_card_number = own_card[2];
 
-                        document.querySelector('.own-card').style.backgroundImage = 'url(<?php echo HOST_URL; ?>/assets/cards/'+ own_card_carddeck_name +'/'+ own_card_carddeck_name+own_card_number +'.<?php echo TCG_CARDS_FILE_TYPE; ?>)';
+                        document.querySelector('.own-card').style.backgroundImage = 'url(<?php echo HOST_URL.TCG_CARDS_FOLDER; ?>/'+ own_card_carddeck_name +'/'+ own_card_carddeck_name+own_card_number +'.<?php echo TCG_CARDS_FILE_TYPE; ?>)';
                     });
                 </script>
                 <?php
