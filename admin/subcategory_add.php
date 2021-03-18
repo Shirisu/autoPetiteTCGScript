@@ -18,6 +18,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         $sql = "SELECT carddeck_sub_cat_name
                 FROM carddeck_sub_cat
                 WHERE carddeck_sub_cat_name = '".$subcategory_name."'
+                  AND carddeck_sub_cat_main_cat_id = '".$main_category_id."'
                 LIMIT 1";
         $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
         if (mysqli_num_rows($result)) {

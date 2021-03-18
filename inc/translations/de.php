@@ -37,6 +37,7 @@ $translations['de'] = array(
         'hint_no_carddeck_for_update_yet' => 'Aktuell gibt es keine neuen Carddecks f&uuml;r ein Update',
         'hint_no_category_selected' => 'Bitte w&auml;hle eine Kategorie aus',
         'hint_no_member_yet' => 'Es gibt noch keine Member',
+        'hint_subcategory_name_exists' => 'Dieser Subkategoriename existiert bereits',
         'hint_success_add' => 'Daten erfolgreich hinzugef&uuml;gt',
         'hint_success_card_add' => 'Karten erfolgreich verteilt',
         'hint_success_cardupdate_add' => 'Cardupdate erfolgreich hinzugef&uuml;gt',

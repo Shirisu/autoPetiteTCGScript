@@ -17,14 +17,25 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                 $subcategory_name = mysqli_real_escape_string($link, strip_tags(trim($_POST['subcategory_name'])));
                 $main_category_id = mysqli_real_escape_string($link, $_POST['main_category_id']);
 
-                mysqli_query($link, "UPDATE carddeck_sub_cat
-                                     SET carddeck_sub_cat_name = '".$subcategory_name."',
-                                         carddeck_sub_cat_main_cat_id = '".$main_category_id."'
-                                     WHERE carddeck_sub_cat_id = ".$subcategory_id."
+                $sql_subcat_exists = "SELECT carddeck_sub_cat_id
+                                      FROM carddeck_sub_cat
+                                      WHERE carddeck_sub_cat_name = '".$subcategory_name."'
+                                        AND carddeck_sub_cat_main_cat_id = '".$main_category_id."'
+                                        AND carddeck_sub_cat_id != " . $subcategory_id . "
+                                      LIMIT 1";
+                $result_subcat_exists = mysqli_query($link, $sql_subcat_exists) OR die(mysqli_error($link));
+                if (mysqli_num_rows($result_subcat_exists)) {
+                    alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_subcategory_name_exists'], 'danger');
+                } else {
+                    mysqli_query($link, "UPDATE carddeck_sub_cat
+                                     SET carddeck_sub_cat_name = '" . $subcategory_name . "',
+                                         carddeck_sub_cat_main_cat_id = '" . $main_category_id . "'
+                                     WHERE carddeck_sub_cat_id = " . $subcategory_id . "
                                      LIMIT 1")
-                OR die(mysqli_error($link));
+                    OR die(mysqli_error($link));
 
-                alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_success_save'], 'success');
+                    alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_success_save'], 'success');
+                }
             } elseif (isset($_POST['subcategory_name']) && !isset($_POST['main_category_id'])) {
                 alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_no_category_selected'], 'danger');
             }
