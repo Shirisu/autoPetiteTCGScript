@@ -247,7 +247,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                 FROM member
                 JOIN member_rank ON member_rank = member_rank_id
                   " . $memberactive . "
-                GROUP BY member_id";
+                ORDER BY member_id ASC";
         $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
         $count = mysqli_num_rows($result);
         if ($count) {

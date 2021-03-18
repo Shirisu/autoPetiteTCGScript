@@ -97,7 +97,7 @@ if (isset($_SESSION['member_rank'])) {
                 breadcrumb($breadcrumb);
                 title(TRANSLATIONS[$GLOBALS['language']]['trade']['text_create_offer']);
 
-                $sql_own_cards = "SELECT member_cards_id, member_cards_carddeck_id, carddeck_name, member_cards_number,
+                $sql_own_cards = "SELECT MIN(member_cards_id) as member_cards_id, member_cards_carddeck_id, carddeck_name, member_cards_number,
                                       COUNT(*) AS card_count
                            FROM member_cards
                            JOIN carddeck ON carddeck_id = member_cards_carddeck_id
