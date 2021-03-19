@@ -76,7 +76,7 @@ if (isset($_SESSION['member_rank'])) {
     }
 
     if (isset($_GET['carddeck_id']) && isset($_GET['card_number'])) {
-        $sql_search = "SELECT member_id, member_last_login, member_cards_id
+        $sql_search = "SELECT member_id, member_last_login, MIN(member_cards_id) as member_cards_id
                        FROM member_cards
                        JOIN member ON member_id = member_cards_member_id
                        WHERE member_cards_carddeck_id = '".$carddeck_id."'

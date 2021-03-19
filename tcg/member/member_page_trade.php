@@ -46,7 +46,7 @@ if (isset($_SESSION['member_rank'])) {
                     $can_use_sum = (MYSQL_VERSION >= 'mysqlnd 8.0.0' ? true : false);
 
                     if ($can_use_sum) {
-                        $sql_cards = "SELECT member_cards_id, member_cards_number, carddeck_id, carddeck_name,
+                        $sql_cards = "SELECT MIN(member_cards_id) as member_cards_id, member_cards_number, carddeck_id, carddeck_name,
                                         COUNT(*) AS card_count,
                                         SUM(COUNT(member_cards_number)) OVER() AS total_card_count
                                     FROM member_cards mc
@@ -65,7 +65,7 @@ if (isset($_SESSION['member_rank'])) {
                         $result_count_cards = mysqli_query($link, $sql_count_cards) OR die(mysqli_error($link));
                         $count_count_cards = mysqli_num_rows($result_count_cards);
 
-                        $sql_cards = "SELECT member_cards_id, member_cards_number, carddeck_id, carddeck_name,
+                        $sql_cards = "SELECT MIN(member_cards_id) as member_cards_id, member_cards_number, carddeck_id, carddeck_name,
                                         COUNT(*) AS card_count
                                     FROM member_cards mc
                                     JOIN carddeck ON carddeck_id = member_cards_carddeck_id

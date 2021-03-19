@@ -129,14 +129,14 @@ if (isset($_SESSION['member_rank'])) {
         </div>
         <div class="col col-12 mb-3 cards-sorting-container">
             <?php
-            $sql_cards = "SELECT member_cards_carddeck_id, member_cards_number, carddeck_name, carddeck_is_puzzle
+            $sql_cards = "SELECT member_cards_carddeck_id, carddeck_name, carddeck_is_puzzle
                           FROM member_cards
                           JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                           WHERE member_cards_member_id = '".$member_id."'
                             AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
                             AND member_cards_active = 1
                           GROUP BY member_cards_carddeck_id
-                          ORDER BY carddeck_name, member_cards_number ASC";
+                          ORDER BY carddeck_name ASC";
             $result_cards = mysqli_query($link, $sql_cards) OR die(mysqli_error($link));
             $count_cards = mysqli_num_rows($result_cards);
             if ($count_cards) {
