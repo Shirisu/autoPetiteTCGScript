@@ -46,9 +46,9 @@ if (isset($_POST['nickname'])) {
 
                 mysqli_query($link, "
                     INSERT INTO member
-                    (member_nick, member_password, member_email, member_register, member_language)
+                    (member_nick, member_password, member_email, member_register, member_language, member_ip)
                     VALUES
-                    ('".$nickname."', '".$password_hashed."', '".$email."', '".time()."', '".$language."')")
+                    ('".$nickname."', '".$password_hashed."', '".$email."', '".time()."', '".$language."', '".ip()."')")
                 OR die(mysqli_error($link));
                 $new_member_id = mysqli_insert_id($link);
 
