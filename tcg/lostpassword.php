@@ -34,7 +34,7 @@ if (isset($_POST['nickname']) && isset($_POST['email'])) {
             require_once('./inc/class.passwordhash_tcg.php');
             $password_hashed = create_hash_for_tcg($password);
 
-            mail($receiver, $subject, $text,
+            mail($receiver, mb_encode_mimeheader($subject,'UTF-8','Q'), $text,
                 "From: $sender <$sendermail>");
             mysqli_query($link, "UPDATE member SET member_password = '".$password_hashed."' WHERE member_nick = '".$nickname."' AND member_email = '".$email."' LIMIT 1") OR die(mysqli_error($link));
 

@@ -7,6 +7,7 @@
 <head>
     <link rel="shortcut icon" href="<?php echo HOST_URL; ?>/favicon.ico" />
     <title><?php echo TCG_META_TITLE; ?></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="title" content="<?php echo TCG_META_TITLE; ?>" />
     <meta name="description" content="<?php echo TCG_META_DESC; ?>" />
     <meta name="keywords" content="<?php echo TCG_META_KEYWORDS; ?>" />

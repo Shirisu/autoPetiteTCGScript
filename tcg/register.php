@@ -68,7 +68,7 @@ if (isset($_POST['nickname'])) {
 
 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_email_enclosure'];
 
-                mail($receiver, $subject, $text,
+                mail($receiver, mb_encode_mimeheader($subject,'UTF-8','Q'), $text,
                     "From: $sender <$sendermail>");
 
                 alert_box(TRANSLATIONS[$GLOBALS['language']]['register']['hint_success'], 'success');
