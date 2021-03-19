@@ -4,8 +4,16 @@ function redirect($link) {
 }
 
 function ip() {
-    $ip = getenv("REMOTE_ADDR");
-    return $ip;
+    return getenv("REMOTE_ADDR");
+}
+
+if (!function_exists("array_key_last")) {
+    function array_key_last($array) {
+        if (!is_array($array) || empty($array)) {
+            return null;
+        }
+        return array_keys($array)[count($array) - 1];
+    }
 }
 
 function passwordgenerator() {
