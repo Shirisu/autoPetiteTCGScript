@@ -371,6 +371,7 @@ function get_member_wish($member_id) {
 function insert_cards($member_id, $quantity) {
     global $link;
     unset($_SESSION['insert_cards']);
+    unset($_SESSION['insert_cards_infos']);
 
     $sql = "SELECT carddeck_id, carddeck_name
             FROM carddeck
@@ -380,11 +381,20 @@ function insert_cards($member_id, $quantity) {
     $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
     if (mysqli_num_rows($result)) {
         $cardarray = array();
+        $cardarray_infos = array();
+        $i = 0;
         while ($row = mysqli_fetch_assoc($result)) {
             $cardnumber = mt_rand(1, TCG_CARDDECK_MAX_CARDS);
             mysqli_query($link, "INSERT INTO member_cards (member_cards_carddeck_id, member_cards_number, member_cards_member_id) VALUES ('" . $row['carddeck_id'] . "','" . $cardnumber . "','" . $member_id . "')") OR die(mysqli_error($link));
             array_push($cardarray, $row['carddeck_name'] . sprintf("%02d", $cardnumber));
+            $cardarray_infos[$i] = array(
+                'id' => $row['carddeck_id'],
+                'number' => $cardnumber
+            );
             $_SESSION['insert_cards'] = $cardarray;
+            $_SESSION['insert_cards_infos'] = $cardarray_infos;
+
+            $i++;
         }
         mysqli_query($link, "UPDATE member SET member_cards = member_cards + '" . $quantity . "' WHERE member_id = '" . $member_id . "' LIMIT 1") OR die(mysqli_error($link));
     }
