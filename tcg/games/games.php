@@ -18,7 +18,7 @@ if (isset($_SESSION['member_rank'])) {
         $sql_games = "SELECT games_id, games_name, games_interval, games_type, games_is_lucky_category_game
                       FROM games
                       WHERE games_status = '1'
-                      ORDER BY games_name ASC";
+                      ORDER BY games_interval, games_name ASC";
         $result_games = mysqli_query($link, $sql_games) OR die(mysqli_error($link));
         if (mysqli_num_rows($result_games)) {
             ?>
