@@ -82,6 +82,7 @@ if (isset($_SESSION['member_rank'])) {
                        WHERE member_cards_carddeck_id = '".$carddeck_id."'
                          AND member_cards_number = '".$card_number."'
                          AND member_cards_cat = '".MEMBER_CARDS_TRADE."'
+                         AND member_cards_active = 1
                        GROUP BY member_id
                        ORDER BY member_nick ASC";
         $result_search = mysqli_query($link, $sql_search);
