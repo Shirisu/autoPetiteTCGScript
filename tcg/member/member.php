@@ -41,9 +41,9 @@ if (isset($_SESSION['member_rank'])) {
                         while ($row_member = mysqli_fetch_assoc($result_member)) {
                             ?>
                             <tr>
-                                <td><?php echo $row_member['member_id']; ?></td>
-                                <td><?php echo get_member_link($row_member['member_id'], '', true); ?></td>
-                                <td><?php echo $row_member['member_level']; ?></td>
+                                <td><?php echo sprintf('%03d', $row_member['member_id']); ?></td>
+                                <td><span class="d-none"><?php echo get_member_nick_plain($row_member['member_id']); ?></span><?php echo get_member_link($row_member['member_id'], '', true); ?></td>
+                                <td><?php echo sprintf('%02d', $row_member['member_level']); ?></td>
                                 <td><?php echo $row_member['member_rank_name']; ?></td>
                                 <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_member['member_register']); ?></td>
                                 <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_member['member_last_login']); ?></td>
