@@ -419,6 +419,12 @@ table.carddeck td {
         padding: 6px;
     }
 }
+@media (max-width: 562px) {
+    .cards-sorting-container table.cards-sorting-table tbody tr td .card-views .card-view:first-of-type,
+    .member-cards-container table.profile-cards tbody tr td .card-views .card-view:first-of-type {
+        display: none !important;
+    }
+}
 .cards-sorting-container .pagination-detail,
 .member-cards-container .pagination-detail,
 .member-wishlist-container .pagination-detail,
