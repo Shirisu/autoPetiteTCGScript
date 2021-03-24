@@ -207,6 +207,8 @@ trading card game
         'text_language_en' => 'english',
         'text_lastlogin' => 'Last Login',
         'text_level_overview' => 'Level overview',
+        'text_level_up' => 'Level up',
+        'text_level_up_reward' => 'Deine Belohung',
         'text_lostpassword' => 'Lost Password?',
         'text_main_language' => 'Main language',
         'text_male' => 'male',

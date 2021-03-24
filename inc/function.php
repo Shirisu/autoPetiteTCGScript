@@ -134,13 +134,15 @@ function member_level_up($member_id) {
 
     if(($row_member['member_level'] != $row_level['member_level_id']) && ($row_member['member_level'] < $row_level['member_level_id'])) {
         insert_cards($member_id, TCG_LEVEL_UP_CARD_REWARD);
-        $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['general']['text_level_up_reward'].': '.implode(', ',$_SESSION['insert_cards']);
+        $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['general']['text_level_up_reward'].': '.implode(', ', $_SESSION['insert_cards']);
         insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_level_up'].' - '.sprintf('%02d', $row_level['member_level_id']), $inserted_cards_text, $member_id);
 
         mysqli_query($link, "UPDATE member SET member_level = '".$row_level['member_level_id']."' WHERE member_id = '".$member_id."' LIMIT 1");
 
         alert_box(
-            TRANSLATIONS[$GLOBALS['language']]['general']['text_level_up'].': '.TRANSLATIONS[$GLOBALS['language']]['general']['text_level_up_reward'].': '.implode(', ',$_SESSION['insert_cards'])
+            TRANSLATIONS[$GLOBALS['language']]['general']['text_level_up'].': '.TRANSLATIONS[$GLOBALS['language']]['general']['text_level_up_reward'].': '.implode(', ', $_SESSION['insert_cards']).
+            '<br />'.
+            $_SESSION['insert_cards_images']
             , 'success');
     }
 }
@@ -371,7 +373,7 @@ function get_member_wish($member_id) {
 function insert_cards($member_id, $quantity) {
     global $link;
     unset($_SESSION['insert_cards']);
-    unset($_SESSION['insert_cards_infos']);
+    unset($_SESSION['insert_cards_images']);
 
     $sql = "SELECT carddeck_id, carddeck_name
             FROM carddeck
@@ -382,6 +384,7 @@ function insert_cards($member_id, $quantity) {
     if (mysqli_num_rows($result)) {
         $cardarray = array();
         $cardarray_infos = array();
+        $_SESSION['insert_cards_images'] = '';
         $i = 0;
         while ($row = mysqli_fetch_assoc($result)) {
             $cardnumber = mt_rand(1, TCG_CARDDECK_MAX_CARDS);
@@ -392,10 +395,17 @@ function insert_cards($member_id, $quantity) {
                 'number' => $cardnumber
             );
             $_SESSION['insert_cards'] = $cardarray;
-            $_SESSION['insert_cards_infos'] = $cardarray_infos;
 
             $i++;
         }
+
+        for ($i = 0; $i < count($cardarray_infos); $i++) {
+            if ($i != 0) {
+                $_SESSION['insert_cards_images'] .= ' ';
+            }
+            $_SESSION['insert_cards_images'] .= get_card($cardarray_infos[$i]['id'], $cardarray_infos[$i]['number']);
+        }
+
         mysqli_query($link, "UPDATE member SET member_cards = member_cards + '" . $quantity . "' WHERE member_id = '" . $member_id . "' LIMIT 1") OR die(mysqli_error($link));
     }
 }
@@ -448,7 +458,7 @@ function insert_shop_random($member_id, $quantity) {
         insert_cards($member_id, $quantity);
         $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['shop']['text_you_spent'].' '.$currency_spent.' '.TCG_CURRENCY.' '.TRANSLATIONS[$GLOBALS['language']]['shop']['text_and_got_following'].': '.implode(', ',$_SESSION['insert_cards']);
         insert_log('Shop', $inserted_cards_text, $member_id);
-        return alert_box($inserted_cards_text, 'success');
+        return alert_box($inserted_cards_text.'<br />'.$_SESSION['insert_cards_images'], 'success');
     } else {
         return alert_box(TRANSLATIONS[$GLOBALS['language']]['shop']['hint_not_enough_currency'], 'danger');
     }
@@ -470,7 +480,7 @@ function insert_shop_card($member_id, $carddeck_id, $card_number) {
             insert_specific_cards($member_id, $carddeck_id, $card_number);
             $inserted_card_text = TRANSLATIONS[$GLOBALS['language']]['shop']['text_you_spent'] . ' 1 ' . TCG_WISH . ' ' . TRANSLATIONS[$GLOBALS['language']]['shop']['text_and_got_following'] . ': ' . $carddeck_name . sprintf('%02d', $card_number);
             insert_log('Shop', $inserted_card_text, $member_id);
-            return alert_box($inserted_card_text, 'success');
+            return alert_box($inserted_card_text.'<br />'.get_card($carddeck_id, $card_number), 'success');
         }
     } else {
         return alert_box(TRANSLATIONS[$GLOBALS['language']]['shop']['hint_not_enough_wish'], 'danger');
