@@ -49,49 +49,36 @@ if (isset($_SESSION['member_rank'])) {
                 if ($can_play) {
                     if (isset($_POST['attempts_count']) && $_POST['attempts_count'] > 0) {
                         $random_choice = mt_rand(1, 3);
-                        $card_images = '';
 
                         if ($random_choice == 1) {
                             insert_cards($member_id, 2);
-                            $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['games']['text_game_log_win_2_cards'].': '.implode(', ',$_SESSION['insert_cards']);
+                            $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['games']['text_game_log_win_2_cards'].': '.implode(', ' ,$_SESSION['insert_cards']);
                             insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - '.$game_name, $inserted_cards_text, $member_id);
-
-                            for ($i = 0; $i < count($_SESSION['insert_cards_infos']); $i++) {
-                                $card_images .= get_card($_SESSION['insert_cards_infos'][$i]['id'], $_SESSION['insert_cards_infos'][$i]['number']);
-                            }
 
                             alert_box(
                                 TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_win'].'!<br />2 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'].': '.implode(', ',$_SESSION['insert_cards']).
                                 '<br />'.
-                                $card_images
+                                $_SESSION['insert_cards_images']
                                 , 'success');
                         } elseif ($random_choice == 2) {
                             insert_cards($member_id, 3);
-                            $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['games']['text_game_log_win_3_cards'].': '.implode(', ',$_SESSION['insert_cards']);
+                            $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['games']['text_game_log_win_3_cards'].': '.implode(', ', $_SESSION['insert_cards']);
                             insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - '.$game_name, $inserted_cards_text, $member_id);
-
-                            for ($i = 0; $i < count($_SESSION['insert_cards_infos']); $i++) {
-                                $card_images .= get_card($_SESSION['insert_cards_infos'][$i]['id'], $_SESSION['insert_cards_infos'][$i]['number']);
-                            }
 
                             alert_box(
                                 TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_win'].'!<br />3 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'].': '.implode(', ',$_SESSION['insert_cards']).
                                 '<br />'.
-                                $card_images
+                                $_SESSION['insert_cards_images']
                                 , 'success');
                         } elseif ($random_choice == 3) {
                             insert_cards($member_id, 1);
-                            $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['games']['text_game_log_win_1_card'].': '.implode(', ',$_SESSION['insert_cards']);
+                            $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['games']['text_game_log_win_1_card'].': '.implode(', ', $_SESSION['insert_cards']);
                             insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - '.$game_name, $inserted_cards_text, $member_id);
-
-                            for ($i = 0; $i < count($_SESSION['insert_cards_infos']); $i++) {
-                                $card_images .= get_card($_SESSION['insert_cards_infos'][$i]['id'], $_SESSION['insert_cards_infos'][$i]['number']);
-                            }
 
                             alert_box(
                                 TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_win'].'!<br />1 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_card'].': '.implode(', ',$_SESSION['insert_cards']).
                                 '<br />'.
-                                $card_images
+                                $_SESSION['insert_cards_images']
                                 , 'success');
                         }
 

@@ -77,7 +77,7 @@ if (isset($_SESSION['member_rank'])) {
                         OR die(mysqli_error($link));
                     }
 
-                    insert_log('Master', $master_text, $member_id);
+                    insert_log('Master', $master_text.'<br />'.$_SESSION['insert_cards_images'], $member_id);
 
                     alert_box($master_text, 'success');
                 } else {
