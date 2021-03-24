@@ -255,7 +255,12 @@ function get_card($carddeck_id, $card_number, $show_only_url = false, $show_inac
         if ($show_only_url == true) {
             return HOST_URL.TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$card_number.'.'.TCG_CARDS_FILE_TYPE;
         } else {
-            return '<img src="'.HOST_URL.TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$card_number.'.'.TCG_CARDS_FILE_TYPE.'" alt="'.$carddeck_name.$card_number.'" />';
+            $filename = get_card($carddeck_id, $card_number, true);
+            if (file_exists('.' . substr($filename, strlen(HOST_URL)))) {
+                return '<img src="'.HOST_URL.TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$card_number.'.'.TCG_CARDS_FILE_TYPE.'" alt="'.$carddeck_name.$card_number.'" />';
+            } else {
+                return '<img class="card-wrapper" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="'.$carddeck_name.$card_number.'" />';
+            }
         }
     }
 }
