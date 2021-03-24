@@ -211,7 +211,7 @@ trading card game
         'text_lastlogin' => 'Last Login',
         'text_level_overview' => 'Level overview',
         'text_level_up' => 'Level up',
-        'text_level_up_reward' => 'Deine Belohung',
+        'text_level_up_reward' => 'Your reward',
         'text_lostpassword' => 'Lost Password?',
         'text_main_language' => 'Main language',
         'text_male' => 'male',
