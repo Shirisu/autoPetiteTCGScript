@@ -94,6 +94,12 @@ Route::add("/administration/editsubcategory/([0-9+].*)",function($subcategory_id
 Route::add("/administration/editsubcategory/([0-9+].*)",function($subcategory_id) {
     require_once("admin/subcategory_edit.php");
 }, "post");
+Route::add("/administration/deletesubcategory/([0-9+].*)",function($subcategory_id) {
+    require_once("admin/subcategory_delete.php");
+});
+Route::add("/administration/deletesubcategory/([0-9+].*)",function($subcategory_id) {
+    require_once("admin/subcategory_delete.php");
+}, "post");
 Route::add("/administration/addcarddeck",function() {
     require_once("admin/carddeck_add.php");
 });

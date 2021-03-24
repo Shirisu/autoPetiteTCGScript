@@ -34,6 +34,7 @@ Current version: 1.1.0
     - edit category
     - add subcategory
     - edit subcategory
+    - delete subcategory
   - carddeck administration
     - add carddeck
     - edit carddeck
