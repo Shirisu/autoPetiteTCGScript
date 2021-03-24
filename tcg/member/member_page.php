@@ -49,7 +49,7 @@ if (isset($_SESSION['member_rank'])) {
                                 <div class="col col-6 col-md-3 mb-2"><?php echo $row_member['member_level']; ?></div>
                                 <div class="col col-6 col-md-3 mb-2 font-weight-bold"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_rank']; ?></div>
                                 <div class="col col-6 col-md-3 mb-2"><?php echo $row_member['member_rank_name']; ?></div>
-                                <div class="col col-6 col-md-3 mb-2 font-weight-bold">Cards</div>
+                                <div class="col col-6 col-md-3 mb-2 font-weight-bold"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']; ?></div>
                                 <div class="col col-6 col-md-3 mb-2"><?php echo $row_member['member_cards']; ?></div>
                                 <div class="col col-6 col-md-3 mb-2 font-weight-bold">Master</div>
                                 <div class="col col-6 col-md-3 mb-2"><?php echo $row_member['member_master']; ?></div>
