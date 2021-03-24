@@ -148,12 +148,27 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                         <tbody>
                         <?php
                         while ($row = mysqli_fetch_assoc($result)) {
+                            $sql_subcat_have_carddecks = "SELECT carddeck_id
+                                                          FROM carddeck
+                                                          WHERE carddeck_sub_cat = '".$row['carddeck_sub_cat_id']."'
+                                                          LIMIT 1";
+                            $result_subcat_have_carddecks = mysqli_query($link, $sql_subcat_have_carddecks) OR die(mysqli_error($link));
+                            if (mysqli_num_rows($result_subcat_have_carddecks)) {
+                                $can_delete_subcategory = false;
+                            } else {
+                                $can_delete_subcategory = true;
+                            }
                             ?>
                             <tr>
                                 <td><?php echo $row['carddeck_sub_cat_id']; ?></td>
                                 <td><?php echo $row['carddeck_sub_cat_name']; ?></td>
                                 <td><?php echo $row['carddeck_cat_name']; ?></td>
-                                <td><a href="<?php echo HOST_URL; ?>/administration/editsubcategory/<?php echo $row['carddeck_sub_cat_id']; ?>">Edit</a></td>
+                                <td>
+                                    <a href="<?php echo HOST_URL; ?>/administration/editsubcategory/<?php echo $row['carddeck_sub_cat_id']; ?>">Edit</a>
+                                    <?php if ($can_delete_subcategory) { ?>
+                                        <br /><a href="<?php echo HOST_URL; ?>/administration/deletesubcategory/<?php echo $row['carddeck_sub_cat_id']; ?>"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_delete']; ?></a>
+                                    <?php } ?>
+                                </td>
                             </tr>
                             <?php
                         }
