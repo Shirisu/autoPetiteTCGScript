@@ -310,6 +310,20 @@ function get_carddeck_name_from_member_cards_id($member_card_id) {
     }
 }
 
+function get_carddeck_name_from_carddeck_id($carddeck_id) {
+    global $link;
+
+    $sql_carddeck = "SELECT carddeck_name
+                     FROM carddeck
+                     WHERE carddeck_id = '".$carddeck_id."'
+                     LIMIT 1";
+    $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
+    if (mysqli_num_rows($result_carddeck)) {
+        $row_carddeck = mysqli_fetch_assoc($result_carddeck);
+        return $row_carddeck['carddeck_name'];
+    }
+}
+
 function get_card_number_from_member_cards_id($member_card_id) {
     global $link;
 

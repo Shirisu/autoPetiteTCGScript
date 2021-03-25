@@ -65,6 +65,20 @@ if (isset($_SESSION['member_rank'])) {
                                          LIMIT 1")
                     OR die(mysqli_error($link));
 
+                    // delete carddeck from wishlist
+                    $sql_wishlist = "SELECT 1
+                                     FROM member_wishlist
+                                     WHERE member_wishlist_carddeck_id = '" . $carddeck_id . "'
+                                       AND member_wishlist_member_id = '".$member_id."'
+                                     LIMIT 1";
+                    $result_wishlist = mysqli_query($link, $sql_wishlist) OR die(mysqli_error($link));
+                    if (mysqli_num_rows($result_wishlist)) {
+                        mysqli_query($link, "DELETE FROM member_wishlist
+                                         WHERE member_wishlist_carddeck_id = '" . $carddeck_id . "'
+                                           AND member_wishlist_member_id = '" . $member_id . "'")
+                        OR die(mysqli_error($link));
+                    }
+
                     insert_cards($member_id, TCG_MASTER_CARD_REWARD);
                     $master_text = $row_carddeck['carddeck_name'] . ' ' . TRANSLATIONS[$GLOBALS['language']]['general']['text_mastered'].'. '.TRANSLATIONS[$GLOBALS['language']]['general']['text_reward'].' - '.TCG_MASTER_CARD_REWARD.' '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'].': '.implode(', ', $_SESSION['insert_cards']);
 
@@ -77,9 +91,9 @@ if (isset($_SESSION['member_rank'])) {
                         OR die(mysqli_error($link));
                     }
 
-                    insert_log('Master', $master_text.'<br />'.$_SESSION['insert_cards_images'], $member_id);
+                    insert_log('Master', $master_text, $member_id);
 
-                    alert_box($master_text, 'success');
+                    alert_box($master_text.'<br />'.$_SESSION['insert_cards_images'], 'success');
                 } else {
                     alert_box(TRANSLATIONS[$GLOBALS['language']]['member']['text_carddeck_not_in_collect'], 'danger');
                 }
@@ -108,6 +122,32 @@ if (isset($_SESSION['member_rank'])) {
                 alert_box(TRANSLATIONS[$GLOBALS['language']]['member']['text_carddeck_not_in_collect'], 'danger');
             }
         }
+    }
+
+    $sql_masterable_carddecks = "SELECT member_cards_carddeck_id
+                                FROM member_cards collect_decks
+                                JOIN carddeck ON carddeck_id = member_cards_carddeck_id
+                                WHERE member_cards_member_id = '".$member_id."'
+                                  AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
+                                  AND member_cards_active = 1
+                                  AND (SELECT COUNT(1)
+                                        FROM member_cards
+                                        WHERE member_cards_carddeck_id = collect_decks.member_cards_carddeck_id
+                                          AND member_cards_member_id = '".$member_id."'
+                                          AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
+                                          AND member_cards_active = 1
+                                    ) = '".TCG_CARDDECK_MAX_CARDS."'
+                                  GROUP BY member_cards_carddeck_id";
+    $result_masterable_carddecks = mysqli_query($link, $sql_masterable_carddecks) OR die(mysqli_error($link));
+    if (mysqli_num_rows($result_masterable_carddecks)) {
+        ?>
+        <?php
+        $masterable_carddecks = array();
+        while ($row_masterable_carddecks = mysqli_fetch_assoc($result_masterable_carddecks)) {
+            array_push($masterable_carddecks, get_carddeck_name_from_carddeck_id($row_masterable_carddecks['member_cards_carddeck_id']));
+        }
+
+        alert_box('<b>'.TRANSLATIONS[$GLOBALS['language']]['member']['text_carddecks_masterable'].':</b> '.implode(', ', $masterable_carddecks), 'warning');
     }
     ?>
     <div class="row cards-sorting">
