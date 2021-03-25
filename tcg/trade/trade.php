@@ -57,8 +57,8 @@ if (isset($_SESSION['member_rank'])) {
                     OR die(mysqli_error($link));
 
                     $trade_card_name = get_carddeck_name_from_member_cards_id($row_trade['trade_from_member_card_id']).sprintf("%'.02d", get_card_number_from_member_cards_id($row_trade['trade_from_member_card_id']));
-                    $trade_member_nick = get_member_nick_plain($row_trade['trade_from_member_id']);
-                    $trade_own_member_nick = get_member_nick_plain($row_trade['trade_to_member_id']);
+                    $trade_member_nick = get_member_link($row_trade['trade_from_member_id']);
+                    $trade_own_member_nick = get_member_link($row_trade['trade_to_member_id']);
                     $own_card_name = get_carddeck_name_from_member_cards_id($row_trade['trade_to_member_card_id']).sprintf("%'.02d", get_card_number_from_member_cards_id($row_trade['trade_to_member_card_id']));
 
                     // insert log for owner of trade
@@ -106,18 +106,19 @@ if (isset($_SESSION['member_rank'])) {
                     OR die(mysqli_error($link));
 
                     $trade_card_name = get_carddeck_name_from_member_cards_id($row_trade['trade_from_member_card_id']).sprintf("%'.02d", get_card_number_from_member_cards_id($row_trade['trade_from_member_card_id']));
-                    $trade_member_nick = get_member_nick_plain($row_trade['trade_from_member_id']);
+                    $trade_member_nick = get_member_link($row_trade['trade_from_member_id']);
+                    $trade_own_member_nick = get_member_link($row_trade['trade_to_member_id']);
                     $own_card_name = get_carddeck_name_from_member_cards_id($row_trade['trade_to_member_card_id']).sprintf("%'.02d", get_card_number_from_member_cards_id($row_trade['trade_to_member_card_id']));
 
                     // insert log for owner of trade
                     $language = get_member_language($row_trade['trade_from_member_id']);
                     $topic = TRANSLATIONS[$language]['trade']['text_decline_trade'];
-                    $text = TRANSLATIONS[$language]['trade']['text_log_trade_decline'].': '.$trade_card_name.' ('.TRANSLATIONS[$language]['trade']['text_log_trade_text_from'].' '.$trade_member_nick.') '.TRANSLATIONS[$language]['trade']['text_log_trade_text_against']. ' '.$own_card_name.' ('.TRANSLATIONS[$language]['trade']['text_log_trade_text_from'].' '.TRANSLATIONS[$language]['trade']['text_log_trade_text_you'].')';
+                    $text = TRANSLATIONS[$language]['trade']['text_log_trade_decline'].': '.$trade_card_name.' ('.TRANSLATIONS[$language]['trade']['text_log_trade_text_from'].' '.$trade_member_nick.') '.TRANSLATIONS[$language]['trade']['text_log_trade_text_against']. ' '.$own_card_name.' ('.TRANSLATIONS[$language]['trade']['text_log_trade_text_from'].' '.$trade_own_member_nick.')';
                     insert_log($topic, $text, $row_trade['trade_from_member_id']);
 
                     // insert own log
                     $topic_own = TRANSLATIONS[$GLOBALS['language']]['trade']['text_decline_trade'];
-                    $text_own = TRANSLATIONS[$GLOBALS['language']]['trade']['text_log_trade_decline'].': '.$trade_card_name.' ('.TRANSLATIONS[$GLOBALS['language']]['trade']['text_log_trade_text_from'].' '.$trade_member_nick.') '.TRANSLATIONS[$GLOBALS['language']]['trade']['text_log_trade_text_against']. ' '.$own_card_name.' ('.TRANSLATIONS[$GLOBALS['language']]['trade']['text_log_trade_text_from'].' '.TRANSLATIONS[$GLOBALS['language']]['trade']['text_log_trade_text_you'].')';
+                    $text_own = TRANSLATIONS[$GLOBALS['language']]['trade']['text_log_trade_decline'].': '.$trade_card_name.' ('.TRANSLATIONS[$GLOBALS['language']]['trade']['text_log_trade_text_from'].' '.$trade_member_nick.') '.TRANSLATIONS[$GLOBALS['language']]['trade']['text_log_trade_text_against']. ' '.$own_card_name.' ('.TRANSLATIONS[$GLOBALS['language']]['trade']['text_log_trade_text_from'].' '.$trade_own_member_nick.')';
                     insert_log($topic_own, $text_own, $member_id);
 
                     alert_box(TRANSLATIONS[$GLOBALS['language']]['trade']['hint_trade_declined'], 'success');
