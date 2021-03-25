@@ -316,6 +316,10 @@ table.carddeck td {
 .carddeck-wrapper .card-wrapper.mastercard {
     margin-top: 5px;
 }
+.carddeck-link {
+    white-space: normal;
+    word-break: break-all;
+}
 
 
 /**
