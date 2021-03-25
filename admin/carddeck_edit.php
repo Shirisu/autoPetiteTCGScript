@@ -269,8 +269,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                     </div>
                                     <textarea class="form-control" id="carddeck_imagesources"
                                               name="carddeck_imagesources"
-                                              aria-describedby="ariaDescribedbyImagesources"
-                                              maxlength="255"><?php echo $carddeck_imagesources; ?></textarea>
+                                              aria-describedby="ariaDescribedbyImagesources"><?php echo $carddeck_imagesources; ?></textarea>
                                 </div>
                                 <small id="ariaDescribedbyImagesources"
                                        class="form-text text-muted"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['hint_imagesources']; ?></small>
