@@ -110,41 +110,27 @@ if (isset($_SESSION['member_rank'])) {
                                     var memory_cols = <?php echo floor(TCG_CARDDECK_MAX_CARDS / 3); ?>; // count of cols
                                     var memory_images = memory_rows * memory_cols;
 
-                                    function GetRandom( min, max ) {
-                                        if( min > max ) {
-                                            return( -1 );
+                                    function isEven(value) {
+                                        return (value % 2 == 0);
+                                    }
+                                    var before_rows = memory_rows;
+                                    var before_cols = memory_cols;
+                                    while (!isEven(memory_images)) {
+                                        if (before_cols == memory_cols) {
+                                            before_cols = memory_cols;
+                                            memory_cols--;
+                                        } else if(before_rows == memory_rows) {
+                                            before_rows = memory_rows;
+                                            memory_rows--;
                                         }
-                                        if( min == max ) {
-                                            return( min );
-                                        }
-                                        return( min + parseInt( Math.random() * ( max-min+1 ) ) );
+                                        memory_images = memory_rows * memory_cols;
                                     }
 
-                                    HTTP_GET_VARS = new Array();
-                                    strGET = document.location.search.substr(1, document.location.search.length);
-                                    if (strGET != '') {
-                                        gArr = strGET.split('&');
-                                        for (i = 0; i < gArr.length; ++i) {
-                                            v = '';
-                                            vArr = gArr[i].split('=');
-                                            if (vArr.length > 1) {
-                                                v = vArr[1];
-                                            }
-                                            HTTP_GET_VARS[decodeURI(vArr[0])] = decodeURI(v);
-                                        }
-                                    }
-
-                                    function GET (v) {
-                                        if (!HTTP_GET_VARS[v]) {
-                                            return 'undefined';
-                                        }
-                                        return HTTP_GET_VARS[v];
-                                    }
                                     var memo_theme = '<?php echo $theme; ?>';
 
                                     var image_path = '<?php echo get_card_path_without_number($theme); ?>';
-                                    var cover = '<?php echo HOST_URL. '/' .TCG_CARDS_FOLDER . '/'.TCG_CARDS_FILLER_NAME.'.' . TCG_CARDS_FILE_TYPE; ?>';
-                                    var found = '<?php echo HOST_URL. '/' .TCG_CARDS_FOLDER . '/'.TCG_CARDS_FILLER_NAME.'.' . TCG_CARDS_FILE_TYPE; ?>';
+                                    var cover = '<?php echo HOST_URL . TCG_CARDS_FOLDER . '/'.TCG_CARDS_FILLER_NAME.'.' . TCG_CARDS_FILE_TYPE; ?>';
+                                    var found = '<?php echo HOST_URL . TCG_CARDS_FOLDER . '/'.TCG_CARDS_FILLER_NAME.'.' . TCG_CARDS_FILE_TYPE; ?>';
                                     var image_with = <?php echo TCG_CARDS_WIDTH; ?>;
 
                                     var valuation = 5;
@@ -233,9 +219,7 @@ if (isset($_SESSION['member_rank'])) {
                                                             }
                                                             output();
                                                             change_field(field, image_path + image_act_number + '.<?php echo TCG_CARDS_FILE_TYPE; ?>');
-                                                            //alert('<?php echo TRANSLATIONS[$GLOBALS['language']]['games']['text_memory_all_found']; ?>');
                                                             document.cookie = 'memory_points=' + points_count;
-                                                            //window.location.href = '<?php echo HOST_URL; ?>/games/skill/<?php echo $game_id; ?>';
                                                             document.memory.submit();
                                                         }
                                                     } else {
