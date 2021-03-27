@@ -117,6 +117,7 @@ if (isset($_SESSION['member_rank'])) {
                                     $filename_filler = TCG_CARDS_FOLDER . '/'.TCG_CARDS_FILLER_NAME.'.' . TCG_CARDS_FILE_TYPE;
                                     ?>
                                     <span class="card-wrapper own-card" <?php echo(file_exists('.' . $filename_filler) ? 'style="background-image:url(' . HOST_URL.$filename_filler . ');"' : ''); ?>></span>
+                                    <br /><?php echo get_member_link($member_id, '', true); ?>
                                 </div>
                                 <div class="form-group col col-12">
                                     <?php if (mysqli_num_rows($result_own_cards)) { ?>
@@ -157,6 +158,7 @@ if (isset($_SESSION['member_rank'])) {
                                     $filename = get_card($trade_card_carddeck_id, $trade_card_number, true);
                                     ?>
                                     <span class="card-wrapper trade-card" <?php echo(file_exists('.' . substr($filename, strlen(HOST_URL))) ? 'style="background-image:url(' . $filename . ');"' : ''); ?>></span>
+                                    <br /><?php echo get_member_link($trade_member_id, '', true); ?>
                                 </div>
                                 <div class="form-group col col-12">
                                     <div class="input-group">
@@ -168,14 +170,13 @@ if (isset($_SESSION['member_rank'])) {
                                         <input type="hidden" class="form-control" id="trade_card_id"
                                                name="trade_card_id"
                                                value="<?php echo $card_id; ?>"/>
-										<br><?php echo get_member_link($trade_member_id, '', true); ?>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col col-12 col-md-4 order-3 order-md-2 text-center">
                             <div class="row">
-                                <div class="form-group col col-12">
+                                <div class="form-group col col-12 trade-message-box">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="ariaDescribedbyTradeText"><?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_trade_message']; ?></span>
