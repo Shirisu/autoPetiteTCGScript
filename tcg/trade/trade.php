@@ -67,6 +67,9 @@ if (isset($_SESSION['member_rank'])) {
                     $text = TRANSLATIONS[$language]['trade']['text_log_trade_accept'].': '.$trade_card_name.' ('.TRANSLATIONS[$language]['trade']['text_log_trade_text_from'].' '.$trade_member_nick.') '.TRANSLATIONS[$language]['trade']['text_log_trade_text_against']. ' '.$own_card_name.' ('.TRANSLATIONS[$language]['trade']['text_log_trade_text_from'].' '.$trade_own_member_nick.')';
                     insert_log($topic, $text, $row_trade['trade_from_member_id']);
 
+                    // send message to owner of trade
+                    insert_message($_SESSION['member_id'], $row_trade['trade_from_member_id'], $topic, $text, 1);
+
                     // insert own log
                     $topic_own = TRANSLATIONS[$GLOBALS['language']]['trade']['text_accept_trade'];
                     $text_own = TRANSLATIONS[$GLOBALS['language']]['trade']['text_log_trade_accept'].': '.$trade_card_name.' ('.TRANSLATIONS[$GLOBALS['language']]['trade']['text_log_trade_text_from'].' '.$trade_member_nick.') '.TRANSLATIONS[$GLOBALS['language']]['trade']['text_log_trade_text_against']. ' '.$own_card_name.' ('.TRANSLATIONS[$GLOBALS['language']]['trade']['text_log_trade_text_from'].' '.$trade_own_member_nick.')';
@@ -115,6 +118,9 @@ if (isset($_SESSION['member_rank'])) {
                     $topic = TRANSLATIONS[$language]['trade']['text_decline_trade'];
                     $text = TRANSLATIONS[$language]['trade']['text_log_trade_decline'].': '.$trade_card_name.' ('.TRANSLATIONS[$language]['trade']['text_log_trade_text_from'].' '.$trade_member_nick.') '.TRANSLATIONS[$language]['trade']['text_log_trade_text_against']. ' '.$own_card_name.' ('.TRANSLATIONS[$language]['trade']['text_log_trade_text_from'].' '.$trade_own_member_nick.')';
                     insert_log($topic, $text, $row_trade['trade_from_member_id']);
+
+                    // send message to owner of trade
+                    insert_message($_SESSION['member_id'], $row_trade['trade_from_member_id'], $topic, $text, 1);
 
                     // insert own log
                     $topic_own = TRANSLATIONS[$GLOBALS['language']]['trade']['text_decline_trade'];
