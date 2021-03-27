@@ -168,6 +168,7 @@ if (isset($_SESSION['member_rank'])) {
                                         <input type="hidden" class="form-control" id="trade_card_id"
                                                name="trade_card_id"
                                                value="<?php echo $card_id; ?>"/>
+										<br><?php echo get_member_link($trade_member_id, '', true); ?>
                                     </div>
                                 </div>
                             </div>
