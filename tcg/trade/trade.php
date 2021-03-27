@@ -276,7 +276,7 @@ if (isset($_SESSION['member_rank'])) {
                                             class="card-wrapper" <?php echo(file_exists('.' . substr($filename, strlen(HOST_URL))) ? 'style="background-image:url(' . $filename . ');"' : ''); ?>></span>
                                     </td>
                                     <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_trade['trade_date']); ?></td>
-                                    <td><?php echo nl2br($row_trade['trade_text']); ?></td>
+                                    <td><div class="overflow-auto"><?php echo nl2br($row_trade['trade_text']); ?></div></td>
                                     <td>
                                         <?php
                                         if ($trade_box_type == 'inbox') {

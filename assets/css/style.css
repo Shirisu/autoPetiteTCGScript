@@ -219,6 +219,12 @@ details summary:focus {
 .bootstrap-table .fixed-table-container .table tbody tr .card-view .card-view-value {
     padding-left: 5px;
 }
+.bootstrap-table .fixed-table-container .table tbody .overflow-auto {
+    max-height: 200px;
+}
+.bootstrap-table .fixed-table-container .table th[data-field="message"] {
+    width: 25%;
+}
 
 
 /**
