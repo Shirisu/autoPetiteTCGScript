@@ -72,16 +72,16 @@ function alert_box($text, $type = 'secondary') {
           </div>';
 }
 
-function navlink($name,$url) {
-    echo '<a class="dropdown-item" href="'.HOST_URL.'/'.$url.'">'.$name.'</a>';
+function navlink($name, $url, $classname = 'dropdown-item') {
+    echo '<a class="'.$classname.'" href="'.HOST_URL.'/'.$url.'">'.$name.'</a>';
 }
 
-function navlink_language($name,$language) {
+function navlink_language($name, $language) {
     echo '<a class="dropdown-item switch-language" href="#" data-language="'.$language.'">'.$name.'</a>';
 }
 
-function navilink($name,$url,$icon = null) {
-    echo '<a class="list-group-item list-group-item-action bg-light" href="'.HOST_URL.'/'.$url.'">'.($icon ? '<i class="fas fa-'.$icon.'"></i> ' : '').''.$name.'</a>';
+function navilink($name, $url, $classname = 'list-group-item list-group-item-action bg-light', $icon = null) {
+    echo '<a class="'.$classname.'" href="'.HOST_URL.'/'.$url.'">'.($icon ? '<i class="'.$icon.'"></i> ' : '').''.$name.'</a>';
 }
 
 function breadcrumb($breadcrumb_array) {

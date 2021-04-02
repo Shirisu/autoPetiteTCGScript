@@ -50,25 +50,23 @@
             max-width: <?php echo (TCG_CARDS_WIDTH + 24); ?>px;
         }
     </style>
+
+    <?php
+    $filename = "templates/".TCG_TEMPLATE."/_include_styles.php";
+    if (file_exists($filename)) {
+        require_once($filename);
+    } else {
+        require_once("templates/1/_include_styles.php");
+    }
+    ?>
 </head>
 <body>
 
-<div class="d-flex" id="wrapper">
-    <div class="bg-light border-right" id="sidebar-wrapper">
-        <div class="sidebar-heading">
-            <a href="<?php echo HOST_URL; ?>"><?php echo TCG_NAME; ?></a>
-        </div>
-        <div class="list-group list-group-flush">
-            <?php
-            // sidebar navigation
-            require_once("inc/navigation/sidebar.php");
-            ?>
-        </div>
-    </div>
-
-    <div id="page-content-wrapper">
-        <?php
-        // top navigation
-        require_once("inc/navigation/header.php");
-        ?>
-        <div class="container-fluid mt-3">
+<?php
+$filename = "templates/".TCG_TEMPLATE."/header.php";
+if (file_exists($filename)) {
+    require_once($filename);
+} else {
+    require_once("templates/1/header.php");
+}
+?>

@@ -1,0 +1,1 @@
+<link rel="stylesheet" href="<?php echo HOST_URL; ?>/templates/1/assets/css/style.css?<?php echo date('YmdH', time()); ?>" type="text/css" />

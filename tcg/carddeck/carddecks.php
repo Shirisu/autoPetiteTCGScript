@@ -116,7 +116,6 @@ if (isset($_SESSION['member_rank'])) {
                     </div>
                 </div>
             </div>
-        </div>
         <div class="col col-12">
             <?php
             if ($count_carddeck) {
