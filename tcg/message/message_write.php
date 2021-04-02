@@ -138,7 +138,8 @@ if (isset($_SESSION['member_rank'])) {
             $sql_member = "SELECT member_id, member_nick
                        FROM member
                        WHERE member_active = 1
-                         AND member_id != '" . $member_id . "'";
+                         AND member_id != '" . $member_id . "'
+                       ORDER BY member_nick ASC";
             $result_member = mysqli_query($link, $sql_member) OR die(mysqli_error($link));
             ?>
             <form action="<?php echo HOST_URL; ?>/message/write" method="post">
