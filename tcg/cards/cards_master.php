@@ -30,10 +30,11 @@ if (isset($_SESSION['member_rank'])) {
         </div>
         <div class="col col-12 mb-3 cards-sorting-container">
             <?php
-            $sql_cards = "SELECT carddeck_id, carddeck_name, member_master_date
+            $sql_cards = "SELECT carddeck_id, carddeck_name, member_master_date, carddeck_active
                           FROM member_master
                           JOIN carddeck ON carddeck_id = member_master_carddeck_id
                           WHERE member_master_member_id = '".$member_id."'
+                            AND carddeck_active = 1
                           ORDER BY carddeck_name ASC";
             $result_cards = mysqli_query($link, $sql_cards) OR die(mysqli_error($link));
             $count_cards = mysqli_num_rows($result_cards);
@@ -52,20 +53,37 @@ if (isset($_SESSION['member_rank'])) {
                             <tbody>
                             <?php
                             while ($row_cards = mysqli_fetch_assoc($result_cards)) {
-                                $carddeck_id = $row_cards['carddeck_id'];
-                                $carddeck_name = $row_cards['carddeck_name'];
-                                $master_date = $row_cards['member_master_date'];
-                                ?>
-                                <tr>
-                                    <td class="d-none"><?php echo $carddeck_name; ?></td>
-                                    <td>
-                                        <div class="cards-sorting-wrapper">
-                                            <a class="carddeck-link" href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>"><?php echo get_card($carddeck_id, 'master'); ?></a><br />
-                                            <small><span class="mastered"><i class="fas fa-medal"></i></span> <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_mastered_on']; ?> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $master_date); ?></small>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <?php
+                                if ($row_cards['carddeck_active'] == 0) {
+                                    ?>
+                                    <tr>
+                                        <td class="d-none"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_unkown']; ?></td>
+                                        <td>
+                                            <div class="cards-sorting-wrapper">
+                                                <?php echo get_card(0, 'master'); ?><br/>
+                                                <small><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_unkown']; ?></small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                } else {
+                                    $carddeck_id = $row_cards['carddeck_id'];
+                                    $carddeck_name = $row_cards['carddeck_name'];
+                                    $master_date = $row_cards['member_master_date'];
+                                    ?>
+                                    <tr>
+                                        <td class="d-none"><?php echo $carddeck_name; ?></td>
+                                        <td>
+                                            <div class="cards-sorting-wrapper">
+                                                <a class="carddeck-link"
+                                                   href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>"><?php echo get_card($carddeck_id, 'master'); ?></a><br/>
+                                                <small><span class="mastered"><i
+                                                            class="fas fa-medal"></i></span> <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_mastered_on']; ?> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $master_date); ?>
+                                                </small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
                             }
                             ?>
                             </tbody>

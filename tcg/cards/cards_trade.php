@@ -90,7 +90,7 @@ if (isset($_SESSION['member_rank'])) {
         </div>
         <div class="col col-12 mb-3 cards-sorting-container">
             <?php
-            $sql_cards = "SELECT member_cards_id, member_cards_number, carddeck_id, carddeck_name,
+            $sql_cards = "SELECT member_cards_id, member_cards_number, carddeck_id, carddeck_name, carddeck_active,
                              EXISTS (SELECT member_cards_id
                               FROM member_cards
                               WHERE member_cards_member_id = '".$member_id."'
@@ -121,6 +121,7 @@ if (isset($_SESSION['member_rank'])) {
                           WHERE member_cards_member_id = '".$member_id."'
                             AND member_cards_cat = '".MEMBER_CARDS_TRADE."'
                             AND member_cards_active = 1
+                            AND carddeck_active = 1
                           ORDER BY carddeck_name, member_cards_number ASC";
             $result_cards = mysqli_query($link, $sql_cards) OR die(mysqli_error($link));
             $count_cards = mysqli_num_rows($result_cards);
@@ -140,57 +141,85 @@ if (isset($_SESSION['member_rank'])) {
                                 <tbody>
                                 <?php
                                 while ($row_cards = mysqli_fetch_assoc($result_cards)) {
-                                    $card_id = $row_cards['member_cards_id'];
-                                    $carddeck_id = $row_cards['carddeck_id'];
-                                    $carddeck_name = $row_cards['carddeck_name'];
-                                    $cardnumber_plain = $row_cards['member_cards_number'];
-                                    $cardnumber = sprintf("%'.02d", $cardnumber_plain);
-                                    $carddeck_in_collect = $row_cards['carddeck_in_collect'];
-                                    $card_already_in_collect = $row_cards['card_already_in_collect'];
-                                    $carddeck_on_wishlist = $row_cards['carddeck_on_wishlist'];
-                                    $carddeck_already_mastered = $row_cards['carddeck_already_mastered'];
-
-                                    if ($carddeck_already_mastered == 1) {
-                                        $trade_selected = true;
-                                        $collect_selected = false;
-                                        $hide_collect = true;
-                                    } elseif ($carddeck_in_collect == 1 && $card_already_in_collect == 1) {
-                                        $trade_selected = true;
-                                        $collect_selected = false;
-                                        $hide_collect = true;
-                                    } elseif (
-                                        ($carddeck_in_collect == 1 && $card_already_in_collect == 0) ||
-                                        ($carddeck_on_wishlist == 1 && $carddeck_in_collect == 0)
-                                    ) {
-                                        $trade_selected = false;
-                                        $collect_selected = true;
-                                        $hide_collect = false;
-                                    } else {
-                                        $trade_selected = false;
-                                        $collect_selected = false;
-                                        $hide_collect = false;
-                                    }
-                                    ?>
-                                    <tr>
-                                        <td class="d-none"><?php echo $carddeck_name.$cardnumber; ?></td>
-                                        <td>
-                                            <div class="cards-sorting-wrapper<?php echo ($carddeck_already_mastered == 1 ? ' mastered' : ''); ?>">
-                                                <?php echo get_card($carddeck_id, $cardnumber_plain); ?>
-                                                <a class="carddeck-link" href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>"><small><?php echo $carddeck_name.$cardnumber; ?></small></a>
-                                                <br />
-                                                <div class="form-group mt-2">
-                                                    <div class="input-group">
-                                                        <select class="custom-select" id="card_category[]" name="card_category[]" aria-describedby="ariaDescribedbyLanguage" required>
-                                                            <option value="3" <?php echo ($trade_selected ? 'selected' : ''); ?>>Trade</option>
-                                                            <?php if ($hide_collect == false) { ?><option value="2" <?php echo ($collect_selected ? 'selected' : ''); ?>>Collect</option><?php } ?>
-                                                        </select>
-                                                    </div>
+                                    if ($row_cards['carddeck_active'] == 0) {
+                                        ?>
+                                        <tr>
+                                            <td class="d-none"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_unkown']; ?></td>
+                                            <td>
+                                                <div
+                                                    class="cards-sorting-wrapper">
+                                                    <?php echo get_card(); ?>
+                                                    <small><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_unkown']; ?></small>
                                                 </div>
-                                                <input type="hidden" id="card_id[]" name="card_id[]" value="<?php echo $card_id; ?>"/>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <?php
+                                            </td>
+                                        </tr>
+                                        <?php
+                                    } else {
+                                        $card_id = $row_cards['member_cards_id'];
+                                        $carddeck_id = $row_cards['carddeck_id'];
+                                        $carddeck_name = $row_cards['carddeck_name'];
+                                        $cardnumber_plain = $row_cards['member_cards_number'];
+                                        $cardnumber = sprintf("%'.02d", $cardnumber_plain);
+                                        $carddeck_in_collect = $row_cards['carddeck_in_collect'];
+                                        $card_already_in_collect = $row_cards['card_already_in_collect'];
+                                        $carddeck_on_wishlist = $row_cards['carddeck_on_wishlist'];
+                                        $carddeck_already_mastered = $row_cards['carddeck_already_mastered'];
+
+                                        if ($carddeck_already_mastered == 1) {
+                                            $trade_selected = true;
+                                            $collect_selected = false;
+                                            $hide_collect = true;
+                                        } elseif ($carddeck_in_collect == 1 && $card_already_in_collect == 1) {
+                                            $trade_selected = true;
+                                            $collect_selected = false;
+                                            $hide_collect = true;
+                                        } elseif (
+                                            ($carddeck_in_collect == 1 && $card_already_in_collect == 0) ||
+                                            ($carddeck_on_wishlist == 1 && $carddeck_in_collect == 0)
+                                        ) {
+                                            $trade_selected = false;
+                                            $collect_selected = true;
+                                            $hide_collect = false;
+                                        } else {
+                                            $trade_selected = false;
+                                            $collect_selected = false;
+                                            $hide_collect = false;
+                                        }
+                                        ?>
+                                        <tr>
+                                            <td class="d-none"><?php echo $carddeck_name . $cardnumber; ?></td>
+                                            <td>
+                                                <div
+                                                    class="cards-sorting-wrapper<?php echo($carddeck_already_mastered == 1 ? ' mastered' : ''); ?>">
+                                                    <?php echo get_card($carddeck_id, $cardnumber_plain); ?>
+                                                    <a class="carddeck-link"
+                                                       href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>">
+                                                        <small><?php echo $carddeck_name . $cardnumber; ?></small>
+                                                    </a>
+                                                    <br/>
+                                                    <div class="form-group mt-2">
+                                                        <div class="input-group">
+                                                            <select class="custom-select" id="card_category[]"
+                                                                    name="card_category[]"
+                                                                    aria-describedby="ariaDescribedbyLanguage" required>
+                                                                <option
+                                                                    value="3" <?php echo($trade_selected ? 'selected' : ''); ?>>
+                                                                    Trade
+                                                                </option>
+                                                                <?php if ($hide_collect == false) { ?>
+                                                                    <option
+                                                                    value="2" <?php echo($collect_selected ? 'selected' : ''); ?>>
+                                                                        Collect</option><?php } ?>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" id="card_id[]" name="card_id[]"
+                                                           value="<?php echo $card_id; ?>"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                    }
                                 }
                                 ?>
                                 </tbody>

@@ -43,12 +43,13 @@ if (isset($_SESSION['member_rank'])) {
                 </div>
                 <div class="col col-12 mb-3 member-cards-container">
                     <?php
-                    $sql_cards = "SELECT member_cards_carddeck_id, carddeck_name, carddeck_is_puzzle
+                    $sql_cards = "SELECT member_cards_carddeck_id, carddeck_name, carddeck_is_puzzle, carddeck_active
                                   FROM member_cards
                                   JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                                   WHERE member_cards_member_id = '".$member_id."'
                                     AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
                                     AND member_cards_active = 1
+                                    AND carddeck_active = 1
                                   GROUP BY member_cards_carddeck_id
                                   ORDER BY carddeck_name ASC";
                     $result_cards = mysqli_query($link, $sql_cards) OR die(mysqli_error($link));
@@ -66,54 +67,89 @@ if (isset($_SESSION['member_rank'])) {
                             <tbody>
                             <?php
                             while ($row_cards = mysqli_fetch_assoc($result_cards)) {
-                                $carddeck_name = $row_cards['carddeck_name'];
+                                if ($row_cards['carddeck_active'] == 0) {
+                                    ?>
+                                    <tr>
+                                        <td class="d-none"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_unkown']; ?></td>
+                                        <td>
+                                            <small><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_unkown']; ?></small>
+                                            <div class="carddeck-wrapper"
+                                                 data-is-puzzle="<?php echo($row_cards['carddeck_is_puzzle'] ? $row_cards['carddeck_is_puzzle'] : 0); ?>">
+                                                <?php
+                                                for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
+                                                    $filename = get_card($row_cards['member_cards_carddeck_id'], $i, true);
+                                                    ?>
+                                                    <span class="card-wrapper"></span>
+                                                    <?php
+                                                    if (($i % TCG_CARDS_PER_ROW) == 0) {
+                                                        ?>
+                                                        <br/>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                } else {
+                                    $carddeck_name = $row_cards['carddeck_name'];
 
-                                $cardnumbers = array();
-                                $sql_card_number = "SELECT member_cards_number
+                                    $cardnumbers = array();
+                                    $sql_card_number = "SELECT member_cards_number
                                                     FROM member_cards
-                                                    WHERE member_cards_member_id = '".$member_id."'
-                                                      AND member_cards_carddeck_id = '".$row_cards['member_cards_carddeck_id']."'
-                                                      AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
+                                                    WHERE member_cards_member_id = '" . $member_id . "'
+                                                      AND member_cards_carddeck_id = '" . $row_cards['member_cards_carddeck_id'] . "'
+                                                      AND member_cards_cat = '" . MEMBER_CARDS_COLLECT . "'
                                                       AND member_cards_active = 1
                                                     GROUP BY member_cards_number
                                                     ORDER BY member_cards_number ASC";
-                                $result_card_number = mysqli_query($link, $sql_card_number) OR die(mysqli_error($link));
-                                $count_card_number = mysqli_num_rows($result_card_number);
-                                if ($count_card_number) {
-                                    while ($row_card_number = mysqli_fetch_assoc($result_card_number)) {
-                                        array_push($cardnumbers, $row_card_number['member_cards_number']);
+                                    $result_card_number = mysqli_query($link, $sql_card_number) OR die(mysqli_error($link));
+                                    $count_card_number = mysqli_num_rows($result_card_number);
+                                    if ($count_card_number) {
+                                        while ($row_card_number = mysqli_fetch_assoc($result_card_number)) {
+                                            array_push($cardnumbers, $row_card_number['member_cards_number']);
+                                        }
                                     }
+                                    ?>
+                                    <tr>
+                                        <td class="d-none"><?php echo $carddeck_name; ?> <?php echo count($cardnumbers); ?>
+                                            /<?php echo TCG_CARDDECK_MAX_CARDS; ?></td>
+                                        <td>
+                                            <small><a
+                                                    href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>">[<?php echo strtoupper($carddeck_name); ?>
+                                                    ]</a> (<?php echo count($cardnumbers); ?>
+                                                /<?php echo TCG_CARDDECK_MAX_CARDS; ?>)
+                                            </small>
+                                            <div class="carddeck-wrapper"
+                                                 data-is-puzzle="<?php echo($row_cards['carddeck_is_puzzle'] ? $row_cards['carddeck_is_puzzle'] : 0); ?>">
+                                                <?php
+                                                for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
+                                                    if (in_array($i, $cardnumbers)) {
+                                                        $filename = get_card($row_cards['member_cards_carddeck_id'], $i, true);
+                                                        ?>
+                                                        <span
+                                                            class="card-wrapper" <?php echo(file_exists('.' . substr($filename, strlen(HOST_URL))) ? 'style="background-image:url(' . $filename . ');"' : ''); ?>></span>
+                                                        <?php
+                                                    } else {
+                                                        $filename_filler = TCG_CARDS_FOLDER . '/' . TCG_CARDS_FILLER_NAME . '.' . TCG_CARDS_FILE_TYPE;
+                                                        ?>
+                                                        <span
+                                                            class="card-wrapper" <?php echo(file_exists('.' . $filename_filler) ? 'style="background-image:url(' . HOST_URL . $filename_filler . ');"' : ''); ?>></span>
+                                                        <?php
+                                                    }
+                                                    if (($i % TCG_CARDS_PER_ROW) == 0) {
+                                                        ?>
+                                                        <br/>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php
                                 }
-                                ?>
-                                <tr>
-                                    <td class="d-none"><?php echo $carddeck_name; ?> <?php echo count($cardnumbers); ?>/<?php echo TCG_CARDDECK_MAX_CARDS; ?></td>
-                                    <td>
-                                        <small><a href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>">[<?php echo strtoupper($carddeck_name); ?>]</a> (<?php echo count($cardnumbers); ?>/<?php echo TCG_CARDDECK_MAX_CARDS; ?>)</small>
-                                        <div class="carddeck-wrapper" data-is-puzzle="<?php echo ($row_cards['carddeck_is_puzzle'] ? $row_cards['carddeck_is_puzzle'] : 0); ?>">
-                                            <?php
-                                            for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
-                                                if (in_array($i, $cardnumbers)) {
-                                                    $filename = get_card($row_cards['member_cards_carddeck_id'], $i, true);
-                                                    ?>
-                                                    <span class="card-wrapper" <?php echo(file_exists('.' . substr($filename, strlen(HOST_URL))) ? 'style="background-image:url(' . $filename . ');"' : ''); ?>></span>
-                                                    <?php
-                                                } else {
-                                                    $filename_filler = TCG_CARDS_FOLDER . '/'.TCG_CARDS_FILLER_NAME.'.' . TCG_CARDS_FILE_TYPE;
-                                                    ?>
-                                                    <span class="card-wrapper" <?php echo(file_exists('.' . $filename_filler) ? 'style="background-image:url(' . HOST_URL.$filename_filler . ');"' : ''); ?>></span>
-                                                    <?php
-                                                }
-                                                if (($i % TCG_CARDS_PER_ROW) == 0) {
-                                                    ?>
-                                                    <br />
-                                                    <?php
-                                                }
-                                            }
-                                            ?>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <?php
                             }
                             ?>
                             </tbody>

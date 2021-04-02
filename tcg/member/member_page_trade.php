@@ -46,7 +46,7 @@ if (isset($_SESSION['member_rank'])) {
                     $can_use_sum = (MYSQL_VERSION >= 'mysqlnd 8.0.0' ? true : false);
 
                     if ($can_use_sum) {
-                        $sql_cards = "SELECT MIN(member_cards_id) as member_cards_id, member_cards_number, carddeck_id, carddeck_name,
+                        $sql_cards = "SELECT MIN(member_cards_id) as member_cards_id, member_cards_number, carddeck_id, carddeck_name, carddeck_active,
                                         COUNT(*) AS card_count,
                                         SUM(COUNT(member_cards_number)) OVER() AS total_card_count
                                     FROM member_cards mc
@@ -54,6 +54,7 @@ if (isset($_SESSION['member_rank'])) {
                                     WHERE member_cards_member_id = '".$member_id."'
                                       AND member_cards_cat = '".MEMBER_CARDS_TRADE."'
                                       AND member_cards_active = 1
+                                      AND carddeck_active = 1
                                     GROUP BY member_cards_carddeck_id, member_cards_number
                                     ORDER BY carddeck_name, member_cards_number ASC";
                     } else {
@@ -65,13 +66,14 @@ if (isset($_SESSION['member_rank'])) {
                         $result_count_cards = mysqli_query($link, $sql_count_cards) OR die(mysqli_error($link));
                         $count_count_cards = mysqli_num_rows($result_count_cards);
 
-                        $sql_cards = "SELECT MIN(member_cards_id) as member_cards_id, member_cards_number, carddeck_id, carddeck_name,
+                        $sql_cards = "SELECT MIN(member_cards_id) as member_cards_id, member_cards_number, carddeck_id, carddeck_name, carddeck_active,
                                         COUNT(*) AS card_count
                                     FROM member_cards mc
                                     JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                                     WHERE member_cards_member_id = '".$member_id."'
                                       AND member_cards_cat = '".MEMBER_CARDS_TRADE."'
                                       AND member_cards_active = 1
+                                      AND carddeck_active = 1
                                     GROUP BY member_cards_carddeck_id, member_cards_number
                                     ORDER BY carddeck_name, member_cards_number ASC";
                     }
@@ -93,22 +95,41 @@ if (isset($_SESSION['member_rank'])) {
                             <tbody>
                             <?php
                             while ($row_cards = mysqli_fetch_assoc($result_cards)) {
-                                $carddeck_id = $row_cards['carddeck_id'];
-                                $carddeck_name = $row_cards['carddeck_name'];
-                                $cardnumber_plain = $row_cards['member_cards_number'];
-                                $cardnumber = sprintf("%'.02d", $cardnumber_plain);
-                                $card_count = $row_cards['card_count'];
-                                ?>
-                                <tr>
-                                    <td class="d-none"><?php echo $carddeck_name.$cardnumber; ?></td>
-                                    <td>
-                                        <div class="profile-cards-wrapper<?php echo ($card_count > 1 ? ' show-counter" data-count="'.$card_count.'x' : ''); ?>">
-                                            <?php echo ($member_id != $_SESSION['member_id'] ? '<a href="'.HOST_URL.'/trade/'.$member_id.'/'.$row_cards['member_cards_id'].'">' : ''); ?><?php echo get_card($carddeck_id, $cardnumber_plain); ?><?php echo ($member_id != $_SESSION['member_id'] ? '</a>' : ''); ?>
-                                            <a class="carddeck-link" href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>"><small><?php echo $carddeck_name.$cardnumber; ?></small></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <?php
+                                if ($row_cards['carddeck_active'] == 0) {
+                                    ?>
+                                    <tr>
+                                        <td class="d-none"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_unkown']; ?></td>
+                                        <td>
+                                            <div
+                                                class="profile-cards-wrapper">
+                                                <?php echo get_card(); ?>
+                                                <small><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_unkown']; ?></small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                } else {
+                                    $carddeck_id = $row_cards['carddeck_id'];
+                                    $carddeck_name = $row_cards['carddeck_name'];
+                                    $cardnumber_plain = $row_cards['member_cards_number'];
+                                    $cardnumber = sprintf("%'.02d", $cardnumber_plain);
+                                    $card_count = $row_cards['card_count'];
+                                    ?>
+                                    <tr>
+                                        <td class="d-none"><?php echo $carddeck_name . $cardnumber; ?></td>
+                                        <td>
+                                            <div
+                                                class="profile-cards-wrapper<?php echo($card_count > 1 ? ' show-counter" data-count="' . $card_count . 'x' : ''); ?>">
+                                                <?php echo($member_id != $_SESSION['member_id'] ? '<a href="' . HOST_URL . '/trade/' . $member_id . '/' . $row_cards['member_cards_id'] . '">' : ''); ?><?php echo get_card($carddeck_id, $cardnumber_plain); ?><?php echo($member_id != $_SESSION['member_id'] ? '</a>' : ''); ?>
+                                                <a class="carddeck-link"
+                                                   href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>">
+                                                    <small><?php echo $carddeck_name . $cardnumber; ?></small>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
                             }
                             ?>
                             </tbody>
