@@ -1,0 +1,168 @@
+/**
+* basic style
+**/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-bottom: 1.5rem;
+}
+
+h1,
+.heading1 {
+    font-size: 1.75rem;
+    line-height: 2rem;
+}
+h2,
+.heading2 {
+    font-size: 1.5rem;
+    line-height: 1.75rem;
+}
+h3,
+.heading3 {
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+}
+
+@media (max-width: 1023px) {
+    h1,
+    .heading1 {
+        font-size: 1.5rem;
+        line-height: 1.75rem;
+    }
+    h2,
+    .heading2 {
+        font-size: 1.25rem;
+        line-height: 1.5rem;
+    }
+    h3,
+    .heading3 {
+        font-size: 1rem;
+        line-height: 1.25rem;
+    }
+}
+
+/**
+* layout style
+**/
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 40px;
+}
+
+.breadcrumb {
+    font-size: 80%;
+    padding: 0 0 0.75rem;
+    background: none;
+    border-bottom: 1px dotted #ced4da;
+    border-radius: 0;
+}
+
+#sidebar-wrapper {
+    min-height: calc(100vh - 40px);
+    margin-left: -15rem;
+    transition: margin .25s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+    padding: 0.875rem 1.25rem;
+    font-size: 1.2rem;
+}
+#sidebar-wrapper .sidebar-subheading {
+    padding: 0.875rem 1.25rem 0;
+    font-size: 1rem;
+}
+
+#sidebar-wrapper .list-group {
+    width: 15rem;
+}
+
+#page-content-wrapper {
+    min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: 0;
+}
+
+@media (min-width: 768px) {
+    #sidebar-wrapper {
+        margin-left: 0;
+    }
+
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: -15rem;
+    }
+}
+
+#menu-toggle i::before {
+    content: "\f100";
+}
+.toggled #menu-toggle i::before {
+    content: "\f101";
+}
+@media (max-width: 767px) {
+    #menu-toggle i::before {
+        content: "\f101";
+    }
+    .toggled #menu-toggle i::before {
+        content: "\f100";
+    }
+    #top-menu-toggle.collapsed i:before {
+        content: '\f0c9';
+    }
+    #top-menu-toggle i:before {
+        content:'\f00d';
+    }
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    font-size: 75%;
+    line-height: 40px;
+    background-color: #f8f9fa;
+}
+
+
+.form-required::after {
+    content: '*';
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 25px;
+    line-height: 38px;
+}
+.form-control:disabled, .form-control[readonly] {
+    background-color: #f4f5f7;
+}
+.input-group-prepend {
+    /*width: 22%;*/
+}
+.input-group-prepend .input-group-text {
+    width: 100%;
+    font-weight: bold;
+}
+
+@media (max-width: 1023px) {
+    .input-group-prepend {
+        width: 33%;
+    }
+
+    .input-group-prepend .input-group-text {
+        overflow-x: auto;
+    }
+}

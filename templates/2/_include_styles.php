@@ -1,0 +1,2 @@
+<link rel="stylesheet" href="<?php echo HOST_URL; ?>/templates/2/assets/css/light-bootstrap-dashboard.css" type="text/css" />
+<link rel="stylesheet" href="<?php echo HOST_URL; ?>/templates/2/assets/css/style.css?<?php echo date('YmdH', time()); ?>" type="text/css" />

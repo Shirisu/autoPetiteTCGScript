@@ -1,0 +1,1 @@
+<script src="<?php echo HOST_URL; ?>/templates/1/assets/js/script.js" type="text/javascript"></script>

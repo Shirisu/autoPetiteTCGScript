@@ -84,6 +84,10 @@ You can define some settings in the [constants.php](https://github.com/Shirisu/a
   - accepted values: from `1` to whatever you like
 - **TCG_SLOGAN**
   - for title-attribute & meta title
+- **TCG_TEMPLATE** - default: `1`
+  - switch template
+  - accepted values: `1`, `2`
+  - which template you want to use
 - **TCG_WISH** - default: `'Wish'`
   - wish name
   - accepted values: whatever you like

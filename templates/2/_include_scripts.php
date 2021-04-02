@@ -1,0 +1,2 @@
+<script src="<?php echo HOST_URL; ?>/templates/2/assets/js/light-bootstrap-dashboard.js" type="text/javascript"></script>
+<script src="<?php echo HOST_URL; ?>/templates/2/assets/js/script.js" type="text/javascript"></script>

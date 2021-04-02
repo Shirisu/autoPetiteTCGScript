@@ -19,6 +19,8 @@ define('TCG_NAME', 'autoPetiteTCGScript'); // for title-attribute & meta title
 define('TCG_SLOGAN', 'a simple mini Trading Card Game'); // for title-attribute & meta title
 define('TCG_META_TITLE', TCG_NAME .' :: '.TCG_SLOGAN); // title-tag & meta title
 
+define('TCG_TEMPLATE', 1); // which template you want to use (1 is the main template)
+
 define('TCG_CARDS_FILE_TYPE', 'png'); // file type for cards (allowed types: gif, jpg, png - use only one!)
 define('TCG_CARDS_FILLER_NAME', 'filler'); // name of the filler/search card - should be placed in the the folder "/assets/cards/"
 define('TCG_CARDS_HEIGHT', 100); // height of card

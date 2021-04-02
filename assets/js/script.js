@@ -16,12 +16,6 @@ function create_toast(id, icon, title, text) {
 }
 
 $(document).ready(function() {
-    // toggle sidebar
-    $('#menu-toggle').on('click', function(e) {
-        e.preventDefault();
-        $('#wrapper').toggleClass('toggled');
-    });
-
     // switch language
     $('.switch-language').on('click', function(e) {
         e.preventDefault();
