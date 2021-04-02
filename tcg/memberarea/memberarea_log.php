@@ -14,6 +14,7 @@ if (isset($_SESSION['member_rank'])) {
     $sql_log = "SELECT member_log_date, member_log_cat, member_log_text
                 FROM member_log
                 WHERE member_log_member_id  = '".$member_id."'
+                  AND DATE_ADD(FROM_UNIXTIME(member_log_date), INTERVAL 14 DAY) >= NOW()
                 ORDER BY member_log_date DESC";
     $result_log = mysqli_query($link, $sql_log) OR die(mysqli_error($link));
     $count_log = mysqli_num_rows($result_log);
@@ -38,7 +39,7 @@ if (isset($_SESSION['member_rank'])) {
                         <tr>
                             <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_log['member_log_date']); ?></td>
                             <td><?php echo $row_log['member_log_cat']; ?></td>
-                            <td><?php echo nl2br($row_log['member_log_text']); ?></td>
+                            <td><div class="overflow-auto"><?php echo nl2br($row_log['member_log_text']); ?></div></td>
                         </tr>
                         <?php
                     }
