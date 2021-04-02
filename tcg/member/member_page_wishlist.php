@@ -49,6 +49,7 @@ if (isset($_SESSION['member_rank'])) {
                                      JOIN carddeck_cat ON carddeck_cat_id = carddeck_cat
                                      JOIN carddeck_sub_cat ON carddeck_sub_cat_id = carddeck_sub_cat
                                      WHERE member_wishlist_member_id = '".$member_id."'
+                                       AND carddeck_active = 1
                                      ORDER BY carddeck_name ASC";
                     $result_wishlist = mysqli_query($link, $sql_wishlist) OR die(mysqli_error($link));
                     $count_wishlist = mysqli_num_rows($result_wishlist);

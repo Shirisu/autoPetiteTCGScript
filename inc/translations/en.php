@@ -249,6 +249,7 @@ trading card game
         'text_text_snippet' => 'Text snippet',
         'text_title' => 'Title',
         'text_trade' => 'Trades',
+        'text_unkown' => 'unkown',
         'text_userarea' => 'User area',
         'text_wishlist' => 'Wishlist',
         'text_year' => 'Year',

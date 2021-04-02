@@ -232,7 +232,7 @@ function get_member_nick_plain($member_id) {
     return 'unkown';
 }
 
-function get_card($carddeck_id, $card_number, $show_only_url = false, $show_inactive = false) {
+function get_card($carddeck_id = 0, $card_number = 0, $show_only_url = false, $show_inactive = false) {
     global $link;
 
     $active_query_string = ($show_inactive ? '' : 'AND carddeck_active = 1');
@@ -262,6 +262,12 @@ function get_card($carddeck_id, $card_number, $show_only_url = false, $show_inac
                 return '<img class="card-wrapper" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="'.$carddeck_name.$card_number.'" />';
             }
         }
+    } else {
+        $masterclass = '';
+        if ($card_number == 'master') {
+            $masterclass = ' mastercard';
+        }
+        return '<img class="card-wrapper'.$masterclass.'" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" />';
     }
 }
 

@@ -65,7 +65,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
 
     $sql_member = "SELECT member_id, member_nick
                    FROM member
-                   WHERE member_active = 1
+                   WHERE member_active != 3
                    ORDER BY member_nick ASC";
     $result_member = mysqli_query($link, $sql_member) OR die(mysqli_error($link));
 
