@@ -13,6 +13,17 @@ Current version: 2.0.0
 ![Lines of code](https://img.shields.io/tokei/lines/github/Shirisu/autoPetiteTCGScript)
 
 
+## Table of contents
+
+* [how to setup](#how-to-setup)
+* [features](#features)
+* [possible features in the future](#possible-features-in-the-future)
+* [requirements](#requirements)
+* [used frameworks, libraries and others](#used-frameworks-libraries-and-others)
+* [credits for the script](#credits-for-the-script)
+* [sites that use the script](#sites-that-use-the-script)
+
+
 ## how to setup
 - download the files
 - go to `inc/connection.php` and adjust the database settings (you need MySQLi)
@@ -128,3 +139,7 @@ Current version: 2.0.0
 
 ## credits for the script
 - Shirisu (also known as Etna or Pleinar) - [Github](https://github.com/Shirisu/)
+
+
+## sites that use the script
+- [Witch Heaven TCG](https://tcg.jadestaub.de)
