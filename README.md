@@ -126,7 +126,7 @@ Current version: 2.0.0
 
 # requirements
 - MySQL 5.7 or higher
-- PHP 7.4 or higher
+- PHP 7.2 or higher
 
 
 ## used frameworks, libraries and others
