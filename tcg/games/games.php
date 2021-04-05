@@ -29,7 +29,9 @@ if (isset($_SESSION['member_rank'])) {
                         $sql_cat = "SELECT carddeck_cat_id, carddeck_cat_name
                                     FROM carddeck_cat
                                     JOIN carddeck ON carddeck_cat = carddeck_cat_id
+                                    WHERE carddeck_active = 1
                                     GROUP BY carddeck_cat_id
+                                    HAVING COUNT(carddeck_id) >= 3
                                     ORDER BY carddeck_cat_name";
                         $result_cat = mysqli_query($link, $sql_cat) OR die(mysqli_error($link));
                         if (mysqli_num_rows($result_cat)) {
