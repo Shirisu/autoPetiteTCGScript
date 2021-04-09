@@ -203,7 +203,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                         <span class="input-group-text" id="ariaDescribedbyMastercard">Mastercard</span>
                     </div>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="masterCardFile" name="masterCardFile" aria-describedby="ariaDescribedbyMastercard" required>
+                        <input type="file" class="custom-file-input" id="masterCardFile" name="masterCardFile" aria-describedby="ariaDescribedbyMastercard"<?php echo (TCG_CARDS_UPLOAD_REQUIRED == true ? ' required' : '') ?>>
                         <label class="custom-file-label" for="masterCardFile"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_choose_file']; ?></label>
                     </div>
                 </div>
@@ -217,7 +217,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                             <span class="input-group-text" id="ariaDescribedbyCard<?php echo $i; ?>">Card <?php echo $i; ?></span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="cardFile<?php echo $i; ?>" name="cardFile<?php echo $i; ?>" aria-describedby="ariaDescribedbyCard<?php echo $i; ?>" required>
+                            <input type="file" class="custom-file-input" id="cardFile<?php echo $i; ?>" name="cardFile<?php echo $i; ?>" aria-describedby="ariaDescribedbyCard<?php echo $i; ?>"<?php echo (TCG_CARDS_UPLOAD_REQUIRED == true ? ' required' : '') ?>>
                             <label class="custom-file-label" for="cardFile<?php echo $i; ?>"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_choose_file']; ?></label>
                         </div>
                     </div>
