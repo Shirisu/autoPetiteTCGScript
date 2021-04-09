@@ -23,6 +23,13 @@ You can define some settings in the [constants.php](https://github.com/Shirisu/a
   - height of a single card
   - accepted values: from `1` to whatever you like
   - all cards have the same height
+- **TCG_CARDS_UPLOAD_REQUIRED** - default: `true`
+  - is cardupload required on add card deck page?
+  - accepted values: `true` (means yes), `false` (means no)
+  - if `false` you must upload the cards by your own but with correct naming
+    - example: `muffinmaster.png`, `muffin01.png`, ... `muffin12.png`
+    - folder structure: `/assets/cards/muffin/`
+    - `muffin` is your carddeck name
 - **TCG_CARDS_PER_ROW** - default: `4`
   - how many cards are in one row
   - accepted values: from `1` to whatever you like

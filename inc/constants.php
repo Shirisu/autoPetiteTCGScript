@@ -24,6 +24,7 @@ define('TCG_TEMPLATE', 1); // which template you want to use (1 is the main temp
 define('TCG_CARDS_FILE_TYPE', 'png'); // file type for cards (allowed types: gif, jpg, png - use only one!)
 define('TCG_CARDS_FILLER_NAME', 'filler'); // name of the filler/search card - should be placed in the the folder "/assets/cards/"
 define('TCG_CARDS_HEIGHT', 100); // height of card
+define('TCG_CARDS_UPLOAD_REQUIRED', true); // is cardupload required on add card deck page? (yes = true - no = false)
 define('TCG_CARDS_PER_ROW', 4); // how many cards are in one row
 define('TCG_CARDS_START_PACKAGE', 12); // cards of start package
 define('TCG_CARDS_WIDTH', 100); // width of card
