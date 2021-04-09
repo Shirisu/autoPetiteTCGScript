@@ -255,7 +255,7 @@ function get_card($carddeck_id = 0, $card_number = 0, $show_only_url = false, $s
         if ($show_only_url == true) {
             return HOST_URL.TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$card_number.'.'.TCG_CARDS_FILE_TYPE;
         } else {
-            $filename = get_card($carddeck_id, $card_number, true);
+            $filename = get_card($carddeck_id, $card_number, true, $show_inactive);
             if (file_exists('.' . substr($filename, strlen(HOST_URL)))) {
                 return '<img src="'.HOST_URL.TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$card_number.'.'.TCG_CARDS_FILE_TYPE.'" alt="'.$carddeck_name.$card_number.'" />';
             } else {
