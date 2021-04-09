@@ -273,6 +273,7 @@ Please remember to change your password immediately afterwards!',
         'mail_subject' => 'Password request on '.TCG_NAME,
     ),
     'member' => array(
+        'hint_no_log_in_this_category_yet' => 'There is no log entry yet',
         'text_already_mastered' => 'you have already mastered the carddeck',
         'text_button_dissolve' => 'dissolve',
         'text_button_sort_cards' => 'Sort cards',

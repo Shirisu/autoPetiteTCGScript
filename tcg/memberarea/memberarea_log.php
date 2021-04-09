@@ -48,7 +48,7 @@ if (isset($_SESSION['member_rank'])) {
                 </table>
                 <?php
             } else {
-                alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_log_in_this_category_yet'], 'danger');
+                alert_box(TRANSLATIONS[$GLOBALS['language']]['member']['hint_no_log_in_this_category_yet'], 'danger');
             }
             ?>
         </div>

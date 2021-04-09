@@ -273,6 +273,7 @@ Bitte denke daran, dein Passwort danach sofort zu &auml;ndern!',
         'mail_subject' => 'Passwort Anforderung auf '.TCG_NAME,
     ),
     'member' => array(
+        'hint_no_log_in_this_category_yet' => 'Kein Logeintrag vorhanden',
         'text_already_mastered' => 'du hast das Carddeck bereits gemastert',
         'text_button_dissolve' => 'aufl&ouml;sen',
         'text_button_sort_cards' => 'Karten einsortieren',
