@@ -67,7 +67,6 @@ if (isset($_SESSION['member_rank'])) {
     }
 
     breadcrumb($breadcrumb);
-    title($title);
 
     $sql_carddeck = "SELECT carddeck_id, carddeck_name, carddeck_series, carddeck_date, carddeck_creator, carddeck_cat_name, carddeck_sub_cat_name
                      FROM carddeck
@@ -78,6 +77,8 @@ if (isset($_SESSION['member_rank'])) {
                      ORDER BY carddeck_name ASC";
     $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
     $count_carddeck = mysqli_num_rows($result_carddeck);
+
+    title($title.' ('.$count_carddeck.')');
     ?>
     <div class="row">
         <div class="col col-12 mb-3">
@@ -87,7 +88,10 @@ if (isset($_SESSION['member_rank'])) {
                         if (isset($category_id) && !isset($sub_category_id)) {
                             $sql_carddeck_sub_cat = "SELECT carddeck_sub_cat_id, carddeck_sub_cat_name
                                                  FROM carddeck_sub_cat
+                                                 JOIN carddeck ON carddeck_sub_cat = carddeck_sub_cat_id
                                                  WHERE carddeck_sub_cat_main_cat_id = '".$category_id."'
+                                                   AND carddeck_active = 1
+                                                 GROUP BY carddeck_sub_cat_id
                                                  ORDER BY carddeck_sub_cat_name ASC";
                             $result_carddeck_sub_cat = mysqli_query($link, $sql_carddeck_sub_cat) OR die(mysqli_error($link));
                             if (mysqli_num_rows($result_carddeck_sub_cat)) {

@@ -119,16 +119,27 @@ if (!isset($_SESSION['member_rank'])) {
                          ORDER BY carddeck_cat_name ASC";
     $result_carddeck_cat = mysqli_query($link, $sql_carddeck_cat) OR die(mysqli_error($link));
     if (mysqli_num_rows($result_carddeck_cat)) {
+        $sql_all_carddeck = "SELECT carddeck_id
+                             FROM carddeck
+                             WHERE carddeck_active = 1";
+        $result_all_carddeck = mysqli_query($link, $sql_all_carddeck) OR die(mysqli_error($link));
+        $count_all_carddeck = mysqli_num_rows($result_all_carddeck);
         ?>
         <li>
             <div class="nav-link"><i class="fas fa-folder-open"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks']; ?></div>
         </li>
         <?php
         while ($row_carddeck_cat = mysqli_fetch_assoc($result_carddeck_cat)) {
+            $sql_carddeck = "SELECT carddeck_id
+                             FROM carddeck
+                             WHERE carddeck_active = 1
+                               AND carddeck_cat = '".$row_carddeck_cat['carddeck_cat_id']."'";
+            $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
+            $count_carddeck = mysqli_num_rows($result_carddeck);
             ?>
             <li>
                 <?php
-                navilink($row_carddeck_cat['carddeck_cat_name'], 'carddecks/'.$row_carddeck_cat['carddeck_cat_id'], 'nav-link');
+                navilink($row_carddeck_cat['carddeck_cat_name'].' ('.$count_carddeck.')', 'carddecks/'.$row_carddeck_cat['carddeck_cat_id'], 'nav-link');
                 ?>
             </li>
             <?php
@@ -136,7 +147,7 @@ if (!isset($_SESSION['member_rank'])) {
         ?>
         <li>
             <?php
-            navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_all'], 'carddecks/all', 'nav-link');
+            navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_all'].' ('.$count_all_carddeck.')', 'carddecks/all', 'nav-link');
             ?>
         </li>
         <?php
