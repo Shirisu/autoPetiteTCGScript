@@ -91,14 +91,13 @@ function breadcrumb($breadcrumb_array) {
             <?php
             foreach ($breadcrumb_array as $link => $text) {
                 if ($link === array_key_last($breadcrumb_array)) {
-                    ?>
-                    <li class="breadcrumb-item active" aria-current="page"><?php echo $text; ?></li>
-                    <?php
+                    $activelinkclass = ' active';
                 } else {
-                    ?>
-                    <li class="breadcrumb-item"><a href="<?php echo HOST_URL.$link; ?>"><?php echo $text; ?></a></li>
-                    <?php
+                    $activelinkclass = '';
                 }
+                ?>
+                <li class="breadcrumb-item<?php echo $activelinkclass; ?>"><a href="<?php echo HOST_URL.$link; ?>"><?php echo $text; ?></a></li>
+                <?php
             }
             ?>
         </ol>
