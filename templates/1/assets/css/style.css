@@ -63,6 +63,9 @@ body {
     border-bottom: 1px dotted #ced4da;
     border-radius: 0;
 }
+.breadcrumb-item.active a {
+    color: #0056b3;
+}
 
 #sidebar-wrapper {
     min-height: calc(100vh - 40px);

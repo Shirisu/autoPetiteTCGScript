@@ -848,3 +848,6 @@
 .copyright > span:last-of-type::after {
     content: '';
 }
+.breadcrumb-item.active a {
+    color: #42d0ed;
+}
