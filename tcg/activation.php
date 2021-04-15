@@ -46,11 +46,7 @@ title(TRANSLATIONS[$GLOBALS['language']]['activation']['headline']);
                                              LIMIT 1")
                             OR die(mysqli_error($link));
 
-                            if ($carddeck_quantity < TCG_CARDS_START_PACKAGE) {
-                                $use_carddeck_quantity = $carddeck_quantity;
-                            } else {
-                                $use_carddeck_quantity = TCG_CARDS_START_PACKAGE;
-                            }
+                            $use_carddeck_quantity = TCG_CARDS_START_PACKAGE;
 
                             insert_cards($new_member_id, $use_carddeck_quantity);
                             $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['register']['start_package'] . ': ' . implode(', ', $_SESSION['insert_cards']);

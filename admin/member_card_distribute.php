@@ -29,16 +29,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                    WHERE member_active = 1
                    ORDER BY member_nick ASC";
     $result_member = mysqli_query($link, $sql_member) OR die(mysqli_error($link));
-    $sql_carddeck_quantity = "SELECT carddeck_id
-                              FROM carddeck
-                              WHERE carddeck_active = 1";
-    $result_carddeck_quantity = mysqli_query($link, $sql_carddeck_quantity) OR die(mysqli_error($link));
-    $carddeck_quantity = mysqli_num_rows($result_carddeck_quantity);
-    if ($carddeck_quantity <= 50) {
-        $random_carddeck_quantity = $carddeck_quantity;
-    } else {
-        $random_carddeck_quantity = 50;
-    }
+    $random_carddeck_quantity = 50;
     ?>
     <form action="<?php echo HOST_URL; ?>/administration/distributecards" method="post">
         <div class="row align-items-center">
