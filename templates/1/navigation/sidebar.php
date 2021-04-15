@@ -82,16 +82,31 @@ if (!isset($_SESSION['member_id'])) {
     // card deck main categories
     $sql_carddeck_cat = "SELECT carddeck_cat_id, carddeck_cat_name
                          FROM carddeck_cat
+                         JOIN carddeck ON carddeck_cat = carddeck_cat_id
+                          AND carddeck_active = 1
+                         GROUP BY carddeck_cat_id
                          ORDER BY carddeck_cat_name ASC";
     $result_carddeck_cat = mysqli_query($link, $sql_carddeck_cat) OR die(mysqli_error($link));
     if (mysqli_num_rows($result_carddeck_cat)) {
+        $sql_all_carddeck = "SELECT carddeck_id
+                             FROM carddeck
+                             WHERE carddeck_active = 1";
+        $result_all_carddeck = mysqli_query($link, $sql_all_carddeck) OR die(mysqli_error($link));
+        $count_all_carddeck = mysqli_num_rows($result_all_carddeck);
         ?>
         <div class="sidebar-subheading"><i class="fas fa-folder-open"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks']; ?></div>
         <?php
         while ($row_carddeck_cat = mysqli_fetch_assoc($result_carddeck_cat)) {
-            navilink($row_carddeck_cat['carddeck_cat_name'], 'carddecks/'.$row_carddeck_cat['carddeck_cat_id'], 'list-group-item list-group-item-action bg-light');
+            $sql_carddeck = "SELECT carddeck_id
+                             FROM carddeck
+                             WHERE carddeck_active = 1
+                               AND carddeck_cat = '".$row_carddeck_cat['carddeck_cat_id']."'";
+            $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
+            $count_carddeck = mysqli_num_rows($result_carddeck);
+
+            navilink($row_carddeck_cat['carddeck_cat_name'].' ('.$count_carddeck.')', 'carddecks/'.$row_carddeck_cat['carddeck_cat_id'], 'list-group-item list-group-item-action bg-light');
         }
-        navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_all'], 'carddecks/all', 'list-group-item list-group-item-action bg-light');
+        navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_all'].' ('.$count_all_carddeck.')', 'carddecks/all', 'list-group-item list-group-item-action bg-light');
     }
 
     navilink('Member', 'member', 'list-group-item list-group-item-action bg-light', 'fas fa-address-book');
