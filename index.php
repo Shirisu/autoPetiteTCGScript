@@ -245,6 +245,12 @@ Route::add("/memberarea/update",function() {
 Route::add("/memberarea/update",function() {
     require_once("tcg/memberarea/memberarea_update.php");
 }, "post");
+Route::add("/memberarea/tradein",function() {
+    require_once("tcg/memberarea/memberarea_tradein.php");
+});
+Route::add("/memberarea/tradein",function() {
+    require_once("tcg/memberarea/memberarea_tradein.php");
+}, "post");
 Route::add("/memberarea",function() {
     require_once("tcg/memberarea/memberarea.php");
 });

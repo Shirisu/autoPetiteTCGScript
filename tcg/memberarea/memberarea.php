@@ -57,6 +57,18 @@ if (isset($_SESSION['member_rank'])) {
                 </div>
             </div>
         </div>
+        <div class="col col-12 col-md-6 mb-2">
+            <div class="card">
+                <div class="card-body">
+                    <div class="media">
+                        <i class="fas fa-sync-alt fa-2x mr-3"></i>
+                        <div class="media-body">
+                            <a href="<?php echo HOST_URL; ?>/memberarea/tradein"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_tradein']; ?></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <?php if (TCG_CURRENCY_USE == true) { ?>
             <div class="col col-12 col-md-6 mb-2">
                 <div class="card">
