@@ -399,38 +399,36 @@ function insert_cards($member_id, $quantity) {
     unset($_SESSION['insert_cards']);
     unset($_SESSION['insert_cards_images']);
 
-    $sql = "SELECT carddeck_id, carddeck_name
+    $_SESSION['insert_cards_images'] = '';
+    $_SESSION['insert_cards'] = '';
+    $cardarray = array();
+    $cardarray_infos = array();
+    for ($count = 1; $count <= $quantity; $count++) {
+        $sql = "SELECT carddeck_id, carddeck_name
             FROM carddeck
             WHERE carddeck_active = 1
             ORDER BY RAND()
-            LIMIT ".$quantity."";
-    $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
-    if (mysqli_num_rows($result)) {
-        $cardarray = array();
-        $cardarray_infos = array();
-        $_SESSION['insert_cards_images'] = '';
-        $i = 0;
-        while ($row = mysqli_fetch_assoc($result)) {
-            $cardnumber = mt_rand(1, TCG_CARDDECK_MAX_CARDS);
-            mysqli_query($link, "INSERT INTO member_cards (member_cards_carddeck_id, member_cards_number, member_cards_member_id) VALUES ('" . $row['carddeck_id'] . "','" . $cardnumber . "','" . $member_id . "')") OR die(mysqli_error($link));
-            array_push($cardarray, $row['carddeck_name'] . sprintf("%02d", $cardnumber));
-            $cardarray_infos[$i] = array(
-                'id' => $row['carddeck_id'],
-                'number' => $cardnumber
-            );
+            LIMIT 1";
+        $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
+        if (mysqli_num_rows($result)) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $cardnumber = mt_rand(1, TCG_CARDDECK_MAX_CARDS);
+                mysqli_query($link, "INSERT INTO member_cards (member_cards_carddeck_id, member_cards_number, member_cards_member_id) VALUES ('" . $row['carddeck_id'] . "','" . $cardnumber . "','" . $member_id . "')") OR die(mysqli_error($link));
+                array_push($cardarray, $row['carddeck_name'] . sprintf("%02d", $cardnumber));
+                $cardarray_infos[$count] = array(
+                    'id' => $row['carddeck_id'],
+                    'number' => $cardnumber
+                );
+            }
             $_SESSION['insert_cards'] = $cardarray;
 
-            $i++;
-        }
-
-        for ($i = 0; $i < count($cardarray_infos); $i++) {
-            if ($i != 0) {
+            if ($count != 0) {
                 $_SESSION['insert_cards_images'] .= ' ';
             }
-            $_SESSION['insert_cards_images'] .= get_card($cardarray_infos[$i]['id'], $cardarray_infos[$i]['number']);
-        }
+            $_SESSION['insert_cards_images'] .= get_card($cardarray_infos[$count]['id'], $cardarray_infos[$count]['number']);
 
-        mysqli_query($link, "UPDATE member SET member_cards = member_cards + '" . $quantity . "' WHERE member_id = '" . $member_id . "' LIMIT 1") OR die(mysqli_error($link));
+            mysqli_query($link, "UPDATE member SET member_cards = member_cards + '" . $quantity . "' WHERE member_id = '" . $member_id . "' LIMIT 1") OR die(mysqli_error($link));
+        }
     }
 }
 
