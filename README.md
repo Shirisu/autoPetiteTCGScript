@@ -106,6 +106,7 @@ Current version: 2.1.1
     - change wish in cards
   - cardupdate
     - get new cards
+  - trade in
 - managing of cards
   - sort in categories (trade, collect)
   - master full carddecks
