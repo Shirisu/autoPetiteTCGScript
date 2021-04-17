@@ -173,7 +173,8 @@ table.carddeck td {
     margin-right: -12px;
 }
 .cards-sorting-container .cards-sorting-wrapper,
-.member-cards-container .profile-cards-wrapper {
+.member-cards-container .profile-cards-wrapper,
+.tradein-container .cards-wrapper {
     position: relative;
 }
 .member-cards-container .profile-cards-wrapper.show-counter::after {
@@ -216,7 +217,8 @@ table.carddeck td {
     margin-top: 5px;
 }
 .cards-sorting-container table.cards-sorting-table,
-.member-cards-container table.profile-cards {
+.member-cards-container table.profile-cards,
+.tradein-container table.tradein {
     margin: auto;
 }
 .cards-sorting-container table.cards-sorting-table thead,
@@ -224,23 +226,27 @@ table.carddeck td {
     display: none !important;
 }
 .cards-sorting-container table.cards-sorting-table tbody tr,
-.member-cards-container table.profile-cards tbody tr {
+.member-cards-container table.profile-cards tbody tr,
+.tradein-container table.tradein tbody tr {
     vertical-align: top;
 }
 .cards-sorting-container table.cards-sorting-table tbody tr td,
-.member-cards-container table.profile-cards tbody tr td {
+.member-cards-container table.profile-cards tbody tr td,
+.tradein-container table.tradein tbody tr td {
     line-height: 1;
     text-align: center;
 }
 @media (min-width: 768px) {
     .cards-sorting-container table.cards-sorting-table tbody,
-    .member-cards-container table.profile-cards tbody {
+    .member-cards-container table.profile-cards tbody,
+    .tradein-container table.tradein tbody {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
     }
     .cards-sorting-container table.cards-sorting-table tbody tr td,
-    .member-cards-container table.profile-cards tbody tr td {
+    .member-cards-container table.profile-cards tbody tr td,
+    .tradein-container table.tradein tbody tr td {
         display: block;
         height: 100%;
     }
@@ -248,23 +254,27 @@ table.carddeck td {
 
 @media (min-width: 768px) {
     .cards-sorting-container table.cards-sorting-table tbody tr td,
-    .member-cards-container table.profile-cards tbody tr td {
+    .member-cards-container table.profile-cards tbody tr td,
+    .tradein-container table.tradein tbody tr td {
         padding: 12px;
     }
 }
 @media (max-width: 767px) {
     .cards-sorting-container table.cards-sorting-table tbody tr,
-    .member-cards-container table.profile-cards tbody tr {
+    .member-cards-container table.profile-cards tbody tr,
+    .tradein-container table.tradein tbody tr {
         display: inline-block;
     }
     .cards-sorting-container table.cards-sorting-table tbody tr td,
-    .member-cards-container table.profile-cards tbody tr td {
+    .member-cards-container table.profile-cards tbody tr td,
+    .tradein-container table.tradein tbody tr td {
         padding: 6px;
     }
 }
 @media (max-width: 562px) {
     .cards-sorting-container table.cards-sorting-table tbody tr td .card-views .card-view:first-of-type,
-    .member-cards-container table.profile-cards tbody tr td .card-views .card-view:first-of-type {
+    .member-cards-container table.profile-cards tbody tr td .card-views .card-view:first-of-type,
+    .tradein-container table.tradein tbody tr td .card-views .card-view:first-of-type {
         display: none !important;
     }
 }
@@ -316,6 +326,13 @@ table.memorygame {
     .trade-message-box {
         padding-bottom: 22px;
     }
+}
+
+/**
+* tradein style
+**/
+.tradein-container button {
+    padding: 0;
 }
 
 

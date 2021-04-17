@@ -567,6 +567,32 @@ function insert_game_played($member_id, $game_id) {
     }
 }
 
+function insert_tradein($member_id) {
+    global $link;
+
+    $sql_last_played = "SELECT member_tradein_last_tradein
+                        FROM member_tradein
+                        WHERE member_tradein_member_id = '" . $member_id . "'
+                        ORDER BY member_tradein_id DESC
+                        LIMIT 1";
+    $result_last_played = mysqli_query($link, $sql_last_played) OR die(mysqli_error($link));
+    if (mysqli_num_rows($result_last_played)) {
+        $query = "UPDATE member_tradein
+                  SET member_tradein_last_tradein = '".time()."'
+                  WHERE member_tradein_member_id = '".$member_id."'
+                  LIMIT 1
+                  ;";
+        mysqli_query($link, $query) or die(mysqli_error($link));
+    } else {
+        $query = "INSERT INTO member_tradein
+              (member_tradein_member_id, member_tradein_last_tradein)
+              VALUES
+              ('".$member_id."', '".time()."')
+              ;";
+        mysqli_query($link, $query) or die(mysqli_error($link));
+    }
+}
+
 function insert_message($sender, $receiver, $subject, $text, $message_system = 0) {
     global $link;
 
@@ -576,5 +602,51 @@ function insert_message($sender, $receiver, $subject, $text, $message_system = 0
                ('".$sender."', '".$receiver."', '".$subject."', '".$text."', '".time()."', '".$message_system."')
                ")
     OR DIE(mysqli_error($link));
+}
+
+function card_tradein($card_id) {
+    global $link;
+
+    $member_id = $_SESSION['member_id'];
+
+    $sql_duplicate_card = "SELECT member_cards_number, carddeck_name,
+                              (SELECT COUNT(member_cards_id)
+                               FROM member_cards
+                               WHERE member_cards_id = '".$card_id."'
+                                 AND member_cards_member_id = '".$member_id."'
+                                 AND member_cards_active = 1
+                               LIMIT 1) as own_card
+                           FROM member_cards
+                           JOIN carddeck ON carddeck_id = member_cards_carddeck_id
+                           WHERE member_cards_member_id = '".$member_id."'
+                             AND member_cards_cat = '".MEMBER_CARDS_TRADE."'
+                             AND member_cards_active = 1
+                           GROUP BY member_cards_number, member_cards_carddeck_id
+                           HAVING COUNT(member_cards_id) > 1";
+    $result_duplicate_card = mysqli_query($link, $sql_duplicate_card) OR die(mysqli_error($link));
+    $row_duplicate_card = mysqli_fetch_assoc($result_duplicate_card);
+    if (mysqli_num_rows($result_duplicate_card) && $row_duplicate_card['own_card'] == 1) {
+        $carddeck_name = $row_duplicate_card['carddeck_name'];
+        $cardnumber_plain = $row_duplicate_card['member_cards_number'];
+        $cardnumber = sprintf("%'.02d", $cardnumber_plain);
+
+        // delete duplicate card
+        mysqli_query($link, "DELETE FROM member_cards
+                             WHERE member_cards_id = '".$card_id."'
+                               AND member_cards_member_id = '".$member_id."'
+                               AND member_cards_cat = '".MEMBER_CARDS_TRADE."'
+                               AND member_cards_active = 1
+                             LIMIT 1")
+        OR die(mysqli_error($link));
+
+        // insert new card
+        insert_cards($member_id, 1);
+        $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['tradein']['text_changed_card'].' '.$carddeck_name.$cardnumber.' '.TRANSLATIONS[$GLOBALS['language']]['tradein']['text_and_got_card'].' '.implode(', ', $_SESSION['insert_cards']);
+        insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_tradein'], $inserted_cards_text, $member_id);
+        insert_tradein($member_id);
+        return alert_box($inserted_cards_text.'<br />'.$_SESSION['insert_cards_images'], 'success');
+    } else {
+        return alert_box(TRANSLATIONS[$GLOBALS['language']]['tradein']['hint_card_dont_exists'], 'danger');
+    }
 }
 ?>

@@ -115,6 +115,15 @@ $(document).ready(function() {
         showHeader: false
     });
 
+    $('table.tradein').bootstrapTable('destroy').bootstrapTable({
+        classes: 'table table-borderless',
+        pagination: true,
+        search: true,
+        searchAccentNeutralise: true,
+        pageSize: 60,
+        showHeader: false
+    });
+
 
     // replace the "Choose a file" label
     $('input[type="file"]').on('change',function(e){

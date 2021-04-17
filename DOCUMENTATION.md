@@ -89,6 +89,10 @@ You can define some settings in the [constants.php](https://github.com/Shirisu/a
 - **TCG_SHOP_CURRENCY_FOR_RANDOM** - default `100`
   - how much currency do 1 random cost?
   - accepted values: from `1` to whatever you like
+- **TCG_TRADE_IN_HOURS** - default `4`
+  - how many hours do you need to wait to trade in new duplicate cards?
+  - accepted values: from `0` to `24`
+  - use value `0` for no cool down time
 - **TCG_SLOGAN**
   - for title-attribute & meta title
 - **TCG_TEMPLATE** - default: `1`
