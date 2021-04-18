@@ -34,6 +34,7 @@ $translations['en'] = array(
         'hint_currency_distribution' => 'What are the '.TCG_CURRENCY.' distributed for?',
         'hint_game_choices' => 'Separate the selection options with a semicolon (;) - example: Donald;Pluto;Goofy',
         'hint_level_to_cards_too_low' => 'Maximum number of cards must be greater than minimum number of cards',
+        'hint_new_password' => 'The new password is',
         'hint_no_carddeck_for_update_yet' => 'Currently there are no new card decks for an update',
         'hint_no_category_selected' => 'Please select a category',
         'hint_no_member_yet' => 'There is no member yet',
@@ -88,6 +89,7 @@ $translations['en'] = array(
         'text_log_distribute_wish_topic' => 'Admin - '.TCG_WISH.' distribution',
         'text_preview_for_cardupdate' => 'Preview cards for update',
         'text_preview_for_cardupdate_subtext' => 'Is automatically added to the news',
+        'text_reset_password' => 'Reset password for member',
         'wish_distribute_headline' => 'Distribute '.TCG_WISH,
     ),
     'cardupdate' => array(

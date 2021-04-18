@@ -180,6 +180,26 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                         }
                         ?>
                     </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            <?php
+                            if (isset($_GET['resetpassword'])) {
+                                // create new password and show it
+                                require_once('./inc/class.passwordhash_tcg.php');
+                                $password = passwordgenerator();
+                                $password_hashed = create_hash_for_tcg($password);
+
+                                mysqli_query($link, "UPDATE member
+                                     SET member_password = '" . $password_hashed . "'
+                                     WHERE member_id = '" . $member_id . "'
+                                     LIMIT 1")
+                                OR die(mysqli_error($link));
+                                alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_new_password'].': '.$password, 'success');
+                            }
+                            ?>
+                            <a href="<?php echo HOST_URL; ?>/administration/editmember/<?php echo $member_id; ?>/?resetpassword"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_reset_password']; ?></a>
+                        </div>
+                    </div>
                 </form>
                 <?php
             }

@@ -59,7 +59,7 @@ Current version: 2.1.1
     - add level
     - edit level
   - member administration
-    - edit member data (status, rank, language, email)
+    - edit member data (status, rank, language, email, reset password)
     - distribute cards
     - distribute currency
     - distribute *wish*
