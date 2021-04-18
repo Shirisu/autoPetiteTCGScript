@@ -15,6 +15,11 @@ function create_toast(id, icon, title, text) {
     );
 }
 
+
+function showingRowsText(pageFrom, pageTo, totalRows) {
+    return '<ul class="pagination"><li class="page-item"><span class="page-link">' + pageFrom + ' - ' + pageTo + '</span></li> <li class="page-item"><span class="page-link">' + totalRows + '</span></li></ul>';
+}
+
 $(document).ready(function() {
     // switch language
     $('.switch-language').on('click', function(e) {
@@ -30,6 +35,10 @@ $(document).ready(function() {
     // use bootstrapTable for all tables without class "optional" or data-paging=no
     $('table:not([data-paging="no"]):not([data-search="no"]):not(.optional)').bootstrapTable('destroy').bootstrapTable({
         pagination: true,
+        paginationParts: ['pageInfo', 'pageList'],
+        formatShowingRows: function(pageFrom, pageTo, totalRows) {
+            return showingRowsText(pageFrom, pageTo, totalRows);
+        },
         search: true,
         searchAccentNeutralise: true,
         sortable: true
@@ -46,6 +55,10 @@ $(document).ready(function() {
     // use bootstrapTable without paging
     $('table[data-search="no"]').bootstrapTable('destroy').bootstrapTable({
         pagination: true,
+        paginationParts: ['pageInfo', 'pageList'],
+        formatShowingRows: function(pageFrom, pageTo, totalRows) {
+            return showingRowsText(pageFrom, pageTo, totalRows);
+        },
         search: false,
         searchAccentNeutralise: true,
         sortable: true
@@ -55,6 +68,10 @@ $(document).ready(function() {
     $('table.news').bootstrapTable('destroy').bootstrapTable({
         classes: 'table table-borderless',
         pagination: true,
+        paginationParts: ['pageInfo', 'pageList'],
+        formatShowingRows: function(pageFrom, pageTo, totalRows) {
+            return showingRowsText(pageFrom, pageTo, totalRows);
+        },
         search: true,
         searchAccentNeutralise: true,
         pageSize: 6,
@@ -64,6 +81,10 @@ $(document).ready(function() {
     $('table.profile-cards.trade-cards').bootstrapTable('destroy').bootstrapTable({
         classes: 'table table-borderless',
         pagination: true,
+        paginationParts: ['pageInfo', 'pageList'],
+        formatShowingRows: function(pageFrom, pageTo, totalRows) {
+            return showingRowsText(pageFrom, pageTo, totalRows);
+        },
         search: true,
         searchAccentNeutralise: true,
         pageSize: 60,
@@ -73,6 +94,10 @@ $(document).ready(function() {
     $('table.profile-cards.collect-cards').bootstrapTable('destroy').bootstrapTable({
         classes: 'table table-borderless',
         pagination: true,
+        paginationParts: ['pageInfo', 'pageList'],
+        formatShowingRows: function(pageFrom, pageTo, totalRows) {
+            return showingRowsText(pageFrom, pageTo, totalRows);
+        },
         search: true,
         searchAccentNeutralise: true,
         pageSize: 12,
@@ -82,6 +107,10 @@ $(document).ready(function() {
     $('table.profile-cards.master-cards').bootstrapTable('destroy').bootstrapTable({
         classes: 'table table-borderless',
         pagination: true,
+        paginationParts: ['pageInfo', 'pageList'],
+        formatShowingRows: function(pageFrom, pageTo, totalRows) {
+            return showingRowsText(pageFrom, pageTo, totalRows);
+        },
         search: true,
         searchAccentNeutralise: true,
         pageSize: 60,
@@ -91,6 +120,10 @@ $(document).ready(function() {
     $('table.cards-sorting-table.new-cards, table.cards-sorting-table.trade-cards').bootstrapTable('destroy').bootstrapTable({
         classes: 'table table-borderless',
         pagination: true,
+        paginationParts: ['pageInfo', 'pageList'],
+        formatShowingRows: function(pageFrom, pageTo, totalRows) {
+            return showingRowsText(pageFrom, pageTo, totalRows);
+        },
         search: true,
         searchAccentNeutralise: true,
         pageSize: 60,
@@ -100,6 +133,10 @@ $(document).ready(function() {
     $('table.cards-sorting-table.master-cards').bootstrapTable('destroy').bootstrapTable({
         classes: 'table table-borderless',
         pagination: true,
+        paginationParts: ['pageInfo', 'pageList'],
+        formatShowingRows: function(pageFrom, pageTo, totalRows) {
+            return showingRowsText(pageFrom, pageTo, totalRows);
+        },
         search: true,
         searchAccentNeutralise: true,
         pageSize: 60,
@@ -109,6 +146,10 @@ $(document).ready(function() {
     $('table.cards-sorting-table.collect-cards').bootstrapTable('destroy').bootstrapTable({
         classes: 'table table-borderless',
         pagination: true,
+        paginationParts: ['pageInfo', 'pageList'],
+        formatShowingRows: function(pageFrom, pageTo, totalRows) {
+            return showingRowsText(pageFrom, pageTo, totalRows);
+        },
         search: true,
         searchAccentNeutralise: true,
         pageSize: 12,
@@ -118,6 +159,10 @@ $(document).ready(function() {
     $('table.tradein').bootstrapTable('destroy').bootstrapTable({
         classes: 'table table-borderless',
         pagination: true,
+        paginationParts: ['pageInfo', 'pageList'],
+        formatShowingRows: function(pageFrom, pageTo, totalRows) {
+            return showingRowsText(pageFrom, pageTo, totalRows);
+        },
         search: true,
         searchAccentNeutralise: true,
         pageSize: 60,
