@@ -87,7 +87,7 @@ if (isset($_SESSION['member_rank'])) {
                                 <div
                                     class="cards-wrapper">
                                     <form action="<?php echo HOST_URL; ?>/memberarea/tradein" method="POST">
-                                        <input type="hidden" id="tradein_card_id" name="tradein_card_id" value="<?php echo $row_duplicate_cards['member_cards_id']; ?>" />
+                                        <input type="hidden" name="tradein_card_id" value="<?php echo $row_duplicate_cards['member_cards_id']; ?>" />
                                         <button type="submit" class="btn"><?php echo get_card($carddeck_id, $cardnumber_plain); ?></button>
                                     </form>
                                 </div>

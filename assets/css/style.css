@@ -278,12 +278,6 @@ table.carddeck td {
         display: none !important;
     }
 }
-.cards-sorting-container .pagination-detail,
-.member-cards-container .pagination-detail,
-.member-wishlist-container .pagination-detail,
-.member-log-container .pagination-detail {
-    display: none;
-}
 .administration .card .media a,
 .cards-sorting .card .media a,
 .memberarea .card .media a {
