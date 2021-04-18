@@ -34,6 +34,7 @@ $translations['de'] = array(
         'hint_currency_distribution' => 'Wof&uuml;r werden die '.TCG_CURRENCY.' verteilt?',
         'hint_game_choices' => 'Trenne die Auswahloptionen mit einem Semikolon (;) - Beispiel: Donald;Pluto;Goofy',
         'hint_level_to_cards_too_low' => 'Maximale Anzahl an Karten muss gr&ouml;&szlig;er als minimale Anzahl an Karten sein',
+        'hint_new_password' => 'Das neue Passwort lautet',
         'hint_no_carddeck_for_update_yet' => 'Aktuell gibt es keine neuen Carddecks f&uuml;r ein Update',
         'hint_no_category_selected' => 'Bitte w&auml;hle eine Kategorie aus',
         'hint_no_member_yet' => 'Es gibt noch keine Member',
@@ -88,6 +89,7 @@ $translations['de'] = array(
         'text_log_distribute_wish_topic' => 'Admin - '.TCG_WISH.'verteilung',
         'text_preview_for_cardupdate' => 'Vorschau der Karten f&uuml;rs Update',
         'text_preview_for_cardupdate_subtext' => 'Wird automatisch zur News hinzugef&uuml;gt',
+        'text_reset_password' => 'Passwort f&uuml;r Member resetten',
         'wish_distribute_headline' => TCG_WISH.' verteilen',
     ),
     'cardupdate' => array(
