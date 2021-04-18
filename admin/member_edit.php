@@ -2,7 +2,7 @@
 if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSION['member_rank'] == 2)) {
     global $link;
     if (isset($member_id)) {
-        $sql = "SELECT member_id, member_ip, member_nick, member_active, member_register, member_last_login, member_rank, member_email, member_language
+        $sql = "SELECT member_id, member_ip, member_nick, member_active, member_register, member_last_login, member_last_active, member_rank, member_email, member_language
                 FROM member
                 WHERE member_id = '".$member_id."'
                 LIMIT 1";
@@ -132,6 +132,14 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                             <div class="form-group col col-12 col-md-6 mb-2">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
+                                        <span class="input-group-text" id="ariaDescribedbyLastActive"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastactive']; ?></span>
+                                    </div>
+                                    <input type="text" disabled class="form-control" aria-describedby="ariaDescribedbyLastActive" required value="<?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'],$row['member_last_active']); ?>" />
+                                </div>
+                            </div>
+                            <div class="form-group col col-12 col-md-6 mb-2">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
                                         <span class="input-group-text" id="ariaDescribedbyRank"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_rank']; ?></span>
                                     </div>
                                     <select class="custom-select" id="member_rank" name="member_rank" aria-describedby="ariaDescribedbyRank" required>
@@ -243,7 +251,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
             $memberactive = 'WHERE member_active = "' . $_SESSION['member_edit_active_status'] . '"';
         }
 
-        $sql = "SELECT member_id, member_nick, member_active, member_register, member_last_login, member_rank_id, member_rank_name, member_ip
+        $sql = "SELECT member_id, member_nick, member_active, member_register, member_last_login, member_last_active, member_rank_id, member_rank_name, member_ip
                 FROM member
                 JOIN member_rank ON member_rank = member_rank_id
                   " . $memberactive . "
@@ -261,6 +269,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                             <th data-field="ip">IP</th>
                             <th data-field="nickname"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_nickname']; ?></th>
                             <th data-field="lastlogin"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastlogin']; ?></th>
+                            <th data-field="lastactive"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastactive']; ?></th>
                             <th data-field="status"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_status']; ?></th>
                             <th data-field="rank"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_rank']; ?></th>
                             <th data-field="options"></th>
@@ -276,6 +285,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                 <td><?php echo ($row['member_active'] == 4 ? $row['member_nick'] : '<a href="'.HOST_URL.'/member/'.$row['member_id'].'">'.$row['member_nick'].'</a>'); ?>
                                 </td>
                                 <td><?php echo ($row['member_active'] == 4 ? '---' : date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row['member_last_login'])); ?></td>
+                                <td><?php echo ($row['member_active'] == 4 ? '---' : date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row['member_last_active'])); ?></td>
                                 <td><?php echo get_active_status($row['member_active']); ?></td>
                                 <td><?php echo ($row['member_active'] == 4 ? '---' : sprintf('%02d', $row['member_rank_id']) . ' - ' . $row['member_rank_name']); ?></td>
                                 <td>

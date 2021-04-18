@@ -9,6 +9,7 @@ if (isset($_SESSION['member_rank'])) {
     } else {
         mysqli_query($link, "INSERT INTO member_online (member_online_member_id, member_online_member_time) VALUES ('".$_SESSION["member_id"]."', '".$online_time."')") or die(mysqli_error($link));
     }
+    mysqli_query($link, "UPDATE member SET member_last_active = '".$online_time."' WHERE member_id = '".$_SESSION["member_id"]."' LIMIT 1;") or die(mysqli_error($link));
 
     // set member inactive after 14 days without login
     $sql_member_active = "SELECT member_id, member_last_login FROM member WHERE member_active = 1";

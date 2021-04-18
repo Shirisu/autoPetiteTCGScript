@@ -10,7 +10,7 @@ if (isset($_SESSION['member_rank'])) {
     breadcrumb($breadcrumb);
     title('Member');
 
-    $sql_member = "SELECT member_id, member_nick, member_last_login, member_register, member_level, member_cards, member_master, member_rank_name
+    $sql_member = "SELECT member_id, member_nick, member_last_login, member_last_active, member_register, member_level, member_cards, member_master, member_rank_name
                    FROM member
                    JOIN member_rank ON member_rank_id = member_rank
                    WHERE member_active = 1
@@ -35,6 +35,7 @@ if (isset($_SESSION['member_rank'])) {
                             <th data-field="rank"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_rank']; ?></th>
                             <th data-field="registered" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_registered']; ?></th>
                             <th data-field="lastlogin" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastlogin']; ?></th>
+                            <th data-field="lastactive" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastactive']; ?></th>
                             <th data-field="online" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_status']; ?></th>
                         </tr>
                         </thead>
@@ -51,6 +52,7 @@ if (isset($_SESSION['member_rank'])) {
                                 <td><?php echo $row_member['member_rank_name']; ?></td>
                                 <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_member['member_register']); ?></td>
                                 <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_member['member_last_login']); ?></td>
+                                <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_member['member_last_active']); ?></td>
                                 <td><?php echo get_online_status($row_member['member_id']); ?></td>
                             </tr>
                             <?php
