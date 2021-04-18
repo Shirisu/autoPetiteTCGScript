@@ -3,7 +3,7 @@ if (isset($_SESSION['member_rank'])) {
     global $link;
 
     if (isset($member_id)) {
-        $sql_member = "SELECT member_id, member_nick, member_level, member_cards, member_master, member_register, member_last_login, member_wish, member_currency, member_text, member_rank_name
+        $sql_member = "SELECT member_id, member_nick, member_level, member_cards, member_master, member_register, member_last_login, member_last_active, member_wish, member_currency, member_text, member_rank_name
                        FROM member
                        JOIN member_rank ON member_rank_id = member_rank
                        WHERE member_id = '".$member_id."'
@@ -65,6 +65,8 @@ if (isset($_SESSION['member_rank'])) {
                                 <div class="col col-6 col-md-6 mb-2"><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_member['member_register']); ?></div>
                                 <div class="col col-6 col-md-6 mb-2 font-weight-bold"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastlogin']; ?></div>
                                 <div class="col col-6 col-md-6 mb-2"><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_member['member_last_login']); ?></div>
+                            <div class="col col-6 col-md-6 mb-2 font-weight-bold"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastactive']; ?></div>
+                                <div class="col col-6 col-md-6 mb-2"><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_member['member_last_active']); ?></div>
                             </div>
                         </div>
                     </div>
