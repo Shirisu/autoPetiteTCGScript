@@ -296,6 +296,8 @@ Bitte denke daran, dein Passwort danach sofort zu &auml;ndern!',
         'text_profile_on_wishlist' => 'auf der Wunschliste',
         'text_profile_on_wishlist_since' => 'auf der Wunschliste seit',
         'text_shop' => 'Shop',
+        'text_show_all_cards' => 'zeige alle Karten',
+        'text_show_only_needed_cards' => 'zeige nur brauchbare Karten',
         'text_view_log' => 'Log ansehen',
     ),
     'message' => array(

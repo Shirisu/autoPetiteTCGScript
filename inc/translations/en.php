@@ -296,6 +296,8 @@ Please remember to change your password immediately afterwards!',
         'text_profile_on_wishlist' => 'on wishlist',
         'text_profile_on_wishlist_since' => 'on wishlist since',
         'text_shop' => 'Shop',
+        'text_show_all_cards' => 'show all cards',
+        'text_show_only_needed_cards' => 'show only needed cards',
         'text_view_log' => 'View log',
     ),
     'message' => array(

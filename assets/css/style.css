@@ -190,16 +190,19 @@ table.carddeck td {
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
+    color: #212529;
     background-color: rgba(248, 249, 250, 0.8);
     border: 1px solid #4e555b;
     border-radius: 50%;
 }
-.cards-sorting-container .cards-sorting-wrapper.mastered::after {
+.cards-sorting-container .cards-sorting-wrapper.mastered::after,
+.member-cards-container .profile-cards-wrapper.mastered::before,
+.member-cards-container .profile-cards-wrapper.needed::before {
     content: '\f559';
     display: inline-block;
     position: absolute;
     top: -3px;
-    right: -3px;
+    left: -3px;
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
     padding: 4px 5px;
@@ -208,9 +211,16 @@ table.carddeck td {
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
+    color: #212529;
     background-color: rgba(248, 249, 250, 0.8);
     border: 1px solid #4e555b;
     border-radius: 50%;
+}
+.member-cards-container .profile-cards-wrapper.needed.collect::before {
+    content: '\f004';
+}
+.member-cards-container .profile-cards-wrapper.needed.wishlist::before {
+    content: '\f005';
 }
 .cards-sorting-container .cards-sorting-table .carddeck-wrapper,
 .member-cards-container .profile-cards .carddeck-wrapper {

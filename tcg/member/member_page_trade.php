@@ -46,17 +46,56 @@ if (isset($_SESSION['member_rank'])) {
                     $can_use_sum = (MYSQL_VERSION >= 'mysqlnd 8.0.0' ? true : false);
 
                     if ($can_use_sum) {
-                        $sql_cards = "SELECT MIN(member_cards_id) as member_cards_id, member_cards_number, carddeck_id, carddeck_name, carddeck_active,
+                        if ($member_id == $_SESSION['member_id']) {
+                            $sql_cards = "SELECT MIN(member_cards_id) as member_cards_id, member_cards_number, carddeck_id, carddeck_name, carddeck_active,
                                         COUNT(*) AS card_count,
                                         SUM(COUNT(member_cards_number)) OVER() AS total_card_count
                                     FROM member_cards mc
                                     JOIN carddeck ON carddeck_id = member_cards_carddeck_id
-                                    WHERE member_cards_member_id = '".$member_id."'
-                                      AND member_cards_cat = '".MEMBER_CARDS_TRADE."'
+                                    WHERE member_cards_member_id = '" . $member_id . "'
+                                      AND member_cards_cat = '" . MEMBER_CARDS_TRADE . "'
                                       AND member_cards_active = 1
                                       AND carddeck_active = 1
                                     GROUP BY member_cards_carddeck_id, member_cards_number
                                     ORDER BY carddeck_name, member_cards_number ASC";
+                        } else {
+                            $sql_cards = "SELECT MIN(member_cards_id) as member_cards_id, member_cards_number, carddeck_id, carddeck_name, carddeck_active,
+                                        COUNT(*) AS card_count,
+                                        SUM(COUNT(member_cards_number)) OVER() AS total_card_count,
+                                         EXISTS (SELECT member_cards_id
+                                          FROM member_cards
+                                          WHERE member_cards_member_id = '" . $_SESSION['member_id'] . "'
+                                            AND mc.member_cards_carddeck_id = member_cards_carddeck_id
+                                            AND member_cards_cat = '" . MEMBER_CARDS_COLLECT . "'
+                                            AND member_cards_active = 1
+                                          GROUP BY member_cards_carddeck_id) as carddeck_in_collect,
+                                         EXISTS (SELECT member_cards_id
+                                          FROM member_cards
+                                          WHERE member_cards_member_id = '" . $_SESSION['member_id'] . "'
+                                            AND mc.member_cards_carddeck_id = member_cards_carddeck_id
+                                            AND mc.member_cards_number = member_cards_number
+                                            AND member_cards_cat = '" . MEMBER_CARDS_COLLECT . "'
+                                            AND member_cards_active = 1
+                                          GROUP BY member_cards_carddeck_id, member_cards_number) as card_already_in_collect,
+                                         EXISTS (SELECT member_wishlist_member_id
+                                          FROM member_wishlist
+                                          WHERE member_wishlist_member_id = '" . $_SESSION['member_id'] . "'
+                                            AND mc.member_cards_carddeck_id = member_wishlist_carddeck_id
+                                          GROUP BY member_wishlist_carddeck_id) as carddeck_on_wishlist,
+                                         EXISTS (SELECT member_master_id
+                                          FROM member_master
+                                          WHERE member_master_member_id = '" . $_SESSION['member_id'] . "'
+                                            AND mc.member_cards_carddeck_id = member_master_carddeck_id
+                                          GROUP BY member_master_carddeck_id) as carddeck_already_mastered
+                                    FROM member_cards mc
+                                    JOIN carddeck ON carddeck_id = member_cards_carddeck_id
+                                    WHERE member_cards_member_id = '" . $member_id . "'
+                                      AND member_cards_cat = '" . MEMBER_CARDS_TRADE . "'
+                                      AND member_cards_active = 1
+                                      AND carddeck_active = 1
+                                    GROUP BY member_cards_carddeck_id, member_cards_number
+                                    ORDER BY carddeck_name, member_cards_number ASC";
+                        }
                     } else {
                         $sql_count_cards = "SELECT member_cards_id
                                     FROM member_cards
@@ -66,16 +105,54 @@ if (isset($_SESSION['member_rank'])) {
                         $result_count_cards = mysqli_query($link, $sql_count_cards) OR die(mysqli_error($link));
                         $count_count_cards = mysqli_num_rows($result_count_cards);
 
-                        $sql_cards = "SELECT MIN(member_cards_id) as member_cards_id, member_cards_number, carddeck_id, carddeck_name, carddeck_active,
+                        if ($member_id == $_SESSION['member_id']) {
+                            $sql_cards = "SELECT MIN(member_cards_id) as member_cards_id, member_cards_number, carddeck_id, carddeck_name, carddeck_active,
                                         COUNT(*) AS card_count
                                     FROM member_cards mc
                                     JOIN carddeck ON carddeck_id = member_cards_carddeck_id
-                                    WHERE member_cards_member_id = '".$member_id."'
-                                      AND member_cards_cat = '".MEMBER_CARDS_TRADE."'
+                                    WHERE member_cards_member_id = '" . $member_id . "'
+                                      AND member_cards_cat = '" . MEMBER_CARDS_TRADE . "'
                                       AND member_cards_active = 1
                                       AND carddeck_active = 1
                                     GROUP BY member_cards_carddeck_id, member_cards_number
                                     ORDER BY carddeck_name, member_cards_number ASC";
+                        } else {
+                            $sql_cards = "SELECT MIN(member_cards_id) as member_cards_id, member_cards_number, carddeck_id, carddeck_name, carddeck_active,
+                                        COUNT(*) AS card_count,
+                                         EXISTS (SELECT member_cards_id
+                                          FROM member_cards
+                                          WHERE member_cards_member_id = '" . $_SESSION['member_id'] . "'
+                                            AND mc.member_cards_carddeck_id = member_cards_carddeck_id
+                                            AND member_cards_cat = '" . MEMBER_CARDS_COLLECT . "'
+                                            AND member_cards_active = 1
+                                          GROUP BY member_cards_carddeck_id) as carddeck_in_collect,
+                                         EXISTS (SELECT member_cards_id
+                                          FROM member_cards
+                                          WHERE member_cards_member_id = '" . $_SESSION['member_id'] . "'
+                                            AND mc.member_cards_carddeck_id = member_cards_carddeck_id
+                                            AND mc.member_cards_number = member_cards_number
+                                            AND member_cards_cat = '" . MEMBER_CARDS_COLLECT . "'
+                                            AND member_cards_active = 1
+                                          GROUP BY member_cards_carddeck_id, member_cards_number) as card_already_in_collect,
+                                         EXISTS (SELECT member_wishlist_member_id
+                                          FROM member_wishlist
+                                          WHERE member_wishlist_member_id = '" . $_SESSION['member_id'] . "'
+                                            AND mc.member_cards_carddeck_id = member_wishlist_carddeck_id
+                                          GROUP BY member_wishlist_carddeck_id) as carddeck_on_wishlist,
+                                         EXISTS (SELECT member_master_id
+                                          FROM member_master
+                                          WHERE member_master_member_id = '" . $_SESSION['member_id'] . "'
+                                            AND mc.member_cards_carddeck_id = member_master_carddeck_id
+                                          GROUP BY member_master_carddeck_id) as carddeck_already_mastered
+                                    FROM member_cards mc
+                                    JOIN carddeck ON carddeck_id = member_cards_carddeck_id
+                                    WHERE member_cards_member_id = '" . $member_id . "'
+                                      AND member_cards_cat = '" . MEMBER_CARDS_TRADE . "'
+                                      AND member_cards_active = 1
+                                      AND carddeck_active = 1
+                                    GROUP BY member_cards_carddeck_id, member_cards_number
+                                    ORDER BY carddeck_name, member_cards_number ASC";
+                        }
                     }
                     $result_cards = mysqli_query($link, $sql_cards) OR die(mysqli_error($link));
                     $count_cards = mysqli_num_rows($result_cards);
@@ -84,11 +161,20 @@ if (isset($_SESSION['member_rank'])) {
                         $total_card_count = ($can_use_sum ? $row_total_card_count['total_card_count'] : $count_count_cards);
                         title_small($total_card_count.' Trade '.($total_card_count == 1 ? TRANSLATIONS[$GLOBALS['language']]['general']['text_card'] : TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']));
                         mysqli_data_seek($result_cards, 0);
+
+                        if ($member_id != $_SESSION['member_id']) {
+                            ?>
+                            <div class="text-center">
+                                <button class="btn btn-secondary" id="filterTradeCards"><?php echo TRANSLATIONS[$GLOBALS['language']]['member']['text_show_only_needed_cards']; ?></button>
+                                <button class="btn btn-secondary" id="resetFilterTradeCards"><?php echo TRANSLATIONS[$GLOBALS['language']]['member']['text_show_all_cards']; ?></button>
+                            </div>
+                            <?php
+                        }
                         ?>
                         <table class="optional profile-cards trade-cards" data-mobile-responsive="true">
                             <thead>
                             <tr>
-                                <th></th>
+                                <th data-field="filtercard"></th>
                                 <th data-searchable="false"><?php echo title_small($count_cards.' Trade '.($count_cards == 1 ? TRANSLATIONS[$GLOBALS['language']]['general']['text_card'] : TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'])); ?></th>
                             </tr>
                             </thead>
@@ -114,13 +200,38 @@ if (isset($_SESSION['member_rank'])) {
                                     $cardnumber_plain = $row_cards['member_cards_number'];
                                     $cardnumber = sprintf("%'.02d", $cardnumber_plain);
                                     $card_count = $row_cards['card_count'];
+
+                                    if ($member_id != $_SESSION['member_id']) {
+                                        $carddeck_in_collect = $row_cards['carddeck_in_collect'];
+                                        $card_already_in_collect = $row_cards['card_already_in_collect'];
+                                        $carddeck_on_wishlist = $row_cards['carddeck_on_wishlist'];
+                                        $carddeck_already_mastered = $row_cards['carddeck_already_mastered'];
+
+                                        if ($carddeck_already_mastered == 1) {
+                                            $filterclass = ' mastered';
+                                        } elseif ($carddeck_in_collect == 1 && $card_already_in_collect == 1) {
+                                            $filterclass = '';
+                                        } elseif (
+                                            ($carddeck_in_collect == 1 && $card_already_in_collect == 0)
+                                        ) {
+                                            $filterclass = ' needed collect';
+                                        } elseif (
+                                            ($carddeck_on_wishlist == 1 && $carddeck_in_collect == 0)
+                                        ) {
+                                            $filterclass = ' needed wishlist';
+                                        } else {
+                                            $filterclass = '';
+                                        }
+                                    } else {
+                                        $filterclass = '';
+                                    }
                                     ?>
                                     <tr>
-                                        <td class="d-none"><?php echo $carddeck_name . $cardnumber; ?></td>
+                                        <td class="d-none filtercard"><?php echo $carddeck_name . $cardnumber; ?><?php echo $filterclass; ?></td>
                                         <td>
                                             <div
-                                                class="profile-cards-wrapper<?php echo($card_count > 1 ? ' show-counter" data-count="' . $card_count . 'x' : ''); ?>">
-                                                <?php echo($member_id != $_SESSION['member_id'] ? '<a href="' . HOST_URL . '/trade/' . $member_id . '/' . $row_cards['member_cards_id'] . '">' : ''); ?><?php echo get_card($carddeck_id, $cardnumber_plain); ?><?php echo($member_id != $_SESSION['member_id'] ? '</a>' : ''); ?>
+                                                class="profile-cards-wrapper<?php echo $filterclass; ?><?php echo($card_count > 1 ? ' show-counter" data-count="' . $card_count . 'x' : ''); ?>">
+                                                <?php echo ($member_id != $_SESSION['member_id'] ? '<a href="' . HOST_URL . '/trade/' . $member_id . '/' . $row_cards['member_cards_id'] . '">' : ''); ?><?php echo get_card($carddeck_id, $cardnumber_plain); ?><?php echo($member_id != $_SESSION['member_id'] ? '</a>' : ''); ?>
                                                 <a class="carddeck-link"
                                                    href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>">
                                                     <small><?php echo $carddeck_name . $cardnumber; ?></small>
