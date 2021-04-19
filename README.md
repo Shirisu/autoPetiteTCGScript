@@ -92,6 +92,8 @@ Current version: 2.1.1
 - member profile
   - show profile
   - show cards
+    - show only needed cards filter
+    - show all cards filter
   - master, wishlist
 - memberarea
   - overview

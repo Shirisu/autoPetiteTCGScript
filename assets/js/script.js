@@ -15,7 +15,6 @@ function create_toast(id, icon, title, text) {
     );
 }
 
-
 function showingRowsText(pageFrom, pageTo, totalRows) {
     return '<ul class="pagination"><li class="page-item"><span class="page-link">' + pageFrom + ' - ' + pageTo + '</span></li> <li class="page-item"><span class="page-link">' + totalRows + '</span></li></ul>';
 }
@@ -78,17 +77,33 @@ $(document).ready(function() {
         showHeader: false
     });
 
-    $('table.profile-cards.trade-cards').bootstrapTable('destroy').bootstrapTable({
-        classes: 'table table-borderless',
-        pagination: true,
-        paginationParts: ['pageInfo', 'pageList'],
-        formatShowingRows: function(pageFrom, pageTo, totalRows) {
-            return showingRowsText(pageFrom, pageTo, totalRows);
-        },
-        search: true,
-        searchAccentNeutralise: true,
-        pageSize: 60,
-        showHeader: false
+    function initTradeCards() {
+        $('table.profile-cards.trade-cards').bootstrapTable('destroy').bootstrapTable({
+            classes: 'table table-borderless',
+            pagination: true,
+            paginationParts: ['pageInfo', 'pageList'],
+            formatShowingRows: function(pageFrom, pageTo, totalRows) {
+                return showingRowsText(pageFrom, pageTo, totalRows);
+            },
+            search: true,
+            searchAccentNeutralise: true,
+            pageSize: 60,
+            showHeader: false
+        });
+    }
+    initTradeCards();
+
+    $('#filterTradeCards').on('click', function () {
+        var $table = $('table.profile-cards.trade-cards');
+        var data = $table.bootstrapTable('getData');
+        $table.bootstrapTable('load', $.grep(data, function (row) {
+            $table.closest('.bootstrap-table').find('.search').hide();
+            return row.filtercard.split(' ').indexOf('needed') > -1;
+        }));
+    });
+
+    $('#resetFilterTradeCards').on('click', function() {
+        initTradeCards();
     });
 
     $('table.profile-cards.collect-cards').bootstrapTable('destroy').bootstrapTable({
@@ -168,7 +183,6 @@ $(document).ready(function() {
         pageSize: 60,
         showHeader: false
     });
-
 
     // replace the "Choose a file" label
     $('input[type="file"]').on('change',function(e){
