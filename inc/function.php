@@ -606,12 +606,12 @@ function insert_message($sender, $receiver, $subject, $text, $message_system = 0
     OR DIE(mysqli_error($link));
 }
 
-function card_tradein($card_id) {
+function card_tradein($card_id, $tradein_card_deck_name, $tradein_card_number) {
     global $link;
 
     $member_id = $_SESSION['member_id'];
 
-    $sql_duplicate_card = "SELECT member_cards_number, carddeck_name,
+    $sql_duplicate_card = "SELECT
                               (SELECT COUNT(member_cards_id)
                                FROM member_cards
                                WHERE member_cards_id = '".$card_id."'
@@ -628,10 +628,6 @@ function card_tradein($card_id) {
     $result_duplicate_card = mysqli_query($link, $sql_duplicate_card) OR die(mysqli_error($link));
     $row_duplicate_card = mysqli_fetch_assoc($result_duplicate_card);
     if (mysqli_num_rows($result_duplicate_card) && $row_duplicate_card['own_card'] == 1) {
-        $carddeck_name = $row_duplicate_card['carddeck_name'];
-        $cardnumber_plain = $row_duplicate_card['member_cards_number'];
-        $cardnumber = sprintf("%'.02d", $cardnumber_plain);
-
         // delete duplicate card
         mysqli_query($link, "DELETE FROM member_cards
                              WHERE member_cards_id = '".$card_id."'
@@ -643,7 +639,7 @@ function card_tradein($card_id) {
 
         // insert new card
         insert_cards($member_id, 1, false);
-        $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['tradein']['text_changed_card'].' '.$carddeck_name.$cardnumber.' '.TRANSLATIONS[$GLOBALS['language']]['tradein']['text_and_got_card'].' '.implode(', ', $_SESSION['insert_cards']);
+        $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['tradein']['text_changed_card'].' '.$tradein_card_deck_name.$tradein_card_number.' '.TRANSLATIONS[$GLOBALS['language']]['tradein']['text_and_got_card'].' '.implode(', ', $_SESSION['insert_cards']);
         insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_tradein'], $inserted_cards_text, $member_id);
         insert_tradein($member_id);
         return alert_box($inserted_cards_text.'<br />'.$_SESSION['insert_cards_images'], 'success');
