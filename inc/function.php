@@ -394,7 +394,7 @@ function get_member_wish($member_id) {
     return 0;
 }
 
-function insert_cards($member_id, $quantity) {
+function insert_cards($member_id, $quantity, $updateCount = true) {
     global $link;
     unset($_SESSION['insert_cards']);
     unset($_SESSION['insert_cards_images']);
@@ -427,7 +427,9 @@ function insert_cards($member_id, $quantity) {
             }
             $_SESSION['insert_cards_images'] .= get_card($cardarray_infos[$count]['id'], $cardarray_infos[$count]['number']);
 
-            mysqli_query($link, "UPDATE member SET member_cards = member_cards + '" . $quantity . "' WHERE member_id = '" . $member_id . "' LIMIT 1") OR die(mysqli_error($link));
+            if ($updateCount == true) {
+                mysqli_query($link, "UPDATE member SET member_cards = member_cards + '" . $quantity . "' WHERE member_id = '" . $member_id . "' LIMIT 1") OR die(mysqli_error($link));
+            }
         }
     }
 }
@@ -640,7 +642,7 @@ function card_tradein($card_id) {
         OR die(mysqli_error($link));
 
         // insert new card
-        insert_cards($member_id, 1);
+        insert_cards($member_id, 1, false);
         $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['tradein']['text_changed_card'].' '.$carddeck_name.$cardnumber.' '.TRANSLATIONS[$GLOBALS['language']]['tradein']['text_and_got_card'].' '.implode(', ', $_SESSION['insert_cards']);
         insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_tradein'], $inserted_cards_text, $member_id);
         insert_tradein($member_id);
