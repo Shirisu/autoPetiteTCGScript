@@ -46,7 +46,7 @@ if (isset($_SESSION['member_rank'])) {
                     $can_use_sum = (MYSQL_VERSION >= 'mysqlnd 8.0.0' ? true : false);
 
                     if ($can_use_sum) {
-                        if ($member_id == $_SESSION['member_id']) {
+                        if ($member_id == $_SESSION['member_id'] || TCG_SHOW_TRADE_FILTER == false) {
                             $sql_cards = "SELECT MIN(member_cards_id) as member_cards_id, member_cards_number, carddeck_id, carddeck_name, carddeck_active,
                                         COUNT(*) AS card_count,
                                         SUM(COUNT(member_cards_number)) OVER() AS total_card_count
@@ -105,7 +105,7 @@ if (isset($_SESSION['member_rank'])) {
                         $result_count_cards = mysqli_query($link, $sql_count_cards) OR die(mysqli_error($link));
                         $count_count_cards = mysqli_num_rows($result_count_cards);
 
-                        if ($member_id == $_SESSION['member_id']) {
+                        if ($member_id == $_SESSION['member_id'] || TCG_SHOW_TRADE_FILTER == false) {
                             $sql_cards = "SELECT MIN(member_cards_id) as member_cards_id, member_cards_number, carddeck_id, carddeck_name, carddeck_active,
                                         COUNT(*) AS card_count
                                     FROM member_cards mc
@@ -162,7 +162,7 @@ if (isset($_SESSION['member_rank'])) {
                         title_small($total_card_count.' Trade '.($total_card_count == 1 ? TRANSLATIONS[$GLOBALS['language']]['general']['text_card'] : TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']));
                         mysqli_data_seek($result_cards, 0);
 
-                        if ($member_id != $_SESSION['member_id']) {
+                        if ($member_id != $_SESSION['member_id'] && TCG_SHOW_TRADE_FILTER == true) {
                             ?>
                             <div class="text-center">
                                 <button class="btn btn-secondary" id="filterTradeCards"><?php echo TRANSLATIONS[$GLOBALS['language']]['member']['text_show_only_needed_cards']; ?></button>
@@ -201,7 +201,7 @@ if (isset($_SESSION['member_rank'])) {
                                     $cardnumber = sprintf("%'.02d", $cardnumber_plain);
                                     $card_count = $row_cards['card_count'];
 
-                                    if ($member_id != $_SESSION['member_id']) {
+                                    if ($member_id != $_SESSION['member_id'] && TCG_SHOW_TRADE_FILTER == true) {
                                         $carddeck_in_collect = $row_cards['carddeck_in_collect'];
                                         $card_already_in_collect = $row_cards['card_already_in_collect'];
                                         $carddeck_on_wishlist = $row_cards['carddeck_on_wishlist'];
