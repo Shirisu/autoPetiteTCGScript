@@ -283,6 +283,10 @@ Route::add("/cards/([a-z+].*)",function($category) {
 Route::add("/cards",function() {
     require_once("tcg/cards/cards_new.php");
 });
+Route::add("/message/delete/allsystemmessages",function() {
+    $action = 'delete_all_systemmessages';
+    require_once("tcg/message/message.php");
+});
 Route::add("/message/delete/([0-9+].*)",function($message_id) {
     $action = 'delete';
     require_once("tcg/message/message.php");
