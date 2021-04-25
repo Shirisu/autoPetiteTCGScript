@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS `member` (
     `member_active` int(1) NOT NULL DEFAULT '3',
     `member_register` int(11) NOT NULL DEFAULT '0',
     `member_last_login` int(11) NOT NULL DEFAULT '0',
+    `member_last_active` int(11) NOT NULL DEFAULT '0',
     `member_rank` int(11) NOT NULL DEFAULT '5',
     `member_level` int(11) NOT NULL DEFAULT '1',
     `member_cards` int(11) NOT NULL DEFAULT '0',
