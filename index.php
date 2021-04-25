@@ -339,16 +339,13 @@ Route::add("/trade/([0-9+].*)/([0-9+].*)",function($trade_member_id, $card_id) {
 Route::add("/trade/([0-9+].*)/([0-9+].*)",function($trade_member_id, $card_id) {
     require_once("tcg/trade/trade_offer.php");
 }, "post");
-Route::add("/trade/([0-9+].*)/accept",function($trade_id) {
-    $action = 'accept';
+Route::add("/trade/inbox/([0-9+].*)",function($trade_id) {
+    $trade_box_type = 'inbox';
     require_once("tcg/trade/trade.php");
-});
-Route::add("/trade/([0-9+].*)/decline",function($trade_id) {
-    $action = 'decline';
-    require_once("tcg/trade/trade.php");
-});
+}, "post");
 Route::add("/trade/([0-9+].*)/withdraw",function($trade_id) {
     $action = 'withdraw';
+    $trade_box_type = 'outbox';
     require_once("tcg/trade/trade.php");
 });
 

@@ -110,14 +110,30 @@ if (isset($_SESSION['member_rank'])) {
                 ?>
                 <form action="<?php echo HOST_URL; ?>/trade/<?php echo $trade_member_id; ?>/<?php echo $card_id; ?>" method="post">
                     <div class="row trade-container">
-                        <div class="col col-12 col-md-4 order-1 order-md-1">
+                        <div class="col col-12 col-md-6 col-lg-4 order-1 order-md-1">
+                            <div class="row">
+                                <div class="col col-12 text-center">
+                                    <?php
+                                    $filename = get_card($trade_card_carddeck_id, $trade_card_number, true);
+                                    ?>
+                                    <span class="card-wrapper trade-card" <?php echo(file_exists('.' . substr($filename, strlen(HOST_URL))) ? 'style="background-image:url(' . $filename . ');"' : ''); ?>></span>
+                                    <br /><small><?php echo $trade_card_name.sprintf("%'.02d", $trade_card_number); ?></small>
+                                    <br /><small><?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_log_trade_text_from'].' '.get_member_link($trade_member_id, '', true); ?></small>
+                                </div>
+                                <div class="form-group col col-12">
+                                    <input type="hidden" id="trade_card_id"
+                                           name="trade_card_id"
+                                           value="<?php echo $card_id; ?>"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col col-12 col-md-6 col-lg-4 order-2 order-md-2">
                             <div class="row">
                                 <div class="col col-12 text-center">
                                     <?php
                                     $filename_filler = TCG_CARDS_FOLDER . '/'.TCG_CARDS_FILLER_NAME.'.' . TCG_CARDS_FILE_TYPE;
                                     ?>
                                     <span class="card-wrapper own-card" <?php echo(file_exists('.' . $filename_filler) ? 'style="background-image:url(' . HOST_URL.$filename_filler . ');"' : ''); ?>></span>
-                                    <br /><?php echo get_member_link($member_id, '', true); ?>
                                 </div>
                                 <div class="form-group col col-12">
                                     <?php if (mysqli_num_rows($result_own_cards)) { ?>
@@ -151,32 +167,135 @@ if (isset($_SESSION['member_rank'])) {
                                 </div>
                             </div>
                         </div>
-                        <div class="col col-12 col-md-4 order-2 order-md-3">
+                        <div class="col col-12 order-3 order-md-4 text-center">
                             <div class="row">
-                                <div class="col col-12 text-center">
-                                    <?php
-                                    $filename = get_card($trade_card_carddeck_id, $trade_card_number, true);
-                                    ?>
-                                    <span class="card-wrapper trade-card" <?php echo(file_exists('.' . substr($filename, strlen(HOST_URL))) ? 'style="background-image:url(' . $filename . ');"' : ''); ?>></span>
-                                    <br /><?php echo get_member_link($trade_member_id, '', true); ?>
-                                </div>
-                                <div class="form-group col col-12">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="ariaDescribedbyTradeCard"><?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_trade_card']; ?></span>
+                                <div class="col col-12 col-md-6">
+                                    <div class="card">
+                                        <div class="card-header" id="headingMissingCards">
+                                            <h5 class="mb-0">
+                                                <span class="btn btn-link btn-sm btn-block" data-toggle="collapse" data-target="#collapseMissingCards" aria-expanded="true" aria-controls="collapseMissingCards">
+                                                    <?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_missing_cards']; ?>
+                                                </span>
+                                            </h5>
                                         </div>
-                                        <input type="text" class="form-control" aria-describedby="ariaDescribedbyTradeCard"
-                                               value="<?php echo $trade_card_name.sprintf("%'.02d", $trade_card_number); ?>" disabled required />
-                                        <input type="hidden" class="form-control" id="trade_card_id"
-                                               name="trade_card_id"
-                                               value="<?php echo $card_id; ?>"/>
+
+                                        <div id="collapseMissingCards" class="collapse show" aria-labelledby="headingMissingCards">
+                                            <div class="card-body pb-0">
+                                                <?php
+                                                $collect_carddecks = array();
+                                                $sql_cards = "SELECT member_cards_carddeck_id, carddeck_name, carddeck_is_puzzle
+                                                      FROM member_cards
+                                                      JOIN carddeck ON carddeck_id = member_cards_carddeck_id
+                                                      WHERE member_cards_member_id = '".$trade_member_id."'
+                                                        AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
+                                                        AND member_cards_active = 1
+                                                      GROUP BY member_cards_carddeck_id
+                                                      ORDER BY carddeck_name ASC";
+                                                $result_cards = mysqli_query($link, $sql_cards) OR die(mysqli_error($link));
+                                                $count_cards = mysqli_num_rows($result_cards);
+                                                if ($count_cards) {
+                                                    while ($row_cards = mysqli_fetch_assoc($result_cards)) {
+                                                        $cardnumbers = array();
+                                                        $sql_card_number = "SELECT member_cards_number
+                                                                    FROM member_cards
+                                                                    WHERE member_cards_member_id = '".$trade_member_id."'
+                                                                      AND member_cards_carddeck_id = '".$row_cards['member_cards_carddeck_id']."'
+                                                                      AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
+                                                                      AND member_cards_active = 1
+                                                                    GROUP BY member_cards_number
+                                                                    ORDER BY member_cards_number ASC";
+                                                        $result_card_number = mysqli_query($link, $sql_card_number) OR die(mysqli_error($link));
+                                                        $count_card_number = mysqli_num_rows($result_card_number);
+                                                        if ($count_card_number) {
+                                                            while ($row_card_number = mysqli_fetch_assoc($result_card_number)) {
+                                                                array_push($cardnumbers, $row_card_number['member_cards_number']);
+                                                                $collect_carddecks[$row_cards['carddeck_name']] = $cardnumbers;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                                ?>
+                                                <table data-mobile-responsive="true" data-page-size="6">
+                                                    <thead>
+                                                    <tr>
+                                                        <th data-field="name" data-sortable="true">Name</th>
+                                                        <th data-field="cards" data-sortable="false"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']; ?></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <?php
+                                                    foreach ($collect_carddecks as $carddeck_name => $card_number) {
+                                                        ?>
+                                                        <tr>
+                                                            <td><small><?php echo $carddeck_name; ?></small></td>
+                                                            <td>
+                                                                <?php
+                                                                for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
+                                                                    if (!in_array($i, $card_number)) {
+                                                                        echo '<span class="badge badge-secondary">'.sprintf('%02d', $i).'</span> ';
+                                                                    }
+                                                                }
+                                                                ?>
+                                                            </td>
+                                                        </tr>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col col-12 mt-3 mt-md-0 col-md-6">
+                                    <div class="card">
+                                        <div class="card-header" id="headingWishlist">
+                                            <h5 class="mb-0">
+                                                <span class="btn btn-link btn-sm btn-block" data-toggle="collapse" data-target="#collapseWishlist" aria-expanded="true" aria-controls="collapseWishlist">
+                                                    <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_wishlist']; ?>
+                                                </span>
+                                            </h5>
+                                        </div>
+
+                                        <div id="collapseWishlist" class="collapse show" aria-labelledby="headingWishlist">
+                                            <div class="card-body">
+                                                <p class="card-text">
+                                                    <?php
+                                                    $collect_wishlist_carddeck = array();
+                                                    $sql_wishlist = "SELECT carddeck_id, carddeck_name
+                                                         FROM member_wishlist
+                                                         JOIN carddeck ON carddeck_id = member_wishlist_carddeck_id
+                                                         WHERE member_wishlist_member_id = '".$trade_member_id."'
+                                                           AND carddeck_active = 1
+                                                         ORDER BY carddeck_name ASC";
+                                                    $result_wishlist = mysqli_query($link, $sql_wishlist);
+                                                    $count_wishlist = mysqli_num_rows($result_wishlist);
+                                                    if ($count_wishlist) {
+                                                        while ($row_wishlist = mysqli_fetch_assoc($result_wishlist)) {
+                                                            $collect_wishlist_carddeck[$row_wishlist['carddeck_name']] = $row_wishlist['carddeck_id'];
+                                                        }
+                                                    }
+
+                                                    if (count($collect_wishlist_carddeck) > 0) {
+                                                        foreach ($collect_wishlist_carddeck as $index => $carddeck_id) {
+                                                            echo get_carddeck_link($carddeck_id);
+                                                            echo ($index != array_key_last($collect_wishlist_carddeck) ? ', ' : '');
+                                                        }
+                                                    } else {
+                                                        alert_box(TRANSLATIONS[$GLOBALS['language']]['member']['text_profile_no_cards_in_category'], 'danger');
+                                                    }
+                                                    ?>
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col col-12 col-md-4 order-3 order-md-2 text-center">
+                        <div class="col col-12 col-md-12 col-lg-4 mt-3 mt-md-0 order-4 order-md-3 text-center">
                             <div class="row">
-                                <div class="form-group col col-12 trade-message-box">
+                                <div class="form-group col col-12">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="ariaDescribedbyTradeText"><?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_trade_message']; ?></span>
