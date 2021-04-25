@@ -174,7 +174,8 @@ table.carddeck td {
 }
 .cards-sorting-container .cards-sorting-wrapper,
 .member-cards-container .profile-cards-wrapper,
-.tradein-container .cards-wrapper {
+.tradein-container .cards-wrapper,
+.card-wrapper {
     position: relative;
 }
 .member-cards-container .profile-cards-wrapper.show-counter::after {
@@ -197,7 +198,8 @@ table.carddeck td {
 }
 .cards-sorting-container .cards-sorting-wrapper.mastered::after,
 .member-cards-container .profile-cards-wrapper.mastered::before,
-.member-cards-container .profile-cards-wrapper.needed::before {
+.member-cards-container .profile-cards-wrapper.needed::before,
+.card-wrapper.needed::before {
     content: '\f559';
     display: inline-block;
     position: absolute;
@@ -216,10 +218,12 @@ table.carddeck td {
     border: 1px solid #4e555b;
     border-radius: 50%;
 }
-.member-cards-container .profile-cards-wrapper.needed.collect::before {
+.member-cards-container .profile-cards-wrapper.needed.collect::before,
+.card-wrapper.needed.collect::before {
     content: '\f004';
 }
-.member-cards-container .profile-cards-wrapper.needed.wishlist::before {
+.member-cards-container .profile-cards-wrapper.needed.wishlist::before,
+.card-wrapper.needed.wishlist::before {
     content: '\f005';
 }
 .cards-sorting-container .cards-sorting-table .carddeck-wrapper,
@@ -321,15 +325,6 @@ table.memorygame {
 }
 .memory_not_found {
     opacity: 1;
-}
-
-/**
-* trade style
-**/
-@media (min-width: 768px) {
-    .trade-message-box {
-        padding-bottom: 22px;
-    }
 }
 
 /**

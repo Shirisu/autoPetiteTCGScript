@@ -329,6 +329,22 @@ function get_carddeck_name_from_carddeck_id($carddeck_id) {
     }
 }
 
+function get_carddeck_link($carddeck_id, $extra_link_text = '') {
+    global $link;
+    $sql = "SELECT carddeck_name
+            FROM carddeck
+            WHERE carddeck_id = '".$carddeck_id."'
+            LIMIT 1";
+    $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
+    if (mysqli_num_rows($result)) {
+        $row = mysqli_fetch_assoc($result);
+
+        return '<a href="' . HOST_URL . '/carddeck/' . $row['carddeck_name'] . '">' . ($extra_link_text ? $extra_link_text : $row['carddeck_name']) . '</a>';
+    }
+
+    return 'unkown';
+}
+
 function get_card_number_from_member_cards_id($member_card_id) {
     global $link;
 
@@ -341,6 +357,73 @@ function get_card_number_from_member_cards_id($member_card_id) {
         $row_carddeck = mysqli_fetch_assoc($result_carddeck);
         return $row_carddeck['member_cards_number'];
     }
+}
+
+function get_card_filter_class($carddeck_id, $card_number) {
+    global $link;
+
+    $member_id = $_SESSION['member_id'];
+
+    $sql_cards = "SELECT EXISTS (SELECT member_cards_id
+                          FROM member_cards
+                          WHERE member_cards_member_id = '" . $member_id . "'
+                            AND mc.member_cards_carddeck_id = member_cards_carddeck_id
+                            AND member_cards_cat = '" . MEMBER_CARDS_COLLECT . "'
+                            AND member_cards_active = 1
+                          GROUP BY member_cards_carddeck_id) as carddeck_in_collect,
+                         EXISTS (SELECT member_cards_id
+                          FROM member_cards
+                          WHERE member_cards_member_id = '" . $member_id . "'
+                            AND mc.member_cards_carddeck_id = member_cards_carddeck_id
+                            AND member_cards_number = '".$card_number."'
+                            AND member_cards_cat = '" . MEMBER_CARDS_COLLECT . "'
+                            AND member_cards_active = 1
+                          GROUP BY member_cards_carddeck_id, member_cards_number) as card_already_in_collect,
+                         EXISTS (SELECT member_wishlist_member_id
+                          FROM member_wishlist
+                          WHERE member_wishlist_member_id = '" . $member_id . "'
+                            AND mc.member_cards_carddeck_id = member_wishlist_carddeck_id
+                          GROUP BY member_wishlist_carddeck_id) as carddeck_on_wishlist,
+                         EXISTS (SELECT member_master_id
+                          FROM member_master
+                          WHERE member_master_member_id = '" . $member_id . "'
+                            AND mc.member_cards_carddeck_id = member_master_carddeck_id
+                          GROUP BY member_master_carddeck_id) as carddeck_already_mastered
+                    FROM member_cards mc
+                    WHERE member_cards_member_id = '" . $member_id . "'
+                      AND member_cards_carddeck_id = '" . $carddeck_id . "'
+                      AND member_cards_active = 1
+                    LIMIT 1";
+    $result_cards = mysqli_query($link, $sql_cards) OR die(mysqli_error($link));
+    $count_cards = mysqli_num_rows($result_cards);
+    if (!$count_cards) {
+        return '';
+    }
+
+    $row_cards = mysqli_fetch_assoc($result_cards);
+
+    $carddeck_in_collect = $row_cards['carddeck_in_collect'];
+    $card_already_in_collect = $row_cards['card_already_in_collect'];
+    $carddeck_on_wishlist = $row_cards['carddeck_on_wishlist'];
+    $carddeck_already_mastered = $row_cards['carddeck_already_mastered'];
+
+    if ($carddeck_already_mastered == 1) {
+        $filterclass = ' mastered';
+    } elseif ($carddeck_in_collect == 1 && $card_already_in_collect == 1) {
+        $filterclass = '';
+    } elseif (
+    ($carddeck_in_collect == 1 && $card_already_in_collect == 0)
+    ) {
+        $filterclass = ' needed collect';
+    } elseif (
+    ($carddeck_on_wishlist == 1 && $carddeck_in_collect == 0)
+    ) {
+        $filterclass = ' needed wishlist';
+    } else {
+        $filterclass = '';
+    }
+
+    return $filterclass;
 }
 
 function get_member_language($member_id) {
