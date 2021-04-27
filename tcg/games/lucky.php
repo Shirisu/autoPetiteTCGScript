@@ -105,7 +105,7 @@ if (isset($_SESSION['member_rank'])) {
                                 <?php
                                 $choices = explode(';', $row_lucky_game['games_lucky_choices']);
                                 for ($i = 0; $i < count($choices); $i++) { ?>
-                                    <button class="btn btn-secondary" type="submit" name="lucky_choice"
+                                    <button class="btn btn-secondary mb-1" type="submit" name="lucky_choice"
                                             id="<?php echo $i; ?>"
                                             value="<?php echo $choices[$i]; ?>">
                                         <?php echo $choices[$i]; ?>
