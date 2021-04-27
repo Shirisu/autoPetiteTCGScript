@@ -46,6 +46,9 @@ if ((isset($_REQUEST["member_nick"])) && isset($_REQUEST["member_password"])) {
                      WHERE member_id='".$_SESSION["member_id"]."'
                      LIMIT 1;") or die(mysqli_error($link));
             }
+
+            member_check_card_count($_SESSION["member_id"]);
+
             header ("Location: ".HOST_URL."/");
         } else {
             header ("Location: ".HOST_URL."/?error=1");

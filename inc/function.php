@@ -146,6 +146,48 @@ function member_level_up($member_id) {
     }
 }
 
+function member_check_card_count($member_id) {
+    global $link;
+
+    $sql = "SELECT member_cards
+            FROM member
+            WHERE member_id = '".$member_id."'
+            LIMIT 1";
+    $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
+
+    if(mysqli_num_rows($result)) {
+        while ($row = mysqli_fetch_assoc($result)) {
+
+            $sql_count_cards = "SELECT member_cards_id
+                             FROM member_cards
+                             WHERE member_cards_member_id = '" . $member_id . "';";
+            $result_count_cards = mysqli_query($link, $sql_count_cards) OR die(mysqli_error($link));
+            $count_cards = mysqli_num_rows($result_count_cards);
+
+            $sql_count_master = "SELECT member_master_id
+                              FROM member_master
+                              WHERE member_master_member_id = '" . $member_id . "';";
+            $result_count_master = mysqli_query($link, $sql_count_master) OR die(mysqli_error($link));
+            $count_master = mysqli_num_rows($result_count_master);
+
+            $count_all_cards = (($count_cards) + ($count_master * TCG_CARDDECK_MAX_CARDS));
+
+            $sql_level = "SELECT *
+                          FROM member_level
+                          WHERE " . $count_all_cards . " BETWEEN member_level_from AND member_level_to";
+            $result_level = mysqli_query($link, $sql_level) OR die(mysqli_error($link));
+
+            if ($count_all_cards != $row['member_cards']) {
+                mysqli_query($link, "UPDATE member
+                                     SET member_cards = " . $count_all_cards . "
+                                     WHERE member_id = " . $member_id . "
+                                     LIMIT 1"
+                ) OR die(mysqli_error($link));
+            }
+        }
+    }
+}
+
 function get_active_status($status) {
     if ($status == 1) {
         $status = TRANSLATIONS[$GLOBALS['language']]['general']['text_active'];
@@ -730,4 +772,5 @@ function card_tradein($card_id, $tradein_card_deck_name, $tradein_card_number) {
         return alert_box(TRANSLATIONS[$GLOBALS['language']]['tradein']['hint_card_dont_exists'], 'danger');
     }
 }
+
 ?>
