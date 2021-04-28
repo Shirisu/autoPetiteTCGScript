@@ -43,12 +43,26 @@ if (isset($_SESSION['member_rank'])) {
                 </div>
                 <div class="col col-12 mb-3 member-cards-container">
                     <?php
-                    $sql_master = "SELECT member_master_id, member_master_date, carddeck_id, carddeck_name, carddeck_active
+                    if (TCG_MULTI_MASTER == true) {
+                        $sql_master = "SELECT carddeck_id, carddeck_name, member_master_date, carddeck_active,
+                                        (SELECT COUNT(member_master_id)
+                                         FROM member_master
+                                         WHERE member_master_carddeck_id = mc.member_master_carddeck_id
+                                           AND member_master_member_id = mc.member_master_member_id) AS master_count
+                                      FROM member_master as mc
+                                      JOIN carddeck ON carddeck_id = member_master_carddeck_id
+                                      WHERE member_master_member_id = '" . $member_id . "'
+                                        AND carddeck_active = 1
+                                      GROUP BY member_master_carddeck_id
+                                      ORDER BY carddeck_name ASC";
+                    } else {
+                        $sql_master = "SELECT member_master_id, member_master_date, carddeck_id, carddeck_name, carddeck_active
                                    FROM member_master
                                    JOIN carddeck ON carddeck_id = member_master_carddeck_id
                                    WHERE member_master_member_id = '".$member_id."'
                                      AND carddeck_active = 1
                                    ORDER BY carddeck_name ASC";
+                    }
                     $result_master = mysqli_query($link, $sql_master) OR die(mysqli_error($link));
                     $count_master = mysqli_num_rows($result_master);
                     if ($count_master) {
@@ -79,15 +93,20 @@ if (isset($_SESSION['member_rank'])) {
                                 } else {
                                     $carddeck_id = $row_master['carddeck_id'];
                                     $carddeck_name = $row_master['carddeck_name'];
+                                    $master_count = 0;
+
+                                    if (TCG_MULTI_MASTER == true) {
+                                        $master_count = $row_master['master_count'];
+                                    }
                                     ?>
                                     <tr>
                                         <td class="d-none"><?php echo $carddeck_name; ?></td>
                                         <td>
                                             <div class="profile-cards-wrapper">
-                                                <a class="carddeck-link"
+                                                <a class="carddeck-link<?php echo($master_count > 1 ? ' show-counter" data-count="' . $master_count . 'x' : ''); ?>"
                                                    href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>"><?php echo get_card($carddeck_id, 'master'); ?></a><br/>
                                                 <small><span class="mastered"><i
-                                                            class="fas fa-medal"></i></span> <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_mastered_on']; ?> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_master['member_master_date']); ?>
+                                                            class="fas fa-medal"></i></span> <?php echo (TCG_MULTI_MASTER == true ? TRANSLATIONS[$GLOBALS['language']]['general']['text_mastered_on_first'] : TRANSLATIONS[$GLOBALS['language']]['general']['text_mastered_on']); ?> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_master['member_master_date']); ?>
                                                 </small>
                                             </div>
                                         </td>

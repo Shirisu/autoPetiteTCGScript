@@ -112,6 +112,7 @@ Current version: 2.4.0
 - managing of cards
   - sort in categories (trade, collect)
   - master full carddecks
+    - multiple mastering
 - message system
 - games
 - trade system

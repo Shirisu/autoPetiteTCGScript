@@ -33,7 +33,7 @@ if (isset($_SESSION['member_rank'])) {
                                    AND member_master_carddeck_id = '" . $carddeck_id . "'
                                  LIMIT 1";
             $result_mastered_yet = mysqli_query($link, $sql_mastered_yet) OR die(mysqli_error($link));
-            if (mysqli_num_rows($result_mastered_yet)) {
+            if (mysqli_num_rows($result_mastered_yet) && TCG_MULTI_MASTER == false) {
                 $row_carddeck = mysqli_fetch_assoc($result_mastered_yet);
                 alert_box($row_carddeck['carddeck_name'] . ' ' . TRANSLATIONS[$GLOBALS['language']]['member']['text_card_not_mastered'] . ' - ' . TRANSLATIONS[$GLOBALS['language']]['member']['text_already_mastered'], 'danger');
             } else {
@@ -249,7 +249,7 @@ if (isset($_SESSION['member_rank'])) {
                                                        AND member_master_carddeck_id = '" . $row_cards['member_cards_carddeck_id'] . "'
                                                      LIMIT 1";
                                     $result_mastered_yet = mysqli_query($link, $sql_mastered_yet) OR die(mysqli_error($link));
-                                    $mastered_yet = mysqli_num_rows($result_mastered_yet);
+                                    $mastered_yet = mysqli_num_rows($result_mastered_yet) && TCG_MULTI_MASTER == false;
                                     ?>
                                     <tr>
                                         <td class="d-none"><?php echo $carddeck_name; ?> <?php echo count($cardnumbers).'/'.TCG_CARDDECK_MAX_CARDS; ?></td>

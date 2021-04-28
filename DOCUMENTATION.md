@@ -86,6 +86,9 @@ You can define some settings in the [constants.php](https://github.com/Shirisu/a
 - **TCG_NAME**
   - for title-attribute & meta title
   - the name of your TCG
+- **TCG_MULTI_MASTER** - default `false`
+  - should it be possible to master a deck multiple times
+  - accepted values: `true` (means yes), `false` (means no)
 - **TCG_SHOP_CURRENCY_FOR_RANDOM** - default `100`
   - how much currency do 1 random cost?
   - accepted values: from `1` to whatever you like

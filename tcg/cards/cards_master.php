@@ -30,12 +30,25 @@ if (isset($_SESSION['member_rank'])) {
         </div>
         <div class="col col-12 mb-3 cards-sorting-container">
             <?php
-            $sql_cards = "SELECT carddeck_id, carddeck_name, member_master_date, carddeck_active
-                          FROM member_master
-                          JOIN carddeck ON carddeck_id = member_master_carddeck_id
-                          WHERE member_master_member_id = '".$member_id."'
-                            AND carddeck_active = 1
-                          ORDER BY carddeck_name ASC";
+            if (TCG_MULTI_MASTER == true) {
+                $sql_cards = "SELECT carddeck_id, carddeck_name, member_master_date, carddeck_active,
+                                (SELECT COUNT(member_master_id)
+                                 FROM member_master
+                                 WHERE member_master_carddeck_id = mc.member_master_carddeck_id
+                                   AND member_master_member_id = mc.member_master_member_id) AS master_count
+                              FROM member_master as mc
+                              JOIN carddeck ON carddeck_id = member_master_carddeck_id
+                              WHERE member_master_member_id = '" . $member_id . "'
+                                AND carddeck_active = 1
+                              ORDER BY carddeck_name, member_master_date ASC";
+            } else {
+                $sql_cards = "SELECT carddeck_id, carddeck_name, member_master_date, carddeck_active
+                              FROM member_master as mc
+                              JOIN carddeck ON carddeck_id = member_master_carddeck_id
+                              WHERE member_master_member_id = '" . $member_id . "'
+                                AND carddeck_active = 1
+                              ORDER BY carddeck_name ASC";
+            }
             $result_cards = mysqli_query($link, $sql_cards) OR die(mysqli_error($link));
             $count_cards = mysqli_num_rows($result_cards);
             if ($count_cards) {

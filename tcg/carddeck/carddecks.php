@@ -162,17 +162,19 @@ if (isset($_SESSION['member_rank'])) {
                             <td><?php echo get_member_link($row_carddeck['carddeck_creator']); ?></td>
                             <td class="text-center">
                                 <?php
-                                if ($already_mastered) {
-                                    ?>
-                                    <span class="mastered"><i class="fas fa-medal"></i></span>
-                                    <?php
-                                } else {
+                                if (!$already_mastered || TCG_MULTI_MASTER == true) {
                                     ?>
                                     <span
                                         class="<?php echo($is_on_wishlist ? 'remove-from-wishlist' : 'add-to-wishlist'); ?>"
                                         data-carddeck-id="<?php echo $row_carddeck['carddeck_id']; ?>">
                                         <i class="fas fa-star"></i><?php echo($is_on_wishlist ? '<i class="fas fa-minus"></i>' : '<i class="fas fa-plus"></i>'); ?>
                                     </span>
+                                    <?php
+                                }
+
+                                if ($already_mastered) {
+                                    ?>
+                                    <span class="mastered"><i class="fas fa-medal"></i></span>
                                     <?php
                                 }
                                 ?>

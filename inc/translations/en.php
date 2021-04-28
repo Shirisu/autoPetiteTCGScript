@@ -221,6 +221,7 @@ trading card game
         'text_master' => 'master',
         'text_mastered' => 'mastered',
         'text_mastered_on' => 'mastered on',
+        'text_mastered_on_first' => 'first mastered on',
         'text_memberarea' => 'Member Area',
         'text_month' => 'Month',
         'text_name' => 'Name',

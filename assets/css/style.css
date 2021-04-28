@@ -172,13 +172,17 @@ table.carddeck td {
     margin-left: -12px;
     margin-right: -12px;
 }
-.cards-sorting-container .cards-sorting-wrapper,
-.member-cards-container .profile-cards-wrapper,
+.cards-sorting-wrapper,
+.profile-cards-wrapper,
 .tradein-container .cards-wrapper,
 .card-wrapper {
     position: relative;
 }
-.member-cards-container .profile-cards-wrapper.show-counter::after {
+.show-counter {
+    position: relative;
+    display: inline-block;
+}
+.show-counter::after {
     content: attr(data-count);
     display: inline-block;
     position: absolute;
@@ -196,10 +200,10 @@ table.carddeck td {
     border: 1px solid #4e555b;
     border-radius: 50%;
 }
-.cards-sorting-container .cards-sorting-wrapper.mastered::after,
-.member-cards-container .profile-cards-wrapper.mastered::before,
-.member-cards-container .profile-cards-wrapper.needed::before,
-.card-wrapper.needed::before {
+.cards-sorting-wrapper.mastered::after,
+.profile-cards-wrapper.needed::before,
+.card-wrapper.needed::before,
+.profile-cards-wrapper.mastered::before {
     content: '\f559';
     display: inline-block;
     position: absolute;
@@ -218,11 +222,11 @@ table.carddeck td {
     border: 1px solid #4e555b;
     border-radius: 50%;
 }
-.member-cards-container .profile-cards-wrapper.needed.collect::before,
+.profile-cards-wrapper.needed.collect::before,
 .card-wrapper.needed.collect::before {
     content: '\f004';
 }
-.member-cards-container .profile-cards-wrapper.needed.wishlist::before,
+.profile-cards-wrapper.needed.wishlist::before,
 .card-wrapper.needed.wishlist::before {
     content: '\f005';
 }
