@@ -85,37 +85,58 @@ if (isset($_SESSION['member_rank'])) {
                             <?php } ?>
                             <tr>
                                 <td scope="row" colspan="2" class="text-center text-md-left pl-0">
-                                    <?php
-                                    $sql_mastered = "SELECT member_master_date
-                                                     FROM member_master
-                                                     WHERE member_master_member_id = '".$_SESSION['member_id']."'
-                                                       AND member_master_carddeck_id = '".$row_carddeck['carddeck_id']."'
-                                                    LIMIT 1";
-                                    $result_mastered = mysqli_query($link, $sql_mastered) OR die(mysqli_error($link));
-                                    $already_mastered = mysqli_num_rows($result_mastered) > 0;
-                                    if ($already_mastered) {
-                                        $row_mastered = mysqli_fetch_assoc($result_mastered);
-                                        ?>
-                                        <span class="mastered"><i class="fas fa-medal"></i></span> <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_mastered_on']; ?> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_mastered['member_master_date']); ?>
+                                    <div class="row m-0">
                                         <?php
-                                    } else {
-                                        $sql_on_wishlist = "SELECT member_wishlist_carddeck_id
+                                        $sql_mastered = "SELECT member_master_date
+                                                         FROM member_master
+                                                         WHERE member_master_member_id = '".$_SESSION['member_id']."'
+                                                           AND member_master_carddeck_id = '".$row_carddeck['carddeck_id']."'
+                                                         ORDER BY member_master_date ASC";
+                                        $result_mastered = mysqli_query($link, $sql_mastered) OR die(mysqli_error($link));
+                                        $already_mastered = mysqli_num_rows($result_mastered) > 0;
+
+                                        if (!$already_mastered || TCG_MULTI_MASTER == true) {
+                                            $sql_on_wishlist = "SELECT member_wishlist_carddeck_id
                                                             FROM member_wishlist
                                                             WHERE member_wishlist_member_id = '" . $_SESSION['member_id'] . "'
                                                               AND member_wishlist_carddeck_id = '" . $row_carddeck['carddeck_id'] . "'
                                                             LIMIT 1";
-                                        $result_on_wishlist = mysqli_query($link, $sql_on_wishlist) OR die(mysqli_error($link));
-                                        $is_on_wishlist = mysqli_num_rows($result_on_wishlist) > 0;
+                                            $result_on_wishlist = mysqli_query($link, $sql_on_wishlist) OR die(mysqli_error($link));
+                                            $is_on_wishlist = mysqli_num_rows($result_on_wishlist) > 0;
+                                            ?>
+                                            <div class="col col-auto">
+                                                <span
+                                                    class="<?php echo($is_on_wishlist ? 'remove-from-wishlist' : 'add-to-wishlist'); ?>"
+                                                    data-carddeck-id="<?php echo $row_carddeck['carddeck_id']; ?>">
+                                                    <i class="fas fa-star"></i><?php echo($is_on_wishlist ? '<i class="fas fa-minus"></i>' : '<i class="fas fa-plus"></i>'); ?>
+                                                </span>
+                                                <span
+                                                    class="wishlist-text"><?php echo($is_on_wishlist ? TRANSLATIONS[$GLOBALS['language']]['wishlist']['text_remove_from_wishlist'] : TRANSLATIONS[$GLOBALS['language']]['wishlist']['text_add_to_wishlist']); ?></span>
+                                            </div>
+                                            <?php
+                                        }
+
+                                        if ($already_mastered) {
+                                            ?>
+                                            <div class="col col-auto">
+                                                <div class="row">
+                                                    <?php
+                                                    while($row_mastered = mysqli_fetch_assoc($result_mastered)) {
+                                                        ?>
+                                                        <div class="col col-auto">
+                                                            <span class="mastered"><i
+                                                                    class="fas fa-medal"></i></span> <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_mastered_on']; ?>
+                                                            <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_mastered['member_master_date']); ?>
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </div>
+                                            <?php
+                                        }
                                         ?>
-                                        <span
-                                            class="<?php echo($is_on_wishlist ? 'remove-from-wishlist' : 'add-to-wishlist'); ?>"
-                                            data-carddeck-id="<?php echo $row_carddeck['carddeck_id']; ?>">
-                                            <i class="fas fa-star"></i><?php echo($is_on_wishlist ? '<i class="fas fa-minus"></i>' : '<i class="fas fa-plus"></i>'); ?>
-                                        </span>
-                                        <span class="wishlist-text"><?php echo($is_on_wishlist ? TRANSLATIONS[$GLOBALS['language']]['wishlist']['text_remove_from_wishlist'] : TRANSLATIONS[$GLOBALS['language']]['wishlist']['text_add_to_wishlist']); ?></span>
-                                        <?php
-                                    }
-                                    ?>
+                                    </div>
                                 </td>
                             </tr>
                             </tbody>
@@ -235,20 +256,44 @@ if (isset($_SESSION['member_rank'])) {
                             <p class="card-text">
                                 <?php
                                 $master_member = array();
-                                $sql_master = "SELECT member_id, member_nick
-                                               FROM member_master
-                                              JOIN member ON member_id = member_master_member_id
-                                               WHERE member_master_carddeck_id = '".$row_carddeck['carddeck_id']."'
-                                               ORDER BY member_nick ASC";
+                                if (TCG_MULTI_MASTER == true) {
+                                    $sql_master = "SELECT member_id, member_nick,
+                                                    (SELECT COUNT(member_master_id)
+                                                     FROM member_master
+                                                     WHERE member_master_carddeck_id = mc.member_master_carddeck_id
+                                                       AND member_master_member_id = mc.member_master_member_id) AS master_count
+                                                   FROM member_master mc
+                                                    JOIN member ON member_id = member_master_member_id
+                                                   WHERE member_master_carddeck_id = '" . $row_carddeck['carddeck_id'] . "'
+                                                   GROUP BY member_master_id
+                                                   ORDER BY member_nick ASC";
+                                } else {
+                                    $sql_master = "SELECT member_id, member_nick
+                                                   FROM member_master
+                                                    JOIN member ON member_id = member_master_member_id
+                                                   WHERE member_master_carddeck_id = '" . $row_carddeck['carddeck_id'] . "'
+                                                   GROUP BY member_master_id
+                                                   ORDER BY member_nick ASC";
+                                }
                                 $result_master = mysqli_query($link, $sql_master);
                                 $count_master = mysqli_num_rows($result_master);
                                 if ($count_master) {
                                     while ($row_master = mysqli_fetch_assoc($result_master)) {
-                                        $master_member[$row_master['member_nick']] = $row_master['member_id'];
+                                        $master_member[$row_master['member_nick']]['member_id'] = $row_master['member_id'];
+                                        $master_member[$row_master['member_nick']]['master_count'] = 0;
+
+                                        if (TCG_MULTI_MASTER == true) {
+                                            $master_member[$row_master['member_nick']]['master_count'] = $row_master['master_count'];
+                                        }
                                     }
 
-                                    foreach ($master_member as $index => $member_id) {
-                                        echo get_member_link($member_id);
+                                    foreach ($master_member as $index => $member_info) {
+                                        echo get_member_link($member_info['member_id']);
+                                        if (TCG_MULTI_MASTER == true) {
+                                            ?>
+                                            <span class="badge badge-secondary"><?php echo $member_info['master_count']; ?>x</span>
+                                            <?php
+                                        }
                                         echo ($index != array_key_last($master_member) ? ', ' : '');
                                     }
                                 } else {

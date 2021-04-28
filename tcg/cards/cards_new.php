@@ -36,7 +36,7 @@ if (isset($_SESSION['member_rank'])) {
                                        AND member_master_carddeck_id = '" . $row_carddeck['carddeck_id'] . "'
                                      LIMIT 1";
                     $result_mastered_yet = mysqli_query($link, $sql_mastered_yet) OR die(mysqli_error($link));
-                    if (mysqli_num_rows($result_mastered_yet)) {
+                    if (mysqli_num_rows($result_mastered_yet) && TCG_MULTI_MASTER == false) {
                         alert_box($row_carddeck['carddeck_name'] . sprintf('%02d', $row_carddeck['member_cards_number']) . ' ' . TRANSLATIONS[$GLOBALS['language']]['member']['text_card_not_moved'] . ' - ' . TRANSLATIONS[$GLOBALS['language']]['member']['text_already_mastered'], 'danger');
                     } else {
                         // check if card is in collect yet
@@ -167,7 +167,7 @@ if (isset($_SESSION['member_rank'])) {
                                         $carddeck_on_wishlist = $row_cards['carddeck_on_wishlist'];
                                         $carddeck_already_mastered = $row_cards['carddeck_already_mastered'];
 
-                                        if ($carddeck_already_mastered == 1) {
+                                        if ($carddeck_already_mastered == 1 && TCG_MULTI_MASTER == false) {
                                             $trade_selected = true;
                                             $collect_selected = false;
                                             $hide_collect = true;

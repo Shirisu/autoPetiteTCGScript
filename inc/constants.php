@@ -40,6 +40,7 @@ define('TCG_META_AUTHOR', 'Admin'); // meta author
 define('TCG_META_DESC', 'a mini TCG'); // meta description
 define('TCG_META_KEYWORDS', 'TCG, tcg, tgc, trading card game, trade card game, trade, card, game, ccg, collectible card game, virtual card game, vcg'); // meta keywords
 define('TCG_META_OWNER', 'mail@host.com'); // meta owner
+define('TCG_MULTI_MASTER', false); // should it be possible to master a deck multiple times? (yes = true - no = false)
 define('TCG_SHOP_CURRENCY_FOR_RANDOM', 100); // how much currency do 1 random cost?
 define('TCG_SHOW_TRADE_FILTER', true); // will you use the trade filter function? (yes = true - no = false)
 define('TCG_TRADE_IN_HOURS', 4); // how many hours do you need to wait to trade in new duplicate cards?
