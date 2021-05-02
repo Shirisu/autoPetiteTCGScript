@@ -130,7 +130,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                             </div>
                             <input type="text" class="form-control" id="carddeck_series" name="carddeck_series"
                                    aria-describedby="ariaDescribedbySeries" maxlength="255"
-                                   value="<?php echo $carddeck_series; ?>" required/>
+                                   value="<?php echo stripslashes($carddeck_series); ?>" required/>
                         </div>
                     </div>
                     <div class="form-group col col-12 col-md-6 mb-2">
@@ -354,7 +354,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                 FROM carddeck
                 JOIN carddeck_cat ON carddeck_cat = carddeck_cat_id
                 JOIN carddeck_sub_cat ON carddeck_sub_cat = carddeck_sub_cat_id
-                ORDER BY carddeck_name";
+                ORDER BY carddeck_id DESC";
         $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
         $count = mysqli_num_rows($result);
         if ($count) {
