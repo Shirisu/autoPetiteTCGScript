@@ -209,7 +209,7 @@ trading card game
         'text_inactive' => 'inaktiv',
         'text_language' => 'Sprache',
         'text_language_de' => 'deutsch',
-        'text_language_en' => 'english',
+        'text_language_en' => 'englisch',
         'text_lastactive' => 'Letzte Aktivit&auml;t',
         'text_lastlogin' => 'Letzte Anmeldung',
         'text_level_overview' => 'Level&uuml;bersicht',

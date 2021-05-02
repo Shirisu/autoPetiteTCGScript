@@ -40,7 +40,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                 move_uploaded_file($file['tmp_name'], $card_folder."/".$carddeck_name."/".$carddeck_name."master.".TCG_CARDS_FILE_TYPE);
                 chmod($card_folder."/".$carddeck_name."/".$carddeck_name."master.".TCG_CARDS_FILE_TYPE, 0665);
             }
-            for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS ; $i++) {
+            for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
                 $file = $_FILES['cardFile' . $i];
                 if (!empty($file['name'])) {
                     move_uploaded_file($file['tmp_name'], $card_folder . "/" . $carddeck_name . "/" . $carddeck_name . sprintf("%'.02d", $i) . "." . TCG_CARDS_FILE_TYPE);
@@ -209,7 +209,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                 </div>
             </div>
             <?php
-            for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS ; $i++) {
+            for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
                 ?>
                 <div class="form-group col col-12 col-md-6 mb-2">
                     <div class="input-group">
