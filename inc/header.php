@@ -18,6 +18,7 @@
     <meta name="siteinfo" content="robots.txt" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/bootstrap-select.min.css" />
     <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/bootstrap-table.min.css?<?php echo date('YmdH', time()); ?>" type="text/css" />
     <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/font-awesome-all.min.css?<?php echo date('YmdH', time()); ?>" type="text/css" />
     <link rel="stylesheet" href="<?php echo HOST_URL; ?>/assets/css/style.css?<?php echo date('YmdH', time()); ?>" type="text/css" />
