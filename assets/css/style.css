@@ -34,10 +34,32 @@ details summary:focus {
 }
 
 
+@media (max-width: 1280px) {
+    .bootstrap-select {
+        width: 100% !important;
+        max-width: fit-content !important;
+    }
+}
+@media (max-width: 1023px) {
+    .bootstrap-select {
+        width: calc(100% - 33%) !important;
+        max-width: 100% !important;
+    }
+}
+.bootstrap-select>select.selectpicker+.dropdown-toggle {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-color: #ced4da;
+}
+.bootstrap-select>select.selectpicker+.dropdown-toggle:focus {
+    outline: none !important;
+    box-shadow: none;
+}
+
+
 .card-same-height .card {
     height: 100%;
 }
-
 @media (max-width: 767px) {
     table .card-view {
         padding-bottom: 5px;

@@ -142,7 +142,8 @@ if (isset($_SESSION['member_rank'])) {
                                                 <span class="input-group-text"
                                                       id="ariaDescribedbyOwnCard"><?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_own_card']; ?></span>
                                             </div>
-                                            <select id="trade_own_card" name="trade_own_card" class="custom-select" aria-describedby="ariaDescribedbyOwnCard"
+                                            <select id="trade_own_card" name="trade_own_card" class="selectpicker" aria-describedby="ariaDescribedbyOwnCard"
+                                                    data-none-selected-text="<?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_own_card_select']; ?>"
                                                     required>
                                                 <option selected disabled hidden value=""></option>
                                                 <?php
