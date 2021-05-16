@@ -34,6 +34,7 @@
                     <?php
                     navlink('F.A.Q.','faq');
                     navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_rules'],'rules');
+                    navlink(TRANSLATIONS[$GLOBALS['language']]['general']['text_statistic'],'statistic');
                     ?>
                 </div>
             </li>
