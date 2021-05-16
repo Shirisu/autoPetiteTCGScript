@@ -429,6 +429,9 @@ Route::add("/faq",function() {
 Route::add("/rules",function() {
     require_once("tcg/rules.php");
 });
+Route::add("/statistic",function() {
+    require_once("tcg/statistic.php");
+});
 
 
 Route::run("/");
