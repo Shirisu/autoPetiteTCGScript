@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Update automated petite TCG Script - column member_last_active for table member
+ * Update automated petite TCG Script - table member_tradein
  *
  * don't forget to adjust the ../inc/constants.php file
  */
@@ -21,7 +21,7 @@ if (!$link) {
 }
 
 $query = '';
-$sqlScript = file("database-structure_lastactive.sql");
+$sqlScript = file("database-structure_masterorder.sql");
 foreach ($sqlScript as $line) {
     $startWith = substr(trim($line), 0, 2);
     $endWith = substr(trim($line), -1, 1);
@@ -37,7 +37,7 @@ foreach ($sqlScript as $line) {
     }
 }
 
-echo 'All went fine - column "member_last_active" for table "member" is imported.';
+echo 'All went fine - database table "member_masterorder" is imported.';
 ?>
     <br/>
     <a href="/">Back</a>

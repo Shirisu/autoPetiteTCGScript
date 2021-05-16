@@ -11,6 +11,8 @@ require_once("../inc/connection.php");
 require_once("../inc/constants.php");
 require_once("../inc/function.php");
 
+global $link;
+
 if (!$link) {
     echo "Error: could not connect to MySQL." . PHP_EOL;
     echo "Debug error number: " . mysqli_connect_errno() . PHP_EOL;

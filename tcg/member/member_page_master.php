@@ -3,6 +3,25 @@ if (isset($_SESSION['member_rank'])) {
     global $link;
 
     if (isset($member_id)) {
+
+        $sql_member_config = "SELECT member_master_order
+                          FROM member
+                          WHERE member_id = '".$_SESSION['member_id']."'
+                          LIMIT 1";
+        $result_member_config = mysqli_query($link, $sql_member_config) OR die(mysqli_error($link));
+        $row_member_config = mysqli_fetch_assoc($result_member_config);
+
+        if ($row_member_config['member_master_order'] == 0) {
+            $master_order = 'carddeck_name';
+            $master_order_multi = 'carddeck_name, member_master_date DESC';
+        } elseif ($row_member_config['member_master_order'] == 1) {
+            $master_order = 'member_master_date DESC';
+            $master_order_multi = 'member_master_date DESC, carddeck_name';
+        } else {
+            $master_order = 'carddeck_name';
+            $master_order_multi = 'carddeck_name, member_master_date DESC';
+        }
+
         $sql_member = "SELECT member_nick
                        FROM member
                        WHERE member_id = '".$member_id."'
@@ -54,14 +73,14 @@ if (isset($_SESSION['member_rank'])) {
                                       WHERE member_master_member_id = '" . $member_id . "'
                                         AND carddeck_active = 1
                                       GROUP BY member_master_carddeck_id
-                                      ORDER BY carddeck_name ASC";
+                                      ORDER BY ".$master_order;
                     } else {
                         $sql_master = "SELECT member_master_id, member_master_date, carddeck_id, carddeck_name, carddeck_active
                                    FROM member_master
                                    JOIN carddeck ON carddeck_id = member_master_carddeck_id
                                    WHERE member_master_member_id = '".$member_id."'
                                      AND carddeck_active = 1
-                                   ORDER BY carddeck_name ASC";
+                                   ORDER BY ".$master_order;
                     }
                     $result_master = mysqli_query($link, $sql_master) OR die(mysqli_error($link));
                     $count_master = mysqli_num_rows($result_master);

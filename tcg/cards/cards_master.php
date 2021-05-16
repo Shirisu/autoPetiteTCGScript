@@ -10,6 +10,24 @@ if (isset($_SESSION['member_rank'])) {
     title('Master');
 
     $member_id = $_SESSION['member_id'];
+
+    $sql_member_config = "SELECT member_master_order
+                          FROM member
+                          WHERE member_id = '".$member_id."'
+                          LIMIT 1";
+    $result_member_config = mysqli_query($link, $sql_member_config) OR die(mysqli_error($link));
+    $row_member_config = mysqli_fetch_assoc($result_member_config);
+
+    if ($row_member_config['member_master_order'] == 0) {
+        $master_order = 'carddeck_name';
+        $master_order_multi = 'carddeck_name, member_master_date DESC';
+    } elseif ($row_member_config['member_master_order'] == 1) {
+        $master_order = 'member_master_date DESC';
+        $master_order_multi = 'member_master_date DESC, carddeck_name';
+    } else {
+        $master_order = 'carddeck_name';
+        $master_order_multi = 'carddeck_name, member_master_date DESC';
+    }
     ?>
     <div class="row cards-sorting">
         <div class="col col-12 mb-3">
@@ -40,14 +58,14 @@ if (isset($_SESSION['member_rank'])) {
                               JOIN carddeck ON carddeck_id = member_master_carddeck_id
                               WHERE member_master_member_id = '" . $member_id . "'
                                 AND carddeck_active = 1
-                              ORDER BY carddeck_name, member_master_date ASC";
+                              ORDER BY ".$master_order_multi;
             } else {
                 $sql_cards = "SELECT carddeck_id, carddeck_name, member_master_date, carddeck_active
                               FROM member_master as mc
                               JOIN carddeck ON carddeck_id = member_master_carddeck_id
                               WHERE member_master_member_id = '" . $member_id . "'
                                 AND carddeck_active = 1
-                              ORDER BY carddeck_name ASC";
+                              ORDER BY ".$master_order;
             }
             $result_cards = mysqli_query($link, $sql_cards) OR die(mysqli_error($link));
             $count_cards = mysqli_num_rows($result_cards);
