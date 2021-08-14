@@ -23,6 +23,8 @@ if (!$link) {
     exit;
 }
 
+# add if TCG_CURRENCY_USE = true
+
         $sql = "SELECT member_id, member_nick, member_active
                 FROM member
                 WHERE member_active = '1'";
@@ -31,7 +33,7 @@ if (!$link) {
         while ($row = mysqli_fetch_assoc($result)) {
 
         $member_id = $row['member_id'];
-        $quantity = 40;
+        $quantity = TCG_DAILY_REWARD;
         $topic = "Daily Coins";
         $language = get_member_language($member_id);
 
