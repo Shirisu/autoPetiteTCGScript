@@ -2,7 +2,7 @@
 
 /**
  * This file will be called via a crontab entry daily using something
- * similar to 'curl -s https://<URL>/dist_.php'
+ * similar to 'curl -s https://<URL>/dist_coins.php'
  * This script is a simple SQL Query and then a loop over all "active"
  * users to reward them with a configurable Daily amount of Currancy.
  *
