@@ -2,7 +2,7 @@
 
 /**
  * This file will be called via a crontab entry daily using something
- * similar to 'curl -s https://<URL>/dist_coins.php'
+ * similar to 'curl -s https://<URL>/dist_currency.php'
  * This script is a simple SQL Query and then a loop over all "active"
  * users to reward them with a configurable Daily amount of Currancy.
  *
@@ -34,11 +34,11 @@ if (!$link) {
 
         $member_id = $row['member_id'];
         $quantity = TCG_DAILY_REWARD;
-        $topic = "Daily Coins";
+        $topic = "Daily ".TCG_CURRENCY;
         $language = get_member_language($member_id);
 
         insert_currency($member_id, $quantity);
-        $inserted_currency_text = "Daily Currancy Distribution".': '.$quantity;
+        $inserted_currency_text = "Daily ".TCG_CURRENCY." Reward".': '.$quantity;
 
         insert_log($topic, $inserted_currency_text, $member_id);
         $text = $topic.': '.$topic.' - '.$inserted_currency_text;
