@@ -23,8 +23,7 @@ if (!$link) {
     exit;
 }
 
-# add if TCG_CURRENCY_USE = true
-
+  if (TCG_CURRENCY_USE == true) {
         $sql = "SELECT member_id, member_nick, member_active
                 FROM member
                 WHERE member_active = '1'";
@@ -34,19 +33,19 @@ if (!$link) {
 
         $member_id = $row['member_id'];
         $quantity = TCG_DAILY_REWARD;
-        $topic = "Daily ".TCG_CURRENCY;
+        $topic = "Daily ".TCG_CURRENCY." Reward";
         $language = get_member_language($member_id);
 
         insert_currency($member_id, $quantity);
-        $inserted_currency_text = "Daily ".TCG_CURRENCY." Reward".': '.$quantity;
+        $inserted_currency_text = "You have been awarded <B>$quantity ".TCG_CURRENCY."</B> for being an Active User";
 
         insert_log($topic, $inserted_currency_text, $member_id);
-        $text = $topic.': '.$topic.' - '.$inserted_currency_text;
+        $text = $topic.' - '.$inserted_currency_text;
         insert_message($member_id, $member_id, $topic, $text, 1);
 
          }
         }
-
+  }
 # echo 'All went fine - Currancy Distributed.';
 
 mysqli_close($link);
