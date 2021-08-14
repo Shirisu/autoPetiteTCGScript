@@ -47,7 +47,7 @@ if (!$link) {
          }
         }
 
-echo 'All went fine - Currancy Distributed.';
+# echo 'All went fine - Currancy Distributed.';
 
 mysqli_close($link);
 ?>
