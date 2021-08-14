@@ -48,5 +48,5 @@ define('TCG_TRADE_IN_HOURS', 0); // how many hours do you need to wait to trade 
 define('TCG_WISH', 'Wish'); // wish name
 define('TCG_WISH_USE', true); // will you use wish? (yes = true - no = false)
 define('TCG_CARDPACK_REWARD', true); // Do you want to issue CardPacks via a cronjob
-define('TCG_CARDPACK_QUANTITY', 3); // How many cards are in a CardPack
+define('TCG_CARDPACK_QUANTITY', 6); // How many cards are in a CardPack
 ?>
