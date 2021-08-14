@@ -3,7 +3,7 @@
 <!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <link rel="shortcut icon" href="<?php echo HOST_URL; ?>/favicon.ico" />
     <title><?php echo TCG_META_TITLE; ?></title>
@@ -13,7 +13,7 @@
     <meta name="keywords" content="<?php echo TCG_META_KEYWORDS; ?>" />
     <meta name="owner" content="<?php echo TCG_META_OWNER; ?>" />
     <meta name="author" content="<?php echo TCG_META_AUTHOR; ?>" />
-    <meta name="audience" lang="de" content="alle">
+<!--     <meta name="audience" lang="de" content="alle"> -->
     <meta name="audience" lang="en" content="all">
     <meta name="siteinfo" content="robots.txt" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
