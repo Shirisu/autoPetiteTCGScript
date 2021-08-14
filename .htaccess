@@ -19,7 +19,7 @@ RewriteRule . index.php [QSA,L]
 
 php_value max_file_uploads 50
 
-<FilesMatch "^cron_*.php">
+<FilesMatch "^cron_">
 	Order deny,allow
 	Deny from all
         Allow from 185.98.191.151
