@@ -1,9 +1,12 @@
 <?php
 
 /**
- * Update automated petite TCG Script - table member_tradein
+ * This file will be called via a crontab entry daily using something
+ * similar to 'curl -s https://<URL>/dist_.php'
+ * This script is a simple SQL Query and then a loop over all "active"
+ * users to reward them with a configurable Daily amount of Currancy.
  *
- * don't forget to adjust the ../inc/constants.php file
+ * don't forget to adjust the ../inc/constants.php file to set the amount.
  */
 
 // set up database connection
