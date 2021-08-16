@@ -283,7 +283,7 @@ if (isset($_SESSION['member_rank'])) {
                                     </tr>
                                     <tr>
                                         <td style="text-align:center;"><img class="memory_found" src="<?php echo HOST_URL. '/' .TCG_CARDS_FOLDER . '/'.TCG_CARDS_FILLER_NAME.'.' . TCG_CARDS_FILE_TYPE; ?>" alt="<?php echo TRANSLATIONS[$GLOBALS['language']]['games']['text_memory_found']; ?>" width="<?php echo TCG_CARDS_HEIGHT; ?>" height="<?php echo TCG_CARDS_WIDTH; ?>" /></td>
-                                        <td style="text-align:center;"><img class="memory_not_found" src="<?php echo HOST_URL. '/' .TCG_CARDS_FOLDER . '/'.TCG_CARDS_FILLER_NAME.'.' . TCG_CARDS_FILE_TYPE; ?>" alt="<?php echo TRANSLATIONS[$GLOBALS['language']]['games']['text_memory_found_not']; ?>" /></td>
+                                        <td style="text-align:center;"><img class="memory_not_found" src="<?php echo HOST_URL. '/' .TCG_CARDS_FOLDER . '/'.TCG_CARDS_FILLER_NAME.'.' . TCG_CARDS_FILE_TYPE; ?>" alt="<?php echo TRANSLATIONS[$GLOBALS['language']]['games']['text_memory_found_not']; ?>" width="<?php echo TCG_CARDS_HEIGHT; ?>" height="<?php echo TCG_CARDS_WIDTH; ?>" /></td>
                                     </tr>
                                 </table>
                             </div>
