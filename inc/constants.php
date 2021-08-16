@@ -27,10 +27,10 @@ define('TCG_CARDS_HEIGHT', 300); // height of card
 define('TCG_CARDS_WIDTH', 200); // width of card
 define('TCG_CARDS_UPLOAD_REQUIRED', true); // is cardupload required on add card deck page? (yes = true - no = false)
 define('TCG_CARDS_PER_ROW', 4); // how many cards are in one row
-define('TCG_CARDS_START_PACKAGE', 4); // cards of start package
+define('TCG_CARDS_START_PACKAGE', 5); // cards of start package
 define('TCG_CARDDECK_MAX_CARDS', 12); // max cards of carddecks
 define('TCG_CURRENCY', 'DaCoins'); // currency name
-define('TCG_DAILY_REWARD', '40'); // How much CURRENCY to reward via the Daily cronjob
+define('TCG_DAILY_REWARD', '140'); // How much CURRENCY to reward via the Daily cronjob
 define('TCG_CURRENCY_USE', true); // will you use the currency? (yes = true - no = false)
 define('TCG_LEVEL_UP_CARD_REWARD', 3); // reward card amount for level up
 define('TCG_MAIN_LANGUAGE', 'en'); // main language (en or de)
@@ -44,9 +44,9 @@ define('TCG_META_OWNER', 'dageek@dageeks-geeks.gg'); // meta owner
 define('TCG_MULTI_MASTER', true); // should it be possible to master a deck multiple times? (yes = true - no = false)
 define('TCG_SHOP_CURRENCY_FOR_RANDOM', 100); // how much currency do 1 random cost?
 define('TCG_SHOW_TRADE_FILTER', true); // will you use the trade filter function? (yes = true - no = false)
-define('TCG_TRADE_IN_HOURS', 0); // how many hours do you need to wait to trade in new duplicate cards?
-define('TCG_WISH', 'Wish'); // wish name
+define('TCG_TRADE_IN_HOURS', 0.1); // how many hours do you need to wait to trade in new duplicate cards?
 define('TCG_WISH_USE', true); // will you use wish? (yes = true - no = false)
+define('TCG_WISH', 'Wish'); // wish name
 define('TCG_CARDPACK_REWARD', true); // Do you want to issue CardPacks via a cronjob
 define('TCG_CARDPACK_QUANTITY', 6); // How many cards are in a CardPack
 ?>

@@ -131,7 +131,8 @@ if (isset($_SESSION['member_rank'])) {
                                     var image_path = '<?php echo get_card_path_without_number($theme); ?>';
                                     var cover = '<?php echo HOST_URL . TCG_CARDS_FOLDER . '/'.TCG_CARDS_FILLER_NAME.'.' . TCG_CARDS_FILE_TYPE; ?>';
                                     var found = '<?php echo HOST_URL . TCG_CARDS_FOLDER . '/'.TCG_CARDS_FILLER_NAME.'.' . TCG_CARDS_FILE_TYPE; ?>';
-                                    var image_with = <?php echo TCG_CARDS_WIDTH; ?>;
+                                    var image_width = <?php echo TCG_CARDS_WIDTH; ?>;
+                                    var image_height = <?php echo TCG_CARDS_HEIGHT; ?>;
 
                                     var valuation = 5;
 
@@ -149,7 +150,7 @@ if (isset($_SESSION['member_rank'])) {
                                     for (z = 0; z < memory_rows; z++) {
                                         document.write('<tr class="memory">');
                                         for (s = 0; s < memory_cols; s++) {
-                                            document.write('<td class="memorycard"><a href="javascript:attempt(' + pos + ')"><img id="' + pos + '" src="' + cover + '" alt="" name=' + pos + '></a></td>');
+                                            document.write('<td class="memorycard"><a href="javascript:attempt(' + pos + ')"><img id="' + pos + '" src="' + cover + '" alt="" name=' + pos + ' width="' + image_width + '" height="' + image_height + '"></a></td>');
                                             pos++;
                                         }
                                         document.write('</tr>');
@@ -281,7 +282,7 @@ if (isset($_SESSION['member_rank'])) {
                                         <th><?php echo TRANSLATIONS[$GLOBALS['language']]['games']['text_memory_found_not']; ?></th>
                                     </tr>
                                     <tr>
-                                        <td style="text-align:center;"><img class="memory_found" src="<?php echo HOST_URL. '/' .TCG_CARDS_FOLDER . '/'.TCG_CARDS_FILLER_NAME.'.' . TCG_CARDS_FILE_TYPE; ?>" alt="<?php echo TRANSLATIONS[$GLOBALS['language']]['games']['text_memory_found']; ?>" /></td>
+                                        <td style="text-align:center;"><img class="memory_found" src="<?php echo HOST_URL. '/' .TCG_CARDS_FOLDER . '/'.TCG_CARDS_FILLER_NAME.'.' . TCG_CARDS_FILE_TYPE; ?>" alt="<?php echo TRANSLATIONS[$GLOBALS['language']]['games']['text_memory_found']; ?>" width="<?php echo TCG_CARDS_HEIGHT; ?>" height="<?php echo TCG_CARDS_WIDTH; ?>" /></td>
                                         <td style="text-align:center;"><img class="memory_not_found" src="<?php echo HOST_URL. '/' .TCG_CARDS_FOLDER . '/'.TCG_CARDS_FILLER_NAME.'.' . TCG_CARDS_FILE_TYPE; ?>" alt="<?php echo TRANSLATIONS[$GLOBALS['language']]['games']['text_memory_found_not']; ?>" /></td>
                                     </tr>
                                 </table>
