@@ -57,14 +57,12 @@ if (isset($_SESSION['member_rank'])) {
                               FROM member_master as mc
                               JOIN carddeck ON carddeck_id = member_master_carddeck_id
                               WHERE member_master_member_id = '" . $member_id . "'
-                                AND carddeck_active = 1
                               ORDER BY ".$master_order_multi;
             } else {
                 $sql_cards = "SELECT carddeck_id, carddeck_name, member_master_date, carddeck_active
                               FROM member_master as mc
                               JOIN carddeck ON carddeck_id = member_master_carddeck_id
                               WHERE member_master_member_id = '" . $member_id . "'
-                                AND carddeck_active = 1
                               ORDER BY ".$master_order;
             }
             $result_cards = mysqli_query($link, $sql_cards) OR die(mysqli_error($link));
