@@ -300,7 +300,7 @@ function get_card($carddeck_id = 0, $card_number = 0, $show_only_url = false, $s
             if (file_exists('.' . substr($filename, strlen(HOST_URL)))) {
                 return '<img src="'.HOST_URL.TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$card_number.'.'.TCG_CARDS_FILE_TYPE.'" alt="'.$carddeck_name.$card_number.'" width="'.TCG_CARDS_WIDTH.'" height="'.TCG_CARDS_HEIGHT.'" />';
             } else {
-                return '<img class="card-wrapper" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="'.$carddeck_name.$card_number.'" width="'.TCG_CARDS_WIDTH.'" height="'.TCG_CARDS_HEIGHT.'" />';
+                return '<img src="'.HOST_URL.TCG_CARDS_FOLDER.'/'.TCG_CARDS_FILLER_NAME.'.'.TCG_CARDS_FILE_TYPE.'" alt="'.$carddeck_name.$card_number.'" width="'.TCG_CARDS_WIDTH.'" height="'.TCG_CARDS_HEIGHT.'" />';
             }
         }
     } else {
@@ -308,7 +308,7 @@ function get_card($carddeck_id = 0, $card_number = 0, $show_only_url = false, $s
         if ($card_number == 'master') {
             $masterclass = ' mastercard';
         }
-        return '<img class="card-wrapper'.$masterclass.'" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" width="'.TCG_CARDS_WIDTH.'" height="'.TCG_CARDS_HEIGHT.'" />';
+        return '<img src="'.HOST_URL.TCG_CARDS_FOLDER.'/'.TCG_CARDS_FILLER_NAME.'.'.TCG_CARDS_FILE_TYPE.'" alt="" width="'.TCG_CARDS_WIDTH.'" height="'.TCG_CARDS_HEIGHT.'" />';
     }
 }
 
