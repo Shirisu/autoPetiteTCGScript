@@ -142,31 +142,11 @@ if (isset($_SESSION['member_rank'])) {
                             </tbody>
                         </table>
                     </div>
-                </div>
-                <div class="col col-12 col-xl-7 text-center order-1 order-xl-2 mb-2 mb-xl-0 overflow-auto">
-                    <div class="carddeck-wrapper" data-is-puzzle="<?php echo ($row_carddeck['carddeck_is_puzzle'] ? $row_carddeck['carddeck_is_puzzle'] : 0); ?>">
-                        <?php
-                        for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
-                            $filename = get_card($row_carddeck['carddeck_id'], $i, true);
-                            ?>
-                            <span class="card-wrapper" <?php echo (file_exists('.'.substr($filename, strlen(HOST_URL))) ? 'style="background-image:url('.$filename.');"' : ''); ?>></span>
-                            <?php
-                            if (($i % TCG_CARDS_PER_ROW) == 0) {
-                                ?>
-                                <br />
-                                <?php
-                            }
-                        }
-                        $filename_master = get_card($row_carddeck['carddeck_id'], 'master', true);
-                        ?>
-                        <span class="card-wrapper mastercard" <?php echo (file_exists('.'.substr($filename_master, strlen(HOST_URL))) ? 'style="background-image:url('.$filename_master.');"' : ''); ?>></span>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-3 card-same-height">
+                    <div class="row mt-3 card-same-height">
+                        <!-- by botric 17/08/2021 moved the collect, trade and master users to closer to the top -->
                 <div class="col col-12 col-md-4 mb-3">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header text-center">
                             <i class="fas fa-heart"></i> Collect / <i class="fas fa-star"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_wishlist']; ?>
                         </div>
                         <div class="card-body text-center">
@@ -215,7 +195,7 @@ if (isset($_SESSION['member_rank'])) {
                 </div>
                 <div class="col col-12 col-md-4 mb-3">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header text-center">
                             <i class="fas fa-exchange-alt"></i> Trade
                         </div>
                         <div class="card-body text-center">
@@ -249,7 +229,7 @@ if (isset($_SESSION['member_rank'])) {
                 </div>
                 <div class="col col-12 col-md-4 mb-3">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header text-center">
                             <i class="fas fa-award"></i> Master
                         </div>
                         <div class="card-body text-center">
@@ -302,6 +282,27 @@ if (isset($_SESSION['member_rank'])) {
                                 ?>
                             </p>
                         </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+                <div class="col col-12 col-xl-7 text-center order-1 order-xl-2 mb-2 mb-xl-0 overflow-auto">
+                    <div class="carddeck-wrapper" data-is-puzzle="<?php echo ($row_carddeck['carddeck_is_puzzle'] ? $row_carddeck['carddeck_is_puzzle'] : 0); ?>">
+                        <?php
+                        for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
+                            $filename = get_card($row_carddeck['carddeck_id'], $i, true);
+                            ?>
+                            <span class="card-wrapper" <?php echo (file_exists('.'.substr($filename, strlen(HOST_URL))) ? 'style="background-image:url('.$filename.');"' : ''); ?>></span>
+                            <?php
+                            if (($i % TCG_CARDS_PER_ROW) == 0) {
+                                ?>
+                                <br />
+                                <?php
+                            }
+                        }
+                        $filename_master = get_card($row_carddeck['carddeck_id'], 'master', true);
+                        ?>
+                        <span class="card-wrapper mastercard" <?php echo (file_exists('.'.substr($filename_master, strlen(HOST_URL))) ? 'style="background-image:url('.$filename_master.');"' : ''); ?>></span>
                     </div>
                 </div>
             </div>
