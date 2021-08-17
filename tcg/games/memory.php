@@ -87,7 +87,7 @@ if (isset($_SESSION['member_rank'])) {
                         $theme = 1;
                         $sql_memory = "SELECT carddeck_id
                                        FROM carddeck
-                                       WHERE carddeck_is_puzzle = 0
+                                       WHERE carddeck_is_puzzle = 1
                                          AND carddeck_active = 1
                                        ORDER BY RAND()
                                        LIMIT 1";
