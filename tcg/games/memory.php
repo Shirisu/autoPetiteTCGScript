@@ -49,11 +49,16 @@ if (isset($_SESSION['member_rank'])) {
                 if ($can_play) {
                     if (isset($_POST['attempts_count']) && $_POST['attempts_count'] > 0) {
 			 $attempts = $_POST['attempts_count'];
+			 $points = $_POST['points_count'];
 
                         if ($attempts <= 12) {
                             insert_cards($member_id, 3);
                             $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['games']['text_game_log_win_3_cards'].': '.implode(', ' ,$_SESSION['insert_cards']);
                             insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - '.$game_name, $inserted_cards_text, $member_id);
+
+			    insert_currency($member_id, $points);
+                            $inserted_currency_text = "You Won <B>$points ".TCG_CURRENCY."</B> playing $game_name";
+                            insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - '.$game_name, $inserted_currency_text, $member_id);
 
                             alert_box(
                                 TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_win'].'!<br />3 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'].': '.implode(', ',$_SESSION['insert_cards']).
@@ -65,6 +70,10 @@ if (isset($_SESSION['member_rank'])) {
                             $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['games']['text_game_log_win_2_cards'].': '.implode(', ', $_SESSION['insert_cards']);
                             insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - '.$game_name, $inserted_cards_text, $member_id);
 
+			    insert_currency($member_id, $points);
+                            $inserted_currency_text = "You Won <B>$points ".TCG_CURRENCY."</B> playing $game_name";
+                            insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - '.$game_name, $inserted_currency_text, $member_id);
+
                             alert_box(
                                 TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_win'].'!<br />2 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'].': '.implode(', ',$_SESSION['insert_cards']).
                                 '<br />'.
@@ -74,6 +83,10 @@ if (isset($_SESSION['member_rank'])) {
                             insert_cards($member_id, 1);
                             $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['games']['text_game_log_win_1_card'].': '.implode(', ', $_SESSION['insert_cards']);
                             insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - '.$game_name, $inserted_cards_text, $member_id);
+
+			    insert_currency($member_id, $points);
+                            $inserted_currency_text = "You Won <B>$points ".TCG_CURRENCY."</B> playing $game_name";
+                            insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - '.$game_name, $inserted_currency_text, $member_id);
 
                             alert_box(
                                 TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_win'].'!<br />1 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_card'].': '.implode(', ',$_SESSION['insert_cards']).
