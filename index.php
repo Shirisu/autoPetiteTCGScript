@@ -391,6 +391,20 @@ Route::add("/games/skill/([0-9+].*)",function($game_id) {
         require_once("tcg/games/games.php");
     }
 }, "post");
+Route::add("/games/mining/([0-9+].*)",function($game_id) {
+    if ($game_id == 6) {
+        require_once("tcg/games/mining.php");
+    } else {
+        require_once("tcg/games/games.php");
+    }
+});
+Route::add("/games/mining/([0-9+].*)",function($game_id) {
+    if ($game_id == 6) {
+        require_once("tcg/games/mining.php");
+    } else {
+        require_once("tcg/games/games.php");
+    }
+}, "post");
 
 // lost password and register
 Route::add("/lostpassword",function() {
