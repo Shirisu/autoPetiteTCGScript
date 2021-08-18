@@ -49,6 +49,7 @@ if (isset($_SESSION['member_rank'])) {
             if ($can_play) {
                 if (isset($_POST['nonce'])) {
                     $nonce = mysqli_real_escape_string($link, $_POST['nonce']);
+                    $cards = mysqli_real_escape_string($link, $_POST['cards']);
 
                         if (TCG_CURRENCY_USE) {
                             $amount_currency = $nonce;
@@ -60,17 +61,18 @@ if (isset($_SESSION['member_rank'])) {
                                 TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice'].': '.strtoupper($lucky_choice).
                                 '. '.TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_win'].'!<br />'.$amount_currency.' '.TCG_CURRENCY
                                 , 'success');
-                        } else {
-                            insert_cards($member_id, 1);
-                            $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['games']['text_game_log_win_1_card'] . ': ' . implode(', ', $_SESSION['insert_cards']);
-                            insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - '.$game_name, $inserted_cards_text, $member_id);
+                            if ($cards > 0) {
+                              insert_cards($member_id, $cards);
+                              $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['games']['text_game_log_win'] . ': ' . implode(', ', $_SESSION['insert_cards']);
+                              insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - '.$game_name, $inserted_cards_text, $member_id);
 
-                            alert_box(
-                                TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice'].': '.strtoupper($lucky_choice).
-                                '. '.TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_win'].'!<br />1 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_card'].': '.implode(', ',$_SESSION['insert_cards']).
-                                '<br />'.
-                                $_SESSION['insert_cards_images']
-                                , 'success');
+                              alert_box(
+                                  TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice'].': '.strtoupper($lucky_choice).
+                                  '. '.TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_win'].'!<br />1 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_card'].': '.implode(', ',$_SESSION['insert_cards']).
+                                  '<br />'.
+                                  $_SESSION['insert_cards_images']
+                                  , 'success');
+                            }
                         }
 
                     insert_game_played($member_id, $game_id);
@@ -89,7 +91,7 @@ if (isset($_SESSION['member_rank'])) {
 <div style="border:1px solid blue; width:200px; height:100px; text-align:center;padding:0"><h1 id="dice" style="font-size:300%">1</h1></div><Br>
 <div style="border:1px solid blue; width:300px; height:100px; text-align:center;padding:0"><h2 id="nonce" style="font-size:150%">0 <?php echo TCG_CURRENCY ?> Mined</h2></div>
 <br>
-<div style="border:1px solid blue; width:300px; height:50px; text-align:center;padding:0"><h1 id="msg" style="font-size:100%">Mining Waiting</h1></div><br>
+<!-- <div style="border:1px solid blue; width:300px; height:50px; text-align:center;padding:0"><h1 id="msg" style="font-size:100%">Mining Waiting</h1></div><br> -->
 <br>
 <button onclick="StartMine()">Start Mining</button>
 <button onclick="StopMine()">Stop Mining</button>
@@ -97,12 +99,14 @@ if (isset($_SESSION['member_rank'])) {
 <script>
 const target=12999
 var nonce
+var cards
 
 nonce=0;
+cards=5;
 
 function StartMine()
 {
- document.getElementById("msg").innerHTML="Miner Running";
+// document.getElementById("msg").innerHTML="Miner Running";
  document.getElementById("nonce").innerHTML="Calculating...";
 MyVar=setInterval(mining,150)
 }
@@ -115,10 +119,16 @@ document.getElementById("dice").innerHTML = ranNum;
 	 if (ranNum<target)
 	 
 	 {  StopMine();
-	 document.getElementById("msg").innerHTML ='Mining Successful, You Mined '+nonce+' <?php echo TCG_CURRENCY ?>';
+           if (cards<0){
+             cards=0;
+           } else {
+             cards=cards-1;
+           };
+
 	 document.getElementById("nonce").innerHTML ='Mined Value'+'='+nonce;
-         document.mining.nonce.value = nonce	
-	 document.getElementById("details").innerHTML ='Claim '+'='+nonce+' <?php echo TCG_CURRENCY ?>';}
+         document.mining.nonce.value = nonce;	
+         document.mining.cards.value = cards;
+	 document.getElementById("details").innerHTML ='Claim '+nonce+' <?php echo TCG_CURRENCY ?> and '+cards+' Cards';}
 }
 function StopMine()
 {clearInterval(MyVar);}
@@ -131,6 +141,7 @@ function StopMine()
                                            <h3 id=details>No Mined <?php echo TCG_CURRENCY ?> Yet</h3>
                                     </button>
                                     <input type="hidden" name="nonce" value="0">
+                                    <input type="hidden" name="cards" value="0">
                             </div>
                         </div>
                     </form>
