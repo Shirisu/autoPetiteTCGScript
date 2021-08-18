@@ -107,22 +107,22 @@ if (isset($_SESSION['member_rank'])) {
                         } else {
                             $can_play = true;
                         }
+
+		 	  if ($row_games['games_type'] == 1){ $slug = "lucky"; $faicon = "fa-dice"; } 
+			  if ($row_games['games_type'] == 2){ $slug = "skill"; $faicon = "fa-puzzle-piece"; } 
+			  if ($row_games['games_type'] == 3){ $slug = "mining"; $faicon = "fa-money-bill"; }
+#	 		  $game_id = $row_games['games_id'];
+			  $gamelink = HOST_URL."/games/$slug/$game_id> ".TRANSLATIONS[$GLOBALS['language']]['general']['play_now']."</a>";
+
                         ?>
                         <div class="col col-12 col-md-6 mb-2">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="media">
-                                        <i class="fas fa-<?php echo (($row_games['games_type'] == '1' || $row_games['games_is_lucky_category_game'] == 1) ? 'dice' : 'puzzle-piece'); ?> fa-2x mr-3"></i>
+                                        <i class="fas <?php echo $faicon; ?> fa-2x mr-3"></i>
                                         <div class="media-body">
                                             <?php
                                             if ($can_play) {
-							
-							if ($row_games['games_type'] == 1){ $slug = "lucky"; } 
-							if ($row_games['games_type'] == 2){ $slug = "skill"; } 
-							if ($row_games['games_type'] == 3){ $slug = "mining"; }
-							$game_id = $row_games['games_id'];
-							$gamelink = HOST_URL."/games/$slug/$game_id> ".TRANSLATIONS[$GLOBALS['language']]['general']['play_now']."</a>";
-
                                                 ?>
                                                 <span class="font-weight-bold"><?php echo $row_games['games_name']; ?></span><br />
                                                 <a href=<?php echo $gamelink ?>
