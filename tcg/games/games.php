@@ -116,9 +116,16 @@ if (isset($_SESSION['member_rank'])) {
                                         <div class="media-body">
                                             <?php
                                             if ($can_play) {
+							
+							if ($row_games['games_type'] == 1){ $slug = "lucky"; } 
+							if ($row_games['games_type'] == 2){ $slug = "skill"; } 
+							if ($row_games['games_type'] == 3){ $slug = "mining"; }
+							$game_id = $row_games['games_id'];
+							$gamelink = HOST_URL."/games/$slug/$game_id> ".TRANSLATIONS[$GLOBALS['language']]['general']['play_now']."</a>";
+
                                                 ?>
                                                 <span class="font-weight-bold"><?php echo $row_games['games_name']; ?></span><br />
-                                                <a href="<?php echo HOST_URL; ?>/games/<?php echo ($row_games['games_type'] == 1 ? 'lucky' : 'skill'); ?>/<?php echo $row_games['games_id']; ?>"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['play_now'] ?></a>
+                                                <a href=<?php echo $gamelink ?>
                                                 <?php
                                             } else {
                                                 ?>
