@@ -111,8 +111,8 @@ if (isset($_SESSION['member_rank'])) {
 		 	  if ($row_games['games_type'] == 1){ $slug = "lucky"; $faicon = "fa-dice"; } 
 			  if ($row_games['games_type'] == 2){ $slug = "skill"; $faicon = "fa-puzzle-piece"; } 
 			  if ($row_games['games_type'] == 3){ $slug = "mining"; $faicon = "fa-money-bill"; }
-#	 		  $game_id = $row_games['games_id'];
-			  $gamelink = HOST_URL."/games/$slug/$game_id> ".TRANSLATIONS[$GLOBALS['language']]['general']['play_now']."</a>";
+#			  $game_id = $row_games['games_id'];
+			  $gamelink = HOST_URL."/games/$slug/".$row_games['games_id']."> ".TRANSLATIONS[$GLOBALS['language']]['general']['play_now']."</a>";
 
                         ?>
                         <div class="col col-12 col-md-6 mb-2">
