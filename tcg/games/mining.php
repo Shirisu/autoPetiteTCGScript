@@ -100,6 +100,7 @@ if (isset($_SESSION['member_rank'])) {
 const target=12999
 var nonce
 var cards
+var MyVar
 
 nonce=0;
 cards=5;
@@ -108,6 +109,7 @@ function StartMine()
 {
 // document.getElementById("msg").innerHTML="Miner Running";
  document.getElementById("nonce").innerHTML="Calculating...";
+StopMine();
 MyVar=setInterval(mining,150)
 }
 
@@ -116,19 +118,20 @@ function mining()
 var ranNum = Math.floor( 1 + Math.random() * 1000000 );
 nonce=nonce+1;
 document.getElementById("dice").innerHTML = ranNum;
-	 if (ranNum<target)
-	 
+	 if (ranNum<target)	 
 	 {  StopMine();
-           if (cards<0){
+           if (cards<=0){
              cards=0;
            } else {
              cards=cards-1;
-           };
+           }
 
-	 document.getElementById("nonce").innerHTML ='Mined Value'+'='+nonce;
-         document.mining.nonce.value = nonce;	
-         document.mining.cards.value = cards;
-	 document.getElementById("details").innerHTML ='Claim '+nonce+' <?php echo TCG_CURRENCY ?> and '+cards+' Cards';}
+	   document.getElementById("nonce").innerHTML ='Mined Value'+'='+nonce;
+           document.mining.nonce.value = nonce;	
+           document.mining.cards.value = cards;
+	   document.getElementById("details").innerHTML ='Claim '+nonce+' <?php echo TCG_CURRENCY ?> and '+cards+' Cards';
+           nonce=0;
+         }
 }
 function StopMine()
 {clearInterval(MyVar);}
