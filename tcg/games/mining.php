@@ -88,8 +88,8 @@ if (isset($_SESSION['member_rank'])) {
 
 <hr>
 <p>Click on the 'Start Mining' button to start the mining simulation</p>
-<div style="border:1px solid blue; width:200px; height:100px; text-align:center;padding:0"><h1 id="dice" style="font-size:300%">1</h1></div><Br>
-<div style="border:1px solid blue; width:300px; height:100px; text-align:center;padding:0"><h2 id="nonce" style="font-size:150%">0 <?php echo TCG_CURRENCY ?> Mined</h2></div>
+<div style="border:1px solid blue; width:200px; height:100px; text-align:center;padding:0" center><h1 id="dice" style="font-size:300%">1</h1></div><Br>
+<div style="border:1px solid blue; width:300px; height:100px; text-align:center;padding:0" center><h2 id="nonce" style="font-size:150%">0 <?php echo TCG_CURRENCY ?> Mined</h2></div>
 <br>
 <!-- <div style="border:1px solid blue; width:300px; height:50px; text-align:center;padding:0"><h1 id="msg" style="font-size:100%">Mining Waiting</h1></div><br> -->
 <br>
@@ -101,16 +101,18 @@ const target=12999
 var nonce
 var cards
 var MyVar
+var mspeed
 
 nonce=0;
 cards=5;
+mspeed=100;
 
 function StartMine()
 {
 // document.getElementById("msg").innerHTML="Miner Running";
  document.getElementById("nonce").innerHTML="Calculating...";
 StopMine();
-MyVar=setInterval(mining,150)
+MyVar=setInterval(mining,mspeed)
 }
 
 function mining()
@@ -131,6 +133,7 @@ document.getElementById("dice").innerHTML = ranNum;
            document.mining.cards.value = cards;
 	   document.getElementById("details").innerHTML ='Claim '+nonce+' <?php echo TCG_CURRENCY ?> and '+cards+' Cards';
            nonce=0;
+           mspeed=mspeed+300;
          }
 }
 function StopMine()
