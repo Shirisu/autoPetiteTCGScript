@@ -206,3 +206,8 @@ To run the script in subfolder you must follow there steps
 - You must add at least 3 card decks to see the active games
 3) Why can't I activate my account using the link in the activation email?
 - You must add at least the amount of card decks you specify in `TCG_CARDS_START_PACKAGE` in the `constants.php`
+4) Can you add a specific feature?
+- Just [open an issue](https://github.com/Shirisu/autoPetiteTCGScript/issues) with some informations about the feature you want to have :)
+The more detailed the better.
+6) Can you add a new game?
+- [Open an issue](https://github.com/Shirisu/autoPetiteTCGScript/issues) with the game you want to be added. It would be good if you can also provide the url of an existing script.
