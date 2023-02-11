@@ -147,3 +147,4 @@ Current version: 2.6.0
 
 ## sites that use the script
 - [Witch Heaven TCG](https://tcg.jadestaub.de)
+- [Alohomora TCG](https://alohomora.arctic-rose.net)
