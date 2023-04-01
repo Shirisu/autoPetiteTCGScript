@@ -52,9 +52,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     <div class="row align-items-center">
                         <div class="form-group col col-12 col-md-6 mb-2">
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="ariaDescribedbyID">ID</span>
-                                </div>
+                                <span class="input-group-text" id="ariaDescribedbyID">ID</span>
                                 <input type="text" disabled class="form-control" aria-describedby="ariaDescribedbyID" required value="<?php echo $row['member_id']; ?>" />
                             </div>
                             <input type="hidden" class="form-control" id="member_id" name="member_id" value="<?php echo $row['member_id']; ?>" />
@@ -64,9 +62,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                             ?>
                             <div class="form-group col col-12 col-md-6 mb-2">
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="ariaDescribedbyIP">IP</span>
-                                    </div>
+                                    <span class="input-group-text" id="ariaDescribedbyIP">IP</span>
                                     <input type="text" disabled class="form-control" aria-describedby="ariaDescribedbyIP" required value="<?php echo $row['member_ip']; ?>" />
                                 </div>
                             </div>
@@ -75,17 +71,13 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                         ?>
                         <div class="form-group col col-12 col-md-6 mb-2">
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="ariaDescribedbyNickname"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_nickname']; ?></span>
-                                </div>
+                                <span class="input-group-text" id="ariaDescribedbyNickname"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_nickname']; ?></span>
                                 <input type="text" disabled class="form-control" aria-describedby="ariaDescribedbyNickname" required value="<?php echo $row['member_nick']; ?>" />
                             </div>
                         </div>
                         <div class="form-group col col-12 col-md-6 mb-2">
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="ariaDescribedbyActive"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_status']; ?></span>
-                                </div>
+                                <span class="input-group-text" id="ariaDescribedbyActive"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_status']; ?></span>
                                 <?php
                                 if ($member_active == 4) {
                                     ?>
@@ -94,7 +86,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                     <?php
                                 } else {
                                     ?>
-                                    <select class="custom-select" id="member_active" name="member_active"
+                                    <select class="selectpicker" data-live-search="true" data-size="10" id="member_active" name="member_active"
                                             aria-describedby="ariaDescribedbyActive" required>
                                         <option value="1"
                                                 <?php echo ($member_active == 1 ? 'selected="selected"' : ''); ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_active']; ?></option>
@@ -115,34 +107,26 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                             ?>
                             <div class="form-group col col-12 col-md-6 mb-2">
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="ariaDescribedbyRegister"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_registered']; ?></span>
-                                    </div>
+                                    <span class="input-group-text" id="ariaDescribedbyRegister"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_registered']; ?></span>
                                     <input type="text" disabled class="form-control" aria-describedby="ariaDescribedbyRegister" required value="<?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'],$row['member_register']); ?>" />
                                 </div>
                             </div>
                             <div class="form-group col col-12 col-md-6 mb-2">
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="ariaDescribedbyLastLogin"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastlogin']; ?></span>
-                                    </div>
+                                    <span class="input-group-text" id="ariaDescribedbyLastLogin"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastlogin']; ?></span>
                                     <input type="text" disabled class="form-control" aria-describedby="ariaDescribedbyLastLogin" required value="<?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'],$row['member_last_login']); ?>" />
                                 </div>
                             </div>
                             <div class="form-group col col-12 col-md-6 mb-2">
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="ariaDescribedbyLastActive"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastactive']; ?></span>
-                                    </div>
+                                    <span class="input-group-text" id="ariaDescribedbyLastActive"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastactive']; ?></span>
                                     <input type="text" disabled class="form-control" aria-describedby="ariaDescribedbyLastActive" required value="<?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'],$row['member_last_active']); ?>" />
                                 </div>
                             </div>
                             <div class="form-group col col-12 col-md-6 mb-2">
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="ariaDescribedbyRank"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_rank']; ?></span>
-                                    </div>
-                                    <select class="custom-select" id="member_rank" name="member_rank" aria-describedby="ariaDescribedbyRank" required>
+                                    <span class="input-group-text" id="ariaDescribedbyRank"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_rank']; ?></span>
+                                    <select class="selectpicker" data-live-search="true" data-size="10" id="member_rank" name="member_rank" aria-describedby="ariaDescribedbyRank" required>
                                         <?php
                                         while ($row_rank = mysqli_fetch_assoc($result_rank)) {
                                             ?>
@@ -155,10 +139,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                             </div>
                             <div class="form-group col col-12 col-md-6 mb-2">
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="ariaDescribedbyLanguage"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_language']; ?></span>
-                                    </div>
-                                    <select class="custom-select" id="member_language" name="member_language" aria-describedby="ariaDescribedbyLanguage" required>
+                                    <span class="input-group-text" id="ariaDescribedbyLanguage"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_language']; ?></span>
+                                    <select class="selectpicker" data-live-search="true" data-size="10" id="member_language" name="member_language" aria-describedby="ariaDescribedbyLanguage" required>
                                         <option selected disabled hidden value=""></option>
                                         <option value="en" <?php if ($member_language == 'en') { ?>selected="selected"<?php } ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_language_en']; ?></option>
                                         <option value="de" <?php if ($member_language == 'de') { ?>selected="selected"<?php } ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_language_de']; ?></option>
@@ -167,13 +149,11 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                             </div>
                             <div class="form-group col col-12 col-md-6 mb-2">
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="ariaDescribedbyEmail"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_email']; ?></span>
-                                    </div>
+                                    <span class="input-group-text" id="ariaDescribedbyEmail"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_email']; ?></span>
                                     <input type="text" class="form-control" aria-describedby="ariaDescribedbyEmail" id="member_email" name="member_email" pattern="^[a-zA-Z0-9_\+-]+(\.[a-zA-Z0-9_\+-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.([a-zA-Z]{2,4})$" value="<?php echo $member_email; ?>" required />
                                 </div>
                             </div>
-                            <div class="form-group col col-12">
+                            <div class="form-group col col-12 mb-2">
                                 <button type="submit" class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_save']; ?></button>
                             </div>
                             <?php
@@ -223,24 +203,24 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         breadcrumb($breadcrumb);
         title(TRANSLATIONS[$GLOBALS['language']]['admin']['member_edit_headline']);
         ?>
-        <div class="row">
-            <div class="col col-12 col-md-4">
-                <a href="<?php echo HOST_URL; ?>/administration/editmember/all"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_all']; ?></a>
+        <div class="row justify-content-center">
+            <div class="d-grid col col-6 col-md-4 mb-2">
+                <a href="<?php echo HOST_URL; ?>/administration/editmember/all" class="btn btn-outline-info btn-sm<?php echo $rank == 'all' ? ' active' : ''; ?>"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_all']; ?></a>
             </div>
-            <div class="col col-12 col-md-4">
-                <a href="<?php echo HOST_URL; ?>/administration/editmember/active"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_active']; ?></a>
+            <div class="d-grid col col-6 col-md-4 mb-2">
+                <a href="<?php echo HOST_URL; ?>/administration/editmember/active" class="btn btn-outline-info btn-sm<?php echo $rank == 'active' ? ' active' : ''; ?>"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_active']; ?></a>
             </div>
-            <div class="col col-12 col-md-4">
-                <a href="<?php echo HOST_URL; ?>/administration/editmember/inactive"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_inactive']; ?></a>
+            <div class="d-grid col col-6 col-md-4 mb-2">
+                <a href="<?php echo HOST_URL; ?>/administration/editmember/inactive" class="btn btn-outline-info btn-sm<?php echo $rank == 'inactive' ? ' active' : ''; ?>"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_inactive']; ?></a>
             </div>
-            <div class="col col-12 col-md-4">
-                <a href="<?php echo HOST_URL; ?>/administration/editmember/notactivatedyet"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_not_active']; ?></a>
+            <div class="d-grid col col-6 col-md-4 mb-2">
+                <a href="<?php echo HOST_URL; ?>/administration/editmember/notactivatedyet" class="btn btn-outline-info btn-sm<?php echo $rank == 'notactivatedyet' ? ' active' : ''; ?>"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_not_active']; ?></a>
             </div>
-            <div class="col col-12 col-md-4">
-                <a href="<?php echo HOST_URL; ?>/administration/editmember/deleted"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_deleted']; ?></a>
+            <div class="d-grid col col-6 col-md-4 mb-2">
+                <a href="<?php echo HOST_URL; ?>/administration/editmember/deleted" class="btn btn-outline-info btn-sm<?php echo $rank == 'deleted' ? ' active' : ''; ?>"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_deleted']; ?></a>
             </div>
-            <div class="col col-12 col-md-4">
-                <a href="<?php echo HOST_URL; ?>/administration/editmember/blocked"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_blocked']; ?></a>
+            <div class="d-grid col col-6 col-md-4 mb-2">
+                <a href="<?php echo HOST_URL; ?>/administration/editmember/blocked" class="btn btn-outline-info btn-sm<?php echo $rank == 'blocked' ? ' active' : ''; ?>"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['member_blocked']; ?></a>
             </div>
         </div>
 
@@ -285,13 +265,13 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     <table id="admin-member-edit-table" data-mobile-responsive="true">
                         <thead>
                         <tr>
-                            <th data-field="id">ID</th>
-                            <th data-field="ip">IP</th>
-                            <th data-field="nickname"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_nickname']; ?></th>
-                            <th data-field="lastlogin"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastlogin']; ?></th>
-                            <th data-field="lastactive"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastactive']; ?></th>
-                            <th data-field="status"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_status']; ?></th>
-                            <th data-field="rank"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_rank']; ?></th>
+                            <th data-field="id" data-sortable="true">ID</th>
+                            <th data-field="ip" data-sortable="true">IP</th>
+                            <th data-field="nickname" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_nickname']; ?></th>
+                            <th data-field="lastlogin" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastlogin']; ?></th>
+                            <th data-field="lastactive" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastactive']; ?></th>
+                            <th data-field="status" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_status']; ?></th>
+                            <th data-field="rank" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_rank']; ?></th>
                             <th data-field="options"></th>
                         </tr>
                         </thead>

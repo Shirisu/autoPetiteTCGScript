@@ -191,15 +191,15 @@ if (isset($_SESSION['member_rank'])) {
     <div class="row">
         <div class="col col-12 mb-3">
             <div class="row">
-                <div class="col col-6 mb-2 mb-md-0">
+                <div class="d-grid col col-6 mb-2">
                     <a href="<?php echo HOST_URL; ?>/trade/inbox"
-                       class="btn btn-outline-info btn-sm btn-block <?php echo($trade_box_type == 'inbox' ? 'active' : ''); ?>"><i
+                       class="btn btn-outline-info btn-sm <?php echo($trade_box_type == 'inbox' ? 'active' : ''); ?>"><i
                             class="fas fa-level-down-alt"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_inbox']; ?>
                     </a>
                 </div>
-                <div class="col col-6 mb-2 mb-md-0">
+                <div class="d-grid col col-6 mb-2">
                     <a href="<?php echo HOST_URL; ?>/trade/outbox"
-                       class="btn btn-outline-info btn-sm btn-block <?php echo($trade_box_type == 'outbox' ? 'active' : ''); ?>"><i
+                       class="btn btn-outline-info btn-sm <?php echo($trade_box_type == 'outbox' ? 'active' : ''); ?>"><i
                             class="fas fa-level-up-alt"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_outbox']; ?>
                     </a>
                 </div>
@@ -213,10 +213,10 @@ if (isset($_SESSION['member_rank'])) {
                     <table id="trade-table" data-mobile-responsive="true" data-search="no">
                         <thead>
                         <tr>
-                            <th data-field="sender-receiver"><?php echo($trade_box_type == 'inbox' ? TRANSLATIONS[$GLOBALS['language']]['trade']['text_sender'] : TRANSLATIONS[$GLOBALS['language']]['trade']['text_receiver']); ?></th>
+                            <th data-field="sender-receiver" data-sortable="true"><?php echo($trade_box_type == 'inbox' ? TRANSLATIONS[$GLOBALS['language']]['trade']['text_sender'] : TRANSLATIONS[$GLOBALS['language']]['trade']['text_receiver']); ?></th>
                             <th data-field="tradecard"><?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_trade_card']; ?></th>
                             <th data-field="owncard"><?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_own_card']; ?></th>
-                            <th data-field="date"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_date']; ?></th>
+                            <th data-field="date" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_date']; ?></th>
                             <th data-field="message"><?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_trade_message']; ?></th>
                             <th data-field="option"></th>
                         </tr>
@@ -265,27 +265,24 @@ if (isset($_SESSION['member_rank'])) {
                                     if ($trade_box_type == 'inbox') {
                                         ?>
                                         <form action="<?php echo HOST_URL; ?>/trade/inbox/<?php echo $row_trade['trade_id']; ?>" method="post">
-                                            <div class="row ml-auto mr-auto">
-                                                <div class="col col-12">
+                                            <div class="row ms-auto me-auto">
+                                                <div class="col col-12 mb-3">
                                                     <div class="form-group">
                                                         <div class="input-group">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text" id="ariaDescribedbyTradeText"><?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_trade_message']; ?></span>
-                                                            </div>
                                                             <textarea class="form-control" id="trade_message" name="trade_message" aria-describedby="ariaDescribedbyTradeText" rows="3"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col col-12 col-xl-6">
-                                                    <div class="form-group">
-                                                        <button type="submit" name="accept" class="btn btn-block badge badge-success">
+                                                <div class="col col-12 col-xl-6 mb-4">
+                                                    <div class="d-grid form-group">
+                                                        <button type="submit" name="accept" class="btn badge bg-success">
                                                             <i class="fas fa-check"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_button_accept']; ?>
                                                         </button>
                                                     </div>
                                                 </div>
-                                                <div class="col col-12 col-xl-6">
-                                                    <div class="form-group">
-                                                        <button type="submit" name="decline" class="btn btn-block badge badge badge-danger">
+                                                <div class="col col-12 col-xl-6 mb-4">
+                                                    <div class="d-grid form-group">
+                                                        <button type="submit" name="decline" class="btn badge badge bg-danger">
                                                             <i class="fas fa-times"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_button_decline']; ?>
                                                         </button>
                                                     </div>
@@ -296,7 +293,7 @@ if (isset($_SESSION['member_rank'])) {
                                     } else {
                                         ?>
                                         <a href="<?php echo HOST_URL; ?>/trade/<?php echo $row_trade['trade_id']; ?>/withdraw"
-                                           class="badge badge-primary"><i
+                                           class="badge bg-primary"><i
                                                 class="fas fa-undo"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_button_withdraw']; ?>
                                         </a>
                                         <?php

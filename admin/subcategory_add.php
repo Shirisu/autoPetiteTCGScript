@@ -55,9 +55,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         <div class="row align-items-center">
             <div class="form-group col col-12 mb-2">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="ariaDescribedbyName">Name</span>
-                    </div>
+                    <span class="input-group-text" id="ariaDescribedbyName">Name</span>
                     <input type="text" class="form-control" id="subcategory_name" name="subcategory_name" aria-describedby="ariaDescribedbyName" maxlength="255" value="" required />
                 </div>
             </div>
@@ -66,10 +64,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                 if (mysqli_num_rows($result_cat)) {
                     ?>
                     <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="ariaDescribedbyCategory"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_category']; ?></span>
-                        </div>
-                        <select class="custom-select" id="main_category_id" name="main_category_id" aria-describedby="ariaDescribedbyCategory" required>
+                        <span class="input-group-text" id="ariaDescribedbyCategory"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_category']; ?></span>
+                        <select class="selectpicker" data-live-search="true" data-size="10" id="main_category_id" name="main_category_id" aria-describedby="ariaDescribedbyCategory" required>
                             <option selected disabled hidden value=""></option>
                             <?php
                             while ($row_cat = mysqli_fetch_assoc($result_cat)) {

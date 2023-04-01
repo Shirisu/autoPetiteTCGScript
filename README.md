@@ -134,9 +134,10 @@ Current version: 2.6.0
 
 
 ## used frameworks, libraries and others
-- Bootstrap v4.5.3 (https://getbootstrap.com)
-- BootstrapTable v1.18.1 (https://bootstrap-table.com)
-- jQuery v3.5.1 (https://jquery.com)
+- Bootstrap v5.2.3 (https://getbootstrap.com)
+- BootstrapSelect v1.14.0-beta3 (https://developer.snapappointments.com/bootstrap-select/)
+- BootstrapTable v1.21.4 (https://bootstrap-table.com)
+- jQuery v3.6.4 (https://jquery.com)
 - Font Awesome Free v5.15.2 (https://fontawesome.com)
 - PHP Routing (https://steampixel.de/einfaches-und-elegantes-url-routing-mit-php/)
 

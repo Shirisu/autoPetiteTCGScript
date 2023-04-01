@@ -38,13 +38,11 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         <div class="row align-items-center">
             <div class="form-group col mb-2">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="ariaDescribedbyName">Name</span>
-                    </div>
+                    <span class="input-group-text" id="ariaDescribedbyName">Name</span>
                     <input type="text" class="form-control" id="category_name" name="category_name" aria-describedby="ariaDescribedbyName" maxlength="255" value="" required />
                 </div>
             </div>
-            <div class="form-group col col-12">
+            <div class="form-group col col-12 mb-2">
                 <button type="submit" class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_add']; ?></button>
             </div>
         </div>

@@ -1,16 +1,14 @@
 function create_toast(id, icon, title, text) {
     return $(
-        '<div class="toast" id="toast-add-to-wishlist-' + id + '" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000">' +
-        '<div class="toast-header">' +
-        '<i class="fas fa-' + icon + ' mr-2"></i>' +
-        '<strong class="mr-auto">' + title + '</strong>' +
-        '<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">' +
-        '<span aria-hidden="true">&times;</span>' +
-        '</button>' +
-        '</div>' +
-        '<div class="toast-body">' +
-        text +
-        '</div>' +
+        '<div class="toast" id="toast-add-to-wishlist-' + id + '" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">' +
+        '  <div class="toast-header">' +
+        '    <i class="fas fa-' + icon + ' me-2"></i>' +
+        '    <strong class="me-auto">' + title + '</strong>' +
+        '    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>' +
+        '  </div>\n' +
+        '  <div class="toast-body">' +
+            text +
+        '  </div>\n' +
         '</div>'
     );
 }
@@ -34,7 +32,7 @@ $(document).ready(function() {
     // use bootstrapTable for all tables without class "optional" or data-paging=no
     $('table:not([data-paging="no"]):not([data-search="no"]):not(.optional)').bootstrapTable('destroy').bootstrapTable({
         pagination: true,
-        paginationParts: ['pageInfo', 'pageList'],
+        paginationParts: ['pageList'],
         formatShowingRows: function(pageFrom, pageTo, totalRows) {
             return showingRowsText(pageFrom, pageTo, totalRows);
         },
@@ -54,7 +52,7 @@ $(document).ready(function() {
     // use bootstrapTable without paging
     $('table[data-search="no"]').bootstrapTable('destroy').bootstrapTable({
         pagination: true,
-        paginationParts: ['pageInfo', 'pageList'],
+        paginationParts: ['pageList'],
         formatShowingRows: function(pageFrom, pageTo, totalRows) {
             return showingRowsText(pageFrom, pageTo, totalRows);
         },
@@ -67,7 +65,7 @@ $(document).ready(function() {
     $('table.news').bootstrapTable('destroy').bootstrapTable({
         classes: 'table table-borderless',
         pagination: true,
-        paginationParts: ['pageInfo', 'pageList'],
+        paginationParts: ['pageList'],
         formatShowingRows: function(pageFrom, pageTo, totalRows) {
             return showingRowsText(pageFrom, pageTo, totalRows);
         },
@@ -81,7 +79,7 @@ $(document).ready(function() {
         $('table.profile-cards.trade-cards').bootstrapTable('destroy').bootstrapTable({
             classes: 'table table-borderless',
             pagination: true,
-            paginationParts: ['pageInfo', 'pageList'],
+            paginationParts: ['pageList'],
             formatShowingRows: function(pageFrom, pageTo, totalRows) {
                 return showingRowsText(pageFrom, pageTo, totalRows);
             },
@@ -109,7 +107,7 @@ $(document).ready(function() {
     $('table.profile-cards.collect-cards').bootstrapTable('destroy').bootstrapTable({
         classes: 'table table-borderless',
         pagination: true,
-        paginationParts: ['pageInfo', 'pageList'],
+        paginationParts: ['pageList'],
         formatShowingRows: function(pageFrom, pageTo, totalRows) {
             return showingRowsText(pageFrom, pageTo, totalRows);
         },
@@ -122,7 +120,7 @@ $(document).ready(function() {
     $('table.profile-cards.master-cards').bootstrapTable('destroy').bootstrapTable({
         classes: 'table table-borderless',
         pagination: true,
-        paginationParts: ['pageInfo', 'pageList'],
+        paginationParts: ['pageList'],
         formatShowingRows: function(pageFrom, pageTo, totalRows) {
             return showingRowsText(pageFrom, pageTo, totalRows);
         },
@@ -135,7 +133,7 @@ $(document).ready(function() {
     $('table.cards-sorting-table.new-cards, table.cards-sorting-table.trade-cards').bootstrapTable('destroy').bootstrapTable({
         classes: 'table table-borderless',
         pagination: true,
-        paginationParts: ['pageInfo', 'pageList'],
+        paginationParts: ['pageList'],
         formatShowingRows: function(pageFrom, pageTo, totalRows) {
             return showingRowsText(pageFrom, pageTo, totalRows);
         },
@@ -148,7 +146,7 @@ $(document).ready(function() {
     $('table.cards-sorting-table.master-cards').bootstrapTable('destroy').bootstrapTable({
         classes: 'table table-borderless',
         pagination: true,
-        paginationParts: ['pageInfo', 'pageList'],
+        paginationParts: ['pageList'],
         formatShowingRows: function(pageFrom, pageTo, totalRows) {
             return showingRowsText(pageFrom, pageTo, totalRows);
         },
@@ -161,7 +159,7 @@ $(document).ready(function() {
     $('table.cards-sorting-table.collect-cards').bootstrapTable('destroy').bootstrapTable({
         classes: 'table table-borderless',
         pagination: true,
-        paginationParts: ['pageInfo', 'pageList'],
+        paginationParts: ['pageList'],
         formatShowingRows: function(pageFrom, pageTo, totalRows) {
             return showingRowsText(pageFrom, pageTo, totalRows);
         },
@@ -173,8 +171,9 @@ $(document).ready(function() {
 
     $('table.tradein').bootstrapTable('destroy').bootstrapTable({
         classes: 'table table-borderless',
+        cardView: true,
         pagination: true,
-        paginationParts: ['pageInfo', 'pageList'],
+        paginationParts: ['pageList'],
         formatShowingRows: function(pageFrom, pageTo, totalRows) {
             return showingRowsText(pageFrom, pageTo, totalRows);
         },
@@ -204,7 +203,7 @@ $(document).ready(function() {
             var data_json = $.parseJSON(data);
             if ($('#'+ data_json.id).length == 0) {
                 var $new_toast = create_toast(data_json.id, data_json.icon, data_json.title, data_json.text);
-                $new_toast.appendTo('#toast-wrapper');
+                $new_toast.appendTo('#toast-container');
                 $new_toast.toast('show');
                 $(current_target).removeClass('add-to-wishlist').addClass('remove-from-wishlist');
                 $(current_target).find('.fa-plus').removeClass('fa-plus').addClass('fa-minus');
@@ -225,7 +224,7 @@ $(document).ready(function() {
             var data_json = $.parseJSON(data);
             if ($('#'+ data_json.id).length == 0) {
                 var $new_toast = create_toast(data_json.id, data_json.icon, data_json.title, data_json.text);
-                $new_toast.appendTo('#toast-wrapper');
+                $new_toast.appendTo('#toast-container');
                 $new_toast.toast('show');
                 $(current_target).removeClass('remove-from-wishlist').addClass('add-to-wishlist');
                 $(current_target).find('.fa-minus').removeClass('fa-minus').addClass('fa-plus');

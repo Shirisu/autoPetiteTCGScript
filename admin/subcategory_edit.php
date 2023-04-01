@@ -59,18 +59,14 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                 <div class="row align-items-center">
                     <div class="form-group col col-12 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="ariaDescribedbyID">ID</span>
-                            </div>
+                            <span class="input-group-text" id="ariaDescribedbyID">ID</span>
                             <input type="text" disabled class="form-control" aria-describedby="ariaDescribedbyID" required value="<?php echo $row['carddeck_sub_cat_id']; ?>" />
                         </div>
                         <input type="hidden" class="form-control" id="subcategory_id" name="subcategory_id" value="<?php echo $row['carddeck_sub_cat_id']; ?>" />
                     </div>
                     <div class="form-group col col-12 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="ariaDescribedbyName">Name</span>
-                            </div>
+                            <span class="input-group-text" id="ariaDescribedbyName">Name</span>
                             <input type="text" class="form-control" id="subcategory_name" name="subcategory_name" aria-describedby="ariaDescribedbyName" maxlength="255" value="<?php echo $subcategory_name; ?>" required />
                         </div>
                     </div>
@@ -79,10 +75,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                         if (mysqli_num_rows($result_cat)) {
                             ?>
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="ariaDescribedbyCategory"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_category']; ?></span>
-                                </div>
-                                <select class="custom-select" id="main_category_id" name="main_category_id" aria-describedby="ariaDescribedbyCategory" required>
+                                <span class="input-group-text" id="ariaDescribedbyCategory"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_category']; ?></span>
+                                <select class="selectpicker" data-live-search="true" data-size="10" id="main_category_id" name="main_category_id" aria-describedby="ariaDescribedbyCategory" required>
                                     <option selected disabled hidden value=""></option>
                                     <?php
                                     while ($row_cat = mysqli_fetch_assoc($result_cat)) {
@@ -99,7 +93,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                         }
                         ?>
                     </div>
-                    <div class="form-group col col-12">
+                    <div class="form-group col col-12 mb-2">
                         <button type="submit" class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_save']; ?></button>
                     </div>
                 </div>
@@ -139,9 +133,9 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     <table id="admin-member-edit-table" data-mobile-responsive="true">
                         <thead>
                         <tr>
-                            <th data-field="id">ID</th>
-                            <th data-field="name">Name</th>
-                            <th data-field="maincategory"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_category_main']; ?></th>
+                            <th data-field="id" data-sortable="true">ID</th>
+                            <th data-field="name" data-sortable="true">Name</th>
+                            <th data-field="maincategory" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_category_main']; ?></th>
                             <th data-field="options"></th>
                         </tr>
                         </thead>

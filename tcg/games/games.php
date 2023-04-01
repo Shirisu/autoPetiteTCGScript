@@ -60,9 +60,11 @@ if (isset($_SESSION['member_rank'])) {
                                 <div class="col col-12 col-md-6 mb-2">
                                     <div class="card">
                                         <div class="card-body">
-                                            <div class="media">
-                                                <i class="fas fa-dice fa-2x mr-3"></i>
-                                                <div class="media-body">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0">
+                                                    <i class="fas fa-dice fa-2x me-3"></i>
+                                                </div>
+                                                <div class="flex-grow-1 ms-3">
                                                     <?php
                                                     if ($can_play) {
                                                         ?>
@@ -111,9 +113,11 @@ if (isset($_SESSION['member_rank'])) {
                         <div class="col col-12 col-md-6 mb-2">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="media">
-                                        <i class="fas fa-<?php echo (($row_games['games_type'] == '1' || $row_games['games_is_lucky_category_game'] == 1) ? 'dice' : 'puzzle-piece'); ?> fa-2x mr-3"></i>
-                                        <div class="media-body">
+                                    <div class="d-flex">
+                                        <div class="flex-shrink-0">
+                                            <i class="fas fa-<?php echo (($row_games['games_type'] == '1' || $row_games['games_is_lucky_category_game'] == 1) ? 'dice' : 'puzzle-piece'); ?> fa-2x me-3"></i>
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
                                             <?php
                                             if ($can_play) {
                                                 ?>

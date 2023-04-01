@@ -38,22 +38,18 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                 <div class="row align-items-center">
                     <div class="form-group col col-12 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="ariaDescribedbyID">ID</span>
-                            </div>
+                            <span class="input-group-text" id="ariaDescribedbyID">ID</span>
                             <input type="text" disabled class="form-control" aria-describedby="ariaDescribedbyID" required value="<?php echo $row['carddeck_cat_id']; ?>" />
                         </div>
                         <input type="hidden" class="form-control" id="category_id" name="category_id" value="<?php echo $row['carddeck_cat_id']; ?>" />
                     </div>
                     <div class="form-group col col-12 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="ariaDescribedbyName">Name</span>
-                            </div>
+                            <span class="input-group-text" id="ariaDescribedbyName">Name</span>
                             <input type="text" class="form-control" id="category_name" name="category_name" aria-describedby="ariaDescribedbyName" maxlength="255" value="<?php echo $category_name; ?>" required />
                         </div>
                     </div>
-                    <div class="form-group col col-12">
+                    <div class="form-group col col-12 mb-2">
                         <button type="submit" class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_save']; ?></button>
                     </div>
                 </div>
@@ -92,8 +88,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     <table id="admin-member-edit-table" data-mobile-responsive="true">
                         <thead>
                         <tr>
-                            <th data-field="id">ID</th>
-                            <th data-field="name">Name</th>
+                            <th data-field="id" data-sortable="true">ID</th>
+                            <th data-field="name" data-sortable="true">Name</th>
                             <th data-field="options"></th>
                         </tr>
                         </thead>

@@ -285,10 +285,12 @@ Route::add("/cards",function() {
 });
 Route::add("/message/delete/allsystemmessages",function() {
     $action = 'delete_all_systemmessages';
+    $message_box_type = 'inbox';
     require_once("tcg/message/message.php");
 });
 Route::add("/message/delete/([0-9+].*)",function($message_id) {
     $action = 'delete';
+    $message_box_type = 'inbox';
     require_once("tcg/message/message.php");
 });
 Route::add("/message/reply/([0-9+].*)",function($message_id) {

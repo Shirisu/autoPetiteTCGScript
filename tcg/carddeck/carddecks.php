@@ -131,7 +131,7 @@ if (isset($_SESSION['member_rank'])) {
                         <th data-field="series" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_series']; ?></th>
                         <th data-field="category" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_category']; ?></th>
                         <th data-field="date" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_date']; ?></th>
-                        <th data-field="creator"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_creator']; ?></th>
+                        <th data-field="creator" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_creator']; ?></th>
                         <th data-field="options"></th>
                     </tr>
                     </thead>

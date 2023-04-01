@@ -241,6 +241,7 @@ trading card game
         'text_password' => 'Passwort',
         'text_pm' => 'Nachrichten',
         'text_preview' => 'Vorschau',
+        'text_profile' => 'Profil',
         'text_quantity' => 'Anzahl',
         'text_rank' => 'Rang',
         'text_register' => 'Registrierung',

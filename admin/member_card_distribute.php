@@ -38,10 +38,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                 if (mysqli_num_rows($result_member)) {
                     ?>
                     <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="ariaDescribedbyMember">Member</span>
-                        </div>
-                        <select class="custom-select" id="member_id" name="member_id" aria-describedby="ariaDescribedbyMember" required>
+                        <span class="input-group-text" id="ariaDescribedbyMember">Member</span>
+                        <select class="selectpicker" data-live-search="true" data-size="10" id="member_id" name="member_id" aria-describedby="ariaDescribedbyMember" required>
                             <option selected disabled hidden value=""></option>
                             <?php
                             while ($row_member = mysqli_fetch_assoc($result_member)) {
@@ -60,10 +58,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
             </div>
             <div class="form-group col col-12 col-md-6 mb-2">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="ariaDescribedbyQuantity"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_quantity']; ?></span>
-                    </div>
-                    <select class="custom-select" id="quantity" name="quantity" aria-describedby="ariaDescribedbyQuantity" required>
+                    <span class="input-group-text" id="ariaDescribedbyQuantity"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_quantity']; ?></span>
+                    <select class="selectpicker" data-live-search="true" data-size="10" id="quantity" name="quantity" aria-describedby="ariaDescribedbyQuantity" required>
                         <option selected disabled hidden value=""></option>
                         <?php
                         for ($i = 1; $i <= $random_carddeck_quantity; $i++) {
@@ -77,14 +73,12 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
             </div>
             <div class="form-group col col-12 col-md-6 mb-2">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="ariaDescribedbyTopic"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_distribution_topic']; ?></span>
-                    </div>
+                    <span class="input-group-text" id="ariaDescribedbyTopic"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_distribution_topic']; ?></span>
                     <input type="text" class="form-control" id="topic" name="topic" aria-describedby="ariaDescribedbyTopic" maxlength="255" value="" required />
                 </div>
                 <small id="ariaDescribedbyTopic" class="form-text text-muted"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['hint_card_distribution']; ?></small>
             </div>
-            <div class="form-group col col-12">
+            <div class="form-group col col-12 mb-2">
                 <button type="submit" class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_add']; ?></button>
             </div>
         </div>

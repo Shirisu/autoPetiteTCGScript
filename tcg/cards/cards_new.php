@@ -76,17 +76,17 @@ if (isset($_SESSION['member_rank'])) {
     <div class="row cards-sorting">
         <div class="col col-12 mb-3">
             <div class="row">
-                <div class="col col-6 col-md-3 mb-2 mb-md-0">
-                    <a href="<?php echo HOST_URL; ?>/cards/new" class="btn btn-outline-info btn-sm btn-block active"><i class="fas fa-fire"></i> New</a>
+                <div class="d-grid col col-6 col-md-3 mb-2">
+                    <a href="<?php echo HOST_URL; ?>/cards/new" class="btn btn-outline-info btn-sm active"><i class="fas fa-fire"></i> New</a>
                 </div>
-                <div class="col col-6 col-md-3 mb-2 mb-md-0">
-                    <a href="<?php echo HOST_URL; ?>/cards/trade" class="btn btn-outline-info btn-sm btn-block"><i class="fas fa-exchange-alt"></i> Trade</a>
+                <div class="d-grid col col-6 col-md-3 mb-2">
+                    <a href="<?php echo HOST_URL; ?>/cards/trade" class="btn btn-outline-info btn-sm"><i class="fas fa-exchange-alt"></i> Trade</a>
                 </div>
-                <div class="col col-6 col-md-3 mb-2 mb-md-0">
-                    <a href="<?php echo HOST_URL; ?>/cards/collect" class="btn btn-outline-info btn-sm btn-block"><i class="fas fa-heart"></i> Collect</a>
+                <div class="d-grid col col-6 col-md-3 mb-2">
+                    <a href="<?php echo HOST_URL; ?>/cards/collect" class="btn btn-outline-info btn-sm"><i class="fas fa-heart"></i> Collect</a>
                 </div>
-                <div class="col col-6 col-md-3 mb-2 mb-md-0">
-                    <a href="<?php echo HOST_URL; ?>/cards/master" class="btn btn-outline-info btn-sm btn-block"><i class="fas fa-award"></i> Master</a>
+                <div class="d-grid col col-6 col-md-3 mb-2">
+                    <a href="<?php echo HOST_URL; ?>/cards/master" class="btn btn-outline-info btn-sm"><i class="fas fa-award"></i> Master</a>
                 </div>
             </div>
         </div>
@@ -201,16 +201,16 @@ if (isset($_SESSION['member_rank'])) {
                                                     <br/>
                                                     <div class="form-group mt-2">
                                                         <div class="input-group">
-                                                            <select class="custom-select" id="card_category[]"
+                                                            <select class="form-select" id="card_category[]"
                                                                     name="card_category[]"
                                                                     aria-describedby="ariaDescribedbyLanguage" required>
                                                                 <option value="1" selected>New</option>
                                                                 <option
                                                                     value="3" <?php echo($trade_selected ? 'selected' : ''); ?>>
-                                                                    Trade
-                                                                </option>
-                                                                <?php if ($hide_collect == false) { ?>
-                                                                    <option
+                                                                Trade
+                                                            </option>
+                                                            <?php if ($hide_collect == false) { ?>
+                                                            <option
                                                                     value="2" <?php echo($collect_selected ? 'selected' : ''); ?>>
                                                                         Collect</option><?php } ?>
                                                             </select>

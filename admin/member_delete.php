@@ -108,10 +108,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                             <div class="row">
                                 <div class="form-group col col-12 mb-2">
                                     <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"
-                                                  id="ariaDescribedbyNickname"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_nickname']; ?></span>
-                                        </div>
+                                        <span class="input-group-text"
+                                              id="ariaDescribedbyNickname"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_nickname']; ?></span>
                                         <input type="text" disabled class="form-control"
                                                aria-describedby="ariaDescribedbyNickname" required
                                                value="<?php echo $row['member_nick']; ?>"/>

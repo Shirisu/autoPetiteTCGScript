@@ -45,10 +45,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                             <div class="row">
                                 <div class="form-group col col-12 mb-2">
                                     <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"
-                                                  id="ariaDescribedbyName">Name</span>
-                                        </div>
+                                        <span class="input-group-text"
+                                              id="ariaDescribedbyName">Name</span>
                                         <input type="text" disabled class="form-control"
                                                aria-describedby="ariaDescribedbyName" required
                                                value="<?php echo $row['carddeck_sub_cat_name']; ?>"/>

@@ -56,29 +56,23 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         <div class="row align-items-center">
             <div class="form-group col col-12 col-md-6 mb-2">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="ariaDescribedbyName"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_name']; ?></span>
-                    </div>
+                    <span class="input-group-text" id="ariaDescribedbyName"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_name']; ?></span>
                     <input type="text" class="form-control" id="level_name" name="level_name" aria-describedby="ariaDescribedbyName" maxlength="55" value="" />
                 </div>
             </div>
             <div class="form-group col col-12 col-md-6 mb-2">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="ariaDescribedbyFrom"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_level_from']; ?></span>
-                    </div>
+                    <span class="input-group-text" id="ariaDescribedbyFrom"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_level_from']; ?></span>
                     <input type="number" class="form-control" id="level_from" name="level_from" min="<?php echo $level_from; ?>" aria-describedby="ariaDescribedbyFrom" maxlength="11" value="" required />
                 </div>
             </div>
             <div class="form-group col col-12 col-md-6 mb-2">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="ariaDescribedbyTo"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_level_to']; ?></span>
-                    </div>
+                    <span class="input-group-text" id="ariaDescribedbyTo"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_level_to']; ?></span>
                     <input type="number" class="form-control" id="level_to" name="level_to" min="<?php echo $level_from + 1; ?>" aria-describedby="ariaDescribedbyTo" maxlength="11" value="" required />
                 </div>
             </div>
-            <div class="form-group col col-12">
+            <div class="form-group col col-12 mb-2">
                 <button type="submit" class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_add']; ?></button>
             </div>
         </div>

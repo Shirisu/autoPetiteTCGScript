@@ -32,7 +32,7 @@ if (isset($_SESSION['member_rank'])) {
                             <th data-field="level" data-sortable="true">Level</th>
                             <th data-field="cards" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']; ?></th>
                             <th data-field="master" data-sortable="true">Master</th>
-                            <th data-field="rank"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_rank']; ?></th>
+                            <th data-field="rank" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_rank']; ?></th>
                             <th data-field="registered" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_registered']; ?></th>
                             <th data-field="lastlogin" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastlogin']; ?></th>
                             <th data-field="lastactive" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastactive']; ?></th>

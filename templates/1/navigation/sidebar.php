@@ -1,20 +1,24 @@
 <?php
 global $link;
 
-if (!isset($_SESSION['member_id'])) {
+if (!isset($_SESSION['member_rank'])) {
     if (isset($_GET['error'])) {
         $error = mysqli_real_escape_string($link, $_GET['error']);
         if ($error == 1) {
-            alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['text_error_login'], 'danger');
+            ?>
+            <div class="container">
+                <?php alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['text_error_login'], 'danger'); ?>
+            </div>
+            <?php
         }
     }
     ?>
     <div class="list-group-item list-group-item-action bg-light">
         <form id="loginform" action="<?php echo HOST_URL; ?>/login" method="post">
-            <div class="form-group">
+            <div class="form-group mb-2">
                 <input type="text" class="form-control" id="member_nick" name="member_nick" placeholder="Nickname">
             </div>
-            <div class="form-group">
+            <div class="form-group mb-2">
                 <input type="password" class="form-control" name="member_password" placeholder="<?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_password']; ?>">
             </div>
             <button type="submit" class="btn btn-primary">Login</button>

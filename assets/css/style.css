@@ -1,6 +1,38 @@
+a {
+    text-decoration: none;
+}
+
+a.badge:hover {
+    color: inherit;
+}
+
+.bootstrap-select {
+    position: relative;
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+}
+.bootstrap-select.input-group-btn {
+    width: auto !important;
+}
+.bootstrap-select .dropdown-toggle {
+    height: 100%;
+}
+.bootstrap-select .dropdown-toggle:active,
+.bootstrap-select .dropdown-toggle:hover,
+.bootstrap-select .btn.show {
+    background-color: transparent;
+}
+.bootstrap-select .dropdown-toggle .filter-option {
+    height: auto;
+}
+
 #toast-container {
     position: relative;
     z-index: 100;
+}
+#toast-container > :not(:last-child) {
+    margin-bottom: 12px;
 }
 #toast-wrapper {
     position: absolute;
@@ -70,9 +102,13 @@ details summary:focus {
 }
 .bootstrap-table .fixed-table-container .table tbody tr .card-view .card-view-title {
     overflow-x: auto;
+    min-width: 40%;
 }
 .bootstrap-table .fixed-table-container .table tbody tr .card-view .card-view-value {
-    padding-left: 5px;
+    /*padding-left: 5px;*/
+}
+.bootstrap-table .fixed-table-container .table.faq-table tbody tr .card-view .card-view-value {
+    text-align: right !important;
 }
 .bootstrap-table .fixed-table-container .table tbody .overflow-auto {
     max-height: 200px;
@@ -87,8 +123,8 @@ details summary:focus {
 **/
 @media (min-width: 768px) {
     .news-container .fixed-table-container {
-        margin-left: -12px;
-        margin-right: -12px;
+        margin-left: -8px;
+        margin-right: -8px;
     }
     .news-container table.news tbody {
         display: flex;
@@ -346,10 +382,12 @@ table.memorygame {
         width: auto;
     }
 }
-.memory_found {
+.memory_found,
+[status="memory_found"] {
     opacity: 0.25;
 }
-.memory_not_found {
+.memory_not_found,
+[status="memory_not_found"] {
     opacity: 1;
 }
 

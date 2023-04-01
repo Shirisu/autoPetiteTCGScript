@@ -54,9 +54,7 @@ if (isset($_SESSION['member_rank'])) {
                     <div class="row message-container">
                         <div class="form-group col col-12 col-md-6 mb-2">
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="ariaDescribedbySubject"><?php echo TRANSLATIONS[$GLOBALS['language']]['message']['text_subject']; ?></span>
-                                </div>
+                                <span class="input-group-text" id="ariaDescribedbySubject"><?php echo TRANSLATIONS[$GLOBALS['language']]['message']['text_subject']; ?></span>
                                 <input type="text" class="form-control" aria-describedby="ariaDescribedbySubject"
                                        id="message_subject" name="message_subject" maxlength="50"
                                        value="RE: <?php echo trim($row_message['message_subject']); ?>" required />
@@ -64,10 +62,8 @@ if (isset($_SESSION['member_rank'])) {
                         </div>
                         <div class="form-group col col-12 col-md-6 mb-2">
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="ariaDescribedbyReceiver"><?php echo TRANSLATIONS[$GLOBALS['language']]['message']['text_receiver']; ?></span>
-                                </div>
-                                <select class="custom-select" disabled aria-describedby="ariaDescribedbyReceiver" required>
+                                <span class="input-group-text" id="ariaDescribedbyReceiver"><?php echo TRANSLATIONS[$GLOBALS['language']]['message']['text_receiver']; ?></span>
+                                <select class="selectpicker" data-live-search="true" data-size="10" disabled aria-describedby="ariaDescribedbyReceiver" required>
                                     <option selected disabled hidden value=""></option>
                                     <?php
                                     while ($row_member = mysqli_fetch_assoc($result_member)) {
@@ -81,9 +77,7 @@ if (isset($_SESSION['member_rank'])) {
                         </div>
                         <div class="form-group col col-12 mb-2">
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="ariaDescribedbyText">Text</span>
-                                </div>
+                                <span class="input-group-text" id="ariaDescribedbyText">Text</span>
                                 <textarea class="form-control" id="message_text" name="message_text"
                                           aria-describedby="ariaDescribedbyText" rows="10"><?php echo $message_text; ?></textarea>
                             </div>
@@ -146,10 +140,8 @@ if (isset($_SESSION['member_rank'])) {
                 <div class="row message-container">
                     <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"
-                                      id="ariaDescribedbySubject"><?php echo TRANSLATIONS[$GLOBALS['language']]['message']['text_subject']; ?></span>
-                            </div>
+                            <span class="input-group-text"
+                                  id="ariaDescribedbySubject"><?php echo TRANSLATIONS[$GLOBALS['language']]['message']['text_subject']; ?></span>
                             <input type="text" class="form-control" aria-describedby="ariaDescribedbySubject"
                                    id="message_subject" name="message_subject" maxlength="50"
                                    value="" required/>
@@ -157,11 +149,9 @@ if (isset($_SESSION['member_rank'])) {
                     </div>
                     <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"
-                                      id="ariaDescribedbyReceiver"><?php echo TRANSLATIONS[$GLOBALS['language']]['message']['text_receiver']; ?></span>
-                            </div>
-                            <select class="custom-select" id="message_receiver" name="message_receiver"
+                            <span class="input-group-text"
+                                  id="ariaDescribedbyReceiver"><?php echo TRANSLATIONS[$GLOBALS['language']]['message']['text_receiver']; ?></span>
+                            <select class="selectpicker" data-live-search="true" data-size="10" id="message_receiver" name="message_receiver"
                                     aria-describedby="ariaDescribedbyReceiver" required>
                                 <option selected disabled hidden value=""></option>
                                 <?php
@@ -177,16 +167,14 @@ if (isset($_SESSION['member_rank'])) {
                     </div>
                     <div class="form-group col col-12 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="ariaDescribedbyText">Text</span>
-                            </div>
-                                <textarea class="form-control" id="message_text" name="message_text"
-                                          aria-describedby="ariaDescribedbyText" rows="10"></textarea>
+                            <span class="input-group-text" id="ariaDescribedbyText">Text</span>
+                            <textarea class="form-control" id="message_text" name="message_text"
+                                      aria-describedby="ariaDescribedbyText" rows="10"></textarea>
                         </div>
                     </div>
                     <div class="form-group col col-12">
                         <button type="submit"
-                                class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['message']['text_button_reply']; ?></button>
+                                class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['message']['text_write_message']; ?></button>
                     </div>
                 </div>
             </form>

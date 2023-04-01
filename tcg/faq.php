@@ -19,13 +19,13 @@ if ($count) {
     ?>
     <div class="row">
         <div class="col">
-            <table id="admin-member-edit-table" data-mobile-responsive="true">
+            <table class="faq-table" data-mobile-responsive="true">
                 <thead>
                 <tr>
-                    <th data-field="id">ID</th>
-                    <th data-field="name"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_name']; ?></th>
-                    <th data-field="from"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_level_from']; ?></th>
-                    <th data-field="to"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_level_to']; ?></th>
+                    <th data-field="id" data-sortable="true">ID</th>
+                    <th data-field="name" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_name']; ?></th>
+                    <th data-field="from" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_level_from']; ?></th>
+                    <th data-field="to" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_level_to']; ?></th>
                 </tr>
                 </thead>
                 <tbody>

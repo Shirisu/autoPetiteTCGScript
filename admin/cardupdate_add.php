@@ -85,11 +85,11 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     <table id="admin-member-edit-table" data-mobile-responsive="true" data-paging="no">
                         <thead>
                             <tr>
-                                <th data-field="options"></th>
-                                <th data-field="id">ID</th>
-                                <th data-field="preview"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_preview']; ?></th>
-                                <th data-field="name">Name (<?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_abbreviation']; ?>)</th>
-                                <th data-field="series"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_series']; ?></th>
+                                <th data-field="options" data-sortable="true"></th>
+                                <th data-field="id" data-sortable="true">ID</th>
+                                <th data-field="preview" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_preview']; ?></th>
+                                <th data-field="name" data-sortable="true">Name (<?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_abbreviation']; ?>)</th>
+                                <th data-field="series" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_series']; ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -138,9 +138,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
             <div class="row align-items-center">
                 <div class="form-group col col-12 col-md-6 mb-2">
                     <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="ariaDescribedbyCarddecks"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_carddecks_for_update']; ?></span>
-                        </div>
+                        <span class="input-group-text" id="ariaDescribedbyCarddecks"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_carddecks_for_update']; ?></span>
                         <input type="text" disabled class="form-control" id="carddecks_preview" name="carddecks_preview" aria-describedby="ariaDescribedbyCarddecks" maxlength="255" value="<?php echo $updatecarddecks; ?>" />
                         <input type="hidden" class="form-control" id="carddecks" name="carddecks" value="<?php echo $updatecarddecks; ?>" />
                         <input type="hidden" class="form-control" id="cardupdate_id" name="cardupdate_id" value="<?php echo $cardupdate_id; ?>" />
@@ -148,29 +146,23 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                 </div>
                 <div class="form-group col col-12 col-md-6 mb-2">
                     <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="ariaDescribedbyQuantity"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_carddecks_quantity_for_update']; ?></span>
-                        </div>
+                        <span class="input-group-text" id="ariaDescribedbyQuantity"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_carddecks_quantity_for_update']; ?></span>
                         <input type="number" class="form-control" aria-describedby="ariaDescribedbyWish" id="quantity" name="quantity" min="1" max="<?php echo $count_decks; ?>" value="<?php echo $quantity_cards; ?>" required />
                     </div>
                 </div>
                 <div class="form-group col col-12 mb-2">
                     <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="ariaDescribedbyTitle"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_title']; ?></span>
-                        </div>
+                        <span class="input-group-text" id="ariaDescribedbyTitle"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_title']; ?></span>
                         <input type="text" class="form-control" id="news_title" name="news_title" aria-describedby="ariaDescribedbyTitle" maxlength="55" value="" required />
                     </div>
                 </div>
                 <div class="form-group col col-12 mb-2">
                     <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="ariaDescribedbyText">Text</span>
-                        </div>
+                        <span class="input-group-text" id="ariaDescribedbyText">Text</span>
                         <textarea class="form-control" id="news_text" name="news_text" aria-describedby="ariaDescribedbyText" rows="10" required></textarea>
                     </div>
                 </div>
-                <div class="form-group col col-12">
+                <div class="form-group col col-12 mb-2">
                     <span class="font-weight-bold"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_preview_for_cardupdate']; ?></span>
                     <span class="font-italic">(<?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_preview_for_cardupdate_subtext']; ?>)</span>
                     <p class="text-center mt-2">
@@ -191,7 +183,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                         ?>
                     </p>
                 </div>
-                <div class="form-group col col-12">
+                <div class="form-group col col-12 mb-2">
                     <button type="submit" class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_add']; ?></button>
                     <small class="text-muted"><span class="font-weight-bold"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_hint']; ?>:</span> <?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['hint_cardupdate_is_activated_immediately']; ?></small>
                 </div>

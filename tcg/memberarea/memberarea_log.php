@@ -28,7 +28,7 @@ if (isset($_SESSION['member_rank'])) {
                     <thead>
                     <tr>
                         <th data-field="date" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_date']; ?></th>
-                        <th data-field="topic"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_category']; ?></th>
+                        <th data-field="topic" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_category']; ?></th>
                         <th data-field="text">Text</th>
                     </tr>
                     </thead>

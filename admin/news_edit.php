@@ -42,10 +42,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                 <div class="row align-items-center">
                     <div class="form-group col col-12 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"
-                                      id="ariaDescribedbyTitle"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_title']; ?></span>
-                            </div>
+                            <span class="input-group-text"
+                                  id="ariaDescribedbyTitle"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_title']; ?></span>
                             <input type="text" class="form-control" id="news_title" name="news_title"
                                    aria-describedby="ariaDescribedbyTitle" maxlength="55"
                                    value="<?php echo $news_title; ?>" required/>
@@ -53,9 +51,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     </div>
                     <div class="form-group col col-12 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="ariaDescribedbyText">Text</span>
-                            </div>
+                            <span class="input-group-text" id="ariaDescribedbyText">Text</span>
                             <textarea class="form-control" id="news_text" name="news_text"
                                       aria-describedby="ariaDescribedbyText" rows="10"
                                       required><?php echo $news_text; ?></textarea>
@@ -140,12 +136,12 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     <table id="admin-member-edit-table" data-mobile-responsive="true">
                         <thead>
                         <tr>
-                            <th data-field="id">ID</th>
-                            <th data-field="author"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_news_author']; ?></th>
-                            <th data-field="title"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_title']; ?></th>
-                            <th data-field="text"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_text_snippet']; ?></th>
-                            <th data-field="date"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_date']; ?></th>
-                            <th data-field="cardupdate"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_have_cardupdate']; ?></th>
+                            <th data-field="id" data-sortable="true">ID</th>
+                            <th data-field="author" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_news_author']; ?></th>
+                            <th data-field="title" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_title']; ?></th>
+                            <th data-field="text" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_text_snippet']; ?></th>
+                            <th data-field="date" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_date']; ?></th>
+                            <th data-field="cardupdate" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_have_cardupdate']; ?></th>
                             <th data-field="options"></th>
                         </tr>
                         </thead>
