@@ -26,7 +26,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                 }
                 $games_status = mysqli_real_escape_string($link, strip_tags(trim($_POST['games_status'])));
 
-                if ($games_id > 3) {
+                if ($games_id > 4) {
                     mysqli_query($link, "UPDATE games
                          SET games_name = '" . $games_name . "',
                              games_interval = '" . $games_interval . "',
@@ -69,7 +69,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
                             <span class="input-group-text" id="ariaDescribedbyName"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_name']; ?></span>
-                            <?php if ($games_id > 3) { ?>
+                            <?php if ($games_id > 4) { ?>
                                 <input type="text" class="form-control" id="games_name" name="games_name" aria-describedby="ariaDescribedbyName" maxlength="55" value="<?php echo $games_name; ?>" required />
                             <?php } else {?>
                                 <input type="text" class="form-control" maxlength="55" value="<?php echo $games_name; ?>" disabled />
@@ -98,7 +98,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
                             <span class="input-group-text" id="ariaDescribedbyType"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type']; ?></span>
-                            <?php if ($games_id > 3) { ?>
+                            <?php if ($games_id > 4) { ?>
                                 <select class="selectpicker" data-live-search="true" data-size="10" id="games_type" name="games_type" aria-describedby="ariaDescribedbyType" required>
                                     <option value="1" <?php echo ($games_type == '1' ? 'selected' : ''); ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type_lucky']; ?></option>
                                     <option value="2" <?php echo ($games_type == '2' ? 'selected' : ''); ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type_skill']; ?></option>
@@ -115,7 +115,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
                             <span class="input-group-text" id="ariaDescribedbyStatus"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_status']; ?></span>
-                            <?php if ($games_id > 3) { ?>
+                            <?php if ($games_id > 4) { ?>
                                 <select class="selectpicker" data-live-search="true" data-size="10" id="games_status" name="games_status" aria-describedby="ariaDescribedbyStatus" required>
                                     <option value="1" <?php echo ($games_status == 1 ? 'selected' : ''); ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_active']; ?></option>
                                     <option value="0" <?php echo ($games_status == 0 ? 'selected' : ''); ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_inactive']; ?></option>
@@ -132,7 +132,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     <div class="form-group col col-12 mb-2">
                         <div class="input-group">
                             <span class="input-group-text" id="ariaDescribedbyChoices"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_choices']; ?></span>
-                            <?php if ($games_id > 3) { ?>
+                            <?php if ($games_id > 4) { ?>
                                 <textarea class="form-control" id="games_lucky_choices" name="games_lucky_choices" aria-describedby="ariaDescribedbyChoices" rows="2"><?php echo $games_lucky_choices; ?></textarea>
                             <?php } else {?>
                                 <textarea class="form-control" disabled aria-describedby="ariaDescribedbyChoices" rows="2"><?php echo $games_lucky_choices; ?></textarea>
