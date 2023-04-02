@@ -551,11 +551,11 @@ function insert_cards($member_id, $quantity, $updateCount = true) {
                 $_SESSION['insert_cards_images'] .= ' ';
             }
             $_SESSION['insert_cards_images'] .= get_card($cardarray_infos[$count]['id'], $cardarray_infos[$count]['number']);
-
-            if ($updateCount == true) {
-                mysqli_query($link, "UPDATE member SET member_cards = member_cards + '" . $quantity . "' WHERE member_id = '" . $member_id . "' LIMIT 1") OR die(mysqli_error($link));
-            }
         }
+    }
+
+    if ($updateCount) {
+        mysqli_query($link, "UPDATE member SET member_cards = member_cards + '" . $quantity . "' WHERE member_id = '" . $member_id . "' LIMIT 1") OR die(mysqli_error($link));
     }
 }
 
