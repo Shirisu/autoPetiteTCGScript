@@ -7,17 +7,14 @@
     }
     ?>
 
-    <div id="toast-container" aria-live="polite" aria-atomic="true">
-        <div id="toast-wrapper">
-        </div>
-    </div>
+    <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
 
     <script>
         var tcgHostUrl = '<?php echo HOST_URL ?>';
     </script>
     <script src="<?php echo HOST_URL; ?>/assets/js/jquery.min.js" type="text/javascript"></script>
     <script src="<?php echo HOST_URL; ?>/assets/js/popper.min.js" type="text/javascript"></script>
-    <script src="<?php echo HOST_URL; ?>/assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<?php echo HOST_URL; ?>/assets/js/bootstrap.bundle.min.js" type="text/javascript"></script>
     <script src="<?php echo HOST_URL; ?>/assets/js/bootstrap-select.min.js" type="text/javascript"></script>
     <script src="<?php echo HOST_URL; ?>/assets/js/bootstrap-table.min.js" type="text/javascript"></script>
     <script src="<?php echo HOST_URL; ?>/assets/js/bootstrap-table-mobile.min.js" type="text/javascript"></script>

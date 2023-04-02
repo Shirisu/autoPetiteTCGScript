@@ -99,9 +99,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                 <div class="row align-items-center">
                     <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="ariaDescribedbyID">ID</span>
-                            </div>
+                            <span class="input-group-text" id="ariaDescribedbyID">ID</span>
                             <input type="text" disabled class="form-control" aria-describedby="ariaDescribedbyID"
                                    required value="<?php echo $row['carddeck_id']; ?>"/>
                         </div>
@@ -110,11 +108,9 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     </div>
                     <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"
-                                      id="ariaDescribedbyName">Name (<?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_abbreviation']; ?>
-                                    )</span>
-                            </div>
+                            <span class="input-group-text"
+                                  id="ariaDescribedbyName">Name (<?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_abbreviation']; ?>
+                                )</span>
                             <input type="text" disabled class="form-control" id="carddeck_name" name="carddeck_name"
                                    aria-describedby="ariaDescribedbyName" pattern="[a-z0-9-_]*" maxlength="50"
                                    value="<?php echo $carddeck_name; ?>" required/>
@@ -124,10 +120,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     </div>
                     <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"
-                                      id="ariaDescribedbySeries"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_series']; ?></span>
-                            </div>
+                            <span class="input-group-text"
+                                  id="ariaDescribedbySeries"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_series']; ?></span>
                             <input type="text" class="form-control" id="carddeck_series" name="carddeck_series"
                                    aria-describedby="ariaDescribedbySeries" maxlength="255"
                                    value="<?php echo stripslashes($carddeck_series); ?>" required/>
@@ -135,11 +129,9 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     </div>
                     <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"
-                                      id="ariaDescribedbyIsPuzzle"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_is_puzzle']; ?></span>
-                            </div>
-                            <select class="custom-select" id="carddeck_is_puzzle" name="carddeck_is_puzzle"
+                            <span class="input-group-text"
+                                  id="ariaDescribedbyIsPuzzle"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_is_puzzle']; ?></span>
+                            <select class="selectpicker" data-live-search="true" data-size="10" id="carddeck_is_puzzle" name="carddeck_is_puzzle"
                                     aria-describedby="ariaDescribedbyIsPuzzle" required>
                                 <option selected disabled hidden value=""></option>
                                 <option
@@ -154,11 +146,9 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                         if (mysqli_num_rows($result_member)) {
                             ?>
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"
-                                          id="ariaDescribedbyCreator"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_creator']; ?></span>
-                                </div>
-                                <select class="custom-select" id="carddeck_creator" name="carddeck_creator"
+                                <span class="input-group-text"
+                                      id="ariaDescribedbyCreator"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_creator']; ?></span>
+                                <select class="selectpicker" data-live-search="true" data-size="10" id="carddeck_creator" name="carddeck_creator"
                                         aria-describedby="ariaDescribedbyCreator" required>
                                     <option selected disabled hidden value=""></option>
                                     <?php
@@ -179,11 +169,9 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     </div>
                     <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"
-                                      id="ariaDescribedbyStatus"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_status']; ?></span>
-                            </div>
-                            <select class="custom-select" id="carddeck_active" name="carddeck_active"
+                            <span class="input-group-text"
+                                  id="ariaDescribedbyStatus"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_status']; ?></span>
+                            <select class="selectpicker" data-live-search="true" data-size="10" id="carddeck_active" name="carddeck_active"
                                     aria-describedby="ariaDescribedbyStatus" required>
                                 <option selected disabled hidden value=""></option>
                                 <option
@@ -198,11 +186,9 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                         if (mysqli_num_rows($result_category)) {
                             ?>
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"
-                                          id="ariaDescribedbyCategory"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_category']; ?></span>
-                                </div>
-                                <select class="custom-select" id="carddeck_category" name="carddeck_category"
+                                <span class="input-group-text"
+                                      id="ariaDescribedbyCategory"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_category']; ?></span>
+                                <select class="selectpicker" data-live-search="true" data-size="10" id="carddeck_category" name="carddeck_category"
                                         aria-describedby="ariaDescribedbyCategory" required>
                                     <option selected disabled hidden value=""></option>
                                     <?php
@@ -213,14 +199,17 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                                              ORDER BY carddeck_sub_cat_name ASC";
                                         $result_sub_category = mysqli_query($link, $sql_sub_category) OR die(mysqli_error($link));
                                         ?>
-                                        <optgroup label="<?php echo $row_category['carddeck_cat_name']; ?>"></optgroup>
-                                        <?php
-                                        while ($row_sub_category = mysqli_fetch_assoc($result_sub_category)) {
-                                            ?>
-                                            <option
-                                                value="<?php echo $row_category['carddeck_cat_id'] . ';' . $row_sub_category['carddeck_sub_cat_id']; ?>" <?php echo($carddeck_category == $row_category['carddeck_cat_id'] . ';' . $row_sub_category['carddeck_sub_cat_id'] ? 'selected' : ''); ?>><?php echo $row_sub_category['carddeck_sub_cat_name']; ?></option>
+                                        <optgroup label="<?php echo $row_category['carddeck_cat_name']; ?>">
                                             <?php
-                                        }
+                                            while ($row_sub_category = mysqli_fetch_assoc($result_sub_category)) {
+                                                ?>
+                                                <option
+                                                    value="<?php echo $row_category['carddeck_cat_id'] . ';' . $row_sub_category['carddeck_sub_cat_id']; ?>" <?php echo($carddeck_category == $row_category['carddeck_cat_id'] . ';' . $row_sub_category['carddeck_sub_cat_id'] ? 'selected' : ''); ?>><?php echo $row_sub_category['carddeck_sub_cat_name']; ?></option>
+                                                <?php
+                                            }
+                                            ?>
+                                        </optgroup>
+                                        <?php
                                     }
                                     ?>
                                 </select>
@@ -236,10 +225,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                         <div class="row">
                             <div class="form-group col col-12 col-md-6 mb-2">
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"
-                                              id="ariaDescribedbyArtist"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_artist']; ?></span>
-                                    </div>
+                                    <span class="input-group-text"
+                                          id="ariaDescribedbyArtist"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_artist']; ?></span>
                                     <input type="text" class="form-control" id="carddeck_artist" name="carddeck_artist"
                                            aria-describedby="ariaDescribedbyArtist" maxlength="255"
                                            value="<?php echo $carddeck_artist; ?>"/>
@@ -249,10 +236,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                             </div>
                             <div class="form-group col col-12 col-md-6 mb-2">
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"
-                                              id="ariaDescribedbyCopyright"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_copyright']; ?></span>
-                                    </div>
+                                    <span class="input-group-text"
+                                          id="ariaDescribedbyCopyright"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_copyright']; ?></span>
                                     <input type="text" class="form-control" id="carddeck_copyright"
                                            name="carddeck_copyright" aria-describedby="ariaDescribedbyCopyright"
                                            maxlength="255" value="<?php echo $carddeck_copyright; ?>"
@@ -263,10 +248,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                             </div>
                             <div class="form-group col col-12 mb-2">
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"
-                                              id="ariaDescribedbyImagesources"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_imagesources']; ?></span>
-                                    </div>
+                                    <span class="input-group-text"
+                                          id="ariaDescribedbyImagesources"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_imagesources']; ?></span>
                                     <textarea class="form-control" id="carddeck_imagesources"
                                               name="carddeck_imagesources"
                                               aria-describedby="ariaDescribedbyImagesources"><?php echo $carddeck_imagesources; ?></textarea>
@@ -284,17 +267,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                 <div class="mb-1">
                                     <?php echo get_card($row['carddeck_id'], 'master', false, true); ?>
                                 </div>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="ariaDescribedbyMastercard">Mastercard</span>
-                                    </div>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="masterCardFile"
-                                               name="masterCardFile" aria-describedby="ariaDescribedbyMastercard">
-                                        <label class="custom-file-label"
-                                               for="masterCardFile"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_choose_file']; ?></label>
-                                    </div>
-                                </div>
+                                <label for="masterCardFile" class="form-label">Mastercard</label>
+                                <input type="file" class="form-control" id="masterCardFile" name="masterCardFile" aria-describedby="ariaDescribedbyMastercard"<?php echo (TCG_CARDS_UPLOAD_REQUIRED == true ? ' required' : '') ?>>
                             </div>
                             <?php
                             for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
@@ -303,17 +277,9 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                     <div class="mb-1">
                                         <?php echo get_card($row['carddeck_id'], $i, false, true); ?>
                                     </div>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="ariaDescribedbyCard<?php echo $i; ?>">Card <?php echo $i; ?></span>
-                                        </div>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="cardFile<?php echo $i; ?>"
-                                                   name="cardFile<?php echo $i; ?>"
-                                                   aria-describedby="ariaDescribedbyCard<?php echo $i; ?>">
-                                            <label class="custom-file-label"
-                                                   for="cardFile<?php echo $i; ?>"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_choose_file']; ?></label>
-                                        </div>
+                                    <div class="form-group col col-12 mb-2">
+                                        <label for="cardFile<?php echo $i; ?>" class="form-label">Card <?php echo $i; ?></label>
+                                        <input type="file" class="form-control" id="cardFile<?php echo $i; ?>" name="cardFile<?php echo $i; ?>" aria-describedby="ariaDescribedbyCard<?php echo $i; ?>"<?php echo (TCG_CARDS_UPLOAD_REQUIRED == true ? ' required' : '') ?>>
                                     </div>
                                 </div>
                                 <?php
@@ -322,7 +288,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                         </div>
                     </details>
 
-                    <div class="form-group col col-12">
+                    <div class="form-group col col-12 mb-2">
                         <button type="submit"
                                 class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_save']; ?></button>
                     </div>
@@ -364,10 +330,10 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     <table id="admin-member-edit-table" data-mobile-responsive="true">
                         <thead>
                         <tr>
-                            <th data-field="id">ID</th>
-                            <th data-field="name">Name (<?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_abbreviation']; ?>)</th>
-                            <th data-field="category"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_category']; ?></th>
-                            <th data-field="status"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_status']; ?></th>
+                            <th data-field="id" data-sortable="true">ID</th>
+                            <th data-field="name" data-sortable="true">Name (<?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_abbreviation']; ?>)</th>
+                            <th data-field="category" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_category']; ?></th>
+                            <th data-field="status" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_status']; ?></th>
                             <th data-field="options"></th>
                         </tr>
                         </thead>

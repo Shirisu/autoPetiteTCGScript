@@ -55,23 +55,19 @@ if (isset($_POST['nickname']) && isset($_POST['email'])) {
     </div>
     <div class="col col-12 col-md-6 mb-3">
         <form action="<?php echo HOST_URL; ?>/lostpassword" method="post">
-            <div class="form-group">
+            <div class="form-group col col-12 mb-2">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="ariaDescribedbyNickname"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_nickname']; ?></span>
-                    </div>
+                    <span class="input-group-text" id="ariaDescribedbyNickname"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_nickname']; ?></span>
                     <input type="text" class="form-control" id="nickname" name="nickname" aria-describedby="ariaDescribedbyNickname" required>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group col col-12 mb-2">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="ariaDescribedbyEmail"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_email']; ?></span>
-                    </div>
+                    <span class="input-group-text" id="ariaDescribedbyEmail"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_email']; ?></span>
                     <input type="email" class="form-control" name="email" aria-describedby="ariaDescribedbyEmail" required>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-2">
                 <button type="submit" class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['lostpassword']['button']; ?></button>
             </div>
         </form>

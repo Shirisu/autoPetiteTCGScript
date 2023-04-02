@@ -38,22 +38,18 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
     <form action="<?php echo HOST_URL; ?>/administration/addnews" method="post">
         <div class="row align-items-center">
             <div class="form-group col col-12 mb-2">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="ariaDescribedbyTitle"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_title']; ?></span>
-                    </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="ariaDescribedbyTitle"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_title']; ?></span>
                     <input type="text" class="form-control" id="news_title" name="news_title" aria-describedby="ariaDescribedbyTitle" maxlength="55" value="" required />
                 </div>
             </div>
             <div class="form-group col col-12 mb-2">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="ariaDescribedbyText">Text</span>
-                    </div>
+                    <span class="input-group-text" id="ariaDescribedbyText">Text</span>
                     <textarea class="form-control" id="news_text" name="news_text" aria-describedby="ariaDescribedbyText" rows="10" required></textarea>
                 </div>
             </div>
-            <div class="form-group col col-12">
+            <div class="form-group col col-12 mb-2">
                 <button type="submit" class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_add']; ?></button>
             </div>
         </div>

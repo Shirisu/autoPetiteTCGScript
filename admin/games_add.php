@@ -47,32 +47,32 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         <div class="row align-items-center">
             <div class="form-group col col-12 col-md-6 mb-2">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="ariaDescribedbyName"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_name']; ?></span>
-                    </div>
+                    <span class="input-group-text" id="ariaDescribedbyName"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_name']; ?></span>
                     <input type="text" class="form-control" id="games_name" name="games_name" aria-describedby="ariaDescribedbyName" maxlength="55" value="" required />
                 </div>
             </div>
             <div class="form-group col col-12 col-md-6 mb-2">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="ariaDescribedbyInterval"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_interval']; ?></span>
-                    </div>
-                    <select class="custom-select" id="games_interval" name="games_interval" aria-describedby="ariaDescribedbyInterval" required>
+                    <span class="input-group-text" id="ariaDescribedbyInterval"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_interval']; ?></span>
+                    <select class="selectpicker" data-live-search="true" data-size="10" id="games_interval" name="games_interval" aria-describedby="ariaDescribedbyInterval" required>
                         <option selected disabled hidden value=""></option>
-                        <option value="1800">30 min</option>
-                        <option value="3600">60 min</option>
-                        <option value="5400">90 min</option>
-                        <option value="7200">120 min</option>
+                        <option value="1800">30 min / 0.5 h</option>
+                        <option value="3600">60 min / 1 h</option>
+                        <option value="5400">90 min / 1.5 h</option>
+                        <option value="7200">120 min / 2 h</option>
+                        <option value="9000">150 min / 2.5 h</option>
+                        <option value="10800">180 min / 3 h</option>
+                        <option value="12600">210 min / 3.5 h</option>
+                        <option value="14400">240 min / 4 h</option>
+                        <option value="16200">270 min / 4.5 h</option>
+                        <option value="18000">300 min / 5 h</option>
                     </select>
                 </div>
             </div>
             <div class="form-group col col-12 col-md-6 mb-2">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="ariaDescribedbyIcon"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type']; ?></span>
-                    </div>
-                    <select class="custom-select" id="games_type" name="games_type" aria-describedby="ariaDescribedbyIcon" required>
+                    <span class="input-group-text" id="ariaDescribedbyIcon"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type']; ?></span>
+                    <select class="selectpicker" data-live-search="true" data-size="10" id="games_type" name="games_type" aria-describedby="ariaDescribedbyIcon" required>
                         <option selected disabled hidden value=""></option>
                         <option value="1"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type_lucky']; ?></option>
                         <option value="2"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_type_skill']; ?></option>
@@ -81,9 +81,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
             </div>
             <div class="form-group col col-12 mb-2">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="ariaDescribedbyChoices"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_choices']; ?></span>
-                    </div>
+                    <span class="input-group-text" id="ariaDescribedbyChoices"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_game_choices']; ?></span>
                     <textarea class="form-control" id="games_lucky_choices" name="games_lucky_choices" aria-describedby="ariaDescribedbyChoices" rows="2"></textarea>
                 </div>
                 <small id="ariaDescribedbyPassword" class="form-text text-muted">

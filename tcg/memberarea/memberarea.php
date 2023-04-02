@@ -12,10 +12,12 @@ if (isset($_SESSION['member_rank'])) {
         <div class="col col-12 col-md-6 mb-2">
             <div class="card">
                 <div class="card-body">
-                    <div class="media">
-                        <i class="fas fa-address-card fa-2x mr-3"></i>
-                        <div class="media-body">
-                           <a href="<?php echo HOST_URL; ?>/member/<?php echo $_SESSION['member_id']; ?>"><?php echo TRANSLATIONS[$GLOBALS['language']]['member']['text_profile_view']; ?></a>
+                    <div class="d-flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-address-card fa-2x me-3"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <a href="<?php echo HOST_URL; ?>/member/<?php echo $_SESSION['member_id']; ?>"><?php echo TRANSLATIONS[$GLOBALS['language']]['member']['text_profile_view']; ?></a>
                         </div>
                     </div>
                 </div>
@@ -24,10 +26,12 @@ if (isset($_SESSION['member_rank'])) {
         <div class="col col-12 col-md-6 mb-2">
             <div class="card">
                 <div class="card-body">
-                    <div class="media">
-                        <i class="fas fa-user-cog fa-2x mr-3"></i>
-                        <div class="media-body">
-                           <a href="<?php echo HOST_URL; ?>/memberarea/changeprofile"><?php echo TRANSLATIONS[$GLOBALS['language']]['member']['text_profile_change']; ?></a>
+                    <div class="d-flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-user-cog fa-2x me-3"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <a href="<?php echo HOST_URL; ?>/memberarea/changeprofile"><?php echo TRANSLATIONS[$GLOBALS['language']]['member']['text_profile_change']; ?></a>
                         </div>
                     </div>
                 </div>
@@ -36,9 +40,11 @@ if (isset($_SESSION['member_rank'])) {
         <div class="col col-12 col-md-6 mb-2">
             <div class="card">
                 <div class="card-body">
-                    <div class="media">
-                        <i class="fas fa-list fa-2x mr-3"></i>
-                        <div class="media-body">
+                    <div class="d-flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-list fa-2x me-3"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
                             <a href="<?php echo HOST_URL; ?>/memberarea/log"><?php echo TRANSLATIONS[$GLOBALS['language']]['member']['text_view_log']; ?></a>
                         </div>
                     </div>
@@ -48,9 +54,11 @@ if (isset($_SESSION['member_rank'])) {
         <div class="col col-12 col-md-6 mb-2">
             <div class="card">
                 <div class="card-body">
-                    <div class="media">
-                        <i class="fas fa-search fa-2x mr-3"></i>
-                        <div class="media-body">
+                    <div class="d-flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-search fa-2x me-3"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
                             <a href="<?php echo HOST_URL; ?>/memberarea/search"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_cardsearch']; ?></a>
                         </div>
                     </div>
@@ -60,9 +68,11 @@ if (isset($_SESSION['member_rank'])) {
         <div class="col col-12 col-md-6 mb-2">
             <div class="card">
                 <div class="card-body">
-                    <div class="media">
-                        <i class="fas fa-sync-alt fa-2x mr-3"></i>
-                        <div class="media-body">
+                    <div class="d-flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-sync-alt fa-2x me-3"></i>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
                             <a href="<?php echo HOST_URL; ?>/memberarea/tradein"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_tradein']; ?></a>
                         </div>
                     </div>
@@ -73,9 +83,11 @@ if (isset($_SESSION['member_rank'])) {
             <div class="col col-12 col-md-6 mb-2">
                 <div class="card">
                     <div class="card-body">
-                        <div class="media">
-                            <i class="fas fa-store-alt fa-2x mr-3"></i>
-                            <div class="media-body">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-store-alt fa-2x me-3"></i>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
                                 <a href="<?php echo HOST_URL; ?>/memberarea/shop"><?php echo TRANSLATIONS[$GLOBALS['language']]['member']['text_shop']; ?></a>
                             </div>
                         </div>
@@ -94,9 +106,11 @@ if (isset($_SESSION['member_rank'])) {
                 ?>
                 <div class="card">
                     <div class="card-body">
-                        <div class="media">
-                            <i class="fas fa-gifts fa-2x mr-3"></i>
-                            <div class="media-body">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-gifts fa-2x me-3"></i>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
                                 <a href="<?php echo HOST_URL; ?>/memberarea/update"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_cardupdate']; ?></a>
                             </div>
                         </div>

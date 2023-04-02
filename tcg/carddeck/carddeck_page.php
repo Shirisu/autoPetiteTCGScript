@@ -84,7 +84,7 @@ if (isset($_SESSION['member_rank'])) {
                                 </tr>
                             <?php } ?>
                             <tr>
-                                <td scope="row" colspan="2" class="text-center text-md-left pl-0">
+                                <td scope="row" colspan="2" class="text-center text-md-left ps-0">
                                     <div class="row m-0">
                                         <?php
                                         $sql_mastered = "SELECT member_master_date
@@ -291,7 +291,7 @@ if (isset($_SESSION['member_rank'])) {
                                         echo get_member_link($member_info['member_id']);
                                         if (TCG_MULTI_MASTER == true) {
                                             ?>
-                                            <span class="badge badge-secondary"><?php echo $member_info['master_count']; ?>x</span>
+                                            <span class="badge bg-secondary"><?php echo $member_info['master_count']; ?>x</span>
                                             <?php
                                         }
                                         echo ($index != array_key_last($master_member) ? ', ' : '');

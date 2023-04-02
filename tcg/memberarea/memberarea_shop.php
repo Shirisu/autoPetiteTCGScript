@@ -64,11 +64,9 @@ if (isset($_SESSION['member_rank'])) {
                                 <div
                                     class="form-group col <?php echo(TCG_WISH_USE == true ? 'col-12' : 'col-12 col-md-6'); ?> mb-2">
                                     <div class="input-group">
-                                        <div class="input-group-prepend">
                                         <span class="input-group-text"
-                                              id="ariaDescribedbyQuantity"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_quantity']; ?><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']; ?></span>
-                                        </div>
-                                        <select class="custom-select" id="random_quantity" name="random_quantity"
+                                              id="ariaDescribedbyQuantity"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_quantity']; ?></span>
+                                        <select class="selectpicker input-group-btn" data-live-search="true" data-size="10" id="random_quantity" name="random_quantity"
                                                 aria-describedby="ariaDescribedbyQuantity" required>
                                             <option selected disabled hidden value=""></option>
                                             <?php
@@ -119,13 +117,11 @@ if (isset($_SESSION['member_rank'])) {
                                              ORDER BY carddeck_name ASC";
                                 $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
                                 ?>
-                                <div class="form-group col col-12 col-md-6 mb-2">
+                                <div class="form-group col col-12 mb-2">
                                     <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"
-                                                  id="ariaDescribedbyCarddeck"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_carddeck']; ?></span>
-                                        </div>
-                                        <select class="custom-select" id="carddeck_id" name="carddeck_id"
+                                        <span class="input-group-text"
+                                              id="ariaDescribedbyCarddeck"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_carddeck']; ?></span>
+                                        <select class="selectpicker input-group-btn" data-live-search="true" data-size="10" id="carddeck_id" name="carddeck_id"
                                                 aria-describedby="ariaDescribedbyCarddeck" required>
                                             <option selected disabled hidden value=""></option>
                                             <?php
@@ -137,22 +133,14 @@ if (isset($_SESSION['member_rank'])) {
                                             }
                                             ?>
                                         </select>
-                                    </div>
-                                </div>
-                                <div class="form-group col col-12 col-md-6 mb-2">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"
-                                                  id="ariaDescribedbyNumber"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_number']; ?></span>
-                                        </div>
-                                        <select class="custom-select" id="card_number" name="card_number"
+                                        <select class="selectpicker input-group-btn" data-live-search="true" data-size="10" id="card_number" name="card_number"
                                                 aria-describedby="ariaDescribedbyNumber" required>
                                             <option selected disabled hidden value=""></option>
                                             <?php
                                             for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
                                                 ?>
                                                 <option
-                                                    value="<?php echo $i; ?>"><?php echo sprintf('%02d', $i); ?></option>
+                                                        value="<?php echo $i; ?>"><?php echo sprintf('%02d', $i); ?></option>
                                                 <?php
                                             }
                                             ?>
@@ -180,7 +168,13 @@ if (isset($_SESSION['member_rank'])) {
                 <?php
             }
         } else {
-            alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_carddeck_yet'], 'danger');
+            ?>
+            <div class="col col-12 mb-2">
+                <?php
+                alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_no_carddeck_yet'], 'danger');
+                ?>
+            </div>
+            <?php
         }
         ?>
     </div>

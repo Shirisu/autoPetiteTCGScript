@@ -88,30 +88,24 @@ if (isset($_POST['nickname'])) {
         } else {
         ?>
             <form action="<?php echo HOST_URL; ?>/register" method="post">
-                <div class="form-row">
-                    <div class="form-group col col-12 col-md-6">
+                <div class="row">
+                    <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="ariaDescribedbyNickname"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_nickname']; ?></span>
-                            </div>
+                            <span class="input-group-text" id="ariaDescribedbyNickname"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_nickname']; ?></span>
                             <input type="text" class="form-control" id="nickname" name="nickname" aria-describedby="ariaDescribedbyNickname" required />
                         </div>
                         <small id="ariaDescribedbyNickname" class="form-text text-muted"><?php echo TRANSLATIONS[$GLOBALS['language']]['register']['hint_nickname']; ?></small>
                     </div>
-                    <div class="form-group col col-12 col-md-6">
+                    <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="ariaDescribedbyEmail"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_email']; ?></span>
-                            </div>
+                            <span class="input-group-text" id="ariaDescribedbyEmail"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_email']; ?></span>
                             <input type="email" class="form-control" id="email" name="email" pattern="^[a-zA-Z0-9_\+-]+(\.[a-zA-Z0-9_\+-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.([a-zA-Z]{2,4})$" autocomplete="off" aria-describedby="ariaDescribedbyEmail" required />
                         </div>
                         <small id="ariaDescribedbyEmail" class="form-text text-muted"><?php echo TRANSLATIONS[$GLOBALS['language']]['register']['hint_email']; ?></small>
                     </div>
-                    <div class="form-group col col-12 col-md-6">
+                    <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="ariaDescribedbyPassword"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_password']; ?></span>
-                            </div>
+                            <span class="input-group-text" id="ariaDescribedbyPassword"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_password']; ?></span>
                             <input type="password" class="form-control" id="password" name="password" pattern="(?=.{8,}$)((?=.*[0-9])(?=.*[!?\+\-_#*&$§%]))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*" aria-describedby="ariaDescribedbyPassword" required />
                         </div>
                         <small id="ariaDescribedbyPassword" class="form-text text-muted">
@@ -125,21 +119,17 @@ if (isset($_POST['nickname'])) {
                             </ul>
                         </small>
                     </div>
-                    <div class="form-group col col-12 col-md-6">
+                    <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="ariaDescribedbyPasswordRepeat"><?php echo TRANSLATIONS[$GLOBALS['language']]['register']['password_repeat']; ?></span>
-                            </div>
+                            <span class="input-group-text" id="ariaDescribedbyPasswordRepeat"><?php echo TRANSLATIONS[$GLOBALS['language']]['register']['password_repeat']; ?></span>
                             <input type="password" class="form-control" id="password2" name="password2" pattern="(?=.{8,}$)((?=.*[0-9])(?=.*[!?\+\-_#*&$§%]))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*" aria-describedby="ariaDescribedbyPasswordRepeat" required />
                         </div>
                         <small id="ariaDescribedbyPasswordRepeat" class="form-text text-muted"><?php echo TRANSLATIONS[$GLOBALS['language']]['register']['hint_password2']; ?></small>
                     </div>
-                    <div class="form-group col col-12 col-md-6">
+                    <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="ariaDescribedbyLanguage"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_language']; ?></span>
-                            </div>
-                            <select class="custom-select" id="language" name="language" aria-describedby="ariaDescribedbyLanguage" required>
+                            <span class="input-group-text" id="ariaDescribedbyLanguage"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_language']; ?></span>
+                            <select class="selectpicker" data-live-search="true" data-size="10" id="language" name="language" aria-describedby="ariaDescribedbyLanguage" required>
                                 <option selected disabled hidden value=""></option>
                                 <option value="en"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_language_en']; ?></option>
                                 <option value="de"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_language_de']; ?></option>
@@ -147,7 +137,7 @@ if (isset($_POST['nickname'])) {
                         </div>
                         <small id="ariaDescribedbyLanguage" class="form-text text-muted"><?php echo TRANSLATIONS[$GLOBALS['language']]['register']['hint_language']; ?></small>
                     </div>
-                    <div class="form-group col col-12">
+                    <div class="form-group col col-12 mb-2">
                         <button type="submit" class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_register']; ?></button>
                     </div>
                 </div>

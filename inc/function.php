@@ -73,11 +73,11 @@ function alert_box($text, $type = 'secondary') {
 }
 
 function navlink($name, $url, $classname = 'dropdown-item') {
-    echo '<a class="'.$classname.'" href="'.HOST_URL.'/'.$url.'">'.$name.'</a>';
+    echo '<li><a class="'.$classname.'" href="'.HOST_URL.'/'.$url.'">'.$name.'</a></li>';
 }
 
 function navlink_language($name, $language) {
-    echo '<a class="dropdown-item switch-language" href="#" data-language="'.$language.'">'.$name.'</a>';
+    echo '<li><a class="dropdown-item switch-language" href="#" data-language="'.$language.'">'.$name.'</a></li>';
 }
 
 function navilink($name, $url, $classname = 'list-group-item list-group-item-action bg-light', $icon = null) {
@@ -771,6 +771,28 @@ function card_tradein($card_id, $tradein_card_deck_name, $tradein_card_number) {
     } else {
         return alert_box(TRANSLATIONS[$GLOBALS['language']]['tradein']['hint_card_dont_exists'], 'danger');
     }
+}
+
+function get_member_menu($member_id, $active_menu) {
+?>
+    <div class="row justify-content-center">
+        <div class="d-grid col col-6 col-md-2 mb-2">
+            <a href="<?php echo HOST_URL; ?>/member/<?php echo $member_id; ?>" class="btn btn-outline-info btn-sm<?php echo $active_menu == 'profile' ? ' active' : ''; ?>"><i class="fas fa-user"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_profile']; ?></a>
+        </div>
+        <div class="d-grid col col-6 col-md-2 mb-2">
+            <a href="<?php echo HOST_URL; ?>/member/<?php echo $member_id; ?>/trade" class="btn btn-outline-info btn-sm<?php echo $active_menu == 'trade' ? ' active' : ''; ?>"><i class="fas fa-exchange-alt"></i> Trade</a>
+        </div>
+        <div class="d-grid col col-6 col-md-2 mb-2">
+            <a href="<?php echo HOST_URL; ?>/member/<?php echo $member_id; ?>/collect" class="btn btn-outline-info btn-sm<?php echo $active_menu == 'collect' ? ' active' : ''; ?>"><i class="fas fa-heart"></i> Collect</a>
+        </div>
+        <div class="d-grid col col-6 col-md-2 mb-2">
+            <a href="<?php echo HOST_URL; ?>/member/<?php echo $member_id; ?>/master" class="btn btn-outline-info btn-sm<?php echo $active_menu == 'master' ? ' active' : ''; ?>"><i class="fas fa-award"></i> Master</a>
+        </div>
+        <div class="d-grid col col-6 col-md-2 mb-2">
+            <a href="<?php echo HOST_URL; ?>/member/<?php echo $member_id; ?>/wishlist" class="btn btn-outline-info btn-sm<?php echo $active_menu == 'wishlist' ? ' active' : ''; ?>"><i class="fas fa-star"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_wishlist']; ?></a>
+        </div>
+    </div>
+<?php
 }
 
 ?>

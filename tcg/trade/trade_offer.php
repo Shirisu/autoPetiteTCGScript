@@ -135,14 +135,12 @@ if (isset($_SESSION['member_rank'])) {
                                     ?>
                                     <span class="card-wrapper own-card" <?php echo(file_exists('.' . $filename_filler) ? 'style="background-image:url(' . HOST_URL.$filename_filler . ');"' : ''); ?>></span>
                                 </div>
-                                <div class="form-group col col-12">
+                                <div class="form-group col col-12 mb-3">
                                     <?php if (mysqli_num_rows($result_own_cards)) { ?>
                                         <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"
-                                                      id="ariaDescribedbyOwnCard"><?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_own_card']; ?></span>
-                                            </div>
-                                            <select id="trade_own_card" name="trade_own_card" class="selectpicker" aria-describedby="ariaDescribedbyOwnCard"
+                                            <span class="input-group-text"
+                                                  id="ariaDescribedbyOwnCard"><?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_own_card']; ?></span>
+                                            <select id="trade_own_card" name="trade_own_card" class="selectpicker input-group-btn" data-live-search="true" data-size="10" aria-describedby="ariaDescribedbyOwnCard"
                                                     data-none-selected-text="<?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_own_card_select']; ?>"
                                                     required>
                                                 <option selected disabled hidden value=""></option>
@@ -173,15 +171,15 @@ if (isset($_SESSION['member_rank'])) {
                                 <div class="col col-12 col-md-6">
                                     <div class="card">
                                         <div class="card-header" id="headingMissingCards">
-                                            <h5 class="mb-0">
-                                                <span class="btn btn-link btn-sm btn-block" data-toggle="collapse" data-target="#collapseMissingCards" aria-expanded="true" aria-controls="collapseMissingCards">
+                                            <h5 class="d-grid mb-0">
+                                                <span class="btn btn-link btn-sm text-decoration-none" data-bs-toggle="collapse" data-bs-target="#collapseMissingCards" aria-expanded="true" aria-controls="collapseMissingCards">
                                                     <?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_missing_cards']; ?>
                                                 </span>
                                             </h5>
                                         </div>
 
                                         <div id="collapseMissingCards" class="collapse show" aria-labelledby="headingMissingCards">
-                                            <div class="card-body pb-0">
+                                            <div class="card-body">
                                                 <?php
                                                 $collect_carddecks = array();
                                                 $sql_cards = "SELECT member_cards_carddeck_id, carddeck_name, carddeck_is_puzzle
@@ -234,7 +232,7 @@ if (isset($_SESSION['member_rank'])) {
                                                                 <?php
                                                                 for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
                                                                     if (!in_array($i, $card_number)) {
-                                                                        echo '<span class="badge badge-secondary">'.sprintf('%02d', $i).'</span> ';
+                                                                        echo '<span class="badge bg-secondary">'.sprintf('%02d', $i).'</span> ';
                                                                     }
                                                                 }
                                                                 ?>
@@ -252,8 +250,8 @@ if (isset($_SESSION['member_rank'])) {
                                 <div class="col col-12 mt-3 mt-md-0 col-md-6">
                                     <div class="card">
                                         <div class="card-header" id="headingWishlist">
-                                            <h5 class="mb-0">
-                                                <span class="btn btn-link btn-sm btn-block" data-toggle="collapse" data-target="#collapseWishlist" aria-expanded="true" aria-controls="collapseWishlist">
+                                            <h5 class="d-grid mb-0">
+                                                <span class="btn btn-link btn-sm text-decoration-none" data-bs-toggle="collapse" data-bs-target="#collapseWishlist" aria-expanded="true" aria-controls="collapseWishlist">
                                                     <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_wishlist']; ?>
                                                 </span>
                                             </h5>
@@ -296,15 +294,13 @@ if (isset($_SESSION['member_rank'])) {
                         </div>
                         <div class="col col-12 col-md-12 col-lg-4 mt-3 mt-md-0 order-4 order-md-3 text-center">
                             <div class="row">
-                                <div class="form-group col col-12">
+                                <div class="form-group col col-12 mb-2">
                                     <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="ariaDescribedbyTradeText"><?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_trade_message']; ?></span>
-                                        </div>
+                                        <span class="input-group-text" id="ariaDescribedbyTradeText"><?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_trade_message']; ?></span>
                                         <textarea class="form-control" id="trade_message" name="trade_message" aria-describedby="ariaDescribedbyTradeText" rows="3"></textarea>
                                     </div>
                                 </div>
-                                <div class="form-group col col-12">
+                                <div class="form-group col col-12 mb-2">
                                     <button type="submit"
                                             class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_send_offer']; ?></button>
                                 </div>

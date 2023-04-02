@@ -44,33 +44,25 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                 <div class="row align-items-center">
                     <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="ariaDescribedbyId">ID</span>
-                            </div>
+                            <span class="input-group-text" id="ariaDescribedbyId">ID</span>
                             <input type="text" class="form-control" maxlength="55" value="<?php echo $level_id; ?>" disabled />
                         </div>
                     </div>
                     <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="ariaDescribedbyName"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_name']; ?></span>
-                            </div>
-                                <input type="text" class="form-control" id="level_name" name="level_name" aria-describedby="ariaDescribedbyName" maxlength="55" value="<?php echo $level_name; ?>" />
+                            <span class="input-group-text" id="ariaDescribedbyName"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_name']; ?></span>
+                            <input type="text" class="form-control" id="level_name" name="level_name" aria-describedby="ariaDescribedbyName" maxlength="55" value="<?php echo $level_name; ?>" />
                         </div>
                     </div>
                     <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="ariaDescribedbyFrom"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_level_from']; ?></span>
-                            </div>
+                            <span class="input-group-text" id="ariaDescribedbyFrom"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_level_from']; ?></span>
                             <input type="number" class="form-control" id="level_from" name="level_from" min="0" aria-describedby="ariaDescribedbyFrom" maxlength="11" value="<?php echo $level_from; ?>" required />
                         </div>
                     </div>
                     <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="ariaDescribedbyTo"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_level_to']; ?></span>
-                            </div>
+                            <span class="input-group-text" id="ariaDescribedbyTo"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_level_to']; ?></span>
                             <input type="number" class="form-control" id="level_to" name="level_to" min="1" aria-describedby="ariaDescribedbyTo" maxlength="11" value="<?php echo $level_to; ?>" required />
                         </div>
                     </div>
@@ -114,10 +106,10 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                     <table id="admin-member-edit-table" data-mobile-responsive="true">
                         <thead>
                         <tr>
-                            <th data-field="id">ID</th>
-                            <th data-field="name"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_name']; ?></th>
-                            <th data-field="from"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_level_from']; ?></th>
-                            <th data-field="to"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_level_to']; ?></th>
+                            <th data-field="id" data-sortable="true">ID</th>
+                            <th data-field="name" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_name']; ?></th>
+                            <th data-field="from" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_level_from']; ?></th>
+                            <th data-field="to" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['admin']['text_level_to']; ?></th>
                             <th data-field="options"></th>
                         </tr>
                         </thead>

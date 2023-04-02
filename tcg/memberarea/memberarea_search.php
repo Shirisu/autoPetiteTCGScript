@@ -30,10 +30,8 @@ if (isset($_SESSION['member_rank'])) {
                     <div class="row align-items-center">
                         <div class="form-group col col-12 col-md-6 mb-2">
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="ariaDescribedbyCarddeck"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_carddeck']; ?></span>
-                                </div>
-                                <select class="custom-select" id="carddeck_id" name="carddeck_id" aria-describedby="ariaDescribedbyCarddeck" required>
+                                <span class="input-group-text" id="ariaDescribedbyCarddeck"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_carddeck']; ?></span>
+                                <select class="selectpicker" data-live-search="true" data-size="10" id="carddeck_id" name="carddeck_id" aria-describedby="ariaDescribedbyCarddeck" required>
                                     <option selected disabled hidden value=""></option>
                                     <?php
                                     while ($row_carddeck = mysqli_fetch_assoc($result_carddeck)) {
@@ -47,10 +45,8 @@ if (isset($_SESSION['member_rank'])) {
                         </div>
                         <div class="form-group col col-12 col-md-6 mb-2">
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="ariaDescribedbyNumber"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_number']; ?></span>
-                                </div>
-                                <select class="custom-select" id="card_number" name="card_number" aria-describedby="ariaDescribedbyNumber" required>
+                                <span class="input-group-text" id="ariaDescribedbyNumber"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_number']; ?></span>
+                                <select class="selectpicker" data-live-search="true" data-size="10" id="card_number" name="card_number" aria-describedby="ariaDescribedbyNumber" required>
                                     <option selected disabled hidden value=""></option>
                                     <?php
                                     for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {

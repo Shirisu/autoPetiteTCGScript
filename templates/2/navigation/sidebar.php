@@ -5,17 +5,21 @@ if (!isset($_SESSION['member_rank'])) {
     if (isset($_GET['error'])) {
         $error = mysqli_real_escape_string($link, $_GET['error']);
         if ($error == 1) {
-            alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['text_error_login'], 'danger');
+            ?>
+            <div class="container">
+                <?php alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['text_error_login'], 'danger'); ?>
+            </div>
+            <?php
         }
     }
     ?>
     <li class="no-hover">
         <div class="nav-link">
             <form id="loginform" action="<?php echo HOST_URL; ?>/login" method="post">
-                <div class="form-group">
+                <div class="form-group mb-2">
                     <input type="text" class="form-control" id="member_nick" name="member_nick" placeholder="Nickname">
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-2">
                     <input type="password" class="form-control" name="member_password" placeholder="<?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_password']; ?>">
                 </div>
                 <button type="submit" class="btn">Login</button>
@@ -111,11 +115,20 @@ if (!isset($_SESSION['member_rank'])) {
         navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_memberarea'], 'memberarea', 'nav-link', 'fas fa-atom');
         ?>
     </li>
+
+    <li>
+        <?php
+        navilink('Member', 'member', 'nav-link', 'fas fa-address-book');
+        ?>
+    </li>
     <?php
 
     // card deck main categories
     $sql_carddeck_cat = "SELECT carddeck_cat_id, carddeck_cat_name
                          FROM carddeck_cat
+                         JOIN carddeck ON carddeck_cat = carddeck_cat_id
+                          AND carddeck_active = 1
+                         GROUP BY carddeck_cat_id
                          ORDER BY carddeck_cat_name ASC";
     $result_carddeck_cat = mysqli_query($link, $sql_carddeck_cat) OR die(mysqli_error($link));
     if (mysqli_num_rows($result_carddeck_cat)) {
@@ -136,29 +149,11 @@ if (!isset($_SESSION['member_rank'])) {
                                AND carddeck_cat = '".$row_carddeck_cat['carddeck_cat_id']."'";
             $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
             $count_carddeck = mysqli_num_rows($result_carddeck);
-            ?>
-            <li>
-                <?php
-                navilink($row_carddeck_cat['carddeck_cat_name'].' ('.$count_carddeck.')', 'carddecks/'.$row_carddeck_cat['carddeck_cat_id'], 'nav-link');
-                ?>
-            </li>
-            <?php
+
+            navilink($row_carddeck_cat['carddeck_cat_name'].' ('.$count_carddeck.')', 'carddecks/'.$row_carddeck_cat['carddeck_cat_id'], 'nav-link');
         }
-        ?>
-        <li>
-            <?php
-            navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_all'].' ('.$count_all_carddeck.')', 'carddecks/all', 'nav-link');
-            ?>
-        </li>
-        <?php
+        navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_all'].' ('.$count_all_carddeck.')', 'carddecks/all', 'nav-link');
     }
-    ?>
-    <li>
-        <?php
-        navilink('Member', 'member', 'nav-link', 'fas fa-address-book');
-        ?>
-    </li>
-    <?php
 }
 
 // show admin link
