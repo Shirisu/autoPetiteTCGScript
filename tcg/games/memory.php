@@ -56,7 +56,7 @@ if (isset($_SESSION['member_rank'])) {
                             insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - '.$game_name, $inserted_cards_text, $member_id);
 
                             alert_box(
-                                TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_win'].'!<br />2 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'].': '.implode(', ',$_SESSION['insert_cards']).
+                                TRANSLATIONS[$GLOBALS['language']]['games']['text_game_win'].'!<br />2 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'].': '.implode(', ',$_SESSION['insert_cards']).
                                 '<br />'.
                                 $_SESSION['insert_cards_images']
                                 , 'success');
@@ -66,7 +66,7 @@ if (isset($_SESSION['member_rank'])) {
                             insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - '.$game_name, $inserted_cards_text, $member_id);
 
                             alert_box(
-                                TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_win'].'!<br />3 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'].': '.implode(', ',$_SESSION['insert_cards']).
+                                TRANSLATIONS[$GLOBALS['language']]['games']['text_game_win'].'!<br />3 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'].': '.implode(', ',$_SESSION['insert_cards']).
                                 '<br />'.
                                 $_SESSION['insert_cards_images']
                                 , 'success');
@@ -76,7 +76,7 @@ if (isset($_SESSION['member_rank'])) {
                             insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - '.$game_name, $inserted_cards_text, $member_id);
 
                             alert_box(
-                                TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_win'].'!<br />1 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_card'].': '.implode(', ',$_SESSION['insert_cards']).
+                                TRANSLATIONS[$GLOBALS['language']]['games']['text_game_win'].'!<br />1 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_card'].': '.implode(', ',$_SESSION['insert_cards']).
                                 '<br />'.
                                 $_SESSION['insert_cards_images']
                                 , 'success');

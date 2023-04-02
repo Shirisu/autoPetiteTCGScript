@@ -137,7 +137,8 @@ INSERT INTO `games` (games_name, games_interval, games_status, games_type, games
 VALUES
 ('Lucky', 3600, '1', '1', NULL, '1'),
 ('Memory', 3600, '1', '2', NULL, '0'),
-('Right Number', 3600, '1', '1', NULL, '0');
+('Right Number', 3600, '1', '1', NULL, '0'),
+('Tic Tac Toe', 3600, '1', '2', NULL, '0');
 
 
 CREATE TABLE IF NOT EXISTS `member_game_played` (

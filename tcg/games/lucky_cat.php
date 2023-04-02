@@ -55,9 +55,9 @@ if (isset($_SESSION['member_rank'])) {
                         if ($random_choice == 1) {
                             alert_box(
                                 TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice'].': '.strtoupper($lucky_choice).
-                                '. '.TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_lost'].'...'
+                                '. '.TRANSLATIONS[$GLOBALS['language']]['games']['text_game_lost'].'...'
                                 , 'danger');
-                            insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - Lucky '.$lucky_game_name, TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_lost'], $member_id);
+                            insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_games'].' - Lucky '.$lucky_game_name, TRANSLATIONS[$GLOBALS['language']]['games']['text_game_lost'], $member_id);
                         } elseif ($random_choice == 2) {
                             insert_cards($member_id, 2);
                             $inserted_cards_text = TRANSLATIONS[$GLOBALS['language']]['games']['text_game_log_win_2_cards'].': '.implode(', ', $_SESSION['insert_cards']);
@@ -65,7 +65,7 @@ if (isset($_SESSION['member_rank'])) {
 
                             alert_box(
                                 TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice'].': '.strtoupper($lucky_choice).
-                                '. '.TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_win'].'!<br />2 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'].': '.implode(', ',$_SESSION['insert_cards']).
+                                '. '.TRANSLATIONS[$GLOBALS['language']]['games']['text_game_win'].'!<br />2 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'].': '.implode(', ',$_SESSION['insert_cards']).
                                 '<br />'.
                                 $_SESSION['insert_cards_images']
                                 , 'success');
@@ -76,7 +76,7 @@ if (isset($_SESSION['member_rank'])) {
 
                             alert_box(
                                 TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice'].': '.strtoupper($lucky_choice).
-                                '. '.TRANSLATIONS[$GLOBALS['language']]['games']['text_game_choice_win'].'!<br />1 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_card'].': '.implode(', ',$_SESSION['insert_cards']).
+                                '. '.TRANSLATIONS[$GLOBALS['language']]['games']['text_game_win'].'!<br />1 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_card'].': '.implode(', ',$_SESSION['insert_cards']).
                                 '<br />'.
                                 $_SESSION['insert_cards_images']
                                 , 'success');
