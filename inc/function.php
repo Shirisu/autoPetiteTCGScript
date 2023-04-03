@@ -795,4 +795,25 @@ function get_member_menu($member_id, $active_menu) {
 <?php
 }
 
+function includeGameFile($game_id) {
+    global $link;
+    $sql_games = "SELECT games_id, games_name, games_file, games_interval, games_type, games_is_lucky_category_game
+                  FROM games
+                  WHERE games_status = '1'
+                    AND games_id = '".$game_id."'
+                  ORDER BY games_interval, games_name ASC";
+    $result_games = mysqli_query($link, $sql_games) OR die(mysqli_error($link));
+    if (mysqli_num_rows($result_games)) {
+        $row_games = mysqli_fetch_assoc($result_games);
+        $filename = "tcg/games/" . $row_games['games_file'];
+        if (file_exists($filename)) {
+            require_once($filename);
+        } else {
+            require_once("tcg/games/games.php");
+        }
+    } else {
+        require_once("tcg/games/games.php");
+    }
+}
+
 ?>
