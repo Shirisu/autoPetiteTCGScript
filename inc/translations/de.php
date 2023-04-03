@@ -201,6 +201,7 @@ trading card game
         'text_error' => 'Fehler - bitte versuche es noch einmal.',
         'text_error_login' => 'Falsche Daten - bitte versuche es noch einmal.',
         'text_exchangeoffice' => 'Wechselstube',
+        'text_file' => 'Datei',
         'text_games' => 'Spiele',
         'text_have_cardupdate' => 'mit Cardupdate?',
         'text_hint' => 'Hinweis',

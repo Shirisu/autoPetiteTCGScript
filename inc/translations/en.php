@@ -201,6 +201,7 @@ trading card game
         'text_error' => 'Error - please try again.',
         'text_error_login' => 'Wrong data - please try again.',
         'text_exchangeoffice' => 'Exchange office',
+        'text_file' => 'File',
         'text_games' => 'Games',
         'text_have_cardupdate' => 'With card update?',
         'text_hint' => 'Hint',

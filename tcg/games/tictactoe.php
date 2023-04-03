@@ -122,7 +122,7 @@ if (isset($_SESSION['member_rank'])) {
                                 //if IE4/NS6, apply style
                                 if (document.all||document.getElementById){
                                     document.write('<style>.tictac{')
-                                    document.write('width:50px;height:50px;')
+                                    document.write('width:75px;height:75px;font-size:30px;')
                                     document.write('}</style>')
                                 }
 
@@ -164,63 +164,54 @@ if (isset($_SESSION['member_rank'])) {
                                 {
                                     if(sqr1 == " X " && sqr2 == " X " && sqr3 == " X ")
                                     {
-                                        alert("You Win!")
                                         document.tic.tictactoe.value = 'prizes';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr4 == " X " && sqr5 == " X " && sqr6 == " X ")
                                     {
-                                        alert("You Win!")
                                         document.tic.tictactoe.value = 'prizes';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr7 == " X " && sqr8 == " X " && sqr9 == " X ")
                                     {
-                                        alert("You Win!")
                                         document.tic.tictactoe.value = 'prizes';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr1 == " X " && sqr5 == " X " && sqr9 == " X ")
                                     {
-                                        alert("You Win!")
                                         document.tic.tictactoe.value = 'prizes';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr1 == " X " && sqr4 == " X " && sqr7 == " X ")
                                     {
-                                        alert("You Win!")
                                         document.tic.tictactoe.value = 'prizes';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr2 == " X " && sqr5 == " X " && sqr8 == " X ")
                                     {
-                                        alert("You Win!")
                                         document.tic.tictactoe.value = 'prizes';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr3 == " X " && sqr6 == " X " && sqr9 == " X ")
                                     {
-                                        alert("You Win!")
                                         document.tic.tictactoe.value = 'prizes';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr1 == " X " && sqr5 == " X " && sqr9 == " X ")
                                     {
-                                        alert("You Win!")
                                         document.tic.tictactoe.value = 'prizes';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr3 == " X " && sqr5 == " X " && sqr7 == " X ")
                                     {
-                                        alert("You Win!")
                                         document.tic.tictactoe.value = 'prizes';
                                         document.tic.submit();
                                         reset();
@@ -239,63 +230,54 @@ if (isset($_SESSION['member_rank'])) {
                                     drawCheck()
                                     if(sqr1 == " O " && sqr2 == " O " && sqr3 == " O ")
                                     {
-                                        alert("You Lose!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr4 == " O " && sqr5 == " O " && sqr6 == " O ")
                                     {
-                                        alert("You Lose!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr7 == " O " && sqr8 == " O " && sqr9 == " O ")
                                     {
-                                        alert("You Lose!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr1 == " O " && sqr5 == " O " && sqr9 == " O ")
                                     {
-                                        alert("You Lose!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr1 == " O " && sqr4 == " O " && sqr7 == " O ")
                                     {
-                                        alert("You Lose!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr2 == " O " && sqr5 == " O " && sqr8 == " O ")
                                     {
-                                        alert("You Lose!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr3 == " O " && sqr6 == " O " && sqr9 == " O ")
                                     {
-                                        alert("You Lose!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr1 == " O " && sqr5 == " O " && sqr9 == " O ")
                                     {
-                                        alert("You Lose!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr3 == " O " && sqr5 == " O " && sqr7 == " O ")
                                     {
-                                        alert("You Lose!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
@@ -306,63 +288,54 @@ if (isset($_SESSION['member_rank'])) {
                                 {
                                     if(sqr1 == " X " && sqr2 == " X " && sqr3 == " X ")
                                     {
-                                        alert("Player 1 wins!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr4 == " X " && sqr5 == " X " && sqr6 == " X ")
                                     {
-                                        alert("Player 1 wins!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr7 == " X " && sqr8 == " X " && sqr9 == " X ")
                                     {
-                                        alert("Player 1 wins!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr1 == " X " && sqr5 == " X " && sqr9 == " X ")
                                     {
-                                        alert("Player 1 wins!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr1 == " X " && sqr4 == " X " && sqr7 == " X ")
                                     {
-                                        alert("Player 1 wins!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr2 == " X " && sqr5 == " X " && sqr8 == " X ")
                                     {
-                                        alert("Player 1 wins!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr3 == " X " && sqr6 == " X " && sqr9 == " X ")
                                     {
-                                        alert("Player 1 wins!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr1 == " X " && sqr5 == " X " && sqr9 == " X ")
                                     {
-                                        alert("Player 1 wins!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr3 == " X " && sqr5 == " X " && sqr7 == " X ")
                                     {
-                                        alert("Player 1 wins!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
@@ -380,63 +353,54 @@ if (isset($_SESSION['member_rank'])) {
                                     drawCheck()
                                     if(sqr1 == " O " && sqr2 == " O " && sqr3 == " O ")
                                     {
-                                        alert("Player 2 wins!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr4 == " O " && sqr5 == " O " && sqr6 == " O ")
                                     {
-                                        alert("Player 2 wins!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr7 == " O " && sqr8 == " O " && sqr9 == " O ")
                                     {
-                                        alert("Player 2 wins!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr1 == " O " && sqr5 == " O " && sqr9 == " O ")
                                     {
-                                        alert("Player 2 wins!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr1 == " O " && sqr4 == " O " && sqr7 == " O ")
                                     {
-                                        alert("Player 2 wins!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr2 == " O " && sqr5 == " O " && sqr8 == " O ")
                                     {
-                                        alert("Player 2 wins!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr3 == " O " && sqr6 == " O " && sqr9 == " O ")
                                     {
-                                        alert("Player 2 wins!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr1 == " O " && sqr5 == " O " && sqr9 == " O ")
                                     {
-                                        alert("Player 2 wins!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
                                     }
                                     else if(sqr3 == " O " && sqr5 == " O " && sqr7 == " O ")
                                     {
-                                        alert("Player 2 wins!")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();
@@ -449,7 +413,6 @@ if (isset($_SESSION['member_rank'])) {
                                     moveCount = sqr1T + sqr2T + sqr3T + sqr4T + sqr5T + sqr6T + sqr7T + sqr8T + sqr9T
                                     if(moveCount == 9)
                                     {
-                                        alert("Draw")
                                         document.tic.tictactoe.value = 'lost';
                                         document.tic.submit();
                                         reset();

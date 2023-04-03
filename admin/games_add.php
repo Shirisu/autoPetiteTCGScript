@@ -12,6 +12,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
 
     if (isset($_POST['games_name']) && isset($_POST['games_interval']) && isset($_POST['games_type'])) {
         $games_name = mysqli_real_escape_string($link, strip_tags(trim($_POST['games_name'])));
+        $games_file = mysqli_real_escape_string($link, strip_tags(trim($_POST['games_file'])));
         $games_interval = mysqli_real_escape_string($link, strip_tags(trim($_POST['games_interval'])));
         $games_type = mysqli_real_escape_string($link, strip_tags(trim($_POST['games_type'])));
         if ($games_type == 1) {
@@ -23,6 +24,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         $sql_check_before_insert = "SELECT games_id
                                     FROM games
                                     WHERE games_name = '".$games_name."'
+                                      AND games_file = '".$games_file."'
                                       AND games_interval = '".$games_interval."'
                                       AND games_type = '".$games_type."'
                                       AND games_lucky_choices = '".$games_lucky_choices."'
@@ -31,9 +33,9 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
         if (!mysqli_num_rows($result_check_before_insert)) {
             mysqli_query($link, "
             INSERT INTO games
-            (games_name, games_interval, games_type, games_lucky_choices)
+            (games_name, games_file, games_interval, games_type, games_lucky_choices)
             VALUES
-            ('" . $games_name . "', '" . $games_interval . "', '" . $games_type . "', '" . $games_lucky_choices . "')")
+            ('" . $games_name . "', '" . $games_file . "', '" . $games_interval . "', '" . $games_type . "', '" . $games_lucky_choices . "')")
             OR die(mysqli_error($link));
 
             alert_box(TRANSLATIONS[$GLOBALS['language']]['admin']['hint_success_games_add'], 'success');
@@ -49,6 +51,12 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                 <div class="input-group">
                     <span class="input-group-text" id="ariaDescribedbyName"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_name']; ?></span>
                     <input type="text" class="form-control" id="games_name" name="games_name" aria-describedby="ariaDescribedbyName" maxlength="55" value="" required />
+                </div>
+            </div>
+            <div class="form-group col col-12 col-md-6 mb-2">
+                <div class="input-group">
+                    <span class="input-group-text" id="ariaDescribedbyFile"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_file']; ?></span>
+                    <input type="text" class="form-control" id="games_file" name="games_file" aria-describedby="ariaDescribedbyFile" maxlength="55" value="" required />
                 </div>
             </div>
             <div class="form-group col col-12 col-md-6 mb-2">
