@@ -7,7 +7,11 @@ if (isset($_SESSION['member_rank'])) {
                             LIMIT 1";
     $result_member_timezone = mysqli_query($link, $sql_member_timezone) OR die(mysqli_error($link));
     $row_member_timezone = mysqli_fetch_assoc($result_member_timezone);
-    date_default_timezone_set($row_member_timezone['member_timezone']);
+    if (empty($row_member_timezone['member_timezone'])) {
+        date_default_timezone_set(TCG_DEFAULT_TIMEZONE);
+    } else {
+        date_default_timezone_set($row_member_timezone['member_timezone']);
+    }
 } else {
     date_default_timezone_set(TCG_DEFAULT_TIMEZONE);
 }

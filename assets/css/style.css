@@ -1,3 +1,7 @@
+img {
+    max-width: 100%;
+}
+
 a {
     text-decoration: none;
 }
@@ -112,6 +116,9 @@ details summary:focus {
 }
 .bootstrap-table .fixed-table-container .table th[data-field="message"] {
     width: 25%;
+}
+.card-img, .card-img-top {
+    overflow: hidden;
 }
 
 
