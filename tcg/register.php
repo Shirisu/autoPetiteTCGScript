@@ -11,7 +11,7 @@ title(TRANSLATIONS[$GLOBALS['language']]['general']['text_register']);
 
 if (isset($_POST['nickname'])) {
     if (!empty($_POST['nickname']) && isset($_POST['email']) && !empty($_POST['email']) &&
-        isset($_POST['language'])
+        isset($_POST['language']) && isset($_POST['timezone'])
     ) {
         global $link;
         $nickname = mysqli_real_escape_string($link, trim($_POST['nickname']));
@@ -43,12 +43,13 @@ if (isset($_POST['nickname'])) {
                 $activationcode = passwordgenerator();
                 $password_hashed = create_hash_for_tcg($password);
                 $language = mysqli_real_escape_string($link, $_POST['language']);
+                $timezone = mysqli_real_escape_string($link, $_POST['timezone']);
 
                 mysqli_query($link, "
                     INSERT INTO member
-                    (member_nick, member_password, member_email, member_register, member_language, member_ip)
+                    (member_nick, member_password, member_email, member_register, member_timezone, member_language, member_ip)
                     VALUES
-                    ('".$nickname."', '".$password_hashed."', '".$email."', '".time()."', '".$language."', '".ip()."')")
+                    ('".$nickname."', '".$password_hashed."', '".$email."', '".time()."', '".$timezone."', '".$language."', '".ip()."')")
                 OR die(mysqli_error($link));
                 $new_member_id = mysqli_insert_id($link);
 
@@ -136,6 +137,23 @@ if (isset($_POST['nickname'])) {
                             </select>
                         </div>
                         <small id="ariaDescribedbyLanguage" class="form-text text-muted"><?php echo TRANSLATIONS[$GLOBALS['language']]['register']['hint_language']; ?></small>
+                    </div>
+                    <div class="form-group col col-12 col-md-6 mb-2">
+                        <div class="input-group">
+                            <span class="input-group-text" id="ariaDescribedbyTimezone"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_timezone']; ?></span>
+                            <select class="selectpicker" data-live-search="true" data-size="10" id="member_timezone" name="member_timezone" aria-describedby="ariaDescribedbyTimezone" required>
+                                <option selected disabled hidden value=""></option>
+                                <?php
+                                $timezone_identifiers = DateTimeZone::listIdentifiers();
+                                for ($i=0; $i < 425; $i++) {
+                                ?>
+                                    <option value="<?php echo $timezone_identifiers[$i]; ?>"><?php echo $timezone_identifiers[$i]; ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <small id="ariaDescribedbyTimezone" class="form-text text-muted"><?php echo TRANSLATIONS[$GLOBALS['language']]['register']['hint_timezone']; ?></small>
                     </div>
                     <div class="form-group col col-12 mb-2">
                         <button type="submit" class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_register']; ?></button>

@@ -1,4 +1,17 @@
-<?php ob_start(); ?>
+<?php ob_start();
+if (isset($_SESSION['member_rank'])) {
+    global $link;
+    $sql_member_timezone = "SELECT member_timezone 
+                            FROM member 
+                            WHERE member_id = '".$_SESSION['member_id']."' 
+                            LIMIT 1";
+    $result_member_timezone = mysqli_query($link, $sql_member_timezone) OR die(mysqli_error($link));
+    $row_member_timezone = mysqli_fetch_assoc($result_member_timezone);
+    date_default_timezone_set($row_member_timezone['member_timezone']);
+} else {
+    date_default_timezone_set(TCG_DEFAULT_TIMEZONE);
+}
+?>
 <?php echo "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?".">"; ?>
 <!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"

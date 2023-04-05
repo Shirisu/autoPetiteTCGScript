@@ -18,6 +18,7 @@ define('TCG_CARDS_FOLDER', '/assets/cards'); // DO NOT EDIT THIS LINE
 define('TCG_NAME', 'autoPetiteTCGScript'); // for title-attribute & meta title
 define('TCG_SLOGAN', 'a simple mini Trading Card Game'); // for title-attribute & meta title
 define('TCG_META_TITLE', TCG_NAME .' :: '.TCG_SLOGAN); // title-tag & meta title
+define('TCG_DEFAULT_TIMEZONE', 'Europe/Berlin'); // default timezone - use string from here: https://www.php.net/manual/en/timezones.php
 
 define('TCG_TEMPLATE', 1); // which template you want to use (1 is the main template)
 

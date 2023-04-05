@@ -13,7 +13,7 @@ if (isset($_SESSION['member_rank'])) {
 
     $member_id = $_SESSION['member_id'];
 
-    $sql = "SELECT member_email, member_language, member_text, member_master_order
+    $sql = "SELECT member_email, member_language, member_text, member_master_order, member_timezone
             FROM member
             WHERE member_id = '".$member_id."'
             LIMIT 1";
@@ -24,6 +24,7 @@ if (isset($_SESSION['member_rank'])) {
         $member_email = $row['member_email'];
         $member_text = $row['member_text'];
         $member_master_order = $row['member_master_order'];
+        $member_timezone = $row['member_timezone'];
 
         if (isset($_POST['member_language']) && isset($_POST['member_email'])) {
             $member_email = mysqli_real_escape_string($link, trim($_POST['member_email']));
@@ -31,12 +32,14 @@ if (isset($_SESSION['member_rank'])) {
             $member_text = trim($_POST['member_text']);
             $member_text_to_save = mysqli_real_escape_string($link, strip_tags(trim($_POST['member_text'])));
             $member_master_order = mysqli_real_escape_string($link, trim($_POST['member_master_order']));
+            $member_timezone = mysqli_real_escape_string($link, trim($_POST['member_timezone']));
 
             mysqli_query($link, "UPDATE member
                                  SET member_email = '".$member_email."',
                                      member_language = '".$member_language."',
                                      member_text = '".$member_text_to_save."',
-                                     member_master_order = '".$member_master_order."'
+                                     member_master_order = '".$member_master_order."',
+                                     member_timezone = '".$member_timezone."'
                                  WHERE member_id = ".$member_id."
                                  LIMIT 1")
             OR die(mysqli_error($link));
@@ -85,6 +88,22 @@ if (isset($_SESSION['member_rank'])) {
                                     <option selected disabled hidden value=""></option>
                                     <option value="0" <?php if ($member_master_order == 0) { ?>selected="selected"<?php } ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['member']['text_profile_master_order_abc']; ?></option>
                                     <option value="1" <?php if ($member_master_order == 1) { ?>selected="selected"<?php } ?>><?php echo TRANSLATIONS[$GLOBALS['language']]['member']['text_profile_master_order_date']; ?></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col col-12 col-md-6 mb-2">
+                            <div class="input-group">
+                                <span class="input-group-text" id="ariaDescribedbyTimezone"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_timezone']; ?></span>
+                                <select class="selectpicker" data-live-search="true" data-size="10" id="member_timezone" name="member_timezone" aria-describedby="ariaDescribedbyTimezone" required>
+                                    <option selected disabled hidden value=""></option>
+                                    <?php
+                                    $timezone_identifiers = DateTimeZone::listIdentifiers();
+                                    for ($i=0; $i < 425; $i++) {
+                                        ?>
+                                        <option value="<?php echo $timezone_identifiers[$i]; ?>" <?php if($timezone_identifiers[$i] == $member_timezone) { echo 'selected="selected"'; } ?>><?php echo $timezone_identifiers[$i]; ?></option>
+                                        <?php
+                                    }
+                                    ?>
                                 </select>
                             </div>
                         </div>

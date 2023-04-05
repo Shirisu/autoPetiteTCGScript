@@ -260,6 +260,7 @@ trading card game
         'text_status' => 'Status',
         'text_text_snippet' => 'Textausschnit',
         'text_title' => 'Titel',
+        'text_timezone' => 'Zeitzone',
         'text_trade' => 'Tauschanfragen',
         'text_tradein' => 'Trade In',
         'text_unkown' => 'unbekannt',
@@ -353,6 +354,7 @@ Bitte denke daran, dein Passwort danach sofort zu &auml;ndern!',
         'hint_password_rule_5' => 'mindestens 8 Zeichen',
         'hint_password2' => 'Bitte pr&uuml;fe, ob du dich nicht vertippt hast!',
         'hint_success' => 'Die Registrierung war erfolgreich. Bitte aktiviere deinen Account, indem du den Link in der Email anklickst.',
+        'hint_timezone' => 'Deine Zeitzone',
         'mail_part_1' => 'du hast auf '.HOST_URL_PLAIN.' einen Account angelegt.
 Nun musst du deine Email bestätigen, damit du dich einloggen kannst.
 
