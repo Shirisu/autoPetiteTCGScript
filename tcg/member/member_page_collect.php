@@ -109,10 +109,11 @@ if (isset($_SESSION['member_rank'])) {
                                         <td class="d-none"><?php echo $carddeck_name; ?> <?php echo count($cardnumbers); ?>
                                             /<?php echo TCG_CARDDECK_MAX_CARDS; ?></td>
                                         <td>
-                                            <small><a
-                                                    href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>">[<?php echo strtoupper($carddeck_name); ?>
-                                                    ]</a> (<?php echo count($cardnumbers); ?>
-                                                /<?php echo TCG_CARDDECK_MAX_CARDS; ?>)
+                                            <small>
+                                                <a
+                                                    href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>">
+                                                    [<?php echo strtoupper($carddeck_name); ?>]
+                                                </a> (<?php echo count($cardnumbers); ?>/<?php echo TCG_CARDDECK_MAX_CARDS; ?>)
                                             </small>
                                             <div class="carddeck-wrapper"
                                                  data-is-puzzle="<?php echo($row_cards['carddeck_is_puzzle'] ? $row_cards['carddeck_is_puzzle'] : 0); ?>">

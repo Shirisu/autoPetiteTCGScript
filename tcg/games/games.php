@@ -57,7 +57,7 @@ if (isset($_SESSION['member_rank'])) {
                                     $can_play = true;
                                 }
                                 ?>
-                                <div class="col col-12 col-md-6 mb-2">
+                                <div class="col col-12 col-md-6 col-lg-4 mb-2">
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="d-flex">
@@ -110,7 +110,7 @@ if (isset($_SESSION['member_rank'])) {
                             $can_play = true;
                         }
                         ?>
-                        <div class="col col-12 col-md-6 mb-2">
+                        <div class="col col-12 col-md-6 col-lg-4 mb-2">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex">
