@@ -259,6 +259,7 @@ trading card game
         'text_statistic_carddecks_overview' => 'Category overview (number of card decks)',
         'text_status' => 'Status',
         'text_text_snippet' => 'Text snippet',
+        'text_timezone' => 'Timezone',
         'text_title' => 'Title',
         'text_trade' => 'Trades',
         'text_tradein' => 'Trade In',
@@ -353,6 +354,7 @@ Please remember to change your password immediately afterwards!',
         'hint_password_rule_5' => 'at least 8 characters',
         'hint_password2' => 'Please check if you have not mistyped!',
         'hint_success' => 'The registration was successful. Please activate your account by clicking the link in the email.',
+        'hint_timezone' => 'Your timezone',
         'mail_part_1' => 'you have created an account at '.HOST_URL_PLAIN.'.
 Now you need to confirm your email so that you can log in.
 
