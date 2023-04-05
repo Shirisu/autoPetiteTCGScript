@@ -214,8 +214,14 @@ table.carddeck td {
     margin-top: 5px;
 }
 .carddeck-link {
+    text-align: center;
     white-space: normal;
     word-break: break-all;
+}
+.cards-sorting-wrapper small {
+    display: inline-block;
+    width: 100%;
+    padding-top: 5px;
 }
 
 
@@ -235,6 +241,7 @@ table.carddeck td {
 .tradein-container .cards-wrapper,
 .card-wrapper {
     position: relative;
+    text-align: center;
 }
 .show-counter {
     position: relative;
