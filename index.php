@@ -362,16 +362,16 @@ Route::add("/games/lucky_cat/([0-9+].*)",function($lucky_cat_game_id) {
     require_once("tcg/games/lucky_cat.php");
 }, "post");
 Route::add("/games/lucky/([0-9+].*)",function($game_id) {
-    includeGameFile($game_id);
+    include_game_file($game_id);
 });
 Route::add("/games/lucky/([0-9+].*)",function($game_id) {
-    includeGameFile($game_id);
+    include_game_file($game_id);
 }, "post");
 Route::add("/games/skill/([0-9+].*)",function($game_id) {
-    includeGameFile($game_id);
+    include_game_file($game_id);
 });
 Route::add("/games/skill/([0-9+].*)",function($game_id) {
-    includeGameFile($game_id);
+    include_game_file($game_id);
 }, "post");
 
 // lost password and register

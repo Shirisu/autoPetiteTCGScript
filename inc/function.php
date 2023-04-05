@@ -795,7 +795,7 @@ function get_member_menu($member_id, $active_menu) {
 <?php
 }
 
-function includeGameFile($game_id) {
+function include_game_file($game_id) {
     global $link;
     $sql_games = "SELECT games_id, games_name, games_file, games_interval, games_type, games_is_lucky_category_game
                   FROM games
@@ -814,6 +814,73 @@ function includeGameFile($game_id) {
     } else {
         require_once("tcg/games/games.php");
     }
+}
+
+function check_shop_update() {
+    global $link;
+
+    $sql_shop = "SELECT shop_last_update
+                 FROM shop
+                 LIMIT 1";
+    $result_shop = mysqli_query($link, $sql_shop) OR DIE(mysqli_error($link));
+    if (mysqli_num_rows($result_shop)) {
+        $row_shop = mysqli_fetch_assoc($result_shop);
+        $last_update = $row_shop['shop_last_update'];
+        $date_now = time();
+        if ($last_update <= $date_now - (60 * 60 * 24)) {
+            reset_shop();
+            refill_shop(TCG_SHOP_MAX_CARDS);
+        }
+    } else {
+        reset_shop();
+        refill_shop(TCG_SHOP_MAX_CARDS);
+    }
+}
+
+function reset_shop() {
+    global $link;
+
+    mysqli_query($link, "TRUNCATE shop")
+    OR DIE(mysqli_error($link));
+}
+function refill_shop($card_quantity) {
+    global $link;
+
+    for ($i = 1; $i <= $card_quantity; $i++) {
+        $sql = "SELECT carddeck_id, carddeck_name
+            FROM carddeck
+            WHERE carddeck_active = 1
+            ORDER BY RAND()
+            LIMIT 1";
+        $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
+        if (mysqli_num_rows($result)) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $cardnumber = mt_rand(1, TCG_CARDDECK_MAX_CARDS);
+                $price = mt_rand(TCG_SHOP_CURRENCY_FOR_CARD_RANGE_MIN, TCG_SHOP_CURRENCY_FOR_CARD_RANGE_MAX);
+                mysqli_query($link,
+                    "INSERT INTO shop 
+                           (shop_carddeck_name, shop_carddeck_id, shop_card_number, shop_price, shop_last_update) 
+                           VALUES 
+                           ('" . $row['carddeck_name'] . "','" . $row['carddeck_id'] . "','" . $cardnumber . "','" . $price . "','" . time() . "')"
+                ) OR die(mysqli_error($link));
+            }
+        }
+    }
+}
+
+function buy_card($shop_id) {
+    echo 'buy ar';
+    // TODO: select card in shop, insert card, remove from shop, insert new card
+    /*$carddeck_id = $row_shop['shop_carddeck_id'];
+    $carddeck_name = $row_shop['shop_carddeck_name'];
+    $cardnumber_plain = $row_shop['shop_card_number'];
+    $cardnumber = sprintf("%'.02d", $cardnumber_plain);
+    $card_price = 100;*/
+
+    //insert_specific_cards($_SESSION['member_id'], $carddeck_id, $cardnumber_plain);
+    $inserted_card_text = TRANSLATIONS[$GLOBALS['language']]['shop']['text_you_bought'] . ': ' . $carddeck_name . sprintf('%02d', $cardnumber).'. '. TRANSLATIONS[$GLOBALS['language']]['shop']['text_you_spent'].': '.$card_price;
+    //insert_log(TRANSLATIONS[$GLOBALS['language']]['general']['text_shop'], $inserted_card_text, $_SESSION['member_id']);
+
 }
 
 ?>

@@ -79,6 +79,9 @@ You can define some settings in the [constants.php](https://github.com/Shirisu/a
 - **TCG_META_TITLE**
   - title-tag & meta title
   - meta tags are used for search engine pages like google, bing, ...
+- **TCG_DEFAULT_TIMEZONE**
+  - default timezone
+  - choose your timezone value from this list: https://www.php.net/manual/en/timezones.php
 - **TCG_META_OWNER**
   - email address to contact the TCG owner and for mails (forget password, questions, ...)
   - meta tags are used for search engine pages like google, bing, ...
@@ -89,8 +92,17 @@ You can define some settings in the [constants.php](https://github.com/Shirisu/a
 - **TCG_MULTI_MASTER** - default `false`
   - should it be possible to master a deck multiple times
   - accepted values: `true` (means yes), `false` (means no)
+- **TCG_SHOP_CURRENCY_FOR_CARD_RANGE_MAX** - default `150`
+  - how much currency do 1 card in shop cost? Range max value
+  - accepted values: from `1` to whatever you like
+- **TCG_SHOP_CURRENCY_FOR_CARD_RANGE_MIN** - default `100`
+  - how much currency do 1 card in shop cost? Range min value
+  - accepted values: from `1` to whatever you like
 - **TCG_SHOP_CURRENCY_FOR_RANDOM** - default `100`
   - how much currency do 1 random cost?
+  - accepted values: from `1` to whatever you like
+- **TCG_SHOP_MAX_CARDS** - default: `20`
+  - card amount shown in shop
   - accepted values: from `1` to whatever you like
 - **TCG_SHOW_TRADE_FILTER** - default `true`
   - will you use the trade filter function?

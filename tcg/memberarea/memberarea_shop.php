@@ -39,6 +39,11 @@ if (isset($_SESSION['member_rank'])) {
             $member_wish = get_member_wish($_SESSION['member_id']);
         }
     }
+
+    if (isset($_POST['cardshop'])) {
+        echo $_POST['cardshop'];
+        buy_card($_POST['cardshop']);
+    }
     ?>
     <div class="row shop-container">
         <div class="col col-12 mb-4 text-left text-md-center">
@@ -177,6 +182,53 @@ if (isset($_SESSION['member_rank'])) {
             <?php
         }
         ?>
+
+        <div class="col col-12 my-3">
+            <?php
+            $sql_shop = "SELECT shop_id, shop_carddeck_name, shop_carddeck_id, shop_card_number, shop_price
+                         FROM shop
+                         ORDER BY shop_carddeck_name, shop_card_number
+                         LIMIT ".TCG_SHOP_MAX_CARDS."";
+            $result_shop = mysqli_query($link, $sql_shop) OR die(mysqli_error($link));
+            if (mysqli_num_rows($result_shop)) {
+                ?>
+                <div class="row">
+                    <div class="col col-12 mb-2"><?php echo TRANSLATIONS[$GLOBALS['language']]['shop']['text_buy_cards_headline']; ?></div>
+                    <?php
+                    while($row_shop = mysqli_fetch_assoc($result_shop)) {
+                        $carddeck_id = $row_shop['shop_carddeck_id'];
+                        $carddeck_name = $row_shop['shop_carddeck_name'];
+                        $cardnumber_plain = $row_shop['shop_card_number'];
+                        $cardnumber = sprintf("%'.02d", $cardnumber_plain);
+                        ?>
+                        <div
+                            class="col col-6 col-md-3 mb-2 shop-card-wrapper">
+                            <form action="<?php echo HOST_URL; ?>/memberarea/shop" method="post">
+                                <?php echo get_card($carddeck_id, $cardnumber_plain); ?>
+                                <a class="carddeck-link"
+                                   href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>">
+                                    <small><?php echo $carddeck_name . $cardnumber; ?></small>
+                                </a>
+                                <div>
+                                    <?php echo TRANSLATIONS[$GLOBALS['language']]['shop']['text_costs']; ?>: <?php echo $row_shop['shop_price'] ?>
+                                </div>
+                                <div>
+                                    <input type="hidden" name="cardshop" value="<?php echo $row_shop['shop_id']; ?>" />
+                                    <button type="submit"
+                                            class="btn btn-primary"><?php echo TRANSLATIONS[$GLOBALS['language']]['shop']['text_button_buy_card']; ?></button>
+                                </div>
+                            </form>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                </div>
+                <?php
+            } else {
+                alert_box(TRANSLATIONS[$GLOBALS['language']]['shop']['text_no_cards']);
+            }
+            ?>
+        </div>
     </div>
     <?php
 } else {
