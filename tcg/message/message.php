@@ -192,7 +192,7 @@ if (isset($_SESSION['member_rank'])) {
                                     <td>
                                         <a href="<?php echo HOST_URL; ?>/message/<?php echo $row_message['message_id']; ?>"><?php echo $row_message['message_subject']; ?></a>
                                     </td>
-                                    <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_message['message_date']); ?></td>
+                                    <td><span class="d-none"><?php echo $row_message['message_date']; ?></span> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_message['message_date']); ?></td>
                                     <td><?php echo($row_message['message_read'] == 0 ? '<span class="badge bg-secondary"><i class="fas fa-times"></i> ' . TRANSLATIONS[$GLOBALS['language']]['message']['text_unread'] . '</span>' : '<span class="badge bg-success"><i class="fas fa-check"></i> ' . TRANSLATIONS[$GLOBALS['language']]['message']['text_read'] . '</span>'); ?></td>
                                     <td>
                                         <a href="<?php echo HOST_URL; ?>/message/delete/<?php echo $row_message['message_id']; ?>"

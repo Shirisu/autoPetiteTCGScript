@@ -67,7 +67,7 @@ if (isset($_SESSION['member_rank'])) {
                                     <td><a href="<?php echo HOST_URL; ?>/carddeck/<?php echo $row_wishlist['carddeck_name']; ?>"><?php echo $row_wishlist['carddeck_name']; ?></a></td>
                                     <td><?php echo $row_wishlist['carddeck_series']; ?></td>
                                     <td><?php echo $row_wishlist['carddeck_cat_name'].' <i class="fas fa-angle-right"></i>'; ?> <?php echo $row_wishlist['carddeck_sub_cat_name']; ?></td>
-                                    <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_wishlist['member_wishlist_date']); ?></td>
+                                    <td><span class="d-none"><?php echo $row_wishlist['member_wishlist_date']; ?></span> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_wishlist['member_wishlist_date']); ?></td>
                                 </tr>
                                 <?php
                             }

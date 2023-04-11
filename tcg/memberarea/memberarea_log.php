@@ -37,7 +37,7 @@ if (isset($_SESSION['member_rank'])) {
                     while ($row_log = mysqli_fetch_assoc($result_log)) {
                         ?>
                         <tr>
-                            <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_log['member_log_date']); ?></td>
+                            <td><span class="d-none"><?php echo $row_log['member_log_date']; ?></span> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_log['member_log_date']); ?></td>
                             <td><?php echo $row_log['member_log_cat']; ?></td>
                             <td><div class="overflow-auto"><?php echo nl2br($row_log['member_log_text']); ?></div></td>
                         </tr>

@@ -258,7 +258,7 @@ if (isset($_SESSION['member_rank'])) {
                                         class="card-wrapper" <?php echo(file_exists('.' . substr($filename, strlen(HOST_URL))) ? 'style="background-image:url(' . $filename . ');"' : ''); ?>></span>
                                     <br /><small><?php echo $trade_card_carddeck_name.sprintf("%'.02d", $trade_card_number); ?></small>
                                 </td>
-                                <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_trade['trade_date']); ?></td>
+                                <td><span class="d-none"><?php echo $row_trade['trade_date']; ?></span> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_trade['trade_date']); ?></td>
                                 <td><div class="overflow-auto"><?php echo nl2br($row_trade['trade_text']); ?></div></td>
                                 <td>
                                     <?php

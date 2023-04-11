@@ -154,7 +154,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                 <td><?php echo $row['member_nick']; ?></td>
                                 <td><?php echo $row['news_title']; ?></td>
                                 <td><?php echo shorten_text($row['news_text'], 20); ?></td>
-                                <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row['news_date']); ?></td>
+                                <td><span class="d-none"><?php echo $row['news_date']; ?></span> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row['news_date']); ?></td>
                                 <td><?php echo ($row['news_cardupdate_id'] != NULL ? TRANSLATIONS[$GLOBALS['language']]['general']['text_yes'] : TRANSLATIONS[$GLOBALS['language']]['general']['text_no']); ?></td>
                                 <td><a href="<?php echo HOST_URL; ?>/administration/editnews/<?php echo $row['news_id']; ?>">Edit</a></td>
                             </tr>
