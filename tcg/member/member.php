@@ -50,9 +50,9 @@ if (isset($_SESSION['member_rank'])) {
                                 <td><?php echo $row_member['member_cards']; ?></td>
                                 <td><?php echo $row_member['member_master']; ?></td>
                                 <td><?php echo $row_member['member_rank_name']; ?></td>
-                                <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_member['member_register']); ?></td>
-                                <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_member['member_last_login']); ?></td>
-                                <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_member['member_last_active']); ?></td>
+                                <td><span class="d-none"><?php echo $row_member['member_register']; ?></span> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_member['member_register']); ?></td>
+                                <td><span class="d-none"><?php echo $row_member['member_last_login']; ?></span> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_member['member_last_login']); ?></td>
+                                <td><span class="d-none"><?php echo $row_member['member_last_active']; ?></span> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_member['member_last_active']); ?></td>
                                 <td><?php echo get_online_status($row_member['member_id']); ?></td>
                             </tr>
                             <?php

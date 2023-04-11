@@ -284,8 +284,8 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                 <td><?php echo ($row['member_active'] == 4 ? '---' : $row['member_ip']); ?></td>
                                 <td><?php echo ($row['member_active'] == 4 ? $row['member_nick'] : '<a href="'.HOST_URL.'/member/'.$row['member_id'].'">'.$row['member_nick'].'</a>'); ?>
                                 </td>
-                                <td><?php echo ($row['member_active'] == 4 ? '---' : date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row['member_last_login'])); ?></td>
-                                <td><?php echo ($row['member_active'] == 4 ? '---' : date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row['member_last_active'])); ?></td>
+                                <td><span class="d-none"><?php echo $row['member_last_login']; ?></span> <?php echo ($row['member_active'] == 4 ? '---' : date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row['member_last_login'])); ?></td>
+                                <td><span class="d-none"><?php echo $row['member_last_active']; ?></span> <?php echo ($row['member_active'] == 4 ? '---' : date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row['member_last_active'])); ?></td>
                                 <td><?php echo get_active_status($row['member_active']); ?></td>
                                 <td><?php echo ($row['member_active'] == 4 ? '---' : sprintf('%02d', $row['member_rank_id']) . ' - ' . $row['member_rank_name']); ?></td>
                                 <td>

@@ -107,7 +107,7 @@ if (isset($_SESSION['member_rank'])) {
                             ?>
                             <tr>
                                 <td><?php echo get_member_link($row_search['member_id'], '', true); ?></td>
-                                <td><?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_search['member_last_active']); ?></td>
+                                <td><span class="d-none"><?php echo $row_search['member_last_active']; ?></span> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_search['member_last_active']); ?></td>
                                 <td><?php echo get_online_status($row_search['member_id']); ?></td>
                                 <td><?php echo ($row_search['member_id'] != $_SESSION['member_id'] ? '<a href="'.HOST_URL.'/trade/'.$row_search['member_id'].'/'.$row_search['member_cards_id'].'">'.TRANSLATIONS[$GLOBALS['language']]['general']['text_start_trade'].'</a>' : '-'); ?></td>
                             </tr>
