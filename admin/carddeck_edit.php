@@ -268,7 +268,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                     <?php echo get_card($row['carddeck_id'], 'master', false, true); ?>
                                 </div>
                                 <label for="masterCardFile" class="form-label">Mastercard</label>
-                                <input type="file" class="form-control" id="masterCardFile" name="masterCardFile" aria-describedby="ariaDescribedbyMastercard"<?php echo (TCG_CARDS_UPLOAD_REQUIRED == true ? ' required' : '') ?>>
+                                <input type="file" class="form-control" id="masterCardFile" name="masterCardFile" aria-describedby="ariaDescribedbyMastercard">
                             </div>
                             <?php
                             for ($i = 1; $i <= TCG_CARDDECK_MAX_CARDS; $i++) {
@@ -279,7 +279,7 @@ if (isset($_SESSION['member_rank']) && ($_SESSION['member_rank'] == 1 || $_SESSI
                                     </div>
                                     <div class="form-group col col-12 mb-2">
                                         <label for="cardFile<?php echo $i; ?>" class="form-label">Card <?php echo $i; ?></label>
-                                        <input type="file" class="form-control" id="cardFile<?php echo $i; ?>" name="cardFile<?php echo $i; ?>" aria-describedby="ariaDescribedbyCard<?php echo $i; ?>"<?php echo (TCG_CARDS_UPLOAD_REQUIRED == true ? ' required' : '') ?>>
+                                        <input type="file" class="form-control" id="cardFile<?php echo $i; ?>" name="cardFile<?php echo $i; ?>" aria-describedby="ariaDescribedbyCard<?php echo $i; ?>">
                                     </div>
                                 </div>
                                 <?php

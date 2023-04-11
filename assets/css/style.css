@@ -1,3 +1,7 @@
+img {
+    max-width: 100%;
+}
+
 a {
     text-decoration: none;
 }
@@ -113,6 +117,9 @@ details summary:focus {
 .bootstrap-table .fixed-table-container .table th[data-field="message"] {
     width: 25%;
 }
+.card-img, .card-img-top {
+    overflow: hidden;
+}
 
 
 /**
@@ -215,6 +222,11 @@ table.carddeck td {
     white-space: normal;
     word-break: break-all;
 }
+.carddeck-link small {
+    display: inline-block;
+    width: 100%;
+    padding-top: 5px;
+}
 .cards-sorting-wrapper small {
     display: inline-block;
     width: 100%;
@@ -236,6 +248,7 @@ table.carddeck td {
 .cards-sorting-wrapper,
 .profile-cards-wrapper,
 .tradein-container .cards-wrapper,
+.shop-card-wrapper,
 .card-wrapper {
     position: relative;
     text-align: center;

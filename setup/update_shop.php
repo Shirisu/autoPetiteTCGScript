@@ -21,7 +21,7 @@ if (!$link) {
 }
 
 $query = '';
-$sqlScript = file("database-structure_timezone.sql");
+$sqlScript = file("database-structure_shop.sql");
 foreach ($sqlScript as $line) {
     $startWith = substr(trim($line), 0, 2);
     $endWith = substr(trim($line), -1, 1);
@@ -37,7 +37,7 @@ foreach ($sqlScript as $line) {
     }
 }
 
-echo 'All went fine - database table "member_timezone" is imported.';
+echo 'All went fine - database table "member_shop" is imported.';
 ?>
     <br/>
     <a href="/">Back</a>

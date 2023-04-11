@@ -98,7 +98,7 @@ if (isset($_SESSION['member_rank'])) {
                                     <option selected disabled hidden value=""></option>
                                     <?php
                                     $timezone_identifiers = DateTimeZone::listIdentifiers();
-                                    for ($i=0; $i < 425; $i++) {
+                                    for ($i=0; $i < 420; $i++) {
                                         ?>
                                         <option value="<?php echo $timezone_identifiers[$i]; ?>" <?php if($timezone_identifiers[$i] == $member_timezone) { echo 'selected="selected"'; } ?>><?php echo $timezone_identifiers[$i]; ?></option>
                                         <?php

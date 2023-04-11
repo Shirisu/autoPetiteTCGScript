@@ -141,11 +141,11 @@ if (isset($_POST['nickname'])) {
                     <div class="form-group col col-12 col-md-6 mb-2">
                         <div class="input-group">
                             <span class="input-group-text" id="ariaDescribedbyTimezone"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_timezone']; ?></span>
-                            <select class="selectpicker" data-live-search="true" data-size="10" id="member_timezone" name="member_timezone" aria-describedby="ariaDescribedbyTimezone" required>
+                            <select class="selectpicker" data-live-search="true" data-size="10" id="timezone" name="timezone" aria-describedby="ariaDescribedbyTimezone" required>
                                 <option selected disabled hidden value=""></option>
                                 <?php
                                 $timezone_identifiers = DateTimeZone::listIdentifiers();
-                                for ($i=0; $i < 425; $i++) {
+                                for ($i=0; $i < 420; $i++) {
                                 ?>
                                     <option value="<?php echo $timezone_identifiers[$i]; ?>"><?php echo $timezone_identifiers[$i]; ?></option>
                                 <?php

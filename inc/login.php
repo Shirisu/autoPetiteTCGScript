@@ -47,6 +47,7 @@ if ((isset($_REQUEST["member_nick"])) && isset($_REQUEST["member_password"])) {
                      LIMIT 1;") or die(mysqli_error($link));
             }
 
+            check_shop_update();
             member_check_card_count($_SESSION["member_id"]);
 
             header ("Location: ".HOST_URL."/");
