@@ -210,98 +210,110 @@ if (isset($_SESSION['member_rank'])) {
             if ($count_trade) {
                 ?>
                 <div class="table-responsive">
-                    <table id="trade-table" data-mobile-responsive="true" data-search="no">
+                    <table class="optional w-100" data-mobile-responsive="true">
                         <thead>
                         <tr>
-                            <th data-field="sender-receiver" data-sortable="true"><?php echo($trade_box_type == 'inbox' ? TRANSLATIONS[$GLOBALS['language']]['trade']['text_sender'] : TRANSLATIONS[$GLOBALS['language']]['trade']['text_receiver']); ?></th>
-                            <th data-field="tradecard"><?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_trade_card']; ?></th>
-                            <th data-field="owncard"><?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_own_card']; ?></th>
-                            <th data-field="date" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_date']; ?></th>
-                            <th data-field="message"><?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_trade_message']; ?></th>
-                            <th data-field="option"></th>
+                            <th></th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="row m-0">
                         <?php
                         while ($row_trade = mysqli_fetch_assoc($result_trade)) {
-                            ?>
-                            <tr>
-                                <td>
-                                    <?php echo($trade_box_type == 'inbox' ? get_member_link($row_trade['trade_from_member_id'], '', true) : get_member_link($row_trade['trade_to_member_id'], '', true)); ?>
-                                </td>
-                                <td class="align-top">
-                                    <?php
-                                    $card_id = ($trade_box_type == 'inbox' ? $row_trade['trade_from_member_card_id'] : $row_trade['trade_to_member_card_id']);
-                                    $trade_card_carddeck_id = get_carddeck_id_from_member_cards_id($card_id);
-                                    $trade_card_carddeck_name = get_carddeck_name_from_carddeck_id($trade_card_carddeck_id);
-                                    $trade_card_number = get_card_number_from_member_cards_id($card_id);
-                                    $filename = get_card($trade_card_carddeck_id, $trade_card_number, true);
-                                    if ($trade_box_type == 'inbox' && TCG_SHOW_TRADE_FILTER == true) {
-                                        $filterclass = get_card_filter_class($trade_card_carddeck_id, $trade_card_number);
-                                    } else {
-                                        $filterclass = '';
-                                    }
-                                    ?>
-                                    <span
-                                        class="card-wrapper<?php echo $filterclass; ?>" <?php echo(file_exists('.' . substr($filename, strlen(HOST_URL))) ? 'style="background-image:url(' . $filename . ');"' : ''); ?>></span>
-                                    <br /><small><?php echo $trade_card_carddeck_name.sprintf("%'.02d", $trade_card_number); ?></small>
-                                </td>
-                                <td class="align-top">
-                                    <?php
-                                    $card_id = ($trade_box_type == 'inbox' ? $row_trade['trade_to_member_card_id'] : $row_trade['trade_from_member_card_id']);
-                                    $trade_card_carddeck_id = get_carddeck_id_from_member_cards_id($card_id);
-                                    $trade_card_carddeck_name = get_carddeck_name_from_carddeck_id($trade_card_carddeck_id);
-                                    $trade_card_number = get_card_number_from_member_cards_id($card_id);
-                                    $filename = get_card($trade_card_carddeck_id, $trade_card_number, true);
-                                    ?>
-                                    <span
-                                        class="card-wrapper" <?php echo(file_exists('.' . substr($filename, strlen(HOST_URL))) ? 'style="background-image:url(' . $filename . ');"' : ''); ?>></span>
-                                    <br /><small><?php echo $trade_card_carddeck_name.sprintf("%'.02d", $trade_card_number); ?></small>
-                                </td>
-                                <td><span class="d-none"><?php echo $row_trade['trade_date']; ?></span> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_trade['trade_date']); ?></td>
-                                <td><div class="overflow-auto"><?php echo nl2br($row_trade['trade_text']); ?></div></td>
-                                <td>
-                                    <?php
-                                    if ($trade_box_type == 'inbox') {
-                                        ?>
-                                        <form action="<?php echo HOST_URL; ?>/trade/inbox/<?php echo $row_trade['trade_id']; ?>" method="post">
-                                            <div class="row ms-auto me-auto">
-                                                <div class="col col-12 mb-3">
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <textarea class="form-control" id="trade_message" name="trade_message" aria-describedby="ariaDescribedbyTradeText" rows="3"></textarea>
+                        ?>
+                            <tr class="col-12 col-md-6 p-0">
+                                <td class="card h-full mb-3 ms-md-2 me-md-2">
+                                    <div class="card-header">
+                                        <span class="d-none"><?php echo $row_trade['trade_date']; ?></span>
+                                        <small><?php
+                                            if ($trade_box_type == 'inbox') {
+                                                echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_sender'].' '.get_member_link($row_trade['trade_from_member_id'], '', true);
+                                            } else {
+                                                echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_receiver'].' '.get_member_link($row_trade['trade_to_member_id'], '', true);
+                                            }
+                                            ?>
+                                            <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_trade['trade_date']); ?>
+                                        </small>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <div class="row align-items-center">
+                                            <div class="col-12 col-md-5">
+                                                <small class="d-block text-muted"><?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_trade_card']; ?></small>
+                                                <?php
+                                                $card_id = ($trade_box_type == 'inbox' ? $row_trade['trade_from_member_card_id'] : $row_trade['trade_to_member_card_id']);
+                                                $trade_card_carddeck_id = get_carddeck_id_from_member_cards_id($card_id);
+                                                $trade_card_carddeck_name = get_carddeck_name_from_carddeck_id($trade_card_carddeck_id);
+                                                $trade_card_number = get_card_number_from_member_cards_id($card_id);
+                                                $filename = get_card($trade_card_carddeck_id, $trade_card_number, true);
+                                                if ($trade_box_type == 'inbox' && TCG_SHOW_TRADE_FILTER == true) {
+                                                    $filterclass = get_card_filter_class($trade_card_carddeck_id, $trade_card_number);
+                                                } else {
+                                                    $filterclass = '';
+                                                }
+                                                ?>
+                                                <span
+                                                        class="card-wrapper<?php echo $filterclass; ?>" <?php echo(file_exists('.' . substr($filename, strlen(HOST_URL))) ? 'style="background-image:url(' . $filename . ');"' : ''); ?>></span>
+                                                <br /><small><?php echo $trade_card_carddeck_name.sprintf("%'.02d", $trade_card_number); ?></small>
+                                            </div>
+                                            <div class="col-12 col-md-2 my-2"><i class="fas fa-exchange-alt fs-1"></i></div>
+                                            <div class="col-12 col-md-5">
+                                                <small class="d-block text-muted"><?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_own_card']; ?></small>
+                                                <?php
+                                                $card_id = ($trade_box_type == 'inbox' ? $row_trade['trade_to_member_card_id'] : $row_trade['trade_from_member_card_id']);
+                                                $trade_card_carddeck_id = get_carddeck_id_from_member_cards_id($card_id);
+                                                $trade_card_carddeck_name = get_carddeck_name_from_carddeck_id($trade_card_carddeck_id);
+                                                $trade_card_number = get_card_number_from_member_cards_id($card_id);
+                                                $filename = get_card($trade_card_carddeck_id, $trade_card_number, true);
+                                                ?>
+                                                <span
+                                                        class="card-wrapper" <?php echo(file_exists('.' . substr($filename, strlen(HOST_URL))) ? 'style="background-image:url(' . $filename . ');"' : ''); ?>></span>
+                                                <br /><small><?php echo $trade_card_carddeck_name.sprintf("%'.02d", $trade_card_number); ?></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                            <p class="card-text overflow-auto"><?php echo nl2br($row_trade['trade_text']); ?></p>
+                                            <?php
+                                            if ($trade_box_type == 'inbox') {
+                                                ?>
+                                                <form action="<?php echo HOST_URL; ?>/trade/inbox/<?php echo $row_trade['trade_id']; ?>" method="post">
+                                                    <div class="row ms-auto me-auto">
+                                                        <div class="col col-12 mb-3">
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <textarea class="form-control" id="trade_message" name="trade_message" aria-describedby="ariaDescribedbyTradeText" rows="3"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col col-12 col-xl-6 mb-4">
+                                                            <div class="d-grid form-group">
+                                                                <button type="submit" name="accept" class="btn badge bg-success py-2">
+                                                                    <i class="fas fa-check"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_button_accept']; ?>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col col-12 col-xl-6 mb-4">
+                                                            <div class="d-grid form-group">
+                                                                <button type="submit" name="decline" class="btn badge badge bg-danger py-2">
+                                                                    <i class="fas fa-times"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_button_decline']; ?>
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col col-12 col-xl-6 mb-4">
-                                                    <div class="d-grid form-group">
-                                                        <button type="submit" name="accept" class="btn badge bg-success">
-                                                            <i class="fas fa-check"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_button_accept']; ?>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="col col-12 col-xl-6 mb-4">
-                                                    <div class="d-grid form-group">
-                                                        <button type="submit" name="decline" class="btn badge badge bg-danger">
-                                                            <i class="fas fa-times"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_button_decline']; ?>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        <?php
-                                    } else {
-                                        ?>
-                                        <a href="<?php echo HOST_URL; ?>/trade/<?php echo $row_trade['trade_id']; ?>/withdraw"
-                                           class="badge bg-primary"><i
-                                                class="fas fa-undo"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_button_withdraw']; ?>
-                                        </a>
-                                        <?php
-                                    }
-                                    ?>
+                                                </form>
+                                                <?php
+                                            } else {
+                                                ?>
+                                                <a href="<?php echo HOST_URL; ?>/trade/<?php echo $row_trade['trade_id']; ?>/withdraw"
+                                                   class="badge bg-primary p-2"><i
+                                                            class="fas fa-undo"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_button_withdraw']; ?>
+                                                </a>
+                                                <?php
+                                            }
+                                            ?>
+                                        </div>
                                 </td>
                             </tr>
-                            <?php
+                        <?php
                         }
                         ?>
                         </tbody>

@@ -10,6 +10,9 @@ a.badge:hover {
     color: inherit;
 }
 
+.dropdown.bootstrap-select {
+    width: auto !important;
+}
 .bootstrap-select {
     position: relative;
     flex: 1 1 auto;

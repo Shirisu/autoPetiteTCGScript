@@ -129,7 +129,7 @@ if (isset($_SESSION['member_rank'])) {
         $count_message = mysqli_num_rows($result_message);
         ?>
         <div class="row">
-            <div class="col col-12 mb-3">
+            <div class="col col-12 mb-1">
                 <div class="row">
                     <div class="d-grid col col-6 mb-2">
                         <a href="<?php echo HOST_URL; ?>/message/inbox"
@@ -148,13 +148,13 @@ if (isset($_SESSION['member_rank'])) {
             <?php
             if ($message_box_type == 'inbox') {
                 ?>
-                <div class="col col-12 mb-3">
-                    <div class="row">
-                        <div class="d-grid col col-auto">
+                <div class="col col-12 mb-1">
+                    <div class="row justify-content-center">
+                        <div class="d-grid col col-auto mb-2">
                             <a class="btn btn-primary"
                                href="<?php echo HOST_URL; ?>/message/write"><?php echo TRANSLATIONS[$GLOBALS['language']]['message']['text_write_message']; ?></a>
                         </div>
-                        <div class="d-grid col col-auto">
+                        <div class="d-grid col col-auto mb-2">
                             <a class="btn btn-danger"
                                href="<?php echo HOST_URL; ?>/message/delete/allsystemmessages"><?php echo TRANSLATIONS[$GLOBALS['language']]['message']['text_delete_all_system_messages']; ?></a>
                         </div>
@@ -166,46 +166,54 @@ if (isset($_SESSION['member_rank'])) {
             <div class="col col-12">
                 <?php
                 if ($count_message) {
-                    ?>
-                    <div class="table-responsive">
-                        <table id="message-table" data-mobile-responsive="true">
-                            <thead>
-                            <tr>
-                                <th data-field="sender"
-                                    data-sortable="true"><?php echo($message_box_type == 'inbox' ? TRANSLATIONS[$GLOBALS['language']]['message']['text_sender'] : TRANSLATIONS[$GLOBALS['language']]['message']['text_receiver']); ?></th>
-                                <th data-field="subject"><?php echo TRANSLATIONS[$GLOBALS['language']]['message']['text_subject']; ?></th>
-                                <th data-field="date"
-                                    data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_date']; ?></th>
-                                <th data-field="status"
-                                    data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['message']['text_read_status']; ?></th>
-                                <th data-field="option"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php
-                            while ($row_message = mysqli_fetch_assoc($result_message)) {
-                                ?>
-                                <tr>
-                                    <td>
-                                        <?php echo($row_message['message_system'] == 1 ? TRANSLATIONS[$GLOBALS['language']]['message']['text_system_message'] : ($message_box_type == 'inbox' ? get_member_link($row_message['message_sender_member_id'], '', true) : get_member_link($row_message['message_receiver_member_id'], '', true))); ?>
-                                    </td>
-                                    <td>
+                ?>
+                    <table class="optional w-100">
+                        <thead>
+                        <tr>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody class="row row-cols-1 row-cols-md-1 g-3">
+                        <?php
+                        while ($row_message = mysqli_fetch_assoc($result_message)) {
+                        ?>
+                            <tr class="col">
+                                <td class="card w-100 h-100 mb-3">
+                                    <div class="card-header">
+                                        <span class="d-none"><?php echo $row_message['message_date']; ?></span>
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <small>
+                                                    <?php
+                                                    if ($message_box_type == 'inbox') {
+                                                        echo TRANSLATIONS[$GLOBALS['language']]['message']['text_sender'];
+                                                    } else {
+                                                        echo TRANSLATIONS[$GLOBALS['language']]['message']['text_receiver'];
+                                                    }
+                                                    echo($row_message['message_system'] == 1 ? TRANSLATIONS[$GLOBALS['language']]['message']['text_system_message'] : ($message_box_type == 'inbox' ? get_member_link($row_message['message_sender_member_id'], '', true) : get_member_link($row_message['message_receiver_member_id'], '', true)));
+                                                    echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_message['message_date']);
+                                                    ?>
+                                                </small>
+                                            </div>
+                                            <div class="col text-end">
+                                                <?php echo($row_message['message_read'] == 0 ? '<span class="badge bg-secondary"><i class="fas fa-times"></i> ' . TRANSLATIONS[$GLOBALS['language']]['message']['text_unread'] . '</span>' : '<span class="badge bg-success"><i class="fas fa-check"></i> ' . TRANSLATIONS[$GLOBALS['language']]['message']['text_read'] . '</span>'); ?>
+                                                <a href="<?php echo HOST_URL; ?>/message/delete/<?php echo $row_message['message_id']; ?>"
+                                                   class="badge bg-danger"><i
+                                                            class="fas fa-trash-alt"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['message']['text_button_delete']; ?>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body text-center">
                                         <a href="<?php echo HOST_URL; ?>/message/<?php echo $row_message['message_id']; ?>"><?php echo $row_message['message_subject']; ?></a>
-                                    </td>
-                                    <td><span class="d-none"><?php echo $row_message['message_date']; ?></span> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_message['message_date']); ?></td>
-                                    <td><?php echo($row_message['message_read'] == 0 ? '<span class="badge bg-secondary"><i class="fas fa-times"></i> ' . TRANSLATIONS[$GLOBALS['language']]['message']['text_unread'] . '</span>' : '<span class="badge bg-success"><i class="fas fa-check"></i> ' . TRANSLATIONS[$GLOBALS['language']]['message']['text_read'] . '</span>'); ?></td>
-                                    <td>
-                                        <a href="<?php echo HOST_URL; ?>/message/delete/<?php echo $row_message['message_id']; ?>"
-                                           class="badge bg-danger"><i
-                                                class="fas fa-trash-alt"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['message']['text_button_delete']; ?>
-                                        </a></td>
-                                </tr>
-                                <?php
-                            }
-                            ?>
-                            </tbody>
-                        </table>
-                    </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                        </tbody>
+                    </table>
                     <?php
                 } else {
                     alert_box(TRANSLATIONS[$GLOBALS['language']]['message']['hint_no_message_yet'], 'danger');
