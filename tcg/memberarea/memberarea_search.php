@@ -84,7 +84,7 @@ if (isset($_SESSION['member_rank'])) {
         $result_search = mysqli_query($link, $sql_search);
         $count_search = mysqli_num_rows($result_search);
         ?>
-        <div class="row">
+        <div class="row mt-3">
             <div class="col col-12 text-center mb-2">
                 <?php echo get_card($carddeck_id, $card_number); ?>
             </div>
@@ -92,30 +92,32 @@ if (isset($_SESSION['member_rank'])) {
                 <?php
                 if ($count_search) {
                     ?>
-                    <table id="member-search-table" data-mobile-responsive="true">
-                        <thead>
-                        <tr>
-                            <th data-field="member" data-sortable="true">Member</th>
-                            <th data-field="lastactive" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastactive']; ?></th>
-                            <th data-field="online" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_status']; ?></th>
-                            <th data-field="text"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php
-                        while ($row_search = mysqli_fetch_assoc($result_search)) {
-                            ?>
+                    <div class="table-responsive">
+                        <table id="member-search-table" data-search="no">
+                            <thead>
                             <tr>
-                                <td><?php echo get_member_link($row_search['member_id'], '', true); ?></td>
-                                <td><span class="d-none"><?php echo $row_search['member_last_active']; ?></span> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_search['member_last_active']); ?></td>
-                                <td><?php echo get_online_status($row_search['member_id']); ?></td>
-                                <td><?php echo ($row_search['member_id'] != $_SESSION['member_id'] ? '<a href="'.HOST_URL.'/trade/'.$row_search['member_id'].'/'.$row_search['member_cards_id'].'">'.TRANSLATIONS[$GLOBALS['language']]['general']['text_start_trade'].'</a>' : '-'); ?></td>
+                                <th data-field="member" data-sortable="true">Member</th>
+                                <th data-field="lastactive" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_lastactive']; ?></th>
+                                <th data-field="online" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_status']; ?></th>
+                                <th data-field="text"></th>
                             </tr>
+                            </thead>
+                            <tbody>
                             <?php
-                        }
-                        ?>
-                        </tbody>
-                    </table>
+                            while ($row_search = mysqli_fetch_assoc($result_search)) {
+                                ?>
+                                <tr>
+                                    <td><?php echo get_member_link($row_search['member_id'], '', true); ?></td>
+                                    <td><span class="d-none"><?php echo $row_search['member_last_active']; ?></span> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_search['member_last_active']); ?></td>
+                                    <td><?php echo get_online_status($row_search['member_id']); ?></td>
+                                    <td><?php echo ($row_search['member_id'] != $_SESSION['member_id'] ? '<a href="'.HOST_URL.'/trade/'.$row_search['member_id'].'/'.$row_search['member_cards_id'].'">'.TRANSLATIONS[$GLOBALS['language']]['general']['text_start_trade'].'</a>' : '-'); ?></td>
+                                </tr>
+                                <?php
+                            }
+                            ?>
+                            </tbody>
+                        </table>
+                    </div>
                     <?php
                 } else {
                     alert_box(TRANSLATIONS[$GLOBALS['language']]['general']['hint_nobody_has_card_in_trade'], 'danger');

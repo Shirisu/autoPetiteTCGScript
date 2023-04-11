@@ -49,31 +49,33 @@ if (isset($_SESSION['member_rank'])) {
                     if ($count_wishlist) {
                         title_small($count_wishlist.' '.($count_wishlist == 1 ? TRANSLATIONS[$GLOBALS['language']]['general']['text_carddeck'] : TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks']).' '.TRANSLATIONS[$GLOBALS['language']]['member']['text_profile_on_wishlist']);
                         ?>
-                        <table data-mobile-responsive="true">
-                            <thead>
-                            <tr>
-                                <th data-field="name" data-sortable="true">Name (<?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_abbreviation']; ?>)</th>
-                                <th data-field="series" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_series']; ?></th>
-                                <th data-field="category" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_category']; ?></th>
-                                <th data-field="date" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['member']['text_profile_on_wishlist_since']; ?></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php
-                            while ($row_wishlist = mysqli_fetch_assoc($result_wishlist)) {
-                                $carddeck_name = $row_wishlist['carddeck_name'];
-                                ?>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
                                 <tr>
-                                    <td><a href="<?php echo HOST_URL; ?>/carddeck/<?php echo $row_wishlist['carddeck_name']; ?>"><?php echo $row_wishlist['carddeck_name']; ?></a></td>
-                                    <td><?php echo $row_wishlist['carddeck_series']; ?></td>
-                                    <td><?php echo $row_wishlist['carddeck_cat_name'].' <i class="fas fa-angle-right"></i>'; ?> <?php echo $row_wishlist['carddeck_sub_cat_name']; ?></td>
-                                    <td><span class="d-none"><?php echo $row_wishlist['member_wishlist_date']; ?></span> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_wishlist['member_wishlist_date']); ?></td>
+                                    <th data-field="name" data-sortable="true">Name (<?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_abbreviation']; ?>)</th>
+                                    <th data-field="series" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_series']; ?></th>
+                                    <th data-field="category" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_category']; ?></th>
+                                    <th data-field="date" data-sortable="true"><?php echo TRANSLATIONS[$GLOBALS['language']]['member']['text_profile_on_wishlist_since']; ?></th>
                                 </tr>
+                                </thead>
+                                <tbody>
                                 <?php
-                            }
-                            ?>
-                            </tbody>
-                        </table>
+                                while ($row_wishlist = mysqli_fetch_assoc($result_wishlist)) {
+                                    $carddeck_name = $row_wishlist['carddeck_name'];
+                                    ?>
+                                    <tr>
+                                        <td><a href="<?php echo HOST_URL; ?>/carddeck/<?php echo $row_wishlist['carddeck_name']; ?>"><?php echo $row_wishlist['carddeck_name']; ?></a></td>
+                                        <td><?php echo $row_wishlist['carddeck_series']; ?></td>
+                                        <td><?php echo $row_wishlist['carddeck_cat_name'].' <i class="fas fa-angle-right"></i>'; ?> <?php echo $row_wishlist['carddeck_sub_cat_name']; ?></td>
+                                        <td><span class="d-none"><?php echo $row_wishlist['member_wishlist_date']; ?></span> <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_date'], $row_wishlist['member_wishlist_date']); ?></td>
+                                    </tr>
+                                    <?php
+                                }
+                                ?>
+                                </tbody>
+                            </table>
+                        </div>
                         <?php
                     } else {
                         title_small('0 '.TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks'].' '.TRANSLATIONS[$GLOBALS['language']]['member']['text_profile_on_wishlist']);

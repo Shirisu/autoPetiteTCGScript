@@ -7,9 +7,6 @@ if (isset($_SESSION['member_rank'])) {
         '/member' => 'Member',
     );
 
-    breadcrumb($breadcrumb);
-    title('Member');
-
     $sql_member = "SELECT member_id, member_nick, member_last_login, member_last_active, member_register, member_level, member_cards, member_master, member_rank_name
                    FROM member
                    JOIN member_rank ON member_rank_id = member_rank
@@ -17,6 +14,8 @@ if (isset($_SESSION['member_rank'])) {
                    ORDER BY member_nick ASC";
     $result_member = mysqli_query($link, $sql_member) OR die(mysqli_error($link));
     $count_member = mysqli_num_rows($result_member);
+
+    title('Member ('.$count_member.')');
     ?>
     <div class="row">
         <div class="col">
@@ -24,7 +23,7 @@ if (isset($_SESSION['member_rank'])) {
             if ($count_member) {
                 ?>
                 <div class="table-responsive">
-                    <table id="member-table" data-mobile-responsive="true">
+                    <table id="member-table">
                         <thead>
                         <tr>
                             <th data-field="id" data-sortable="true">ID</th>

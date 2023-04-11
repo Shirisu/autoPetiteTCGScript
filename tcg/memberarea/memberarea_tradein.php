@@ -92,7 +92,10 @@ if (isset($_SESSION['member_rank'])) {
                                         <input type="hidden" name="tradein_card_id" value="<?php echo $row_duplicate_cards['member_cards_id']; ?>" />
                                         <input type="hidden" name="tradein_card_deck_name" value="<?php echo $carddeck_name; ?>" />
                                         <input type="hidden" name="tradein_card_number" value="<?php echo $cardnumber; ?>" />
-                                        <button type="submit" class="btn"><?php echo get_card($carddeck_id, $cardnumber_plain); ?></button>
+                                        <button type="submit" class="btn">
+                                            <?php echo get_card($carddeck_id, $cardnumber_plain); ?>
+                                            <span class="d-block"><?php echo $carddeck_name.$cardnumber; ?></span>
+                                        </button>
                                     </form>
                                 </div>
                             </td>
