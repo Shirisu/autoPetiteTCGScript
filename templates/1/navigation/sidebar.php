@@ -112,6 +112,12 @@ if (!isset($_SESSION['member_rank'])) {
         }
         navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_all'].' ('.$count_all_carddeck.')', 'carddecks/all', 'list-group-item list-group-item-action bg-light');
     }
+    $sql_unreleased_carddeck = "SELECT carddeck_id
+                                FROM carddeck
+                                WHERE carddeck_active = 0";
+    $result_unreleased_carddeck = mysqli_query($link, $sql_unreleased_carddeck) OR die(mysqli_error($link));
+    $count_unreleased_carddeck = mysqli_num_rows($result_unreleased_carddeck);
+    navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks_unreleased'].' ('.$count_unreleased_carddeck.')', 'carddecks/unreleased', 'list-group-item list-group-item-action bg-light', 'fas fa-folder-plus');
 
     navilink('Member', 'member', 'list-group-item list-group-item-action bg-light', 'fas fa-address-book');
 }

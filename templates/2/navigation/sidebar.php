@@ -154,6 +154,16 @@ if (!isset($_SESSION['member_rank'])) {
         }
         navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_all'].' ('.$count_all_carddeck.')', 'carddecks/all', 'nav-link');
     }
+    $sql_unreleased_carddeck = "SELECT carddeck_id
+                                    FROM carddeck
+                                    WHERE carddeck_active = 0";
+    $result_unreleased_carddeck = mysqli_query($link, $sql_unreleased_carddeck) OR die(mysqli_error($link));
+    $count_unreleased_carddeck = mysqli_num_rows($result_unreleased_carddeck);
+    ?>
+    <li>
+        <?php navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks_unreleased'].' ('.$count_unreleased_carddeck.')', 'carddecks/unreleased', 'nav-link', 'fas fa-folder-plus'); ?>
+    </li>
+    <?php
 }
 
 // show admin link
