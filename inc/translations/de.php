@@ -169,6 +169,7 @@ $translations['de'] = array(
         'text_blocked' => 'gesperrt',
         'text_carddeck' => 'Carddeck',
         'text_carddecks' => 'Carddecks',
+        'text_carddecks_unreleased' => 'Fertige Carddecks',
         'text_card' => 'Karte',
         'text_cards' => 'Karten',
         'text_cards_in_circulation' => 'Karten im Umlauf',
