@@ -819,13 +819,14 @@ function include_game_file($game_id) {
 function check_shop_update() {
     global $link;
 
-    $sql_shop = "SELECT shop_last_update
-                 FROM shop
+    $sql_shop = "SELECT table_last_update_date
+                 FROM table_last_update
+                 WHERE table_last_update_name = 'shop'
                  LIMIT 1";
     $result_shop = mysqli_query($link, $sql_shop) OR DIE(mysqli_error($link));
     if (mysqli_num_rows($result_shop)) {
         $row_shop = mysqli_fetch_assoc($result_shop);
-        $last_update = $row_shop['shop_last_update'];
+        $last_update = $row_shop['table_last_update_date'];
         $date_now = time();
         if ($last_update <= $date_now - (60 * 60 * 24)) {
             reset_shop();
@@ -842,6 +843,9 @@ function reset_shop() {
 
     mysqli_query($link, "TRUNCATE shop")
     OR DIE(mysqli_error($link));
+
+    mysqli_query($link, "DELETE FROM table_last_update WHERE table_last_update_name = 'shop' LIMIT 1")
+    OR DIE(mysqli_error($link));
 }
 function refill_shop($card_quantity) {
     global $link;
@@ -854,14 +858,23 @@ function refill_shop($card_quantity) {
                 LIMIT 1";
         $result = mysqli_query($link, $sql) OR die(mysqli_error($link));
         if (mysqli_num_rows($result)) {
+            mysqli_query($link,
+                "INSERT INTO table_last_update 
+                       (table_last_update_name) 
+                       VALUES 
+                       ('shop')
+                       ON DUPLICATE KEY UPDATE
+                       table_last_update_date = '".time()."'"
+            ) OR die(mysqli_error($link));
+
             while ($row = mysqli_fetch_assoc($result)) {
                 $cardnumber = mt_rand(1, TCG_CARDDECK_MAX_CARDS);
                 $price = mt_rand(TCG_SHOP_CURRENCY_FOR_CARD_RANGE_MIN, TCG_SHOP_CURRENCY_FOR_CARD_RANGE_MAX);
                 mysqli_query($link,
                     "INSERT INTO shop 
-                           (shop_carddeck_name, shop_carddeck_id, shop_card_number, shop_price, shop_last_update) 
+                           (shop_carddeck_name, shop_carddeck_id, shop_card_number, shop_price) 
                            VALUES 
-                           ('" . $row['carddeck_name'] . "','" . $row['carddeck_id'] . "','" . $cardnumber . "','" . $price . "','" . time() . "')"
+                           ('" . $row['carddeck_name'] . "','" . $row['carddeck_id'] . "','" . $cardnumber . "','" . $price . "')"
                 ) OR die(mysqli_error($link));
             }
         }
@@ -887,7 +900,7 @@ function buy_card($member_id, $shop_id) {
             mysqli_query($link, "UPDATE member SET member_currency = member_currency - '".$card_price."' WHERE member_id = '".$member_id."' LIMIT 1") OR die(mysqli_error($link));
             insert_specific_cards($member_id, $carddeck_id, $cardnumber_plain);
             $inserted_card_text = TRANSLATIONS[$GLOBALS['language']]['shop']['text_you_bought'] . ': ' . $carddeck_name . sprintf('%02d', $cardnumber) . '. ' . TRANSLATIONS[$GLOBALS['language']]['shop']['text_you_spent'] . ': ' . $card_price . ' '.TCG_CURRENCY;
-            echo $inserted_card_text;
+            alert_box($inserted_card_text, 'success');
             insert_log(TRANSLATIONS[$GLOBALS['language']]['member']['text_shop'], $inserted_card_text, $member_id);
             mysqli_query($link, "DELETE FROM shop WHERE shop_id = '".$shop_id."' LIMIT 1") OR die(mysqli_error($link));
             refill_shop(1);

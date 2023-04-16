@@ -35,7 +35,6 @@ if (isset($_SESSION['member_rank'])) {
         }
 
         if (isset($_POST['cardshop'])) {
-            echo $_POST['cardshop'];
             buy_card($_SESSION['member_id'], $_POST['cardshop']);
         }
 
@@ -177,14 +176,29 @@ if (isset($_SESSION['member_rank'])) {
                     <div class="col col-12 my-3">
                         <?php
                         $sql_shop = "SELECT shop_id, shop_carddeck_name, shop_carddeck_id, shop_card_number, shop_price
-                             FROM shop
-                             ORDER BY shop_id
-                             LIMIT ".TCG_SHOP_MAX_CARDS."";
+                                     FROM shop
+                                     ORDER BY shop_id
+                                     LIMIT ".TCG_SHOP_MAX_CARDS."";
                         $result_shop = mysqli_query($link, $sql_shop) OR die(mysqli_error($link));
                         if (mysqli_num_rows($result_shop)) {
+                            $sql_last_update = "SELECT table_last_update_date
+                                                FROM table_last_update
+                                                WHERE table_last_update_name = 'shop'
+                                                LIMIT 1";
+                            $result_last_update = mysqli_query($link, $sql_last_update) OR die(mysqli_error($link));
+                            if (mysqli_num_rows($result_last_update)) {
+                                $row_last_update = mysqli_fetch_assoc($result_last_update);
+                                ?>
+                                <div class="badge bg-secondary mb-2">
+                                    <?php echo TRANSLATIONS[$GLOBALS['language']]['shop']['text_last_refill']; ?>:
+                                    <?php echo date(TRANSLATIONS[$GLOBALS['language']]['general']['date_format_fulldatetime'], $row_last_update['table_last_update_date']); ?>
+                                </div>
+                                <?php
+                            }
                             ?>
                             <div class="row">
                                 <?php
+                                mysqli_data_seek($result_shop, 0);
                                 while($row_shop = mysqli_fetch_assoc($result_shop)) {
                                     $carddeck_id = $row_shop['shop_carddeck_id'];
                                     $carddeck_name = $row_shop['shop_carddeck_name'];
@@ -194,7 +208,7 @@ if (isset($_SESSION['member_rank'])) {
                                     $canbuy = $member_currency >= $card_price;
                                     ?>
                                     <div
-                                        class="col col-12 col-sm-6 col-md-3 mb-2 shop-card-wrapper">
+                                        class="col col-12 col-sm-6 col-md-3 mb-2 text-center">
                                         <form action="<?php echo HOST_URL; ?>/memberarea/shop" method="post">
                                             <div class="card">
                                                 <div class="card-img-top">

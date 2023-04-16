@@ -1,0 +1,1 @@
+ALTER TABLE `shop` DROP `shop_last_update`;
