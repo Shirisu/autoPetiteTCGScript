@@ -301,8 +301,14 @@ CREATE TABLE IF NOT EXISTS `shop` (
     `shop_carddeck_id` int(11) NOT NULL,
     `shop_card_number` int(11) NOT NULL,
     `shop_price` int(11) NOT NULL,
-    `shop_last_update` int(11) NOT NULL DEFAULT '0',
     PRIMARY KEY (`shop_id`),
     KEY `shop_carddeck_id` (`shop_carddeck_id`),
     CONSTRAINT `shop_ibfk_1` FOREIGN KEY (`shop_carddeck_id`) REFERENCES `carddeck` (`carddeck_id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `table_last_update` (
+    `table_last_update_name` varchar(255) NOT NULL,
+    `table_last_update_date` int(11) NOT NULL DEFAULT current_timestamp(),
+    UNIQUE KEY `table_last_update_name` (`table_last_update_name`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
