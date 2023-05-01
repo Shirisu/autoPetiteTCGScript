@@ -4,14 +4,12 @@ if (isset($_SESSION['member_rank'])) {
     $breadcrumb = array(
         '/' => 'Home',
         '/cards' => TRANSLATIONS[$GLOBALS['language']]['general']['text_cards'],
-        '/cards/new' => 'New',
+        '/cards/keep' => 'Keep',
     );
     breadcrumb($breadcrumb);
-    title('New');
+    title('Keep');
 
     $member_id = $_SESSION['member_id'];
-
-    member_level_up($member_id);
 
     if (isset($_POST['card_id']) && isset($_POST['card_category'])) {
         foreach ($_POST['card_id'] as $index => $card) {
@@ -75,7 +73,7 @@ if (isset($_SESSION['member_rank'])) {
     ?>
     <div class="row cards-sorting">
         <div class="col col-12 mb-3">
-            <?php get_cards_menu('new'); ?>
+            <?php get_cards_menu('keep'); ?>
         </div>
         <div class="col col-12 mb-3 cards-sorting-container">
             <?php
@@ -130,23 +128,23 @@ if (isset($_SESSION['member_rank'])) {
                           FROM member_cards mc
                           JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                           WHERE member_cards_member_id = '".$member_id."'
-                            AND member_cards_cat = '".MEMBER_CARDS_NEW."'
+                            AND member_cards_cat = '".MEMBER_CARDS_KEEP."'
                             AND member_cards_active = 1
                             AND carddeck_active = 1
                           ORDER BY carddeck_name, member_cards_number ASC";
             $result_cards = mysqli_query($link, $sql_cards) OR die(mysqli_error($link));
             $count_cards = mysqli_num_rows($result_cards);
             if ($count_cards) {
-                title_small($count_cards.' New '.($count_cards == 1 ? TRANSLATIONS[$GLOBALS['language']]['general']['text_card'] : TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']));
+                title_small($count_cards.' Keep '.($count_cards == 1 ? TRANSLATIONS[$GLOBALS['language']]['general']['text_card'] : TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']));
                 ?>
-                <form action="<?php echo HOST_URL; ?>/cards/new" method="post">
+                <form action="<?php echo HOST_URL; ?>/cards/keep" method="post">
                     <div class="row">
                         <div class="col col-12">
-                            <table class="optional cards-sorting-table new-cards" data-mobile-responsive="true">
+                            <table class="optional cards-sorting-table keep-cards" data-mobile-responsive="true">
                                 <thead>
                                 <tr>
                                     <th></th>
-                                    <th data-searchable="false"><?php echo title_small($count_cards.' New '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']); ?></th>
+                                    <th data-searchable="false"><?php echo title_small($count_cards.' Keep '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']); ?></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -210,13 +208,8 @@ if (isset($_SESSION['member_rank'])) {
                                             ($carddeck_on_wishlist == 1 AND $card_already_in_keep == 0 AND $carddeck_in_keep == 1)
                                         ) {
                                             $keep_selected = true;
-                                        } elseif (
-                                            $carddeck_in_trade == 1 AND $carddeck_in_keep == 0 AND $carddeck_in_collect == 0
-                                        ) {
-                                            $trade_selected = true;
-                                        }
-                                        if (!TCG_CATEGORY_KEEP_USE) {
-                                            $keep_selected = false;
+                                        } else {
+                                            $keep_selected = true;
                                         }
                                         ?>
                                         <tr>
@@ -235,19 +228,16 @@ if (isset($_SESSION['member_rank'])) {
                                                             <select class="form-select" id="card_category[]"
                                                                     name="card_category[]"
                                                                     aria-describedby="ariaDescribedbyLanguage" required>
-                                                                <option value="1" selected>New</option>
                                                                 <option
                                                                     value="3" <?php echo($trade_selected ? 'selected' : ''); ?>>
-                                                                Trade
+                                                                    Trade
                                                                 </option>
-                                                                <?php if (TCG_CATEGORY_KEEP_USE) { ?>
-                                                                    <option
-                                                                        value="4" <?php echo($keep_selected ? 'selected' : ''); ?>>
-                                                                    Keep
-                                                                    </option>
-                                                                <?php } ?>
-                                                                <?php if (!$hide_collect) { ?>
                                                                 <option
+                                                                    value="4" <?php echo($keep_selected ? 'selected' : ''); ?>>
+                                                                    Keep
+                                                                </option>
+                                                                <?php if ($hide_collect == false) { ?>
+                                                                    <option
                                                                     value="2" <?php echo($collect_selected ? 'selected' : ''); ?>>
                                                                         Collect</option><?php } ?>
                                                             </select>
@@ -272,7 +262,7 @@ if (isset($_SESSION['member_rank'])) {
                 </form>
                 <?php
             } else {
-                title_small('0 New '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']);
+                title_small('0 Keep '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']);
                 alert_box(TRANSLATIONS[$GLOBALS['language']]['member']['text_profile_no_cards_in_category'], 'danger');
             }
             ?>

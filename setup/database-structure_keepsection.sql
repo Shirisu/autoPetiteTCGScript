@@ -1,0 +1,1 @@
+ALTER TABLE `member_cards` CHANGE `member_cards_cat` `member_cards_cat` ENUM('1','2','3','4') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '1' COMMENT '1 = new, 2 = collect, 3 = trade, 4 = keep';

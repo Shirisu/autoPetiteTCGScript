@@ -382,7 +382,7 @@ Please go to the following link in your browser:',
     ),
     'trade' => array(
         'hint_card_dont_exists' => 'This card does not exist',
-        'hint_no_cards_to_trade' => 'You do not have a cards to trade',
+        'hint_no_cards_to_trade' => 'You do not have cards to trade',
         'hint_no_trade_yet' => 'No trade offers available yet',
         'hint_offer_error' => 'Trade offer could not be sent - please try again',
         'hint_offer_sent' => 'Trade offer successfully sent',

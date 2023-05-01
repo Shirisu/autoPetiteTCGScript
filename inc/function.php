@@ -298,7 +298,7 @@ function get_card($carddeck_id = 0, $card_number = 0, $show_only_url = false, $s
         } else {
             $filename = get_card($carddeck_id, $card_number, true, $show_inactive);
             if (file_exists('.' . substr($filename, strlen(HOST_URL)))) {
-                return '<img src="'.HOST_URL.TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$card_number.'.'.TCG_CARDS_FILE_TYPE.'" alt="'.$carddeck_name.$card_number.'" />';
+                return '<img class="card-wrapper" src="'.HOST_URL.TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$card_number.'.'.TCG_CARDS_FILE_TYPE.'" alt="'.$carddeck_name.$card_number.'" />';
             } else {
                 return '<img class="card-wrapper" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="'.$carddeck_name.$card_number.'" />';
             }
@@ -782,6 +782,11 @@ function get_member_menu($member_id, $active_menu) {
         <div class="d-grid col col-6 col-md-2 mb-2">
             <a href="<?php echo HOST_URL; ?>/member/<?php echo $member_id; ?>/trade" class="btn btn-outline-info btn-sm<?php echo $active_menu == 'trade' ? ' active' : ''; ?>"><i class="fas fa-exchange-alt"></i> Trade</a>
         </div>
+        <?php if (TCG_CATEGORY_KEEP_USE) { ?>
+            <div class="d-grid col col-6 col-md-2 mb-2">
+                <a href="<?php echo HOST_URL; ?>/member/<?php echo $member_id; ?>/keep" class="btn btn-outline-info btn-sm<?php echo $active_menu == 'keep' ? ' active' : ''; ?>"><i class="fas fa-lock"></i> Keep</a>
+            </div>
+        <?php } ?>
         <div class="d-grid col col-6 col-md-2 mb-2">
             <a href="<?php echo HOST_URL; ?>/member/<?php echo $member_id; ?>/collect" class="btn btn-outline-info btn-sm<?php echo $active_menu == 'collect' ? ' active' : ''; ?>"><i class="fas fa-heart"></i> Collect</a>
         </div>
@@ -790,6 +795,30 @@ function get_member_menu($member_id, $active_menu) {
         </div>
         <div class="d-grid col col-6 col-md-2 mb-2">
             <a href="<?php echo HOST_URL; ?>/member/<?php echo $member_id; ?>/wishlist" class="btn btn-outline-info btn-sm<?php echo $active_menu == 'wishlist' ? ' active' : ''; ?>"><i class="fas fa-star"></i> <?php echo TRANSLATIONS[$GLOBALS['language']]['general']['text_wishlist']; ?></a>
+        </div>
+    </div>
+<?php
+}
+
+function get_cards_menu($active_menu) {
+?>
+    <div class="row justify-content-center">
+        <div class="d-grid col col-6 col-md-2 mb-2">
+            <a href="<?php echo HOST_URL; ?>/cards/new" class="btn btn-outline-info btn-sm<?php echo $active_menu == 'new' ? ' active' : ''; ?>"><i class="fas fa-user"></i> New</a>
+        </div>
+        <div class="d-grid col col-6 col-md-2 mb-2">
+            <a href="<?php echo HOST_URL; ?>/cards/trade" class="btn btn-outline-info btn-sm<?php echo $active_menu == 'trade' ? ' active' : ''; ?>"><i class="fas fa-exchange-alt"></i> Trade</a>
+        </div>
+        <?php if (TCG_CATEGORY_KEEP_USE) { ?>
+        <div class="d-grid col col-6 col-md-2 mb-2">
+            <a href="<?php echo HOST_URL; ?>/cards/keep" class="btn btn-outline-info btn-sm<?php echo $active_menu == 'keep' ? ' active' : ''; ?>"><i class="fas fa-lock"></i> Keep</a>
+        </div>
+        <?php } ?>
+        <div class="d-grid col col-6 col-md-2 mb-2">
+            <a href="<?php echo HOST_URL; ?>/cards/collect" class="btn btn-outline-info btn-sm<?php echo $active_menu == 'collect' ? ' active' : ''; ?>"><i class="fas fa-heart"></i> Collect</a>
+        </div>
+        <div class="d-grid col col-6 col-md-2 mb-2">
+            <a href="<?php echo HOST_URL; ?>/cards/master" class="btn btn-outline-info btn-sm<?php echo $active_menu == 'master' ? ' active' : ''; ?>"><i class="fas fa-award"></i> Master</a>
         </div>
     </div>
 <?php

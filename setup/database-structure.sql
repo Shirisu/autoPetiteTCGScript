@@ -162,7 +162,7 @@ CREATE TABLE IF NOT EXISTS `member_cards` (
     `member_cards_carddeck_id` int(11) NOT NULL,
     `member_cards_number` int(11) NOT NULL,
     `member_cards_member_id` int(11) NOT NULL,
-    `member_cards_cat` enum('1','2','3') COLLATE utf8_unicode_ci NOT NULL DEFAULT '1' COMMENT '1 = new, 2 = collect, 3 = trade',
+    `member_cards_cat` enum('1','2','3','4') COLLATE utf8_unicode_ci NOT NULL DEFAULT '1' COMMENT '1 = new, 2 = collect, 3 = trade, 4 = keep',
     `member_cards_active` int(1) NOT NULL DEFAULT '1',
     PRIMARY KEY (`member_cards_id`),
     KEY `member_cards_number` (`member_cards_number`),

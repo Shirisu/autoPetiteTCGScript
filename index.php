@@ -211,6 +211,8 @@ Route::add("/member",function() {
 Route::add("/member/([0-9+].*)/([a-z+].*)",function($member_id, $category) {
     if ($category == 'trade') {
         require_once("tcg/member/member_page_trade.php");
+    } elseif ($category == 'keep') {
+        require_once("tcg/member/member_page_keep.php");
     } elseif ($category == 'collect') {
         require_once("tcg/member/member_page_collect.php");
     } elseif ($category == 'master') {
@@ -262,6 +264,8 @@ Route::add("/cards/([a-z+].*)",function($category) {
         require_once("tcg/cards/cards_new.php");
     } elseif ($category == 'trade') {
         require_once("tcg/cards/cards_trade.php");
+    } elseif ($category == 'keep') {
+        require_once("tcg/cards/cards_keep.php");
     } elseif ($category == 'collect') {
         require_once("tcg/cards/cards_collect.php");
     } elseif ($category == 'master') {
@@ -275,6 +279,8 @@ Route::add("/cards/([a-z+].*)",function($category) {
         require_once("tcg/cards/cards_new.php");
     } elseif ($category == 'trade') {
         require_once("tcg/cards/cards_trade.php");
+    } elseif ($category == 'keep') {
+        require_once("tcg/cards/cards_keep.php");
     } elseif ($category == 'collect') {
         require_once("tcg/cards/cards_collect.php");
     } elseif ($category == 'master') {

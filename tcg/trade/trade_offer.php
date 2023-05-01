@@ -170,7 +170,7 @@ if (isset($_SESSION['member_rank'])) {
                             <div class="row">
                                 <div class="col col-12">
                                     <div class="fw-bold my-2">
-                                        <?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_missing_cards']; ?>
+                                        <?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_missing_cards']; ?> (Collect<?php echo TCG_CATEGORY_KEEP_USE ? ' &amp; Keep' : ''; ?>)
                                     </div>
 
                                     <div id="collapseMissingCards" class="collapse show" aria-labelledby="headingMissingCards">
@@ -181,7 +181,8 @@ if (isset($_SESSION['member_rank'])) {
                                                   FROM member_cards
                                                   JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                                                   WHERE member_cards_member_id = '".$trade_member_id."'
-                                                    AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
+                                                    AND (member_cards_cat = '".MEMBER_CARDS_COLLECT."'
+                                                      OR member_cards_cat = '".MEMBER_CARDS_KEEP."')
                                                     AND member_cards_active = 1
                                                   GROUP BY member_cards_carddeck_id
                                                   ORDER BY carddeck_name ASC";
@@ -194,7 +195,8 @@ if (isset($_SESSION['member_rank'])) {
                                                                 FROM member_cards
                                                                 WHERE member_cards_member_id = '".$trade_member_id."'
                                                                   AND member_cards_carddeck_id = '".$row_cards['member_cards_carddeck_id']."'
-                                                                  AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
+                                                                  AND (member_cards_cat = '".MEMBER_CARDS_COLLECT."'
+                                                                    OR member_cards_cat = '".MEMBER_CARDS_KEEP."')
                                                                   AND member_cards_active = 1
                                                                 GROUP BY member_cards_number
                                                                 ORDER BY member_cards_number ASC";

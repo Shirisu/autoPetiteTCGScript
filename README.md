@@ -87,7 +87,7 @@ Current version: 3.1.0
     - functionality for add/remove wishlist
   - show cards and details
   - add to wishlist
-  - show collector, trader, master
+  - show collector, trader, keeper, master
 - member overview
 - member profile
   - show profile
@@ -110,7 +110,7 @@ Current version: 3.1.0
     - get new cards
   - trade in
 - managing of cards
-  - sort in categories (trade, collect)
+  - sort in categories (trade, keep, collect)
   - master full carddecks
     - multiple mastering
 - message system
