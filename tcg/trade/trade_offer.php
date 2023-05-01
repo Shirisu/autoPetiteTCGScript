@@ -250,7 +250,7 @@ if (isset($_SESSION['member_rank'])) {
                                     <div id="collapseMissingCards" class="collapse show" aria-labelledby="headingMissingCards">
                                         <div class="card-body">
                                             <?php
-                                            $collect_carddecks = array();
+                                            $missing_carddecks = array();
                                             $sql_cards = "SELECT member_cards_carddeck_id, carddeck_name, carddeck_is_puzzle
                                                   FROM member_cards
                                                   JOIN carddeck ON carddeck_id = member_cards_carddeck_id
@@ -279,7 +279,7 @@ if (isset($_SESSION['member_rank'])) {
                                                     if ($count_card_number) {
                                                         while ($row_card_number = mysqli_fetch_assoc($result_card_number)) {
                                                             array_push($cardnumbers, $row_card_number['member_cards_number']);
-                                                            $collect_carddecks[$row_cards['carddeck_name']] = $cardnumbers;
+                                                            $missing_carddecks[$row_cards['carddeck_name']] = $cardnumbers;
                                                         }
                                                     }
                                                 }
@@ -295,7 +295,7 @@ if (isset($_SESSION['member_rank'])) {
                                                 </thead>
                                                 <tbody>
                                                 <?php
-                                                foreach ($collect_carddecks as $carddeck_name => $card_number) {
+                                                foreach ($missing_carddecks as $carddeck_name => $card_number) {
                                                     ?>
                                                     <tr>
                                                         <td><small><?php echo $carddeck_name; ?></small></td>
