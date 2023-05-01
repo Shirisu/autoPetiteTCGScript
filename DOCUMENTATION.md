@@ -45,6 +45,8 @@ You can define some settings in the [constants.php](https://github.com/Shirisu/a
   - card amount of a card deck
   - accepted values: from `1` to whatever you like
   - all card decks have the same amount of cards
+- **TCG_CATEGORY_KEEP_USE** - default `true`
+  - should it be possible to use the keep category
 - **TCG_CURRENCY** - default: `'Dollar'`
   - currency name
   - accepted values: whatever you like

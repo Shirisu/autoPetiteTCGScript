@@ -75,20 +75,7 @@ if (isset($_SESSION['member_rank'])) {
     ?>
     <div class="row cards-sorting">
         <div class="col col-12 mb-3">
-            <div class="row">
-                <div class="d-grid col col-6 col-md-3 mb-2">
-                    <a href="<?php echo HOST_URL; ?>/cards/new" class="btn btn-outline-info btn-sm active"><i class="fas fa-fire"></i> New</a>
-                </div>
-                <div class="d-grid col col-6 col-md-3 mb-2">
-                    <a href="<?php echo HOST_URL; ?>/cards/trade" class="btn btn-outline-info btn-sm"><i class="fas fa-exchange-alt"></i> Trade</a>
-                </div>
-                <div class="d-grid col col-6 col-md-3 mb-2">
-                    <a href="<?php echo HOST_URL; ?>/cards/collect" class="btn btn-outline-info btn-sm"><i class="fas fa-heart"></i> Collect</a>
-                </div>
-                <div class="d-grid col col-6 col-md-3 mb-2">
-                    <a href="<?php echo HOST_URL; ?>/cards/master" class="btn btn-outline-info btn-sm"><i class="fas fa-award"></i> Master</a>
-                </div>
-            </div>
+            <?php get_cards_menu('new'); ?>
         </div>
         <div class="col col-12 mb-3 cards-sorting-container">
             <?php
@@ -108,6 +95,28 @@ if (isset($_SESSION['member_rank'])) {
                                 AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
                                 AND member_cards_active = 1
                               GROUP BY member_cards_carddeck_id, member_cards_number) as card_already_in_collect,
+                             EXISTS (SELECT member_cards_id
+                              FROM member_cards
+                              WHERE member_cards_member_id = '".$member_id."'
+                                AND mc.member_cards_carddeck_id = member_cards_carddeck_id
+                                AND member_cards_cat = '".MEMBER_CARDS_KEEP."'
+                                AND member_cards_active = 1
+                              GROUP BY member_cards_carddeck_id) as carddeck_in_keep,
+                             EXISTS (SELECT member_cards_id
+                              FROM member_cards
+                              WHERE member_cards_member_id = '".$member_id."'
+                                AND mc.member_cards_carddeck_id = member_cards_carddeck_id
+                                AND mc.member_cards_number = member_cards_number
+                                AND member_cards_cat = '".MEMBER_CARDS_KEEP."'
+                                AND member_cards_active = 1
+                              GROUP BY member_cards_carddeck_id, member_cards_number) as card_already_in_keep,
+                             EXISTS (SELECT member_cards_id
+                              FROM member_cards
+                              WHERE member_cards_member_id = '".$member_id."'
+                                AND mc.member_cards_carddeck_id = member_cards_carddeck_id
+                                AND member_cards_cat = '".MEMBER_CARDS_TRADE."'
+                                AND member_cards_active = 1
+                              GROUP BY member_cards_carddeck_id) as carddeck_in_trade,
                              EXISTS (SELECT member_wishlist_member_id
                               FROM member_wishlist
                               WHERE member_wishlist_member_id = '".$member_id."'
@@ -164,28 +173,49 @@ if (isset($_SESSION['member_rank'])) {
                                         $cardnumber = sprintf("%'.02d", $cardnumber_plain);
                                         $carddeck_in_collect = $row_cards['carddeck_in_collect'];
                                         $card_already_in_collect = $row_cards['card_already_in_collect'];
+                                        $carddeck_in_keep = $row_cards['carddeck_in_keep'];
+                                        $card_already_in_keep = $row_cards['card_already_in_keep'];
+                                        $carddeck_in_trade = $row_cards['carddeck_in_trade'];
                                         $carddeck_on_wishlist = $row_cards['carddeck_on_wishlist'];
                                         $carddeck_already_mastered = $row_cards['carddeck_already_mastered'];
 
-                                        if ($carddeck_already_mastered == 1 && TCG_MULTI_MASTER == false) {
-                                            $trade_selected = true;
-                                            $collect_selected = false;
-                                            $hide_collect = true;
-                                        } elseif ($carddeck_in_collect == 1 && $card_already_in_collect == 1) {
-                                            $trade_selected = true;
-                                            $collect_selected = false;
-                                            $hide_collect = true;
-                                        } elseif (
-                                            ($carddeck_in_collect == 1 && $card_already_in_collect == 0) ||
-                                            ($carddeck_on_wishlist == 1 && $carddeck_in_collect == 0)
+                                        $trade_selected = false;
+                                        $keep_selected = false;
+                                        $collect_selected = false;
+                                        $hide_collect = false;
+
+                                        // set hide collect
+                                        if (
+                                            ($carddeck_already_mastered == 1 && !TCG_MULTI_MASTER) ||
+                                            ($card_already_in_collect == 1)
                                         ) {
-                                            $trade_selected = false;
+                                            $hide_collect = true;
+                                        }
+
+                                        // set selected category
+                                        if (
+                                            $carddeck_already_mastered == 1 && !TCG_MULTI_MASTER
+                                        ) {
+                                            $trade_selected = true;
+                                        } elseif (
+                                            $card_already_in_collect == 0 AND $carddeck_in_collect == 1
+                                        ) {
                                             $collect_selected = true;
-                                            $hide_collect = false;
-                                        } else {
-                                            $trade_selected = false;
-                                            $collect_selected = false;
-                                            $hide_collect = false;
+                                        } elseif (
+                                            $card_already_in_keep == 0 AND $carddeck_in_keep == 1
+                                        ) {
+                                            $keep_selected = true;
+                                        } elseif (
+                                            $carddeck_on_wishlist == 1 AND $card_already_in_keep == 0 AND $carddeck_in_keep == 1
+                                        ) {
+                                            $keep_selected = true;
+                                        } elseif (
+                                            $carddeck_in_trade == 1 AND $carddeck_in_keep == 0 AND $carddeck_in_collect == 0
+                                        ) {
+                                            $trade_selected = true;
+                                        }
+                                        if (!TCG_CATEGORY_KEEP_USE) {
+                                            $keep_selected = false;
                                         }
                                         ?>
                                         <tr>
@@ -208,9 +238,15 @@ if (isset($_SESSION['member_rank'])) {
                                                                 <option
                                                                     value="3" <?php echo($trade_selected ? 'selected' : ''); ?>>
                                                                 Trade
-                                                            </option>
-                                                            <?php if ($hide_collect == false) { ?>
-                                                            <option
+                                                                </option>
+                                                                <?php if (TCG_CATEGORY_KEEP_USE) { ?>
+                                                                    <option
+                                                                        value="4" <?php echo($keep_selected ? 'selected' : ''); ?>>
+                                                                    Keep
+                                                                    </option>
+                                                                <?php } ?>
+                                                                <?php if (!$hide_collect) { ?>
+                                                                <option
                                                                     value="2" <?php echo($collect_selected ? 'selected' : ''); ?>>
                                                                         Collect</option><?php } ?>
                                                             </select>

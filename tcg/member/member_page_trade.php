@@ -70,6 +70,21 @@ if (isset($_SESSION['member_rank'])) {
                                             AND member_cards_cat = '" . MEMBER_CARDS_COLLECT . "'
                                             AND member_cards_active = 1
                                           GROUP BY member_cards_carddeck_id, member_cards_number) as card_already_in_collect,
+                                         EXISTS (SELECT member_cards_id
+                                          FROM member_cards
+                                          WHERE member_cards_member_id = '" . $_SESSION['member_id'] . "'
+                                            AND mc.member_cards_carddeck_id = member_cards_carddeck_id
+                                            AND member_cards_cat = '" . MEMBER_CARDS_KEEP . "'
+                                            AND member_cards_active = 1
+                                          GROUP BY member_cards_carddeck_id) as carddeck_in_keep,
+                                         EXISTS (SELECT member_cards_id
+                                          FROM member_cards
+                                          WHERE member_cards_member_id = '" . $_SESSION['member_id'] . "'
+                                            AND mc.member_cards_carddeck_id = member_cards_carddeck_id
+                                            AND mc.member_cards_number = member_cards_number
+                                            AND member_cards_cat = '" . MEMBER_CARDS_KEEP . "'
+                                            AND member_cards_active = 1
+                                          GROUP BY member_cards_carddeck_id, member_cards_number) as card_already_in_keep,
                                          EXISTS (SELECT member_wishlist_member_id
                                           FROM member_wishlist
                                           WHERE member_wishlist_member_id = '" . $_SESSION['member_id'] . "'
@@ -197,6 +212,8 @@ if (isset($_SESSION['member_rank'])) {
                                     if ($member_id != $_SESSION['member_id'] && TCG_SHOW_TRADE_FILTER == true) {
                                         $carddeck_in_collect = $row_cards['carddeck_in_collect'];
                                         $card_already_in_collect = $row_cards['card_already_in_collect'];
+                                        $carddeck_in_keep = $row_cards['carddeck_in_keep'];
+                                        $card_already_in_keep = $row_cards['card_already_in_keep'];
                                         $carddeck_on_wishlist = $row_cards['carddeck_on_wishlist'];
                                         $carddeck_already_mastered = $row_cards['carddeck_already_mastered'];
 
@@ -208,6 +225,10 @@ if (isset($_SESSION['member_rank'])) {
                                             ($carddeck_in_collect == 1 && $card_already_in_collect == 0)
                                         ) {
                                             $filterclass = ' needed collect';
+                                        } elseif (
+                                            ($carddeck_in_keep == 1 && $card_already_in_keep == 0)
+                                        ) {
+                                            $filterclass = ' needed keep';
                                         } elseif (
                                             ($carddeck_on_wishlist == 1 && $carddeck_in_collect == 0)
                                         ) {

@@ -298,10 +298,15 @@ table.carddeck td {
     background-color: rgba(248, 249, 250, 0.8);
     border: 1px solid #4e555b;
     border-radius: 50%;
+    z-index: 10;
 }
 .profile-cards-wrapper.needed.collect::before,
 .card-wrapper.needed.collect::before {
     content: '\f004';
+}
+.profile-cards-wrapper.needed.keep::before,
+.card-wrapper.needed.keep::before {
+    content: '\f023';
 }
 .profile-cards-wrapper.needed.wishlist::before,
 .card-wrapper.needed.wishlist::before {

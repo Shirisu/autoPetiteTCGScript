@@ -91,6 +91,22 @@ $(document).ready(function() {
     }
     initTradeCards();
 
+    function initKeepCards() {
+        $('table.profile-cards.keep-cards').bootstrapTable('destroy').bootstrapTable({
+            classes: 'table table-borderless',
+            pagination: true,
+            paginationParts: ['pageList'],
+            formatShowingRows: function(pageFrom, pageTo, totalRows) {
+                return showingRowsText(pageFrom, pageTo, totalRows);
+            },
+            search: true,
+            searchAccentNeutralise: true,
+            pageSize: 60,
+            showHeader: false
+        });
+    }
+    initKeepCards();
+
     $('#filterTradeCards').on('click', function () {
         var $table = $('table.profile-cards.trade-cards');
         var data = $table.bootstrapTable('getData');

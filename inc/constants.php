@@ -11,6 +11,7 @@ define('HOST_URL', '//'.HOST_URL_PLAIN); // DO NOT EDIT THIS LINE
 define('MEMBER_CARDS_NEW', '1'); // DO NOT EDIT THIS LINE
 define('MEMBER_CARDS_COLLECT', '2'); // DO NOT EDIT THIS LINE
 define('MEMBER_CARDS_TRADE', '3'); // DO NOT EDIT THIS LINE
+define('MEMBER_CARDS_KEEP', '4'); // DO NOT EDIT THIS LINE
 define('MYSQL_VERSION', mysqli_get_client_info()); // DO NOT EDIT THIS LINE
 define('TCG_CARDS_FOLDER', '/assets/cards'); // DO NOT EDIT THIS LINE
 
@@ -23,12 +24,13 @@ define('TCG_DEFAULT_TIMEZONE', 'Europe/Berlin'); // default timezone - use strin
 define('TCG_TEMPLATE', 1); // which template you want to use (1 is the main template)
 
 define('TCG_CARDS_FILE_TYPE', 'png'); // file type for cards (allowed types: gif, jpg, png - use only one!)
-define('TCG_CARDS_FILLER_NAME', 'filler'); // name of the filler/search card - should be placed in the the folder "/assets/cards/"
+define('TCG_CARDS_FILLER_NAME', 'filler'); // name of the filler/search card - should be placed in the folder "/assets/cards/"
 define('TCG_CARDS_HEIGHT', 100); // height of card
 define('TCG_CARDS_UPLOAD_REQUIRED', true); // is cardupload required on add card deck page? (yes = true - no = false)
 define('TCG_CARDS_PER_ROW', 4); // how many cards are in one row
 define('TCG_CARDS_START_PACKAGE', 12); // cards of start package
 define('TCG_CARDS_WIDTH', 100); // width of card
+define('TCG_CATEGORY_KEEP_USE', true); // should it be possible to use the keep category? (yes = true - no = false)
 define('TCG_CARDDECK_MAX_CARDS', 12); // max cards of carddecks
 define('TCG_CURRENCY', 'Dollar'); // currency name
 define('TCG_CURRENCY_USE', true); // will you use the currency? (yes = true - no = false)
