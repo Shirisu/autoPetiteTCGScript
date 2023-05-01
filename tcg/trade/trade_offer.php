@@ -170,7 +170,7 @@ if (isset($_SESSION['member_rank'])) {
                             <div class="row">
                                 <div class="col col-12">
                                     <div class="fw-bold my-2">
-                                        <?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_missing_cards']; ?>
+                                        <?php echo TRANSLATIONS[$GLOBALS['language']]['trade']['text_missing_cards']; ?> (Collect<?php echo TCG_CATEGORY_KEEP_USE ? ' &amp; Keep' : ''; ?>)
                                     </div>
 
                                     <div id="collapseMissingCards" class="collapse show" aria-labelledby="headingMissingCards">
