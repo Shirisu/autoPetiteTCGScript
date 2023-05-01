@@ -206,7 +206,8 @@ if (isset($_SESSION['member_rank'])) {
                                         ) {
                                             $keep_selected = true;
                                         } elseif (
-                                            $carddeck_on_wishlist == 1 AND $card_already_in_keep == 0 AND $carddeck_in_keep == 1
+                                            ($carddeck_on_wishlist == 1 AND $card_already_in_keep == 0 AND $carddeck_in_keep == 0) OR
+                                            ($carddeck_on_wishlist == 1 AND $card_already_in_keep == 0 AND $carddeck_in_keep == 1)
                                         ) {
                                             $keep_selected = true;
                                         } elseif (
