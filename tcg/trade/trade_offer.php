@@ -98,8 +98,48 @@ if (isset($_SESSION['member_rank'])) {
                 title(TRANSLATIONS[$GLOBALS['language']]['trade']['text_create_offer']);
 
                 $sql_own_cards = "SELECT MIN(member_cards_id) as member_cards_id, member_cards_carddeck_id, carddeck_name, member_cards_number,
-                                      COUNT(*) AS card_count
-                           FROM member_cards
+                                      COUNT(*) AS card_count,
+                                     EXISTS (SELECT member_cards_id
+                                      FROM member_cards
+                                      WHERE member_cards_member_id = '" . $trade_member_id . "'
+                                        AND mc.member_cards_carddeck_id = member_cards_carddeck_id
+                                        AND member_cards_cat = '" . MEMBER_CARDS_COLLECT . "'
+                                        AND member_cards_active = 1
+                                      GROUP BY member_cards_carddeck_id) as carddeck_in_collect,
+                                     EXISTS (SELECT member_cards_id
+                                      FROM member_cards
+                                      WHERE member_cards_member_id = '" . $trade_member_id . "'
+                                        AND mc.member_cards_carddeck_id = member_cards_carddeck_id
+                                        AND mc.member_cards_number = member_cards_number
+                                        AND member_cards_cat = '" . MEMBER_CARDS_COLLECT . "'
+                                        AND member_cards_active = 1
+                                      GROUP BY member_cards_carddeck_id, member_cards_number) as card_already_in_collect,
+                                     EXISTS (SELECT member_cards_id
+                                      FROM member_cards
+                                      WHERE member_cards_member_id = '" . $trade_member_id . "'
+                                        AND mc.member_cards_carddeck_id = member_cards_carddeck_id
+                                        AND member_cards_cat = '" . MEMBER_CARDS_KEEP . "'
+                                        AND member_cards_active = 1
+                                      GROUP BY member_cards_carddeck_id) as carddeck_in_keep,
+                                     EXISTS (SELECT member_cards_id
+                                      FROM member_cards
+                                      WHERE member_cards_member_id = '" . $trade_member_id . "'
+                                        AND mc.member_cards_carddeck_id = member_cards_carddeck_id
+                                        AND mc.member_cards_number = member_cards_number
+                                        AND member_cards_cat = '" . MEMBER_CARDS_KEEP . "'
+                                        AND member_cards_active = 1
+                                      GROUP BY member_cards_carddeck_id, member_cards_number) as card_already_in_keep,
+                                     EXISTS (SELECT member_wishlist_member_id
+                                      FROM member_wishlist
+                                      WHERE member_wishlist_member_id = '" . $trade_member_id . "'
+                                        AND mc.member_cards_carddeck_id = member_wishlist_carddeck_id
+                                      GROUP BY member_wishlist_carddeck_id) as carddeck_on_wishlist,
+                                     EXISTS (SELECT member_master_id
+                                      FROM member_master
+                                      WHERE member_master_member_id = '" . $trade_member_id . "'
+                                        AND mc.member_cards_carddeck_id = member_master_carddeck_id
+                                      GROUP BY member_master_carddeck_id) as carddeck_already_mastered
+                           FROM member_cards mc
                            JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                            WHERE member_cards_member_id = '" . $member_id . "'
                              AND member_cards_cat = '".MEMBER_CARDS_TRADE."'
@@ -150,9 +190,43 @@ if (isset($_SESSION['member_rank'])) {
                                                     $own_carddeck_name = $row_own_cards['carddeck_name'];
                                                     $own_card_number_plain = $row_own_cards['member_cards_number'];
                                                     $own_card_number = sprintf("%'.02d", $own_card_number_plain);
+
+                                                    $carddeck_in_collect = $row_own_cards['carddeck_in_collect'];
+                                                    $card_already_in_collect = $row_own_cards['card_already_in_collect'];
+                                                    $carddeck_in_keep = $row_own_cards['carddeck_in_keep'];
+                                                    $card_already_in_keep = $row_own_cards['card_already_in_keep'];
+                                                    $carddeck_on_wishlist = $row_own_cards['carddeck_on_wishlist'];
+                                                    $carddeck_already_mastered = $row_own_cards['carddeck_already_mastered'];
+
+                                                    $card_needed_text = '';
+                                                    $card_needed_icon = '';
+                                                    if ($carddeck_already_mastered == 1 && !TCG_MULTI_MASTER) {
+                                                        $card_needed_text = '('.TRANSLATIONS[$GLOBALS['language']]['general']['text_mastered'].')';
+                                                        $card_needed_icon = 'fa fa-award';
+                                                    } elseif (
+                                                        ($carddeck_in_collect == 1 && $card_already_in_collect == 0)
+                                                    ) {
+                                                        $card_needed_text = '(collect)';
+                                                        $card_needed_icon = 'fa fa-heart';
+                                                    } elseif (
+                                                        ($carddeck_in_keep == 1 && $card_already_in_keep == 0)
+                                                    ) {
+                                                        $card_needed_text = '(keep)';
+                                                        $card_needed_icon = 'fa fa-lock';
+                                                    } elseif (
+                                                        ($carddeck_on_wishlist == 1 && $carddeck_in_collect == 0)
+                                                    ) {
+                                                        $card_needed_text = '(wishlist)';
+                                                        $card_needed_icon = 'fa fa-star';
+                                                    }
                                                     ?>
                                                     <option
-                                                        value="<?php echo $row_own_cards['member_cards_id']; ?>;;<?php echo $own_carddeck_name; ?>;;<?php echo $own_card_number; ?>"><?php echo $own_carddeck_name.$own_card_number.$card_count; ?></option>
+                                                        data-icon="<?php echo $card_needed_icon; ?>"
+                                                        value="<?php echo $row_own_cards['member_cards_id']; ?>;;<?php echo $own_carddeck_name; ?>;;<?php echo $own_card_number; ?>"
+                                                        data-subtext="<?php echo $card_needed_text; ?>"
+                                                    >
+                                                        <?php echo $own_carddeck_name.$own_card_number.$card_count; ?>
+                                                    </option>
                                                     <?php
                                                 }
                                                 ?>
