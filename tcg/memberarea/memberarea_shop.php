@@ -237,7 +237,7 @@ if (isset($_SESSION['member_rank'])) {
                                 ?>
                             </div>
                             <div class="row">
-                                <div class="col col-12 mb-2 text-center">
+                                <div class="col col-12 my-4 text-center">
                                     <?php get_card_highlight_legend(); ?>
                                 </div>
                             </div>
