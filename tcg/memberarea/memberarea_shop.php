@@ -173,7 +173,7 @@ if (isset($_SESSION['member_rank'])) {
                 }
 
                 if (TCG_CURRENCY_USE == true) { ?>
-                    <div class="col col-12 my-3">
+                    <div class="col col-12 my-3 shop">
                         <?php
                         $sql_shop = "SELECT shop_id, shop_carddeck_name, shop_carddeck_id, shop_card_number, shop_price
                                      FROM shop
@@ -196,7 +196,7 @@ if (isset($_SESSION['member_rank'])) {
                                 <?php
                             }
                             ?>
-                            <div class="row">
+                            <div class="row shop">
                                 <?php
                                 mysqli_data_seek($result_shop, 0);
                                 while($row_shop = mysqli_fetch_assoc($result_shop)) {
@@ -206,13 +206,16 @@ if (isset($_SESSION['member_rank'])) {
                                     $cardnumber = sprintf("%'.02d", $cardnumber_plain);
                                     $card_price = $row_shop['shop_price'];
                                     $canbuy = $member_currency >= $card_price;
+                                    $filterclass = get_card_filter_class($carddeck_id, $cardnumber_plain);
                                     ?>
                                     <div
                                         class="col col-12 col-sm-6 col-md-3 mb-2 text-center">
                                         <form action="<?php echo HOST_URL; ?>/memberarea/shop" method="post">
                                             <div class="card">
                                                 <div class="card-img-top">
-                                                    <?php echo get_card($carddeck_id, $cardnumber_plain); ?>
+                                                    <div class="card-highlight<?php echo $filterclass; ?>">
+                                                        <?php echo get_card($carddeck_id, $cardnumber_plain); ?>
+                                                    </div>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="card-title">
@@ -232,6 +235,11 @@ if (isset($_SESSION['member_rank'])) {
                                     <?php
                                 }
                                 ?>
+                            </div>
+                            <div class="row">
+                                <div class="col col-12 mb-2 text-center">
+                                    <?php get_card_highlight_legend(); ?>
+                                </div>
                             </div>
                             <?php
                         } else {
