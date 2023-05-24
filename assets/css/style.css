@@ -280,7 +280,9 @@ table.carddeck td {
 .cards-sorting-wrapper.mastered::after,
 .profile-cards-wrapper.needed::before,
 .card-wrapper.needed::before,
-.profile-cards-wrapper.mastered::before {
+.profile-cards-wrapper.mastered::before,
+.deck-mastered::before,
+.needed::before {
     content: '\f559';
     display: inline-block;
     position: absolute;
@@ -301,17 +303,51 @@ table.carddeck td {
     z-index: 10;
 }
 .profile-cards-wrapper.needed.collect::before,
-.card-wrapper.needed.collect::before {
+.card-wrapper.needed.collect::before,
+.needed.collect::before {
     content: '\f004';
+    color: #842029;
 }
 .profile-cards-wrapper.needed.keep::before,
-.card-wrapper.needed.keep::before {
+.card-wrapper.needed.keep::before,
+.needed.keep::before {
     content: '\f023';
+    color: #0d788a;
 }
 .profile-cards-wrapper.needed.wishlist::before,
-.card-wrapper.needed.wishlist::before {
+.card-wrapper.needed.wishlist::before,
+.needed.wishlist::before {
     content: '\f005';
+    color: #ffc107;
 }
+.needed,
+.deck-mastered {
+    position: relative;
+    background-color: lightgrey;
+}
+.needed.collect {
+    background-color: #f8d7da;
+    border: 1px solid #f5c2c7;
+}
+.needed.keep {
+    background-color: #cff4fc;
+    border: 1px solid #b6effb;
+}
+.needed.wishlist {
+    background-color: rgba(255, 193, 7, 0.3);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.card-highlight {
+    position: relative;
+    width: fit-content;
+    margin: auto 0;
+    padding: 5px;
+}
+.shop .card-highlight {
+    margin: 5px auto 0;
+}
+
 .cards-sorting-container .cards-sorting-table .carddeck-wrapper,
 .member-cards-container .profile-cards .carddeck-wrapper {
     margin-top: 5px;

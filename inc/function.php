@@ -421,6 +421,21 @@ function get_card_filter_class($carddeck_id, $card_number) {
                             AND member_cards_cat = '" . MEMBER_CARDS_COLLECT . "'
                             AND member_cards_active = 1
                           GROUP BY member_cards_carddeck_id, member_cards_number) as card_already_in_collect,
+                         EXISTS (SELECT member_cards_id
+                          FROM member_cards
+                          WHERE member_cards_member_id = '" . $member_id . "'
+                            AND mc.member_cards_carddeck_id = member_cards_carddeck_id
+                            AND member_cards_cat = '" . MEMBER_CARDS_KEEP . "'
+                            AND member_cards_active = 1
+                          GROUP BY member_cards_carddeck_id) as carddeck_in_keep,
+                         EXISTS (SELECT member_cards_id
+                          FROM member_cards
+                          WHERE member_cards_member_id = '" . $member_id . "'
+                            AND mc.member_cards_carddeck_id = member_cards_carddeck_id
+                            AND member_cards_number = '".$card_number."'
+                            AND member_cards_cat = '" . MEMBER_CARDS_KEEP . "'
+                            AND member_cards_active = 1
+                          GROUP BY member_cards_carddeck_id, member_cards_number) as card_already_in_keep,
                          EXISTS (SELECT member_wishlist_member_id
                           FROM member_wishlist
                           WHERE member_wishlist_member_id = '" . $member_id . "'
@@ -446,11 +461,13 @@ function get_card_filter_class($carddeck_id, $card_number) {
 
     $carddeck_in_collect = $row_cards['carddeck_in_collect'];
     $card_already_in_collect = $row_cards['card_already_in_collect'];
+    $carddeck_in_keep = $row_cards['carddeck_in_keep'];
+    $card_already_in_keep = $row_cards['card_already_in_keep'];
     $carddeck_on_wishlist = $row_cards['carddeck_on_wishlist'];
     $carddeck_already_mastered = $row_cards['carddeck_already_mastered'];
 
     if ($carddeck_already_mastered == 1) {
-        $filterclass = ' mastered';
+        $filterclass = ' deck-mastered';
     } elseif ($carddeck_in_collect == 1 && $card_already_in_collect == 1) {
         $filterclass = '';
     } elseif (
@@ -458,7 +475,11 @@ function get_card_filter_class($carddeck_id, $card_number) {
     ) {
         $filterclass = ' needed collect';
     } elseif (
-    ($carddeck_on_wishlist == 1 && $carddeck_in_collect == 0)
+    ($carddeck_in_keep == 1 && $card_already_in_keep == 0)
+    ) {
+        $filterclass = TCG_CATEGORY_KEEP_USE ? ' needed keep' : '';
+    } elseif (
+    ($carddeck_on_wishlist == 1 && $carddeck_in_collect == 0 && $carddeck_in_keep == 0)
     ) {
         $filterclass = ' needed wishlist';
     } else {
@@ -466,6 +487,28 @@ function get_card_filter_class($carddeck_id, $card_number) {
     }
 
     return $filterclass;
+}
+
+function get_card_highlight_legend() {
+    echo '<div class="container">
+            <div class="row gx-4">
+                <div class="col col-12 mb-2"><b>'.TRANSLATIONS[$GLOBALS['language']]['general']['text_legend'].':</b></div>
+                <div class="col col-12 col-md-'.(TCG_CATEGORY_KEEP_USE ? '3' : '4').' mb-2">
+                    <div class="needed collect">Collect</div>
+                </div>';
+        if (TCG_CATEGORY_KEEP_USE) {
+            echo '<div class="col col-12 col-md-3 mb-2">
+                    <div class="needed keep">Keep</div>
+                </div>';
+        }
+          echo '<div class="col col-12 col-md-'.(TCG_CATEGORY_KEEP_USE ? '3' : '4').' mb-2">
+                    <div class="needed wishlist">'.TRANSLATIONS[$GLOBALS['language']]['general']['text_wishlist'].'</div>
+                </div>
+                <div class="col col-12 col-md-'.(TCG_CATEGORY_KEEP_USE ? '3' : '4').' mb-2">
+                    <div class="deck-mastered">'.TRANSLATIONS[$GLOBALS['language']]['general']['text_mastered'].'</div>
+                </div>
+            </div>
+          </div>';
 }
 
 function get_member_language($member_id) {
