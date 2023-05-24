@@ -77,54 +77,7 @@ if (isset($_SESSION['member_rank'])) {
         </div>
         <div class="col col-12 mb-3 cards-sorting-container">
             <?php
-            $sql_cards = "SELECT member_cards_id, member_cards_number, carddeck_id, carddeck_name, carddeck_active,
-                             EXISTS (SELECT member_cards_id
-                              FROM member_cards
-                              WHERE member_cards_member_id = '".$member_id."'
-                                AND mc.member_cards_carddeck_id = member_cards_carddeck_id
-                                AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
-                                AND member_cards_active = 1
-                              GROUP BY member_cards_carddeck_id) as carddeck_in_collect,
-                             EXISTS (SELECT member_cards_id
-                              FROM member_cards
-                              WHERE member_cards_member_id = '".$member_id."'
-                                AND mc.member_cards_carddeck_id = member_cards_carddeck_id
-                                AND mc.member_cards_number = member_cards_number
-                                AND member_cards_cat = '".MEMBER_CARDS_COLLECT."'
-                                AND member_cards_active = 1
-                              GROUP BY member_cards_carddeck_id, member_cards_number) as card_already_in_collect,
-                             EXISTS (SELECT member_cards_id
-                              FROM member_cards
-                              WHERE member_cards_member_id = '".$member_id."'
-                                AND mc.member_cards_carddeck_id = member_cards_carddeck_id
-                                AND member_cards_cat = '".MEMBER_CARDS_KEEP."'
-                                AND member_cards_active = 1
-                              GROUP BY member_cards_carddeck_id) as carddeck_in_keep,
-                             EXISTS (SELECT member_cards_id
-                              FROM member_cards
-                              WHERE member_cards_member_id = '".$member_id."'
-                                AND mc.member_cards_carddeck_id = member_cards_carddeck_id
-                                AND mc.member_cards_number = member_cards_number
-                                AND member_cards_cat = '".MEMBER_CARDS_KEEP."'
-                                AND member_cards_active = 1
-                              GROUP BY member_cards_carddeck_id, member_cards_number) as card_already_in_keep,
-                             EXISTS (SELECT member_cards_id
-                              FROM member_cards
-                              WHERE member_cards_member_id = '".$member_id."'
-                                AND mc.member_cards_carddeck_id = member_cards_carddeck_id
-                                AND member_cards_cat = '".MEMBER_CARDS_TRADE."'
-                                AND member_cards_active = 1
-                              GROUP BY member_cards_carddeck_id) as carddeck_in_trade,
-                             EXISTS (SELECT member_wishlist_member_id
-                              FROM member_wishlist
-                              WHERE member_wishlist_member_id = '".$member_id."'
-                                AND mc.member_cards_carddeck_id = member_wishlist_carddeck_id
-                              GROUP BY member_wishlist_carddeck_id) as carddeck_on_wishlist,
-                             EXISTS (SELECT member_master_id
-                              FROM member_master
-                              WHERE member_master_member_id = '".$member_id."'
-                                AND mc.member_cards_carddeck_id = member_master_carddeck_id
-                              GROUP BY member_master_carddeck_id) as carddeck_already_mastered
+            $sql_cards = "SELECT member_cards_id, member_cards_number, carddeck_id, carddeck_name, carddeck_active
                           FROM member_cards mc
                           JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                           WHERE member_cards_member_id = '".$member_id."'
@@ -164,60 +117,63 @@ if (isset($_SESSION['member_rank'])) {
                                         </tr>
                                         <?php
                                     } else {
+                                        $can_use_strcontains = PHP_VERSION >= '8.0.0';
                                         $card_id = $row_cards['member_cards_id'];
                                         $carddeck_id = $row_cards['carddeck_id'];
                                         $carddeck_name = $row_cards['carddeck_name'];
                                         $cardnumber_plain = $row_cards['member_cards_number'];
                                         $cardnumber = sprintf("%'.02d", $cardnumber_plain);
-                                        $carddeck_in_collect = $row_cards['carddeck_in_collect'];
-                                        $card_already_in_collect = $row_cards['card_already_in_collect'];
-                                        $carddeck_in_keep = $row_cards['carddeck_in_keep'];
-                                        $card_already_in_keep = $row_cards['card_already_in_keep'];
-                                        $carddeck_in_trade = $row_cards['carddeck_in_trade'];
-                                        $carddeck_on_wishlist = $row_cards['carddeck_on_wishlist'];
-                                        $carddeck_already_mastered = $row_cards['carddeck_already_mastered'];
+
+                                        $filterclass = get_card_filter_class($carddeck_id, $cardnumber_plain);
+                                        $carddeck_already_mastered = $can_use_strcontains ? str_contains($filterclass, 'deck-mastered') : strpos($filterclass, 'deck-mastered');
+                                        $card_need_in_collect = $can_use_strcontains ? str_contains($filterclass, 'needed collect') : strpos($filterclass, 'needed collect');
+                                        $card_need_in_keep = $can_use_strcontains ? str_contains($filterclass, 'needed keep') : strpos($filterclass, 'needed keep');
+                                        $card_need_on_wishlist = $can_use_strcontains ? str_contains($filterclass, 'needed wishlist') : strpos($filterclass, 'needed wishlist');
 
                                         $trade_selected = false;
-                                        $keep_selected = false;
+                                        $keep_selected = true;
                                         $collect_selected = false;
                                         $hide_collect = false;
 
                                         // set hide collect
                                         if (
-                                            ($carddeck_already_mastered == 1 && !TCG_MULTI_MASTER) ||
-                                            ($card_already_in_collect == 1)
+                                            $carddeck_already_mastered &&
+                                            !TCG_MULTI_MASTER
                                         ) {
                                             $hide_collect = true;
                                         }
 
                                         // set selected category
                                         if (
-                                            $carddeck_already_mastered == 1 && !TCG_MULTI_MASTER
+                                            $carddeck_already_mastered && !TCG_MULTI_MASTER
                                         ) {
                                             $trade_selected = true;
                                         } elseif (
-                                            $card_already_in_collect == 0 AND $carddeck_in_collect == 1
+                                            $card_need_in_collect
                                         ) {
                                             $collect_selected = true;
                                         } elseif (
-                                            $card_already_in_keep == 0 AND $carddeck_in_keep == 1
+                                            $card_need_in_keep
                                         ) {
                                             $keep_selected = true;
-                                        } elseif (
-                                            ($carddeck_on_wishlist == 1 AND $card_already_in_keep == 0 AND $carddeck_in_keep == 0) OR
-                                            ($carddeck_on_wishlist == 1 AND $card_already_in_keep == 0 AND $carddeck_in_keep == 1)
+                                        }
+                                        elseif (
+                                            $card_need_on_wishlist
                                         ) {
                                             $keep_selected = true;
-                                        } else {
-                                            $keep_selected = true;
+                                        }
+                                        if (!TCG_CATEGORY_KEEP_USE) {
+                                            $keep_selected = false;
                                         }
                                         ?>
                                         <tr>
                                             <td class="d-none"><?php echo $carddeck_name . $cardnumber; ?></td>
                                             <td>
                                                 <div
-                                                    class="cards-sorting-wrapper<?php echo($carddeck_already_mastered == 1 ? ' mastered' : ''); ?>">
-                                                    <?php echo get_card($carddeck_id, $cardnumber_plain); ?>
+                                                    class="cards-sorting-wrapper">
+                                                    <div class="card-highlight<?php echo $filterclass; ?>">
+                                                        <?php echo get_card($carddeck_id, $cardnumber_plain); ?>
+                                                    </div>
                                                     <a class="carddeck-link"
                                                        href="<?php echo HOST_URL; ?>/carddeck/<?php echo $carddeck_name; ?>">
                                                         <small><?php echo $carddeck_name . $cardnumber; ?></small>
@@ -260,6 +216,12 @@ if (isset($_SESSION['member_rank'])) {
                         </div>
                     </div>
                 </form>
+
+                <div class="row">
+                    <div class="col col-12 my-4 text-center">
+                        <?php get_card_highlight_legend(); ?>
+                    </div>
+                </div>
                 <?php
             } else {
                 title_small('0 Keep '.TRANSLATIONS[$GLOBALS['language']]['general']['text_cards']);
