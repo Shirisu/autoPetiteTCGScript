@@ -164,6 +164,38 @@ if (!isset($_SESSION['member_rank'])) {
         <?php navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks_unreleased'].' ('.$count_unreleased_carddeck.')', 'carddecks/unreleased', 'nav-link', 'fas fa-folder-plus'); ?>
     </li>
     <?php
+
+    // show card update link
+    $sql_cardupdate = "SELECT cardupdate_id, cardupdate_carddeck_id, cardupdate_count_cards
+                       FROM cardupdate
+                       ORDER BY cardupdate_id DESC
+                       LIMIT 1";
+    $result_cardupdate = mysqli_query($link, $sql_cardupdate) OR die(mysqli_error($link));
+    if(mysqli_num_rows($result_cardupdate)) {
+        $row_cardupdate = mysqli_fetch_assoc($result_cardupdate);
+        $sql_member_cardupdate = "SELECT member_update_carddeck_id, member_update_cards_count
+                                  FROM member_update
+                                  WHERE member_update_member_id = '".$_SESSION['member_id']."'
+                                     AND member_update_cardupdate_id = '".$row_cardupdate['cardupdate_id']."'
+                                  LIMIT 1";
+        $result_member_cardupdate = mysqli_query($link, $sql_member_cardupdate) OR die(mysqli_error());
+        $row_member_cardupdate = mysqli_fetch_assoc($result_member_cardupdate);
+        if(mysqli_num_rows($result_member_cardupdate)) {
+            if($row_member_cardupdate['member_update_cards_count'] > 0) {
+                ?>
+                <li>
+                    <?php navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_cardupdate'], 'memberarea/update', 'nav-link', 'fas fa-gifts'); ?>
+                </li>
+                <?php
+            }
+        } else {
+            ?>
+            <li>
+                <?php navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_cardupdate'], 'memberarea/update', 'nav-link', 'fas fa-gifts'); ?>
+            </li>
+        <?php
+        }
+    }
 }
 
 // show admin link

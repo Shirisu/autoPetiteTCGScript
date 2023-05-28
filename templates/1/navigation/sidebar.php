@@ -119,6 +119,30 @@ if (!isset($_SESSION['member_rank'])) {
     $count_unreleased_carddeck = mysqli_num_rows($result_unreleased_carddeck);
     navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_carddecks_unreleased'].' ('.$count_unreleased_carddeck.')', 'carddecks/unreleased', 'list-group-item list-group-item-action bg-light', 'fas fa-folder-plus');
 
+    // show card update link
+    $sql_cardupdate = "SELECT cardupdate_id, cardupdate_carddeck_id, cardupdate_count_cards
+                       FROM cardupdate
+                       ORDER BY cardupdate_id DESC
+                       LIMIT 1";
+    $result_cardupdate = mysqli_query($link, $sql_cardupdate) OR die(mysqli_error($link));
+    if(mysqli_num_rows($result_cardupdate)) {
+        $row_cardupdate = mysqli_fetch_assoc($result_cardupdate);
+        $sql_member_cardupdate = "SELECT member_update_carddeck_id, member_update_cards_count
+                                  FROM member_update
+                                  WHERE member_update_member_id = '".$_SESSION['member_id']."'
+                                     AND member_update_cardupdate_id = '".$row_cardupdate['cardupdate_id']."'
+                                  LIMIT 1";
+        $result_member_cardupdate = mysqli_query($link, $sql_member_cardupdate) OR die(mysqli_error());
+        $row_member_cardupdate = mysqli_fetch_assoc($result_member_cardupdate);
+        if(mysqli_num_rows($result_member_cardupdate)) {
+            if($row_member_cardupdate['member_update_cards_count'] > 0) {
+                navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_cardupdate'], 'memberarea/update', 'list-group-item list-group-item-action bg-light', 'fas fa-gifts');
+            }
+        } else {
+            navilink(TRANSLATIONS[$GLOBALS['language']]['general']['text_cardupdate'], 'memberarea/update', 'list-group-item list-group-item-action bg-light', 'fas fa-gifts');
+        }
+    }
+
     navilink('Member', 'member', 'list-group-item list-group-item-action bg-light', 'fas fa-address-book');
 }
 
