@@ -98,47 +98,7 @@ if (isset($_SESSION['member_rank'])) {
                 title(TRANSLATIONS[$GLOBALS['language']]['trade']['text_create_offer']);
 
                 $sql_own_cards = "SELECT MIN(member_cards_id) as member_cards_id, member_cards_carddeck_id, carddeck_name, member_cards_number,
-                                      COUNT(*) AS card_count,
-                                     EXISTS (SELECT member_cards_id
-                                      FROM member_cards
-                                      WHERE member_cards_member_id = '" . $trade_member_id . "'
-                                        AND mc.member_cards_carddeck_id = member_cards_carddeck_id
-                                        AND member_cards_cat = '" . MEMBER_CARDS_COLLECT . "'
-                                        AND member_cards_active = 1
-                                      GROUP BY member_cards_carddeck_id) as carddeck_in_collect,
-                                     EXISTS (SELECT member_cards_id
-                                      FROM member_cards
-                                      WHERE member_cards_member_id = '" . $trade_member_id . "'
-                                        AND mc.member_cards_carddeck_id = member_cards_carddeck_id
-                                        AND mc.member_cards_number = member_cards_number
-                                        AND member_cards_cat = '" . MEMBER_CARDS_COLLECT . "'
-                                        AND member_cards_active = 1
-                                      GROUP BY member_cards_carddeck_id, member_cards_number) as card_already_in_collect,
-                                     EXISTS (SELECT member_cards_id
-                                      FROM member_cards
-                                      WHERE member_cards_member_id = '" . $trade_member_id . "'
-                                        AND mc.member_cards_carddeck_id = member_cards_carddeck_id
-                                        AND member_cards_cat = '" . MEMBER_CARDS_KEEP . "'
-                                        AND member_cards_active = 1
-                                      GROUP BY member_cards_carddeck_id) as carddeck_in_keep,
-                                     EXISTS (SELECT member_cards_id
-                                      FROM member_cards
-                                      WHERE member_cards_member_id = '" . $trade_member_id . "'
-                                        AND mc.member_cards_carddeck_id = member_cards_carddeck_id
-                                        AND mc.member_cards_number = member_cards_number
-                                        AND member_cards_cat = '" . MEMBER_CARDS_KEEP . "'
-                                        AND member_cards_active = 1
-                                      GROUP BY member_cards_carddeck_id, member_cards_number) as card_already_in_keep,
-                                     EXISTS (SELECT member_wishlist_member_id
-                                      FROM member_wishlist
-                                      WHERE member_wishlist_member_id = '" . $trade_member_id . "'
-                                        AND mc.member_cards_carddeck_id = member_wishlist_carddeck_id
-                                      GROUP BY member_wishlist_carddeck_id) as carddeck_on_wishlist,
-                                     EXISTS (SELECT member_master_id
-                                      FROM member_master
-                                      WHERE member_master_member_id = '" . $trade_member_id . "'
-                                        AND mc.member_cards_carddeck_id = member_master_carddeck_id
-                                      GROUP BY member_master_carddeck_id) as carddeck_already_mastered
+                                      COUNT(*) AS card_count
                            FROM member_cards mc
                            JOIN carddeck ON carddeck_id = member_cards_carddeck_id
                            WHERE member_cards_member_id = '" . $member_id . "'
@@ -185,18 +145,19 @@ if (isset($_SESSION['member_rank'])) {
                                                     required>
                                                 <option selected disabled hidden value=""></option>
                                                 <?php
+                                                $can_use_strcontains = PHP_VERSION >= '8.0.0';
                                                 while ($row_own_cards = mysqli_fetch_assoc($result_own_cards)) {
                                                     $card_count = ($row_own_cards['card_count'] > 1 ? ' ('.$row_own_cards['card_count'].'x)' : '');
                                                     $own_carddeck_name = $row_own_cards['carddeck_name'];
+                                                    $own_carddeck_id = $row_own_cards['member_cards_carddeck_id'];
                                                     $own_card_number_plain = $row_own_cards['member_cards_number'];
                                                     $own_card_number = sprintf("%'.02d", $own_card_number_plain);
 
-                                                    $carddeck_in_collect = $row_own_cards['carddeck_in_collect'];
-                                                    $card_already_in_collect = $row_own_cards['card_already_in_collect'];
-                                                    $carddeck_in_keep = $row_own_cards['carddeck_in_keep'];
-                                                    $card_already_in_keep = $row_own_cards['card_already_in_keep'];
-                                                    $carddeck_on_wishlist = $row_own_cards['carddeck_on_wishlist'];
-                                                    $carddeck_already_mastered = $row_own_cards['carddeck_already_mastered'];
+                                                    $filterclass = get_card_filter_class($own_carddeck_id, $own_card_number_plain, $trade_member_id, $member_id);
+                                                    $carddeck_already_mastered = $can_use_strcontains ? str_contains($filterclass, 'deck-mastered') : strpos($filterclass, 'deck-mastered');
+                                                    $card_need_in_collect = $can_use_strcontains ? str_contains($filterclass, 'needed collect') : strpos($filterclass, 'needed collect');
+                                                    $card_need_in_keep = $can_use_strcontains ? str_contains($filterclass, 'needed keep') : strpos($filterclass, 'needed keep');
+                                                    $card_need_on_wishlist = $can_use_strcontains ? str_contains($filterclass, 'needed wishlist') : strpos($filterclass, 'needed wishlist');
 
                                                     $card_needed_text = '';
                                                     $card_needed_icon = '';
@@ -204,19 +165,19 @@ if (isset($_SESSION['member_rank'])) {
                                                         $card_needed_text = '('.TRANSLATIONS[$GLOBALS['language']]['general']['text_mastered'].')';
                                                         $card_needed_icon = 'fa fa-award';
                                                     } elseif (
-                                                        ($carddeck_in_collect == 1 && $card_already_in_collect == 0)
+                                                        $card_need_in_collect
                                                     ) {
-                                                        $card_needed_text = '(collect)';
+                                                        $card_needed_text = '(Collect)';
                                                         $card_needed_icon = 'fa fa-heart';
                                                     } elseif (
-                                                        ($carddeck_in_keep == 1 && $card_already_in_keep == 0)
+                                                        $card_need_in_keep
                                                     ) {
-                                                        $card_needed_text = '(keep)';
+                                                        $card_needed_text = '(Keep)';
                                                         $card_needed_icon = 'fa fa-lock';
                                                     } elseif (
-                                                        ($carddeck_on_wishlist == 1 && $carddeck_in_collect == 0)
+                                                        $card_need_on_wishlist
                                                     ) {
-                                                        $card_needed_text = '(wishlist)';
+                                                        $card_needed_text = '('.TRANSLATIONS[$GLOBALS['language']]['general']['text_wishlist'].')';
                                                         $card_needed_icon = 'fa fa-star';
                                                     }
                                                     ?>

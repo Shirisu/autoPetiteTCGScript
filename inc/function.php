@@ -287,8 +287,10 @@ function get_card($carddeck_id = 0, $card_number = 0, $show_only_url = false, $s
         $row_carddeck = mysqli_fetch_assoc($result_carddeck);
         $carddeck_name = $row_carddeck['carddeck_name'];
 
+        $masterclass = '';
         if ($card_number == 'master') {
             $card_number = 'master';
+            $masterclass = ' mastercard';
         } else {
             $card_number = sprintf('%02d', $card_number);
         }
@@ -298,9 +300,9 @@ function get_card($carddeck_id = 0, $card_number = 0, $show_only_url = false, $s
         } else {
             $filename = get_card($carddeck_id, $card_number, true, $show_inactive);
             if (file_exists('.' . substr($filename, strlen(HOST_URL)))) {
-                return '<img class="card-wrapper" src="'.HOST_URL.TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$card_number.'.'.TCG_CARDS_FILE_TYPE.'" alt="'.$carddeck_name.$card_number.'" />';
+                return '<img class="card-wrapper'.$masterclass.'" src="'.HOST_URL.TCG_CARDS_FOLDER.'/'.$carddeck_name.'/'.$carddeck_name.$card_number.'.'.TCG_CARDS_FILE_TYPE.'" alt="'.$carddeck_name.$card_number.'" />';
             } else {
-                return '<img class="card-wrapper" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="'.$carddeck_name.$card_number.'" />';
+                return '<img class="card-wrapper'.$masterclass.'" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="'.$carddeck_name.$card_number.'" />';
             }
         }
     } else {
@@ -401,22 +403,25 @@ function get_card_number_from_member_cards_id($member_card_id) {
     }
 }
 
-function get_card_filter_class($carddeck_id, $card_number, $new_category = false) {
+function get_card_filter_class($carddeck_id, $card_number, $own_member_id = 0, $other_member_id = 0, $new_category = false) {
     global $link;
 
-    $member_id = $_SESSION['member_id'];
+    if ($own_member_id === 0 && $other_member_id === 0) {
+        $own_member_id = $_SESSION['member_id'];
+        $other_member_id = $_SESSION['member_id'];
+    }
 
     $sql_cards = "SELECT 
                     EXISTS (SELECT member_cards_id
                       FROM member_cards
-                      WHERE member_cards_member_id = '" . $member_id . "'
+                      WHERE member_cards_member_id = '" . $own_member_id . "'
                         AND mc.member_cards_carddeck_id = member_cards_carddeck_id
                         AND member_cards_cat = '" . MEMBER_CARDS_COLLECT . "'
                         AND member_cards_active = 1
                       GROUP BY member_cards_carddeck_id) as carddeck_in_collect,
                      EXISTS (SELECT member_cards_id
                       FROM member_cards
-                      WHERE member_cards_member_id = '" . $member_id . "'
+                      WHERE member_cards_member_id = '" . $own_member_id . "'
                         AND mc.member_cards_carddeck_id = member_cards_carddeck_id
                         AND member_cards_number = '".$card_number."'
                         AND member_cards_cat = '" . MEMBER_CARDS_COLLECT . "'
@@ -424,14 +429,14 @@ function get_card_filter_class($carddeck_id, $card_number, $new_category = false
                       GROUP BY member_cards_carddeck_id, member_cards_number) as card_already_in_collect,
                      EXISTS (SELECT member_cards_id
                       FROM member_cards
-                      WHERE member_cards_member_id = '" . $member_id . "'
+                      WHERE member_cards_member_id = '" . $own_member_id . "'
                         AND mc.member_cards_carddeck_id = member_cards_carddeck_id
                         AND member_cards_cat = '" . MEMBER_CARDS_KEEP . "'
                         AND member_cards_active = 1
                       GROUP BY member_cards_carddeck_id) as carddeck_in_keep,
                      EXISTS (SELECT member_cards_id
                       FROM member_cards
-                      WHERE member_cards_member_id = '" . $member_id . "'
+                      WHERE member_cards_member_id = '" . $own_member_id . "'
                         AND mc.member_cards_carddeck_id = member_cards_carddeck_id
                         AND member_cards_number = '".$card_number."'
                         AND member_cards_cat = '" . MEMBER_CARDS_KEEP . "'
@@ -439,14 +444,14 @@ function get_card_filter_class($carddeck_id, $card_number, $new_category = false
                       GROUP BY member_cards_carddeck_id, member_cards_number) as card_already_in_keep,
                      EXISTS (SELECT member_cards_id
                       FROM member_cards
-                      WHERE member_cards_member_id = '" . $member_id . "'
+                      WHERE member_cards_member_id = '" . $own_member_id . "'
                         AND mc.member_cards_carddeck_id = member_cards_carddeck_id
                         AND member_cards_cat = '" . MEMBER_CARDS_TRADE . "'
                         AND member_cards_active = 1
                       GROUP BY member_cards_carddeck_id) as carddeck_in_trade,
                      EXISTS (SELECT member_cards_id
                       FROM member_cards
-                      WHERE member_cards_member_id = '" . $member_id . "'
+                      WHERE member_cards_member_id = '" . $own_member_id . "'
                         AND mc.member_cards_carddeck_id = member_cards_carddeck_id
                         AND member_cards_number = '".$card_number."'
                         AND member_cards_cat = '" . MEMBER_CARDS_TRADE . "'
@@ -454,16 +459,16 @@ function get_card_filter_class($carddeck_id, $card_number, $new_category = false
                       GROUP BY member_cards_carddeck_id, member_cards_number) as card_already_in_trade,
                      EXISTS (SELECT member_wishlist_member_id
                       FROM member_wishlist
-                      WHERE member_wishlist_member_id = '" . $member_id . "'
+                      WHERE member_wishlist_member_id = '" . $own_member_id . "'
                         AND mc.member_cards_carddeck_id = member_wishlist_carddeck_id
                       GROUP BY member_wishlist_carddeck_id) as carddeck_on_wishlist,
                      EXISTS (SELECT member_master_id
                       FROM member_master
-                      WHERE member_master_member_id = '" . $member_id . "'
+                      WHERE member_master_member_id = '" . $own_member_id . "'
                         AND mc.member_cards_carddeck_id = member_master_carddeck_id
                       GROUP BY member_master_carddeck_id) as carddeck_already_mastered
                     FROM member_cards mc
-                    WHERE member_cards_member_id = '" . $member_id . "'
+                    WHERE member_cards_member_id = '" . $other_member_id . "'
                       AND member_cards_carddeck_id = '" . $carddeck_id . "'
                       AND member_cards_active = 1
                     LIMIT 1";
