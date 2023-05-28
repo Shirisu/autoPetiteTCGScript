@@ -38,6 +38,7 @@ if (isset($_SESSION['member_rank'])) {
             $quantity = $row_member_cardupdate['member_update_cards_count'];
         }
         $updatecarddecks_array = explode(';', $updatedecks);
+        $updatecarddecks_array_new = '';
 
         if (isset($_POST['carddeck_id']) && $quantity > 0) {
             $carddeck_id = mysqli_real_escape_string($link, trim($_POST['carddeck_id']));
@@ -46,22 +47,20 @@ if (isset($_SESSION['member_rank'])) {
             if (in_array($carddeck_id, $updatecarddecks_array)) {
                 $pos = array_search($carddeck_id, $updatecarddecks_array);
                 unset($updatecarddecks_array[$pos]);
-
                 $updatecarddecks_array = array_values(array_filter($updatecarddecks_array));
-                $updatecarddecks_array_new = implode(";",$updatecarddecks_array);
+                $updatecarddecks_array_new = implode(";", $updatecarddecks_array);
 
             }
 
             $count_decks = sizeof($updatecarddecks_array);
-
-            $quantity = $quantity - 1;
 
             $sql_carddeck = "SELECT carddeck_name
                              FROM carddeck
                              WHERE carddeck_id = '" . $carddeck_id . "'
                              LIMIT 1";
             $result_carddeck = mysqli_query($link, $sql_carddeck) OR die(mysqli_error($link));
-            if (mysqli_num_rows($result_carddeck)) {
+            if (mysqli_num_rows($result_carddeck) && ($updatecarddecks_array_new !== '' && $quantity > 0)) {
+                $quantity = $quantity - 1;
                 $row_carddeck = mysqli_fetch_assoc($result_carddeck);
 
                 insert_specific_cards($_SESSION['member_id'], $carddeck_id, $card_number);
