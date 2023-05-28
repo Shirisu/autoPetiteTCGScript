@@ -244,11 +244,13 @@ if (isset($_SESSION['member_rank'])) {
                                                 $trade_card_carddeck_name = get_carddeck_name_from_carddeck_id($trade_card_carddeck_id);
                                                 $trade_card_number = get_card_number_from_member_cards_id($card_id);
                                                 $filename = get_card($trade_card_carddeck_id, $trade_card_number, true);
-                                                if ($trade_box_type == 'inbox' && TCG_SHOW_TRADE_FILTER == true) {
-                                                    $filterclass = get_card_filter_class($trade_card_carddeck_id, $trade_card_number);
-                                                } else {
-                                                    $filterclass = '';
+                                                $filterclass = '';
+                                                if (TCG_SHOW_TRADE_FILTER == true) {
+                                                    if ($trade_box_type == 'inbox') {
+                                                        $filterclass = get_card_filter_class($trade_card_carddeck_id, $trade_card_number);
+                                                    }
                                                 }
+
                                                 ?>
                                                 <span
                                                         class="card-wrapper<?php echo $filterclass; ?>" <?php echo(file_exists('.' . substr($filename, strlen(HOST_URL))) ? 'style="background-image:url(' . $filename . ');"' : ''); ?>></span>
