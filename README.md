@@ -5,7 +5,7 @@ It's written in PHP and uses jQuery and plain CSS.
 
 It's based on the concept and script of "Tasty TCG" from 2016 but it's almost completely reworked.
 
-Current version: 3.1.0
+Current version: 3.2.0
 
 [Documentation - how to use autoPetiteTCGScript](https://github.com/Shirisu/autoPetiteTCGScript/blob/master/DOCUMENTATION.md)
 
@@ -148,13 +148,16 @@ Current version: 3.1.0
 
 ## sites that use the script
 - [Witch Heaven TCG](https://tcg.jadestaub.de)
-- [Alohomora TCG](https://alohomora.arctic-rose.net)
+- [Alohomora TCG](https://alohomora.tcgtastic.org)
 - [Pentakill TCG](https://pentakill.tcgtastic.org)
 - [Delectable](http://delectable.charminglychristina.com)
 - [Music Station](http://musicstation.moon-jewel.net)
-
-### in preparation - coming soon
 - [Novella](http://novella.charminglychristina.com)
 - [Mixtape](https://mixtape.tcgtastic.org)
+- [Showtime](https://showtime.tcgstation.com)
+
+### in preparation - coming soon
 - [Blocktastic](https://block.tcgtastic.org)
 - [Keiken](https://jrpg.sailorchaos.us)
+- [Small Screen](http://smallscreen.charminglychristina.com)
+- [Silver Screen](https://silver.with-paranoia.com)
