@@ -102,6 +102,7 @@ if (isset($_SESSION['member_rank'])) {
                                 </thead>
                                 <tbody>
                                 <?php
+                                $can_use_strcontains = PHP_VERSION >= '8.0.0';
                                 while ($row_cards = mysqli_fetch_assoc($result_cards)) {
                                     if ($row_cards['carddeck_active'] == 0) {
                                         ?>
@@ -117,7 +118,6 @@ if (isset($_SESSION['member_rank'])) {
                                         </tr>
                                         <?php
                                     } else {
-                                        $can_use_strcontains = PHP_VERSION >= '8.0.0';
                                         $card_id = $row_cards['member_cards_id'];
                                         $carddeck_id = $row_cards['carddeck_id'];
                                         $carddeck_name = $row_cards['carddeck_name'];
@@ -129,6 +129,7 @@ if (isset($_SESSION['member_rank'])) {
                                         $card_need_in_collect = $can_use_strcontains ? str_contains($filterclass, 'needed collect') : strpos($filterclass, 'needed collect');
                                         $card_need_in_keep = $can_use_strcontains ? str_contains($filterclass, 'needed keep') : strpos($filterclass, 'needed keep');
                                         $card_need_on_wishlist = $can_use_strcontains ? str_contains($filterclass, 'needed wishlist') : strpos($filterclass, 'needed wishlist');
+                                        $card_already_there = $can_use_strcontains ? str_contains($filterclass, 'already-in-') : strpos($filterclass, 'already-in-');
 
                                         $trade_selected = false;
                                         $keep_selected = true;
@@ -137,8 +138,9 @@ if (isset($_SESSION['member_rank'])) {
 
                                         // set hide collect
                                         if (
-                                            $carddeck_already_mastered &&
-                                            !TCG_MULTI_MASTER
+                                            ($carddeck_already_mastered &&
+                                            !TCG_MULTI_MASTER) ||
+                                            $card_already_there
                                         ) {
                                             $hide_collect = true;
                                         }
@@ -152,6 +154,7 @@ if (isset($_SESSION['member_rank'])) {
                                             $card_need_in_collect
                                         ) {
                                             $collect_selected = true;
+                                            $hide_collect = false;
                                         } elseif (
                                             $card_need_in_keep
                                         ) {
