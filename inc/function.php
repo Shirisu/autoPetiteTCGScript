@@ -475,7 +475,18 @@ function get_card_filter_class($carddeck_id, $card_number, $own_member_id = 0, $
     $result_cards = mysqli_query($link, $sql_cards) OR die(mysqli_error($link));
     $count_cards = mysqli_num_rows($result_cards);
     if (!$count_cards) {
-        return '';
+        $sql_wishlist = "SELECT member_wishlist_member_id
+                         FROM member_wishlist
+                         WHERE member_wishlist_member_id = '" . $own_member_id . "'
+                           AND member_wishlist_carddeck_id = '" . $carddeck_id . "'
+                         LIMIT 1";
+        $result_wishlist = mysqli_query($link, $sql_wishlist) OR die(mysqli_error($link));
+        $count_wishlist = mysqli_num_rows($result_wishlist);
+        if (!$count_wishlist) {
+            return '';
+        }
+
+        return ' needed wishlist';
     }
 
     $row_cards = mysqli_fetch_assoc($result_cards);

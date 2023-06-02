@@ -96,6 +96,7 @@ if (isset($_SESSION['member_rank'])) {
                             </thead>
                             <tbody>
                             <?php
+                            $can_use_strcontains = PHP_VERSION >= '8.0.0';
                             while ($row_cards = mysqli_fetch_assoc($result_cards)) {
                                 if ($row_cards['carddeck_active'] == 0) {
                                     ?>
@@ -111,7 +112,6 @@ if (isset($_SESSION['member_rank'])) {
                                     </tr>
                                     <?php
                                 } else {
-                                    $can_use_strcontains = PHP_VERSION >= '8.0.0';
                                     $carddeck_id = $row_cards['carddeck_id'];
                                     $carddeck_name = $row_cards['carddeck_name'];
                                     $cardnumber_plain = $row_cards['member_cards_number'];
@@ -120,7 +120,7 @@ if (isset($_SESSION['member_rank'])) {
 
                                     $filterclass = '';
                                     if ($member_id != $_SESSION['member_id']) {
-                                        $filterclass = get_card_filter_class($carddeck_id, $cardnumber_plain, $member_id, $member_id);
+                                        $filterclass = get_card_filter_class($carddeck_id, $cardnumber_plain, $_SESSION['member_id'], $member_id);
                                     }
                                     ?>
                                     <tr>
