@@ -197,7 +197,7 @@ if (isset($_SESSION['member_rank'])) {
                                                                         Keep
                                                                     </option>
                                                                 <?php } ?>
-                                                                <?php if ($hide_collect == false) { ?>
+                                                                <?php if (!$hide_collect) { ?>
                                                                     <option
                                                                     value="2" <?php echo($collect_selected ? 'selected' : ''); ?>>
                                                                         Collect</option><?php } ?>

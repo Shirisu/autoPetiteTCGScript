@@ -403,7 +403,7 @@ function get_card_number_from_member_cards_id($member_card_id) {
     }
 }
 
-function get_card_filter_class($carddeck_id, $card_number, $own_member_id = 0, $other_member_id = 0, $new_category = false) {
+function get_card_filter_class($carddeck_id, $card_number, $own_member_id = 0, $other_member_id = 0, $category = 0) {
     global $link;
 
     if ($own_member_id === 0 && $other_member_id === 0) {
@@ -512,9 +512,9 @@ function get_card_filter_class($carddeck_id, $card_number, $own_member_id = 0, $
     ($carddeck_in_keep == 1 && $card_already_in_keep == 0)
     ) {
         $filterclass = TCG_CATEGORY_KEEP_USE ? ' needed keep' : '';
-    } elseif ($carddeck_in_keep == 1 && $card_already_in_keep == 1) {
+    } elseif ($category === MEMBER_CARDS_NEW && $carddeck_in_keep == 1 && $card_already_in_keep == 1) {
         $filterclass = ' already-in-keep';
-    } elseif ($new_category && $carddeck_in_trade == 1 && $card_already_in_trade == 1) {
+    } elseif ($category === MEMBER_CARDS_NEW && $carddeck_in_trade == 1 && $card_already_in_trade == 1) {
         $filterclass = ' already-in-trade';
     } elseif (
     ($carddeck_on_wishlist == 1 && $carddeck_in_collect == 0 && $carddeck_in_keep == 0)

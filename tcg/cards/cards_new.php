@@ -126,12 +126,13 @@ if (isset($_SESSION['member_rank'])) {
                                         $cardnumber_plain = $row_cards['member_cards_number'];
                                         $cardnumber = sprintf("%'.02d", $cardnumber_plain);
 
-                                        $filterclass = get_card_filter_class($carddeck_id, $cardnumber_plain, 0, 0, true);
+                                        $filterclass = get_card_filter_class($carddeck_id, $cardnumber_plain, 0, 0, MEMBER_CARDS_NEW);
                                         $carddeck_already_mastered = $can_use_strcontains ? str_contains($filterclass, 'deck-mastered') : strpos($filterclass, 'deck-mastered');
                                         $card_need_in_collect = $can_use_strcontains ? str_contains($filterclass, 'needed collect') : strpos($filterclass, 'needed collect');
                                         $card_need_in_keep = $can_use_strcontains ? str_contains($filterclass, 'needed keep') : strpos($filterclass, 'needed keep');
                                         $card_need_on_wishlist = $can_use_strcontains ? str_contains($filterclass, 'needed wishlist') : strpos($filterclass, 'needed wishlist');
                                         $card_already_there = $can_use_strcontains ? str_contains($filterclass, 'already-in-') : strpos($filterclass, 'already-in-');
+                                        $card_already_in_keep = $can_use_strcontains ? str_contains($filterclass, 'already-in-keep') : strpos($filterclass, 'already-in-keep');
 
                                         $new_selected = true;
                                         $trade_selected = false;
@@ -143,7 +144,7 @@ if (isset($_SESSION['member_rank'])) {
                                         if (
                                             ($carddeck_already_mastered &&
                                             !TCG_MULTI_MASTER) ||
-                                            $card_already_there
+                                            ($card_already_there && !$card_already_in_keep)
                                         ) {
                                             $hide_collect = true;
                                         }

@@ -61,8 +61,8 @@ if (isset($_SESSION['member_rank'])) {
             height: <?php echo TCG_MASTERCARDS_HEIGHT; ?>px;
         }
         .cards-sorting-wrapper {
-            flex: 0 0 <?php echo (TCG_CARDS_WIDTH + 24); ?>px;
-            max-width: <?php echo (TCG_CARDS_WIDTH + 24); ?>px;
+            flex: 0 0 <?php echo (TCG_CARDS_WIDTH + 34); ?>px;
+            max-width: <?php echo (TCG_CARDS_WIDTH + 34); ?>px;
         }
 
         .cards-sorting-container table.cards-sorting-table.new-cards tbody tr,
@@ -70,8 +70,8 @@ if (isset($_SESSION['member_rank'])) {
         .member-cards-container table.profile-cards.trade-cards tbody tr,
         .cards-sorting-container table.cards-sorting-table.keep-cards tbody tr,
         .member-cards-container table.profile-cards.keep-cards tbody tr {
-            flex: 0 0 <?php echo (TCG_CARDS_WIDTH + 24); ?>px;
-            max-width: <?php echo (TCG_CARDS_WIDTH + 24); ?>px;
+            flex: 0 0 <?php echo (TCG_CARDS_WIDTH + 34); ?>px;
+            max-width: <?php echo (TCG_CARDS_WIDTH + 34); ?>px;
         }
     </style>
 
