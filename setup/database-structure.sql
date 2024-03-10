@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `member` (
     `member_tradeable` int(1) NOT NULL DEFAULT '1' COMMENT '0 = nicht antauschbar, 1 = antauschbar',
     `member_showonlyusefultrades` int(1) NOT NULL DEFAULT '0',
     `member_master_order` INT(11) NOT NULL DEFAULT '0',
-    `member_timezone` VARCHAR(100) NOT NULL,
+    `member_timezone` VARCHAR(100) NOT NULL DEFAULT 'Europe/Berlin',
     `member_language` varchar(2) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'en',
     PRIMARY KEY (`member_id`),
     KEY `member_nick` (`member_nick`),
