@@ -150,14 +150,6 @@ Current version: 3.2.1
 - [Witch Heaven TCG](https://tcg.jadestaub.de)
 - [Alohomora TCG](https://alohomora.tcgtastic.org)
 - [Pentakill TCG](https://pentakill.tcgtastic.org)
-- [Delectable](http://delectable.charminglychristina.com)
-- [Music Station](http://musicstation.moon-jewel.net)
-- [Novella](http://novella.charminglychristina.com)
-- [Mixtape](https://mixtape.tcgtastic.org)
-- [Showtime](https://showtime.tcgstation.com)
 
 ### in preparation - coming soon
-- [Blocktastic](https://block.tcgtastic.org)
-- [Keiken](https://jrpg.sailorchaos.us)
-- [Small Screen](http://smallscreen.charminglychristina.com)
-- [Silver Screen](https://silver.with-paranoia.com)
+- 
